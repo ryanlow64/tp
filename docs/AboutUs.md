@@ -21,11 +21,11 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Chen Xu
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/chenxu20.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/chenxu20)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Team Lead

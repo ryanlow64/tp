@@ -35,7 +35,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/mjyan02.png" width="200px">
 
-[[github](http://github.com/mjyan02/tp)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/mjyan02)] [[portfolio](team/johndoe.md)]
 
 * Role: Intellij Expert
 * Responsibilities: In charge of helping other team members with matters related to IntelliJ

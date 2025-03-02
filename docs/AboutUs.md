@@ -40,15 +40,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Ryan Low
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/ryanlow64.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/ryanlow64)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: Dev Ops
 
 ### James Doe
 

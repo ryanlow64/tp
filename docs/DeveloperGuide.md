@@ -280,8 +280,9 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:
 
+Our product provides the user with easier real estate networking by having an organised contact log that can be managed faster than a typical mouse/GUI driven app. Its intuitive design organises industry contacts and scheduling. Less time would be spent on such administrative tasks, and more could be spent on closing deals and strengthening their network.
 
 ### User stories
 

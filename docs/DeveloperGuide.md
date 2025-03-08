@@ -272,8 +272,8 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Product scope
 
-**Target user profile**:
-
+**Target user profile**: Real Estate agents who 
+* need to connect clients (e.g. buyers, sellers, investors) with the best opportunities based on market demands and property locations.
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast

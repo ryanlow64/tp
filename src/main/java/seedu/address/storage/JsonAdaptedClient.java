@@ -10,11 +10,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.client.Address;
-import seedu.address.model.client.Email;
-import seedu.address.model.client.Name;
 import seedu.address.model.client.Client;
+import seedu.address.model.client.ClientName;
+import seedu.address.model.client.Email;
 import seedu.address.model.client.Phone;
+import seedu.address.model.commons.Address;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -24,7 +24,7 @@ public class JsonAdaptedClient {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Client's %s field is missing!";
 
-    private final String name;
+    private final String clientName;
     private final String phone;
     private final String email;
     private final String address;
@@ -34,10 +34,10 @@ public class JsonAdaptedClient {
      * Constructs a {@code JsonAdaptedClient} with the given client details.
      */
     @JsonCreator
-    public JsonAdaptedClient(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
+    public JsonAdaptedClient(@JsonProperty("clientName") String clientName, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
-        this.name = name;
+        this.clientName = clientName;
         this.phone = phone;
         this.email = email;
         this.address = address;
@@ -50,7 +50,7 @@ public class JsonAdaptedClient {
      * Converts a given {@code Client} into this class for Jackson use.
      */
     public JsonAdaptedClient(Client source) {
-        name = source.getName().fullName;
+        clientName = source.getClientName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
@@ -70,13 +70,14 @@ public class JsonAdaptedClient {
             clientTags.add(tag.toModelType());
         }
 
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+        if (clientName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                ClientName.class.getSimpleName()));
         }
-        if (!Name.isValidName(name)) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        if (!ClientName.isValidClientName(clientName)) {
+            throw new IllegalValueException(ClientName.MESSAGE_CONSTRAINTS);
         }
-        final Name modelName = new Name(name);
+        final ClientName modelClientName = new ClientName(clientName);
 
         if (phone == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
@@ -103,7 +104,7 @@ public class JsonAdaptedClient {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(clientTags);
-        return new Client(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        return new Client(modelClientName, modelPhone, modelEmail, modelAddress, modelTags);
     }
 
 }

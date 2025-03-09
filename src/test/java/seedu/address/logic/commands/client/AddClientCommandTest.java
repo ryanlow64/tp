@@ -4,9 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddCommandTest;
-import seedu.address.logic.commands.CommandResult;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalClients.ALICE;
 
@@ -20,6 +17,9 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddCommandTest;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -53,13 +53,14 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
         AddCommand addCommand = new AddClientCommand(validClient);
         ModelStub modelStub = new ModelStubWithClient(validClient);
 
-        assertThrows(CommandException.class, AddClientCommand.MESSAGE_DUPLICATE_CLIENT, () -> addCommand.execute(modelStub));
+        assertThrows(CommandException.class, AddClientCommand.MESSAGE_DUPLICATE_CLIENT, ()
+            -> addCommand.execute(modelStub));
     }
 
     @Test
     public void equals() {
-        Client alice = new ClientBuilder().withName("Alice").build();
-        Client bob = new ClientBuilder().withName("Bob").build();
+        Client alice = new ClientBuilder().withClientName("Alice").build();
+        Client bob = new ClientBuilder().withClientName("Bob").build();
         AddCommand<Client> addAliceCommand = new AddClientCommand(alice);
         AddCommand<Client> addBobCommand = new AddClientCommand(bob);
 

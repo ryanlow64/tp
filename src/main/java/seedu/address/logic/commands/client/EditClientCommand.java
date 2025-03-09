@@ -2,17 +2,19 @@ package seedu.address.logic.commands.client;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -22,11 +24,11 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.client.Address;
 import seedu.address.model.client.Client;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.client.Email;
-import seedu.address.model.client.Name;
 import seedu.address.model.client.Phone;
+import seedu.address.model.commons.Address;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -40,7 +42,7 @@ public class EditClientCommand extends EditCommand<Client> {
             + "by the index number used in the displayed client list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_CLIENT_NAME + "CLIENTNAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
@@ -92,13 +94,13 @@ public class EditClientCommand extends EditCommand<Client> {
     private static Client createEditedClient(Client clientToEdit, EditClientDescriptor editClientDescriptor) {
         assert clientToEdit != null;
 
-        Name updatedName = editClientDescriptor.getName().orElse(clientToEdit.getName());
+        ClientName updatedClientName = editClientDescriptor.getClientName().orElse(clientToEdit.getClientName());
         Phone updatedPhone = editClientDescriptor.getPhone().orElse(clientToEdit.getPhone());
         Email updatedEmail = editClientDescriptor.getEmail().orElse(clientToEdit.getEmail());
         Address updatedAddress = editClientDescriptor.getAddress().orElse(clientToEdit.getAddress());
         Set<Tag> updatedTags = editClientDescriptor.getTags().orElse(clientToEdit.getTags());
 
-        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Client(updatedClientName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
 
     @Override
@@ -130,7 +132,7 @@ public class EditClientCommand extends EditCommand<Client> {
      * corresponding field value of the client.
      */
     public static class EditClientDescriptor extends EditDescriptor<Client> {
-        private Name name;
+        private ClientName clientName;
         private Phone phone;
         private Email email;
         private Address address;
@@ -143,7 +145,7 @@ public class EditClientCommand extends EditCommand<Client> {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditClientDescriptor(EditClientDescriptor toCopy) {
-            setName(toCopy.name);
+            setClientName(toCopy.clientName);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
@@ -155,15 +157,15 @@ public class EditClientCommand extends EditCommand<Client> {
          */
         @Override
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(clientName, phone, email, address, tags);
         }
 
-        public void setName(Name name) {
-            this.name = name;
+        public void setClientName(ClientName clientName) {
+            this.clientName = clientName;
         }
 
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
+        public Optional<ClientName> getClientName() {
+            return Optional.ofNullable(clientName);
         }
 
         public void setPhone(Phone phone) {
@@ -219,7 +221,7 @@ public class EditClientCommand extends EditCommand<Client> {
             }
 
             EditClientDescriptor otherEditClientDescriptor = (EditClientDescriptor) other;
-            return Objects.equals(name, otherEditClientDescriptor.name)
+            return Objects.equals(clientName, otherEditClientDescriptor.clientName)
                     && Objects.equals(phone, otherEditClientDescriptor.phone)
                     && Objects.equals(email, otherEditClientDescriptor.email)
                     && Objects.equals(address, otherEditClientDescriptor.address)
@@ -229,7 +231,7 @@ public class EditClientCommand extends EditCommand<Client> {
         @Override
         public String toString() {
             return new ToStringBuilder(this)
-                    .add("name", name)
+                    .add("clientName", clientName)
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)

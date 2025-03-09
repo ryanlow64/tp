@@ -36,7 +36,7 @@ public class Messages {
      */
     public static String format(Client client) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(client.getName())
+        builder.append(client.getClientName())
                 .append("; Phone: ")
                 .append(client.getPhone())
                 .append("; Email: ")

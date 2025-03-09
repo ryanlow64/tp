@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.client.EditClientCommand.EditClientDescriptor;
-import seedu.address.model.client.Address;
 import seedu.address.model.client.Client;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.client.Email;
-import seedu.address.model.client.Name;
 import seedu.address.model.client.Phone;
+import seedu.address.model.commons.Address;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,7 +32,7 @@ public class EditClientDescriptorBuilder {
      */
     public EditClientDescriptorBuilder(Client client) {
         descriptor = new EditClientDescriptor();
-        descriptor.setName(client.getName());
+        descriptor.setClientName(client.getClientName());
         descriptor.setPhone(client.getPhone());
         descriptor.setEmail(client.getEmail());
         descriptor.setAddress(client.getAddress());
@@ -40,10 +40,10 @@ public class EditClientDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code EditClientDescriptor} that we are building.
+     * Sets the {@code ClientName} of the {@code EditClientDescriptor} that we are building.
      */
-    public EditClientDescriptorBuilder withName(String name) {
-        descriptor.setName(new Name(name));
+    public EditClientDescriptorBuilder withClientName(String clientName) {
+        descriptor.setClientName(new ClientName(clientName));
         return this;
     }
 

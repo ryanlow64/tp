@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CLIENT_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
@@ -37,7 +37,8 @@ public class EditClientDescriptorTest {
         assertFalse(DESC_AMY.equals(DESC_BOB));
 
         // different name -> returns false
-        EditClientDescriptor editedAmy = new EditClientDescriptorBuilder(DESC_AMY).withName(VALID_NAME_BOB).build();
+        EditClientDescriptor editedAmy = new EditClientDescriptorBuilder(DESC_AMY).withClientName(VALID_CLIENT_NAME_BOB)
+            .build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different phone -> returns false
@@ -60,8 +61,8 @@ public class EditClientDescriptorTest {
     @Test
     public void toStringMethod() {
         EditClientDescriptor editClientDescriptor = new EditClientDescriptor();
-        String expected = EditClientDescriptor.class.getCanonicalName() + "{name="
-                + editClientDescriptor.getName().orElse(null) + ", phone="
+        String expected = EditClientDescriptor.class.getCanonicalName() + "{clientName="
+                + editClientDescriptor.getClientName().orElse(null) + ", phone="
                 + editClientDescriptor.getPhone().orElse(null) + ", email="
                 + editClientDescriptor.getEmail().orElse(null) + ", address="
                 + editClientDescriptor.getAddress().orElse(null) + ", tags="

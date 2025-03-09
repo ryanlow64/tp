@@ -13,21 +13,21 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.client.AddClientCommand;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.client.DeleteClientCommand;
-import seedu.address.logic.commands.client.EditClientCommand;
-import seedu.address.logic.commands.client.EditClientCommand.EditClientDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.client.AddClientCommand;
+import seedu.address.logic.commands.client.DeleteClientCommand;
+import seedu.address.logic.commands.client.EditClientCommand;
+import seedu.address.logic.commands.client.EditClientCommand.EditClientDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.client.NameContainsKeywordsPredicate;
 import seedu.address.model.client.Client;
-import seedu.address.testutil.EditClientDescriptorBuilder;
+import seedu.address.model.client.NameContainsKeywordsPredicate;
 import seedu.address.testutil.ClientBuilder;
 import seedu.address.testutil.ClientUtil;
+import seedu.address.testutil.EditClientDescriptorBuilder;
 
 public class AddressBookParserTest {
 

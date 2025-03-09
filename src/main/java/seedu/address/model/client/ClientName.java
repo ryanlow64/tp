@@ -3,11 +3,13 @@ package seedu.address.model.client;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import seedu.address.model.commons.Name;
+
 /**
  * Represents a Person's name in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidClientName} Name(String)}
  */
-public class Name {
+public class ClientName implements Name<Client> {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Names should only contain alphanumeric characters and spaces, and it should not be blank";
@@ -21,20 +23,20 @@ public class Name {
     public final String fullName;
 
     /**
-     * Constructs a {@code Name}.
+     * Constructs a {@code ClientName}.
      *
      * @param name A valid name.
      */
-    public Name(String name) {
+    public ClientName(String name) {
         requireNonNull(name);
-        checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidClientName(name), MESSAGE_CONSTRAINTS);
         fullName = name;
     }
 
     /**
      * Returns true if a given string is a valid name.
      */
-    public static boolean isValidName(String test) {
+    public static boolean isValidClientName(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 
@@ -51,11 +53,11 @@ public class Name {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Name)) {
+        if (!(other instanceof ClientName)) {
             return false;
         }
 
-        Name otherName = (Name) other;
+        ClientName otherName = (ClientName) other;
         return fullName.equals(otherName.fullName);
     }
 

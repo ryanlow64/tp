@@ -23,7 +23,7 @@ public class Client {
 
     // Data fields
     private final Address address;
-    private final Set<Tag> tags = new HashSet<>();
+    private final Set<Tag> tags = new HashSet<>(); // TODO: Remove tags from Client in all files if not needed
 
     /**
      * Every field must be present and not null.

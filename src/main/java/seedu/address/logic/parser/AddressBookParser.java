@@ -18,6 +18,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.client.AddClientCommandParser;
+import seedu.address.logic.parser.client.DeleteClientCommandParser;
+import seedu.address.logic.parser.client.EditClientCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -58,11 +60,13 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             return new AddClientCommandParser().parse(arguments);
 
+        // TODO: Add more edit commands here for each entity
         case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+            return new EditClientCommandParser().parse(arguments);
 
+        // TODO: Add more delete commands here for each entity
         case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+            return new DeleteClientCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();

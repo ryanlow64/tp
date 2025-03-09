@@ -15,7 +15,7 @@ public abstract class AddCommand<T> extends Command {
     protected final T toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Client}
+     * Creates an AddCommand to add the specified item.
      */
     public AddCommand(T item) {
         requireNonNull(item);

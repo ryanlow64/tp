@@ -344,8 +344,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Real Estate Agent**: A professional responsible for managing client contacts and property transactions.
+* **Client**: A member of the public who intends to enter into an agreement with a real estate agent to purchase, sell or invest in real estate properties.
+* **Contact Details**: Information including name, phone number, email, and/or other personal details of a client
+* **Command-Line Interface (CLI)**: A text-based user interface that allows users to interact with the system by typing commands.
+* **Address Book**: A digital storage system that manages client contacts and related information.
+* **Property Viewing**: A scheduled meeting between the real estate agent and a client to inspect a property
+* **Deal Status**: The current status of a property transaction which falls into three categories: Pending, Closed or In Negotiation 
 
 --------------------------------------------------------------------------------------------------------------------
 

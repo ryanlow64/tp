@@ -272,29 +272,36 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Product scope
 
-**Target user profile**:
-
+**Target user profile**: Real Estate agents who 
+* need to connect clients (e.g. buyers, sellers, investors) with the best opportunities based on market demands and property locations.
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:
 
+Our product provides the user with easier real estate networking by having an organised contact log that can be managed faster than a typical mouse/GUI driven app. Its intuitive design organises industry contacts and scheduling. Less time would be spent on such administrative tasks, and more could be spent on closing deals and strengthening their network.
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​           | I want to …​                                                                | So that I can…​                                                |
+|----------|-------------------|-----------------------------------------------------------------------------|----------------------------------------------------------------|
+| `* * *`  | Real Estate Agent | add property details                                                        | showcase new properties to potential buyers                    |
+| `* * *`  | Real Estate Agent | remove property details                                                     | keep my available listings relevant                            |
+| `* * `   | Real Estate Agent | edit property details                                                       | update incorrect or outdated information                       |
+| `* * *`  | Real Estate Agent | add client contact details                                                  | easily follow up on leads and maintain relationships           |
+| `* * *`  | Real Estate Agent | remove outdated client contact details                                      | keep my records relevant and clutter-free                      |
+| `* * `   | Real Estate Agent | edit client contact details                                                 | update changes in phone numbers, emails, or client preferences |
+| `* * *`  | Real Estate Agent | add schedule property viewings with clients                                 | efficiently manage my daily appointments                       |
+| `* * *`  | Real Estate Agent | delete scheduled property viewings                                          | free up time for other appointments                            |
+| `* * `   | Real Estate Agent | edit scheduled property viewings                                            | adjust timing when clients request changes                     |
+| `* * `   | Real Estate Agent | update the status of property deals (e.g., pending, closed, in negotiation) | stay updated on ongoing transactions and plan my next actions  |
+| `* * *`  | Real Estate Agent | store all my client contacts in one place                                   | easily access and manage them                                  |
+  |
 
 *{More to be added}*
 

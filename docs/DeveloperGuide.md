@@ -309,36 +309,126 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: Add Client Contact Details**
+
+**Actor:** Real Estate Agent
+**Preconditions:** The system is running.
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  Agent selects the option to add a new contact.
+2.  Agent inputs client details.
+3.  System validates input.
+4.  System stores contact.
+5.  System informs agent the outcome of the addition.
 
-    Use case ends.
+   **Use case ends.**
 
 **Extensions**
 
-* 2a. The list is empty.
+**3a.** If mandatory fields are missing, the system prompts the agent to complete them.
+**3b.** If format of any field is incorrect, the system requests the agent to correct them.
 
-  Use case ends.
+   **Use case resumes at step 3.**
 
-* 3a. The given index is invalid.
+**4a.** If the system fails to store the contact details, and error message is displayed.
 
-    * 3a1. AddressBook shows an error message.
+   **Use case ends.**
 
-      Use case resumes at step 2.
+---
+
+**Use case: Remove Client Contact Details**
+
+**Actor:** Real Estate Agent
+**Preconditions:** The system is running.
+
+**MSS**
+
+1.  Agent searches for a contact.
+2.  Agent selects the contact that needs to be removed.
+3.  System requests for confirmation.
+4.  Agent confirms the deletion.
+5.  System removes the contact.
+6.  System shows confirmation upon successful removal.
+
+   **Use case ends.**
+
+**Extensions**
+
+**4a.** If the agent cancels the deletion, the process terminates without removing the contact.
+
+   **Use case ends.**
+
+**5a.** If the system fails to delete the contact details, and error message is displayed.
+
+   **Use case ends.**
+
+---
+
+**Use case: Add Property Listing Details**
+
+**Actor:** Real Estate Agent
+**Preconditions:** The system is running.
+
+**MSS**
+
+1.  Agent selects the option to add a new property listing.
+2.  Agent inputs property listing details.
+3.  System validates input.
+4.  System stores property listing.
+5.  System informs agent the outcome of the addition.
+
+   **Use case ends.**
+
+**Extensions**
+
+**3a.** If mandatory fields are missing, the system prompts the agent to complete them.
+**3b.** If format of any field is incorrect, the system requests the agent to correct them.
+
+   **Use case resumes at step 3.**
+
+**4a.** If the system fails to store the property listing details, and error message is displayed.
+
+   **Use case ends.**
+
+---
+
+**Use case: Remove Property Listing Details**
+
+**Actor:** Real Estate Agent
+**Preconditions:** The system is running.
+
+**MSS**
+
+1.  Agent searches for a property listing.
+2.  Agent selects the listing that needs to be removed.
+3.  System requests for confirmation.
+4.  Agent confirms the deletion.
+5.  System removes the listing.
+6.  System shows confirmation upon successful removal.
+
+   **Use case ends.**
+
+**Extensions**
+
+**4a.** If the agent cancels the deletion, the process terminates without removing the listing.
+
+   **Use case ends.**
+
+**5a.** If the system fails to delete the property listing, and error message is displayed.
+
+   **Use case ends.**
 
 *{More to be added}*
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. The system must process user commands within 1 second.
+2. The system must be able to run on different operating systems like Windows, MacOS, and Linux.
+3. The system should be able to support up to 10000 contact details, property listings and meeting schedules each without a noticeable degradation in performance.
+4. The system must not lose or corrupt contact data under normal conditions.
+5. The program will not send automated tasks like periodic reminders.
+6. The system should be picked up by a new user quickly.
 
 *{More to be added}*
 

@@ -17,6 +17,10 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.client.ListClientCommand;
+import seedu.address.logic.parser.client.AddClientCommandParser;
+import seedu.address.logic.parser.client.DeleteClientCommandParser;
+import seedu.address.logic.parser.client.EditClientCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -53,14 +57,17 @@ public class AddressBookParser {
 
         switch (commandWord) {
 
+        // TODO: Add more add commands here for each entity
         case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+            return new AddClientCommandParser().parse(arguments);
 
+        // TODO: Add more edit commands here for each entity
         case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+            return new EditClientCommandParser().parse(arguments);
 
+        // TODO: Add more delete commands here for each entity
         case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+            return new DeleteClientCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -68,8 +75,9 @@ public class AddressBookParser {
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
+        // TODO: Add more list commands here for each entity
         case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+            return new ListClientCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

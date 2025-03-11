@@ -455,7 +455,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
 
-3a. Meeting clashes with the existing schedule.
+3a. Meeting clashes with the existing schedule.\
 &nbsp;&nbsp;&nbsp;&nbsp;3a1. System prompts the user to choose a different date or time.\
 &nbsp;&nbsp;&nbsp;&nbsp;3a2. User enters new data.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 2.**
@@ -463,6 +463,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4a. System fails to store the meeting details.\
 &nbsp;&nbsp;&nbsp;&nbsp;4a1. System displays an error message.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
 
 *(More to be added)*
 

@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# REconnect Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -14,6 +14,8 @@
 ## **Acknowledgements**
 
 _{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+
+This project is based on AddressBook Level 3 by SE-EDU, available [here](https://github.com/se-edu/addressbook-level3).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -288,22 +290,35 @@ Our product provides the user with easier real estate networking by having an or
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​           | I want to …​                                                                | So that I can…​                                                |
-|----------|-------------------|-----------------------------------------------------------------------------|----------------------------------------------------------------|
-| `* * *`  | Real Estate Agent | add property details                                                        | showcase new properties to potential buyers                    |
-| `* * *`  | Real Estate Agent | remove property details                                                     | keep my available listings relevant                            |
-| `* * `   | Real Estate Agent | edit property details                                                       | update incorrect or outdated information                       |
-| `* * *`  | Real Estate Agent | add client contact details                                                  | easily follow up on leads and maintain relationships           |
-| `* * *`  | Real Estate Agent | remove outdated client contact details                                      | keep my records relevant and clutter-free                      |
-| `* * `   | Real Estate Agent | edit client contact details                                                 | update changes in phone numbers, emails, or client preferences |
-| `* * *`  | Real Estate Agent | add schedule property viewings with clients                                 | efficiently manage my daily appointments                       |
-| `* * *`  | Real Estate Agent | delete scheduled property viewings                                          | free up time for other appointments                            |
-| `* * `   | Real Estate Agent | edit scheduled property viewings                                            | adjust timing when clients request changes                     |
-| `* * `   | Real Estate Agent | update the status of property deals (e.g., pending, closed, in negotiation) | stay updated on ongoing transactions and plan my next actions  |
-| `* * *`  | Real Estate Agent | store all my client contacts in one place                                   | easily access and manage them                                  |
-  |
+| Priority | As a …​                                    | I want to …​                                                                | So that I can…​                                                               |
+|----------|--------------------------------------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| `* * *`  | real estate agent                          | add property details                                                        | offer more property listings to attract potential buyers                      |
+| `* * *`  | real estate agent                          | remove property details                                                     | keep my available listings relevant                                           |
+| `* * `   | real estate agent                          | edit property details                                                       | update incorrect or outdated information                                      |
+| `* * *`  | real estate agent                          | store all the property details in one place                                 | showcase the list of properties that I have to potential buyers               |
+| `* * *`  | real estate agent                          | add client contact details                                                  | easily follow up on leads and maintain relationships                          |
+| `* * *`  | real estate agent                          | remove outdated client contact details                                      | keep my records relevant and clutter-free                                     |
+| `* * `   | real estate agent                          | edit client contact details                                                 | ensure that phone numbers, emails and other details remain accurate           |
+| `* * *`  | real estate agent                          | store all my client contacts in one place                                   | easily access and manage them                                                 |
+| `* * *`  | real estate agent                          | add scheduled meetings with clients                                         | efficiently manage my daily appointments                                      |
+| `* * *`  | real estate agent                          | delete scheduled meetings                                                   | free up time for other appointments                                           |
+| `* * `   | real estate agent                          | edit scheduled meetings                                                     | adjust timing when clients request changes                                    |
+| `* * *`  | real estate agent                          | be able to track my scheduled meetings                                      | plan my time effectively                                                      |
+| `* * `   | real estate agent                          | update the status of property deals (e.g., pending, closed, in negotiation) | stay updated on ongoing transactions and plan my next actions                 |
+| `*`      | real estate agent                          | filter properties based on location                                         | find properties that match location preferences of clients quickly            |
+| `*`      | real estate agent                          | filter properties based on price                                            | find properties that match clients' budgets quickly                           |
+| `* *`    | busy real estate agent                     | sort my client meetings in chronological order                              | prioritize the upcoming meetings first                                        |
+| `*`      | overbooked and forgetful real estate agent | receive reminders for upcoming meetings                                     | stay on track and be punctual for meetings                                    |
+| `* *`    | real estate agent with many clients        | search clients via tags                                                     | get a truncated list of people who are relevant to the tag                    |
+| `* * *`  | real estate agent                          | search clients by their names                                               | view their contact details easily                                             |
+| `* *`    | cautious real estate agent                 | receive a confirmation when deleting stuff                                  | ensure that the correct information is being deleted                          |
+| `* *`    | careless real estate agent                 | have an undo button for edits and deletes                                   | recover from mistakes and prevent the accidental loss of valuable information |
+| `*`      | real estate agent                          | compare between multiple property listings side by side                     | help clients make better informed decisions                                   |
+| `*`      | performance-driven real estate agent       | generate reports on closed deals                                            | analyze my sales performance and improve my strategies                        |
+| `*`      | real estate agent with many clients        | favourite some clients that I interact with and meet up regularly           | facilitate interaction with clients that I engage frequently                  |    
+| `*`      | organized real estate agent                | archive closed property deals                                               | free up the clutter in the list of deals                                      |
 
-*{More to be added}*
+*(More to be added)*
 
 ### Use cases
 
@@ -311,136 +326,174 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: Add Client Contact Details**
 
-**Actor:** Real Estate Agent
+**Actor:** User (Real Estate Agent)\
 **Preconditions:** The system is running.
 
 **MSS**
 
-1.  Agent selects the option to add a new contact.
-2.  Agent inputs client details.
-3.  System validates input.
-4.  System stores contact.
-5.  System informs agent the outcome of the addition.
+1. User requests to add a new contact and provides contact details.
+2. System validates input.
+3. System stores contact.
+4. System informs user the outcome of the addition.
 
-   **Use case ends.**
+**Use case ends.**
 
 **Extensions**
 
-**3a.** If mandatory fields are missing, the system prompts the agent to complete them.
-**3b.** If format of any field is incorrect, the system requests the agent to correct them.
+2a. System detects missing or incorrect fields.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a1. System prompts the user to complete them.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a2. User enters new data.\
+&nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
 
-   **Use case resumes at step 3.**
-
-**4a.** If the system fails to store the contact details, and error message is displayed.
-
-   **Use case ends.**
+3a. System fails to store the contact details.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
 ---
 
 **Use case: Remove Client Contact Details**
 
-**Actor:** Real Estate Agent
+**Actor:** User (Real Estate Agent)\
 **Preconditions:** The system is running.
 
 **MSS**
 
-1.  Agent searches for a contact.
-2.  Agent selects the contact that needs to be removed.
-3.  System requests for confirmation.
-4.  Agent confirms the deletion.
-5.  System removes the contact.
-6.  System shows confirmation upon successful removal.
+1. User selects the contact to be removed.
+2. System requests user for confirmation.
+3. User confirms the deletion.
+4. System removes the contact.
+5. System informs user the outcome of the deletion.
 
-   **Use case ends.**
+**Use case ends.**
 
 **Extensions**
 
-**4a.** If the agent cancels the deletion, the process terminates without removing the contact.
+3a. User cancels the deletion.\
+**Use case resumes at step 5.**
 
-   **Use case ends.**
-
-**5a.** If the system fails to delete the contact details, and error message is displayed.
-
-   **Use case ends.**
+4a. System fails to delete the contact.\
+&nbsp;&nbsp;&nbsp;&nbsp;4a1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
 ---
 
 **Use case: Add Property Listing Details**
 
-**Actor:** Real Estate Agent
+**Actor:** User (Real Estate Agent)\
 **Preconditions:** The system is running.
 
 **MSS**
 
-1.  Agent selects the option to add a new property listing.
-2.  Agent inputs property listing details.
-3.  System validates input.
-4.  System stores property listing.
-5.  System informs agent the outcome of the addition.
+1. User requests to add a new property listing and provides property listing details.
+2. System validates input.
+3. System stores property listing.
+4. System informs user the outcome of the addition.
 
-   **Use case ends.**
+**Use case ends.**
 
 **Extensions**
 
-**3a.** If mandatory fields are missing, the system prompts the agent to complete them.
-**3b.** If format of any field is incorrect, the system requests the agent to correct them.
+2a. System detects missing or incorrect fields.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a1. System prompts the user to complete them.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a2. User enters new data.\
+&nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
 
-   **Use case resumes at step 3.**
-
-**4a.** If the system fails to store the property listing details, and error message is displayed.
-
-   **Use case ends.**
+3a. System fails to store the property listing details.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
 ---
 
 **Use case: Remove Property Listing Details**
 
-**Actor:** Real Estate Agent
+**Actor:** User (Real Estate Agent)\
 **Preconditions:** The system is running.
 
 **MSS**
 
-1.  Agent searches for a property listing.
-2.  Agent selects the listing that needs to be removed.
-3.  System requests for confirmation.
-4.  Agent confirms the deletion.
-5.  System removes the listing.
-6.  System shows confirmation upon successful removal.
+1. User selects the property listing to be removed.
+2. System requests user for confirmation.
+3. User confirms the deletion.
+4. System removes the listing.
+5. System informs user the outcome of the deletion.
 
-   **Use case ends.**
+**Use case ends.**
 
 **Extensions**
 
-**4a.** If the agent cancels the deletion, the process terminates without removing the listing.
+3a. User cancels the deletion.\
+**Use case resumes at step 5.**
 
-   **Use case ends.**
+4a. System fails to delete the property listing.\
+&nbsp;&nbsp;&nbsp;&nbsp;4a1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
-**5a.** If the system fails to delete the property listing, and error message is displayed.
+---
 
-   **Use case ends.**
+**Use case: Add Client Meeting**
 
-*{More to be added}*
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to add a new meeting and provides meeting details.
+2. System validates input.
+3. System checks for clashes in schedule.
+4. System adds the meeting to the schedule.
+5. System informs user the outcome of the addition.
+
+**Use case ends.**
+
+**Extensions**
+
+2a. System detects missing or incorrect fields.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a1. System prompts the user to complete them.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a2. User enters new data.\
+&nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
+
+3a. Meeting clashes with the existing schedule.
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System prompts the user to choose a different date or time.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a2. User enters new data.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 2.**
+
+4a. System fails to store the meeting details.\
+&nbsp;&nbsp;&nbsp;&nbsp;4a1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+*(More to be added)*
 
 ### Non-Functional Requirements
 
-1. The system must process user commands within 1 second.
-2. The system must be able to run on different operating systems like Windows, MacOS, and Linux.
+1. The system must process all user commands within 2 seconds.
+2. The system must be able to run on different operating systems like Linux, Windows and MacOS.
 3. The system should be able to support up to 10000 contact details, property listings and meeting schedules each without a noticeable degradation in performance.
 4. The system must not lose or corrupt contact data under normal conditions.
 5. The program will not send automated tasks like periodic reminders.
-6. The system should be picked up by a new user quickly.
+6. The system should be intuitive so that a new user can quickly learn how to use it.
 
-*{More to be added}*
+*(More to be added)*
 
 ### Glossary
 
-* **Real Estate Agent**: A professional responsible for managing client contacts and property transactions.
-* **Client**: A member of the public who intends to enter into an agreement with a real estate agent to purchase, sell or invest in real estate properties.
-* **Contact Details**: Information including name, phone number, email, and/or other personal details of a client
-* **Command-Line Interface (CLI)**: A text-based user interface that allows users to interact with the system by typing commands.
-* **Address Book**: A digital storage system that manages client contacts and related information.
-* **Property Viewing**: A scheduled meeting between the real estate agent and a client to inspect a property
-* **Deal Status**: The current status of a property transaction which falls into three categories: Pending, Closed or In Negotiation 
+**Address Book**: A digital storage system that manages client contacts and related information.
+
+**Agent**: A licensed professional responsible for managing client contacts and facilitate real estate transactions.
+
+**Client**: Anyone who intends to buy, sell or invest in real estate that interacts with an agent regarding their prospective real estate transactions.
+
+**Contact Details**: Information including name, phone number, email, and/or other personal details of a client.
+
+**Command-Line Interface (CLI)**: A text-based user interface that allows users to interact with the system by typing commands.
+
+**Deal Status**: The current status of a property transaction which falls into three categories: Pending, Closed or In Negotiation.
+
+**Property Listing**: A collection of information about a property available for sale.
+
+**Property Viewing**: A scheduled meeting between the real estate agent and a client to inspect a property.
 
 --------------------------------------------------------------------------------------------------------------------
 

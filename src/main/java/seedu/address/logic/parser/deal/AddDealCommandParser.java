@@ -55,9 +55,13 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
         if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
             String statusString = argMultimap.getValue(PREFIX_STATUS).get().toUpperCase();
             try {
+                // Convert to the format expected by the enum (e.g., "in_negotiation" to "IN_NEGOTIATION")
+                if (statusString.equals("IN NEGOTIATION")) {
+                    statusString = "IN_NEGOTIATION";
+                }
                 status = DealStatus.valueOf(statusString);
             } catch (IllegalArgumentException e) {
-                throw new ParseException("Invalid status: Must be one of 'pending', 'closed', 'in negotiation'.");
+                throw new ParseException("Invalid status: Must be one of 'PENDING', 'CLOSED', 'IN_NEGOTIATION'.");
             }
         }
 

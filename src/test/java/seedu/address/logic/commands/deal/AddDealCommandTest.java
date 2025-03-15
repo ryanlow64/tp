@@ -23,6 +23,7 @@ import seedu.address.model.client.Client;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
+import seedu.address.testutil.ClientBuilder;
 
 public class AddDealCommandTest {
 
@@ -152,7 +153,13 @@ public class AddDealCommandTest {
         @Override
         public ObservableList<Client> getFilteredClientList() {
             // Return a list with enough elements to pass the index checks
-            return FXCollections.observableArrayList();
+            return FXCollections.observableArrayList(
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build()
+            );
         }
         @Override
         public ObservableList<Deal> getFilteredDealList() {
@@ -167,15 +174,17 @@ public class AddDealCommandTest {
         public boolean hasDeal(Deal deal) {
             return false;
         }
-        
         @Override
         public ObservableList<Client> getFilteredClientList() {
             // Return a list with enough elements to pass the index checks
             return FXCollections.observableArrayList(
-                new Client(), new Client(), new Client(), new Client(), new Client()
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build()
             );
         }
-        
         @Override
         public ObservableList<Deal> getFilteredDealList() {
             return FXCollections.observableArrayList();
@@ -186,7 +195,6 @@ public class AddDealCommandTest {
      */
     private class ModelStubWithDealAndClients extends ModelStub {
         private final Deal deal;
-        
         ModelStubWithDealAndClients(Deal deal) {
             requireNonNull(deal);
             this.deal = deal;
@@ -197,15 +205,17 @@ public class AddDealCommandTest {
             requireNonNull(deal);
             return this.deal.equals(deal);
         }
-        
         @Override
         public ObservableList<Client> getFilteredClientList() {
             // Return a list with enough elements to pass the index checks
             return FXCollections.observableArrayList(
-                new Client(), new Client(), new Client(), new Client(), new Client()
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build()
             );
         }
-        
         @Override
         public ObservableList<Deal> getFilteredDealList() {
             return FXCollections.observableArrayList(deal);
@@ -234,15 +244,17 @@ public class AddDealCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
-        
         @Override
         public ObservableList<Client> getFilteredClientList() {
             // Return a list with enough elements to pass the index checks
             return FXCollections.observableArrayList(
-                new Client(), new Client(), new Client(), new Client(), new Client()
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build(),
+                new ClientBuilder().build()
             );
         }
-        
         @Override
         public ObservableList<Deal> getFilteredDealList() {
             return FXCollections.observableArrayList(dealsAdded);

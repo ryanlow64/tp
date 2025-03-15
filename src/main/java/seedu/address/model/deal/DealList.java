@@ -46,12 +46,14 @@ public class DealList {
             return true;
         }
 
-        if (!(other instanceof DealList otherDealList)) {
+        if (!(other instanceof DealList)) {
             return false;
         }
 
+        DealList otherDealList = (DealList) other;
         return internalList.equals(otherDealList.internalList);
     }
+
     @Override
     public int hashCode() {
         return internalList.hashCode();

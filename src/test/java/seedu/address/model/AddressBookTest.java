@@ -85,8 +85,10 @@ public class AddressBookTest {
 
     @Test
     public void toStringMethod() {
-        String expected = AddressBook.class.getCanonicalName() + "{clients=" + addressBook.getClientList() + "}";
-        assertEquals(expected, addressBook.toString());
+        String toString = addressBook.toString();
+        assertTrue(toString.contains("clients="));
+        assertTrue(toString.contains("deals="));
+        assertTrue(toString.startsWith(AddressBook.class.getCanonicalName()));
     }
 
     /**

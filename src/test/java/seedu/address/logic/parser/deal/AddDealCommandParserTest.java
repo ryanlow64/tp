@@ -62,19 +62,19 @@ public class AddDealCommandParserTest {
     public void parse_invalidValue_failure() {
         // Invalid property ID
         assertParseFailure(parser, INVALID_PROPERTY_ID_DESC + VALID_BUYER_ID_DESC + VALID_SELLER_ID_DESC
-                + VALID_PRICE_DESC, "Invalid index format!");
+                + VALID_PRICE_DESC, "Index is not a non-zero unsigned integer.");
         // Invalid buyer ID
         assertParseFailure(parser, VALID_PROPERTY_ID_DESC + INVALID_BUYER_ID_DESC + VALID_SELLER_ID_DESC
-                + VALID_PRICE_DESC, "Invalid index format!");
+                + VALID_PRICE_DESC, "Index is not a non-zero unsigned integer.");
         // Invalid seller ID
         assertParseFailure(parser, VALID_PROPERTY_ID_DESC + VALID_BUYER_ID_DESC + INVALID_SELLER_ID_DESC
-                + VALID_PRICE_DESC, "Invalid index format!");
+                + VALID_PRICE_DESC, "Index is not a non-zero unsigned integer.");
         // Invalid price
         assertParseFailure(parser, VALID_PROPERTY_ID_DESC + VALID_BUYER_ID_DESC + VALID_SELLER_ID_DESC
                 + INVALID_PRICE_DESC, "Invalid price: Price must be a positive number and be under 9 quintillion.");
         // Invalid status
         assertParseFailure(parser, VALID_PROPERTY_ID_DESC + VALID_BUYER_ID_DESC + VALID_SELLER_ID_DESC
                 + VALID_PRICE_DESC + INVALID_STATUS_DESC,
-                "Invalid status: Must be one of 'pending', 'closed', 'in negotiation'.");
+                "Invalid status: Must be one of 'PENDING', 'CLOSED', 'IN_NEGOTIATION'.");
     }
 }

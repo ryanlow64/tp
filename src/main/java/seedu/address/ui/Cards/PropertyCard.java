@@ -48,8 +48,8 @@ public class PropertyCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(property.getPropertyName().fullName);
         address.setText(property.getAddress().value);
-        price.setText(property.getPrice().value.toString());
-        size.setText(property.getSize().map(size -> size.value.toString()).orElse(""));
+        price.setText(property.getPrice().map(price -> price.price).orElse(""));
+        size.setText(property.getSize().map(size -> size.size).orElse(""));
         description.setText(property.getDescription().orElse(""));
     }
 }

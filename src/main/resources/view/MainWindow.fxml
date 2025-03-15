@@ -11,49 +11,58 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.SeparatorMenuItem?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="Address App" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+         title="REconnect" minWidth="900.0" minHeight="600.0" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
   <scene>
     <Scene>
       <stylesheets>
-        <URL value="@DarkTheme.css" />
+        <URL value="@LightTheme.css" />
         <URL value="@Extensions.css" />
       </stylesheets>
+      <VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #EBF5FB;">
+        <padding>
+          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+        </padding>
+        <VBox>
+          <MenuBar style="-fx-background-color: #60c6d6;" VBox.vgrow="NEVER">
+            <menus>
+              <Menu mnemonicParsing="false" text="File">
+                <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
+              </Menu>
+              <Menu mnemonicParsing="false" text="Help">
+                <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
+              </Menu>
+            </menus>
+            <VBox.margin>
+              <Insets/>
+            </VBox.margin>
+          </MenuBar>
 
-      <VBox>
-        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-          <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-          </Menu>
-        </MenuBar>
+          <VBox fx:id="clientList" style="-fx-background-color: #EBF5FB;" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
+            <padding>
+              <Insets top="5" right="5" bottom="5" left="5"/>
+            </padding>
+            <StackPane fx:id="clientListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+          </VBox>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+          <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" style="-fx-background-color: #EBF5FB;"
+                     minHeight="100" prefHeight="100" maxHeight="100">
+            <padding>
+              <Insets top="2" right="4" bottom="2" left="4"/>
+            </padding>
+          </StackPane>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+          <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" style="-fx-background-color: #EBF5FB;">
+            <padding>
+              <Insets top="2" right="4" bottom="2" left="4"/>
+            </padding>
+          </StackPane>
 
-        <VBox fx:id="clientList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="clientListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
         </VBox>
-
-        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>
     </Scene>
   </scene>

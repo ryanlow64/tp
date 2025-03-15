@@ -1,9 +1,9 @@
 package seedu.address.model.schedule;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
-import seedu.address.commons.core.index.Index;
+import seedu.address.model.client.ClientName;
+import seedu.address.model.property.PropertyName;
 
 /**
  * Represents a Schedule in the address book.
@@ -13,9 +13,24 @@ import seedu.address.commons.core.index.Index;
  */
 public class Schedule {
 
-    private Index propertyID;
-    private Index clientID;
+    private PropertyName propertyName; // store property name instead of property index
+    private ClientName clientName; // store client name instead of client index
     private LocalDateTime dateTime;
-    private Optional<Note> note;
+    private Note note; // make Note compulsory as it will be used as the title of the schedule card
 
+    public PropertyName getPropertyName() {
+        return propertyName;
+    }
+
+    public ClientName getClientName() {
+        return clientName;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public Note getNote() {
+        return note;
+    }
 }

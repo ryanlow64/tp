@@ -8,7 +8,11 @@ package seedu.address.model.property;
  */
 public class Size {
 
-    private int value;
+    public final Integer value;
+
+    public Size(int value) {
+        this.value = value;
+    }
 
     /**
      * Returns true if a given string is a valid name.

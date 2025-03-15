@@ -19,4 +19,23 @@ public class Property {
     private Optional<Size> size;
     private Optional<String> description;
 
+    public PropertyName getPropertyName() {
+        return propertyName;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public Price getPrice() {
+        return price;
+    }
+
+    public Optional<Size> getSize() {
+        return size;
+    }
+
+    public Optional<String> getDescription() {
+        return description;
+    }
 }

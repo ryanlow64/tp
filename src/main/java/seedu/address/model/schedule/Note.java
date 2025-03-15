@@ -8,5 +8,9 @@ package seedu.address.model.schedule;
  */
 public class Note {
 
-    private String note;
+    public final String note;
+
+    public Note(String note) {
+        this.note = note;
+    }
 }

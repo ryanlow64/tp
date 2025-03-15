@@ -8,7 +8,11 @@ package seedu.address.model.commons;
  */
 public class Price {
 
-    private long value;
+    public final Long value;
+
+    public Price(long value) {
+        this.value = value;
+    }
 
     /**
      * Returns true if a given string is a valid price.

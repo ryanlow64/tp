@@ -73,7 +73,7 @@ public class AddDealCommand extends Command {
         requireNonNull(model);
 
         // Validate property ID exists
-        // For now, we'll skip property validation until property list is implemented
+        // Skip property validation for now until property list is implemented
         // TODO: Update this when property list is implemented
         // if (propertyId.getZeroBased() >= model.getFilteredPropertyList().size()) {
         //     throw new CommandException(MESSAGE_INVALID_PROPERTY_ID);

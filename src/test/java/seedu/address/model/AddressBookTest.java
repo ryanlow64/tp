@@ -103,6 +103,11 @@ public class AddressBookTest {
         public ObservableList<Client> getClientList() {
             return clients;
         }
+        
+        @Override
+        public ObservableList<seedu.address.model.deal.Deal> getDealList() {
+            return FXCollections.observableArrayList();
+        }
     }
 
 }

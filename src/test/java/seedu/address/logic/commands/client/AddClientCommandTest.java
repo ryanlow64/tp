@@ -161,6 +161,21 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
         public void updateFilteredClientList(Predicate<Client> predicate) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public boolean hasDeal(seedu.address.model.deal.Deal deal) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addDeal(seedu.address.model.deal.Deal deal) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public javafx.collections.ObservableList<seedu.address.model.deal.Deal> getFilteredDealList() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

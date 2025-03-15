@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -13,6 +14,10 @@ import seedu.address.model.client.ClientName;
 import seedu.address.model.client.Email;
 import seedu.address.model.client.Phone;
 import seedu.address.model.commons.Address;
+import seedu.address.model.property.Description;
+import seedu.address.model.property.Price;
+import seedu.address.model.property.PropertyName;
+import seedu.address.model.property.Size;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -120,5 +125,60 @@ public class ParserUtil {
             tagSet.add(parseTag(tagClientName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String propertyName} into a {@code propertyName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code propertyName} is invalid.
+     */
+    public static PropertyName parsePropertyName(String propertyName) throws ParseException {
+        requireNonNull(propertyName);
+        String trimmedPropertyName = propertyName.trim();
+        if (!PropertyName.isValidPropertyName(trimmedPropertyName)) {
+            throw new ParseException(PropertyName.MESSAGE_CONSTRAINTS);
+        }
+        return new PropertyName(trimmedPropertyName);
+    }
+
+    /**
+     * Parses a {@code String price} into a {@code Price}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code price} is invalid.
+     */
+    public static Optional<Price> parsePrice(String price) throws ParseException {
+        if (!Price.isValidPrice(price)) {
+            throw new ParseException(Price.MESSAGE_CONSTRAINTS);
+        }
+        return Optional.of(new Price(price));
+    }
+
+    /**
+     * Parses a {@code String size} into a {@code size}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code size} is invalid.
+     */
+    public static Optional<Size> parseSize(String size) throws ParseException {
+        if (!Size.isValidSize(size)) {
+            throw new ParseException(Size.MESSAGE_CONSTRAINTS);
+        }
+        return Optional.of(new Size(size));
+    }
+
+    /**
+     * Parses a {@code String description} into an {@code Description}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code description} is invalid.
+     */
+    public static Optional<String> parseDescription(String description) throws ParseException {
+        String trimmedDescription = description.trim();
+        if (!Description.isValidDescription(trimmedDescription)) {
+            throw new ParseException(Description.MESSAGE_CONSTRAINTS);
+        }
+        return Optional.of(trimmedDescription);
     }
 }

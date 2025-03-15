@@ -74,11 +74,10 @@ public class Deal {
             return true;
         }
 
-        if (!(other instanceof Deal)) {
+        if (!(other instanceof Deal otherDeal)) {
             return false;
         }
 
-        Deal otherDeal = (Deal) other;
         return propertyId.equals(otherDeal.propertyId)
                 && buyerId.equals(otherDeal.buyerId)
                 && sellerId.equals(otherDeal.sellerId);

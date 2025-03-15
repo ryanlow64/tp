@@ -31,4 +31,4 @@ public class PriceTest {
         assertTrue(Price.isValidPrice("1000000000000")); // trillion
         assertTrue(Price.isValidPrice("8999999999999999999")); // just under 9 quintillion
     }
-} 
+}

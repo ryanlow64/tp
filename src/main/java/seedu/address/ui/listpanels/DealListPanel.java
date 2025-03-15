@@ -1,4 +1,4 @@
-package seedu.address.ui.ListPanels;
+package seedu.address.ui.listpanels;
 
 import java.util.logging.Logger;
 
@@ -9,32 +9,33 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.deal.Deal;
-import seedu.address.ui.Cards.DealCard;
 import seedu.address.ui.UiPart;
+import seedu.address.ui.cards.DealCard;
+
 
 /**
  * Panel containing the list of deals.
  */
 public class DealListPanel extends UiPart<Region> {
-    private static final String FXML = "ClientListPanel.fxml"; // Reuse the client list panel FXML for now
+    private static final String FXML = "DealListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(DealListPanel.class);
 
     @FXML
-    private ListView<Deal> clientListView; // This ID must match the ID in the FXML file
+    private ListView<Deal> dealListView;
 
     /**
      * Creates a {@code DealListPanel} with the given {@code ObservableList}.
      */
     public DealListPanel(ObservableList<Deal> dealList) {
         super(FXML);
-        clientListView.setItems(dealList);
-        clientListView.setCellFactory(listView -> new DealListViewCell());
+        dealListView.setItems(dealList);
+        dealListView.setCellFactory(listView -> new DealListViewCell());
     }
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Deal} using a {@code DealCard}.
      */
-    class DealListViewCell extends ListCell<Deal> {
+    static class DealListViewCell extends ListCell<Deal> {
         @Override
         protected void updateItem(Deal deal, boolean empty) {
             super.updateItem(deal, empty);

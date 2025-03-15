@@ -37,7 +37,8 @@ public class AddDealCommand extends Command {
             + PREFIX_PRICE + "690000 "
             + PREFIX_STATUS + "closed";
 
-    public static final String MESSAGE_SUCCESS = "New deal added successfully: Property ID %1$d, Buyer ID %2$d, Seller ID %3$d, Price $%4$d, Status %5$s";
+    public static final String MESSAGE_SUCCESS = "New deal added successfully:"
+            + " Property ID %1$d, Buyer ID %2$d, Seller ID %3$d, Price $%4$d, Status %5$s";
     public static final String MESSAGE_DUPLICATE_DEAL = "This deal already exists in the address book";
     public static final String MESSAGE_INVALID_PROPERTY_ID = "Invalid property ID.";
     public static final String MESSAGE_INVALID_BUYER_ID = "Invalid buyer ID.";
@@ -60,7 +61,6 @@ public class AddDealCommand extends Command {
         requireNonNull(sellerId);
         requireNonNull(price);
         requireNonNull(status);
-        
         this.propertyId = propertyId;
         this.buyerId = buyerId;
         this.sellerId = sellerId;
@@ -74,7 +74,7 @@ public class AddDealCommand extends Command {
 
         // Validate property ID exists
         // For now, we'll skip property validation until property list is implemented
-        // TODO: Update thiswhen property list is implemented
+        // TODO: Update this when property list is implemented
         // if (propertyId.getZeroBased() >= model.getFilteredPropertyList().size()) {
         //     throw new CommandException(MESSAGE_INVALID_PROPERTY_ID);
         // }
@@ -88,7 +88,6 @@ public class AddDealCommand extends Command {
         if (sellerId.getZeroBased() >= model.getFilteredClientList().size()) {
             throw new CommandException(MESSAGE_INVALID_SELLER_ID);
         }
-        
         // Validate that buyer and seller are not the same person
         if (buyerId.equals(sellerId)) {
             throw new CommandException(MESSAGE_SAME_BUYER_SELLER);
@@ -99,21 +98,19 @@ public class AddDealCommand extends Command {
         if (model.hasDeal(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_DEAL);
         }
-        
         // Check if the property is already involved in another deal
         boolean propertyAlreadyInDeal = model.getFilteredDealList().stream()
                 .anyMatch(existingDeal -> existingDeal.getPropertyId().equals(propertyId));
-        
         if (propertyAlreadyInDeal) {
             throw new CommandException(MESSAGE_PROPERTY_ALREADY_IN_DEAL);
         }
 
         model.addDeal(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, 
-                propertyId.getOneBased(), 
-                buyerId.getOneBased(), 
-                sellerId.getOneBased(), 
-                price.value, 
+        return new CommandResult(String.format(MESSAGE_SUCCESS,
+                propertyId.getOneBased(),
+                buyerId.getOneBased(),
+                sellerId.getOneBased(),
+                price.value,
                 status));
     }
 
@@ -123,15 +120,14 @@ public class AddDealCommand extends Command {
             return true;
         }
 
-        if (!(other instanceof AddDealCommand)) {
+        if (!(other instanceof AddDealCommand otherAddDealCommand)) {
             return false;
         }
 
-        AddDealCommand otherAddDealCommand = (AddDealCommand) other;
         return propertyId.equals(otherAddDealCommand.propertyId)
                 && buyerId.equals(otherAddDealCommand.buyerId)
                 && sellerId.equals(otherAddDealCommand.sellerId)
                 && price.value.equals(otherAddDealCommand.price.value)
                 && status.equals(otherAddDealCommand.status);
     }
-} 
+}

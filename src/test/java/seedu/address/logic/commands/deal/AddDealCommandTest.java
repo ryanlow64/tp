@@ -3,8 +3,8 @@ package seedu.address.logic.commands.deal;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,18 +39,17 @@ public class AddDealCommandTest {
         Index sellerId = Index.fromOneBased(2);
         Price price = new Price(500000);
         DealStatus status = DealStatus.PENDING;
-        
         Deal validDeal = new Deal(propertyId, buyerId, sellerId, price, status);
 
         CommandResult commandResult = new AddDealCommand(propertyId, buyerId, sellerId, price, status)
                 .execute(modelStub);
 
-        assertEquals(String.format(AddDealCommand.MESSAGE_SUCCESS, 
-                propertyId.getOneBased(), 
-                buyerId.getOneBased(), 
-                sellerId.getOneBased(), 
-                price.value, 
-                status), 
+        assertEquals(String.format(AddDealCommand.MESSAGE_SUCCESS,
+                propertyId.getOneBased(),
+                buyerId.getOneBased(),
+                sellerId.getOneBased(),
+                price.value,
+                status),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validDeal), modelStub.dealsAdded);
     }
@@ -62,7 +61,6 @@ public class AddDealCommandTest {
         Index sellerId = Index.fromOneBased(2);
         Price price = new Price(500000);
         DealStatus status = DealStatus.PENDING;
-        
         Deal validDeal = new Deal(propertyId, buyerId, sellerId, price, status);
         AddDealCommand addDealCommand = new AddDealCommand(propertyId, buyerId, sellerId, price, status);
         ModelStub modelStub = new ModelStubWithDeal(validDeal);
@@ -78,7 +76,6 @@ public class AddDealCommandTest {
         Index sellerId = Index.fromOneBased(1); // Same as buyer
         Price price = new Price(500000);
         DealStatus status = DealStatus.PENDING;
-        
         AddDealCommand addDealCommand = new AddDealCommand(propertyId, buyerId, sellerId, price, status);
         ModelStub modelStub = new ModelStubWithClients();
 
@@ -93,13 +90,10 @@ public class AddDealCommandTest {
         Index sellerId = Index.fromOneBased(2);
         Price price = new Price(500000);
         DealStatus status = DealStatus.PENDING;
-        
         Deal existingDeal = new Deal(propertyId, buyerId, sellerId, price, status);
-        
         // Different buyer and seller, but same property
         Index newBuyerId = Index.fromOneBased(3);
         Index newSellerId = Index.fromOneBased(4);
-        
         AddDealCommand addDealCommand = new AddDealCommand(propertyId, newBuyerId, newSellerId, price, status);
         ModelStub modelStub = new ModelStubWithDealAndClients(existingDeal);
 
@@ -114,13 +108,11 @@ public class AddDealCommandTest {
         Index sellerId1 = Index.fromOneBased(2);
         Price price1 = new Price(500000);
         DealStatus status1 = DealStatus.PENDING;
-        
         Index propertyId2 = Index.fromOneBased(2);
         Index buyerId2 = Index.fromOneBased(3);
         Index sellerId2 = Index.fromOneBased(4);
         Price price2 = new Price(600000);
         DealStatus status2 = DealStatus.CLOSED;
-        
         AddDealCommand addDealCommand1 = new AddDealCommand(propertyId1, buyerId1, sellerId1, price1, status1);
         AddDealCommand addDealCommand2 = new AddDealCommand(propertyId2, buyerId2, sellerId2, price2, status2);
 
@@ -157,19 +149,16 @@ public class AddDealCommandTest {
             requireNonNull(deal);
             return this.deal.equals(deal);
         }
-        
         @Override
         public ObservableList<Client> getFilteredClientList() {
             // Return a list with enough elements to pass the index checks
             return FXCollections.observableArrayList();
         }
-        
         @Override
         public ObservableList<Deal> getFilteredDealList() {
             return FXCollections.observableArrayList(deal);
         }
     }
-    
     /**
      * A Model stub that contains clients but no deals.
      */
@@ -182,7 +171,9 @@ public class AddDealCommandTest {
         @Override
         public ObservableList<Client> getFilteredClientList() {
             // Return a list with enough elements to pass the index checks
-            return FXCollections.observableArrayList();
+            return FXCollections.observableArrayList(
+                new Client(), new Client(), new Client(), new Client(), new Client()
+            );
         }
         
         @Override
@@ -190,7 +181,6 @@ public class AddDealCommandTest {
             return FXCollections.observableArrayList();
         }
     }
-    
     /**
      * A Model stub that contains both clients and a deal.
      */
@@ -211,7 +201,9 @@ public class AddDealCommandTest {
         @Override
         public ObservableList<Client> getFilteredClientList() {
             // Return a list with enough elements to pass the index checks
-            return FXCollections.observableArrayList();
+            return FXCollections.observableArrayList(
+                new Client(), new Client(), new Client(), new Client(), new Client()
+            );
         }
         
         @Override
@@ -246,7 +238,9 @@ public class AddDealCommandTest {
         @Override
         public ObservableList<Client> getFilteredClientList() {
             // Return a list with enough elements to pass the index checks
-            return FXCollections.observableArrayList();
+            return FXCollections.observableArrayList(
+                new Client(), new Client(), new Client(), new Client(), new Client()
+            );
         }
         
         @Override
@@ -254,4 +248,4 @@ public class AddDealCommandTest {
             return FXCollections.observableArrayList(dealsAdded);
         }
     }
-} 
+}

@@ -14,7 +14,6 @@ import seedu.address.model.deal.Deal;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Client> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
-    
     /** {@code Predicate} that always evaluate to true */
     Predicate<Deal> PREDICATE_SHOW_ALL_DEALS = unused -> true;
 

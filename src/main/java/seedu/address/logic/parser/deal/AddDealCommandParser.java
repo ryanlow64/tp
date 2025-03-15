@@ -32,7 +32,7 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
      */
     public AddDealCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER, 
+                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER,
                         PREFIX_PRICE, PREFIX_STATUS);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE)
@@ -43,7 +43,6 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
         Index propertyId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_PROPERTY_ID).get());
         Index buyerId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_BUYER).get());
         Index sellerId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_SELLER).get());
-        
         // Parse price
         String priceString = argMultimap.getValue(PREFIX_PRICE).get();
         if (!Price.isValidPrice(priceString)) {
@@ -51,7 +50,6 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
         }
         long priceValue = Long.parseLong(priceString);
         Price price = new Price(priceValue);
-        
         // Parse status (optional)
         DealStatus status = DealStatus.PENDING; // Default status
         if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
@@ -73,4 +71,4 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-} 
+}

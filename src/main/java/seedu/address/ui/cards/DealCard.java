@@ -1,4 +1,4 @@
-package seedu.address.ui.Cards;
+package seedu.address.ui.cards;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -37,11 +37,10 @@ public class DealCard extends UiPart<Region> {
         this.deal = deal;
         id.setText(displayedIndex + ". ");
         name.setText("DEAL: Property #" + deal.getPropertyId().getOneBased());
-        phone.setText("Buyer: Client #" + deal.getBuyerId().getOneBased() + 
-                      " | Seller: Client #" + deal.getSellerId().getOneBased());
+        phone.setText("Buyer: Client #" + deal.getBuyerId().getOneBased()
+                + " | Seller: Client #" + deal.getSellerId().getOneBased());
         address.setText("Price: $" + deal.getPrice().value);
         email.setText("Status: " + deal.getStatus());
-        
         // Make the card visually separaate for now
         cardPane.setStyle("-fx-background-color: #f0f8ff;"); // Light blue background
     }
@@ -63,4 +62,4 @@ public class DealCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && deal.equals(card.deal);
     }
-} 
+}

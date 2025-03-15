@@ -1,6 +1,5 @@
 package seedu.address.model.deal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -26,7 +25,7 @@ public class DealList {
     public List<Deal> asUnmodifiableList() {
         return List.copyOf(internalList);
     }
-    
+
     /**
      * Returns an unmodifiable observable list of deals.
      */
@@ -40,23 +39,21 @@ public class DealList {
     public boolean contains(Deal toCheck) {
         return internalList.stream().anyMatch(toCheck::equals);
     }
-    
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
         }
 
-        if (!(other instanceof DealList)) {
+        if (!(other instanceof DealList otherDealList)) {
             return false;
         }
 
-        DealList otherDealList = (DealList) other;
         return internalList.equals(otherDealList.internalList);
     }
-    
     @Override
     public int hashCode() {
         return internalList.hashCode();
     }
-} 
+}

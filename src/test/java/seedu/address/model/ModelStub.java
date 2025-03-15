@@ -81,7 +81,6 @@ public class ModelStub implements Model {
     public void updateFilteredClientList(Predicate<Client> predicate) {
         throw new AssertionError("This method should not be called.");
     }
-    
     @Override
     public boolean hasDeal(Deal deal) {
         throw new AssertionError("This method should not be called.");
@@ -96,4 +95,4 @@ public class ModelStub implements Model {
     public ObservableList<Deal> getFilteredDealList() {
         throw new AssertionError("This method should not be called.");
     }
-} 
+}

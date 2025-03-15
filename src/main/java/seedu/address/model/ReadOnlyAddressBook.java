@@ -14,7 +14,6 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate clients.
      */
     ObservableList<Client> getClientList();
-    
     /**
      * Returns an unmodifiable view of the deals list.
      */

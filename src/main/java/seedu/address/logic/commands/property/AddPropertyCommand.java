@@ -37,7 +37,7 @@ public class AddPropertyCommand extends AddCommand<Property> {
             + PREFIX_DESCRIPTION + "Spacious 4-bedroom home";
 
     public static final String MESSAGE_SUCCESS = "New property added: %1$s";
-    public static final String MESSAGE_DUPLICATE_CLIENT = "This property already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PROPERTY = "This property already exists in the address book";
 
     /**
      * Creates an AddCommand to add the specified {@code Property}
@@ -51,7 +51,7 @@ public class AddPropertyCommand extends AddCommand<Property> {
         requireNonNull(model);
 
         if (model.hasProperty(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_CLIENT);
+            throw new CommandException(MESSAGE_DUPLICATE_PROPERTY);
         }
 
         model.addProperty(toAdd);

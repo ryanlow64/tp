@@ -13,7 +13,7 @@ import seedu.address.model.property.Property;
  */
 public class ListPropertyCommand extends ListCommand<Property> {
 
-    public static final String COMMAND_WORD = "list_properties";
+    public static final String COMMAND_WORD = "list_property";
 
     public static final String MESSAGE_SUCCESS = "Listed all properties";
 

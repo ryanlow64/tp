@@ -3,6 +3,7 @@ package seedu.address.model.schedule;
 import java.time.LocalDateTime;
 
 import seedu.address.model.client.ClientName;
+import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 
 /**
@@ -17,6 +18,13 @@ public class Schedule {
     private ClientName clientName; // store client name instead of client index
     private LocalDateTime dateTime;
     private Note note; // make Note compulsory as it will be used as the title of the schedule card
+
+    /**
+     * TODO: Implement this method
+     */
+    public boolean isSameSchedule(Schedule otherSchedule) {
+        return false;
+    }
 
     public PropertyName getPropertyName() {
         return propertyName;

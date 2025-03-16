@@ -1,4 +1,4 @@
-package seedu.address.ui.ListPanels;
+package seedu.address.ui.listpanels;
 
 import java.util.logging.Logger;
 
@@ -9,7 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.property.Property;
-import seedu.address.ui.Cards.PropertyCard;
+import seedu.address.ui.cards.PropertyCard;
 import seedu.address.ui.UiPart;
 
 /**

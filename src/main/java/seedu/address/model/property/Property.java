@@ -19,6 +19,20 @@ public class Property {
     private Optional<Size> size;
     private Optional<String> description;
 
+    /**
+     * Returns true if both properties have the same propertyName.
+     * This defines a weaker notion of equality between two properties.
+     * TODO: Modify this to check for other fields if necessary.
+     */
+    public boolean isSameProperty(Property otherProperty) {
+        if (otherProperty == this) {
+            return true;
+        }
+
+        return otherProperty != null
+            && otherProperty.getPropertyName().equals(getPropertyName());
+    }
+
     public PropertyName getPropertyName() {
         return propertyName;
     }

@@ -42,12 +42,12 @@
             </VBox.margin>
           </MenuBar>
 
-          <VBox fx:id="clientList" style="-fx-background-color: #EBF5FB;" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
+          <SplitPane fx:id="listPlanesPlaceholder" dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true"
+                     style="-fx-background-color: #EBF5FB;" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <padding>
               <Insets top="5" right="5" bottom="5" left="5"/>
             </padding>
-            <StackPane fx:id="clientListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-          </VBox>
+          </SplitPane>
 
           <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" style="-fx-background-color: #EBF5FB;"
                      minHeight="100" prefHeight="100" maxHeight="100">

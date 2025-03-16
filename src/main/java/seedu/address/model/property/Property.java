@@ -24,7 +24,7 @@ public class Property {
      */
     public Property(PropertyName propertyName, Address address, Optional<Price> price,
                     Optional<Size> size, Optional<Description> description) {
-        requireAllNonNull(propertyName, address, size, description);
+        requireAllNonNull(propertyName, address, price, size, description);
         this.propertyName = propertyName;
         this.address = address;
         this.price = price;

@@ -1,29 +1,29 @@
 package seedu.address.model.property;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
 import java.util.Optional;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.commons.Address;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
 /**
  * Represents a Property in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
-
  */
 public class Property {
     private final PropertyName propertyName;
     private final Address address;
     private final Optional<Price> price;
     private final Optional<Size> size;
-    private final Optional<String> description;
+    private final Optional<Description> description;
 
     /**
      * Every field must be present and not null.
      */
-    public Property(PropertyName propertyName, Address address, Optional<Price> price, Optional<Size> size, Optional<String> description) {
+    public Property(PropertyName propertyName, Address address, Optional<Price> price,
+                    Optional<Size> size, Optional<Description> description) {
         requireAllNonNull(propertyName, address, size, description);
         this.propertyName = propertyName;
         this.address = address;
@@ -48,7 +48,7 @@ public class Property {
         return size;
     }
 
-    public Optional<String> getDescription() {
+    public Optional<Description> getDescription() {
         return description;
     }
 
@@ -62,7 +62,11 @@ public class Property {
         }
 
         return otherProperty != null
-                && otherProperty.getPropertyName().equals(getPropertyName());
+                && otherProperty.getPropertyName().equals(getPropertyName())
+                && otherProperty.getAddress().equals(getAddress())
+                && otherProperty.getPrice().equals(getPrice())
+                && otherProperty.getSize().equals(getSize())
+                && otherProperty.getDescription().equals(getDescription());
     }
 
     /**

@@ -7,13 +7,13 @@ import seedu.address.model.Model;
 /**
  * Generic class for deleting an item in the address book.
  */
-public abstract class DeletePropertyCommand<T> extends Command {
+public abstract class DeletePropCommand<T> extends Command {
 
     public static final String COMMAND_WORD = "delete_property";
 
     protected final Index targetIndex;
 
-    public DeletePropertyCommand(Index targetIndex) {
+    public DeletePropCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 

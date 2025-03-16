@@ -8,15 +8,15 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 /**
  * A list of properties that enforces uniqueness between its elements and does not allow nulls.
- * A property is considered unique by comparing using {@code Property#isSameProperty(Property)}. As such, adding and updating of
- * properties uses Property#isSameProperty(Property) for equality so as to ensure that the property being added or updated is
- * unique in terms of identity in the UniquePropertyList. However, the removal of a property uses Property#equals(Object) so
- * as to ensure that the property with exactly the same fields will be removed.
+ * A property is considered unique by comparing using {@code Property#isSameProperty(Property)}. As such, adding and
+ * updating of properties uses Property#isSameProperty(Property) for equality to ensure that the property being
+ * added or updated is unique in terms of identity in the UniquePropertyList. However, the removal of a property uses
+ * Property#equals(Object) to ensure that the property with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
@@ -116,11 +116,10 @@ public class UniquePropertyList implements Iterable<Property> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof UniquePropertyList)) {
+        if (!(other instanceof UniquePropertyList otherUniquePropertyList)) {
             return false;
         }
 
-        UniquePropertyList otherUniquePropertyList = (UniquePropertyList) other;
         return internalList.equals(otherUniquePropertyList.internalList);
     }
 

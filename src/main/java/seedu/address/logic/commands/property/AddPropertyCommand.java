@@ -26,15 +26,15 @@ public class AddPropertyCommand extends AddCommand<Property> {
             + "Parameters: "
             + PREFIX_PROPERTY_NAME + "PROPERTY "
             + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_PRICE + "PRICE "
-            + PREFIX_SIZE + "SIZE "
+            + PREFIX_PRICE + "PRICE (in S$ millions) "
+            + PREFIX_SIZE + "SIZE (in square feet) "
             + PREFIX_DESCRIPTION + "DESCRIPTION \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_PROPERTY_NAME + "Maple Villa Condominium"
+            + PREFIX_PROPERTY_NAME + "Maple Villa Condominium "
             + PREFIX_ADDRESS + "123 Maple Street "
-            + PREFIX_PRICE + "S$1 Million "
-            + PREFIX_SIZE + "1000 square feet "
-            + PREFIX_DESCRIPTION + "Spacious 4-bedroom home";
+            + PREFIX_PRICE + "1 "
+            + PREFIX_SIZE + "1000 "
+            + PREFIX_DESCRIPTION + "Spacious 4 bedroom home";
 
     public static final String MESSAGE_SUCCESS = "New property added: %1$s";
     public static final String MESSAGE_DUPLICATE_CLIENT = "This property already exists in the address book";

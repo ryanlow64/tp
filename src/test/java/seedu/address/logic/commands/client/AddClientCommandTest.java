@@ -26,6 +26,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.client.Client;
+import seedu.address.model.property.Property;
 import seedu.address.testutil.ClientBuilder;
 
 public class AddClientCommandTest extends AddCommandTest<Client> {
@@ -128,6 +129,11 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
         }
 
         @Override
+        public void addProperty(Property property) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setAddressBook(ReadOnlyAddressBook newData) {
             throw new AssertionError("This method should not be called.");
         }
@@ -143,7 +149,17 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
         }
 
         @Override
+        public boolean hasProperty(Property property) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void deleteClient(Client target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteProperty(Property property) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -153,12 +169,27 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
         }
 
         @Override
+        public void setProperty(Property target, Property editedProperty) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Client> getFilteredClientList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
+        public ObservableList<Property> getFilteredPropertyList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredClientList(Predicate<Client> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredPropertyList(Predicate<Property> predicate) {
             throw new AssertionError("This method should not be called.");
         }
     }

@@ -59,12 +59,12 @@ public class Messages {
         builder.append(property.getPropertyName())
                 .append("; Address: ")
                 .append(property.getAddress())
-                .append("; Price: ")
-                .append(property.getPrice())
+                .append("; Price: S$")
+                .append(property.getPrice().orElseThrow()).append(" million")
                 .append("; Size: ")
-                .append(property.getSize())
+                .append(property.getSize().orElseThrow()).append(" square feet")
                 .append("; Description: ")
-                .append(property.getDescription());
+                .append(property.getDescription().orElseThrow());
         return builder.toString();
     }
 

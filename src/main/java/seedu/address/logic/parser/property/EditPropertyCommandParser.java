@@ -2,15 +2,17 @@ package seedu.address.logic.parser.property;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
 
 import seedu.address.commons.core.index.Index;
-
 import seedu.address.logic.commands.property.EditPropertyCommand;
 import seedu.address.logic.commands.property.EditPropertyCommand.EditPropertyDescriptor;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
-
 import seedu.address.logic.parser.EditCommandParser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -47,8 +49,8 @@ public class EditPropertyCommandParser extends EditCommandParser<Property> {
         EditPropertyDescriptor editPropertyDescriptor = new EditPropertyDescriptor();
 
         if (argMultimap.getValue(PREFIX_PROPERTY_NAME).isPresent()) {
-            editPropertyDescriptor.setPropertyName(ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_PROPERTY_NAME)
-                    .get()));
+            editPropertyDescriptor.setPropertyName(ParserUtil.parsePropertyName(argMultimap
+                    .getValue(PREFIX_PROPERTY_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editPropertyDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
@@ -60,7 +62,8 @@ public class EditPropertyCommandParser extends EditCommandParser<Property> {
             editPropertyDescriptor.setSize(ParserUtil.parseSize(argMultimap.getValue(PREFIX_SIZE).get()));
         }
         if (argMultimap.getValue(PREFIX_DESCRIPTION).isPresent()) {
-            editPropertyDescriptor.setDescription(ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get()));
+            editPropertyDescriptor.setDescription(ParserUtil.parseDescription(argMultimap
+                    .getValue(PREFIX_DESCRIPTION).get()));
         }
 
         if (!editPropertyDescriptor.isAnyFieldEdited()) {

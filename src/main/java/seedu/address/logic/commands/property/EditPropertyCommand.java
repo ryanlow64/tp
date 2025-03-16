@@ -1,10 +1,16 @@
 package seedu.address.logic.commands.property;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PROPERTIES;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -16,7 +22,11 @@ import seedu.address.logic.commands.EditDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.commons.Address;
-import seedu.address.model.property.*;
+import seedu.address.model.property.Description;
+import seedu.address.model.property.Price;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.PropertyName;
+import seedu.address.model.property.Size;
 
 /**
  * Edits the details of an existing property in the address book.
@@ -29,14 +39,14 @@ public class EditPropertyCommand extends EditCommand<Property> {
             + "by the index number used in the displayed property list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_PROPERTY_NAME + "PROEPRTYNAME] "
+            + "[" + PREFIX_PROPERTY_NAME + "PROPERTYNAME] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_PRICE + "PRICE] "
-            + "[" + PREFIX_SIZE + "SIZE] "
+            + "[" + PREFIX_PRICE + "PRICE (in S$ millions)] "
+            + "[" + PREFIX_SIZE + "SIZE (in square feet)] "
             + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ADDRESS + "234 Maple Street "
-            + PREFIX_PRICE + "S$1.5 Million";
+            + PREFIX_PRICE + "1.5";
 
     public static final String MESSAGE_EDIT_PROPERTY_SUCCESS = "Edited Property: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -78,14 +88,17 @@ public class EditPropertyCommand extends EditCommand<Property> {
      * Creates and returns a {@code Property} with the details of {@code propertyToEdit}
      * edited with {@code editPropertyDescriptor}.
      */
-    private static Property createEditedProperty(Property propertyToEdit, EditPropertyDescriptor editPropertyDescriptor) {
+    private static Property createEditedProperty(Property propertyToEdit,
+                                                 EditPropertyDescriptor editPropertyDescriptor) {
         assert propertyToEdit != null;
 
-        PropertyName updatedPropertyName = editPropertyDescriptor.getPropertyName().orElse(propertyToEdit.getPropertyName());
+        PropertyName updatedPropertyName = editPropertyDescriptor.getPropertyName()
+                .orElse(propertyToEdit.getPropertyName());
         Address updatedAddress = editPropertyDescriptor.getAddress().orElse(propertyToEdit.getAddress());
         Optional<Price> updatedPrice = editPropertyDescriptor.getPrice().orElse(propertyToEdit.getPrice());
         Optional<Size> updatedSize = editPropertyDescriptor.getSize().orElse(propertyToEdit.getSize());
-        Optional<String> updatedDescription = editPropertyDescriptor.getDescription().orElse(propertyToEdit.getDescription());
+        Optional<Description> updatedDescription = editPropertyDescriptor.getDescription()
+                .orElse(propertyToEdit.getDescription());
 
         return new Property(updatedPropertyName, updatedAddress, updatedPrice, updatedSize, updatedDescription);
     }
@@ -122,7 +135,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
         private Address address;
         private Optional<Price> price;
         private Optional<Size> size;
-        private Optional<String> description;
+        private Optional<Description> description;
 
         public EditPropertyDescriptor() {}
 
@@ -178,11 +191,11 @@ public class EditPropertyCommand extends EditCommand<Property> {
             return Optional.ofNullable(size);
         }
 
-        public void setDescription(Optional<String> description) {
+        public void setDescription(Optional<Description> description) {
             this.description = description;
         }
 
-        public Optional<Optional<String>> getDescription() {
+        public Optional<Optional<Description>> getDescription() {
             return Optional.ofNullable(description);
         }
 

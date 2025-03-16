@@ -174,11 +174,11 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code description} is invalid.
      */
-    public static Optional<String> parseDescription(String description) throws ParseException {
+    public static Optional<Description> parseDescription(String description) throws ParseException {
         String trimmedDescription = description.trim();
         if (!Description.isValidDescription(trimmedDescription)) {
             throw new ParseException(Description.MESSAGE_CONSTRAINTS);
         }
-        return Optional.of(trimmedDescription);
+        return Optional.of(new Description(trimmedDescription));
     }
 }

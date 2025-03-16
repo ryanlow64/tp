@@ -2,6 +2,8 @@ package seedu.address.model.property;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.util.Optional;
+
 /**
  * Represents a Property's size in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidSize(String)}
@@ -9,26 +11,45 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Size {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Size should only contain numbers, and it should be between 3 and 5 digits long (in Square Feet)";
+            "Size should only contain numbers from [100, 99999] (in square feet)";
 
-    public static final String VALIDATION_REGEX = "\\d{3,}";
+    public static final String VALIDATION_REGEX = "([1-9]\\d{2,4})";
 
-    public final String size;
+    public final Optional<String> size;
 
+    /**
+     * Constructs a {@code Size}.
+     *
+     * @param size A valid size or empty string.
+     */
     public Size(String size) {
-        checkArgument(isValidSize(size), MESSAGE_CONSTRAINTS);
-        this.size = size;
+        if (size == null || size.isBlank()) {
+            this.size = Optional.empty();
+        } else {
+            checkArgument(isValidSize(size), MESSAGE_CONSTRAINTS);
+            this.size = Optional.of(size);
+        }
     }
 
     /**
      * Returns true if a given string is a valid size.
      */
     public static boolean isValidSize(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.isBlank() || test.matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Returns the size if present, otherwise returns "N/A".
+     */
     @Override
     public String toString() {
+        return size.orElse("N/A");
+    }
+
+    /**
+     * Returns the optional size.
+     */
+    public Optional<String> getSize() {
         return size;
     }
 

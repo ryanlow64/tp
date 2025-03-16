@@ -20,6 +20,13 @@ public class DealList {
     }
 
     /**
+     * Replaces the contents of this list with {@code deals}.
+     */
+    public void setDeals(List<Deal> deals) {
+        this.internalList.setAll(deals);
+    }
+
+    /**
      * Returns the backing list as an unmodifiable list.
      */
     public List<Deal> asUnmodifiableList() {

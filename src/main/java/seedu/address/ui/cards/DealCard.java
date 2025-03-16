@@ -12,7 +12,7 @@ import seedu.address.ui.UiPart;
  */
 public class DealCard extends UiPart<Region> {
 
-    private static final String FXML = "ClientListCard.fxml"; // Reuse the client card FXML for now
+    private static final String FXML = "DealListCard.fxml";
 
     public final Deal deal;
 

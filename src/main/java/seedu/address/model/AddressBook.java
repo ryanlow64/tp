@@ -53,12 +53,20 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the deal list with {@code deals}.
+     */
+    public void setDeals(List<Deal> deals) {
+        this.deals.setDeals(deals);
+    }
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
         setClients(newData.getClientList());
+        setDeals(newData.getDealList());
     }
 
     //// client-level operations

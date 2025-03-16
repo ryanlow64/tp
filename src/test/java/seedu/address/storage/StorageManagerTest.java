@@ -3,6 +3,7 @@ package seedu.address.storage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalDeals.getTypicalDeals;
 
 import java.nio.file.Path;
 
@@ -57,7 +58,21 @@ public class StorageManagerTest {
         AddressBook original = getTypicalAddressBook();
         storageManager.saveAddressBook(original);
         ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
-        assertEquals(original, new AddressBook(retrieved));
+        assertEquals(original, retrieved);
+    }
+
+    @Test
+    public void addressBookWithDealsReadSave() throws Exception {
+        // Create an address book with deals
+        AddressBook original = getTypicalAddressBook();
+        getTypicalDeals().forEach(original::addDeal);
+        // Save and read back
+        storageManager.saveAddressBook(original);
+        ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
+        // Verify clients and deals are the same
+        assertEquals(original.getClientList(), retrieved.getClientList());
+        assertEquals(original.getDealList(), retrieved.getDealList());
+        assertEquals(original, retrieved);
     }
 
     @Test

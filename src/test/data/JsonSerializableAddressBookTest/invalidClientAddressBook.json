@@ -2,7 +2,8 @@
   "clients": [ {
     "clientName": "Hans Muster",
     "phone": "9482424",
-    "email": "invalid@email!3e",
+    "email": "invalid-email",
     "address": "4th street"
-  } ]
+  } ],
+  "deals": [ ]
 }

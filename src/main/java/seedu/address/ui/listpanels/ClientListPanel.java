@@ -9,8 +9,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.client.Client;
-import seedu.address.ui.cards.ClientCard;
 import seedu.address.ui.UiPart;
+import seedu.address.ui.cards.ClientCard;
 
 /**
  * Panel containing the list of clients.

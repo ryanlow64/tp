@@ -3,7 +3,6 @@ package seedu.address.model.schedule;
 import java.time.LocalDateTime;
 
 import seedu.address.model.client.ClientName;
-import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 
 /**

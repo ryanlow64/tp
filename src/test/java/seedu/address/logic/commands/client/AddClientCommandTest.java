@@ -26,6 +26,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.client.Client;
+import seedu.address.model.deal.Deal;
 import seedu.address.model.property.Property;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.ClientBuilder;
@@ -160,6 +161,11 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
         }
 
         @Override
+        public ObservableList<Deal> getFilteredDealList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Property> getFilteredPropertyList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -171,6 +177,11 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
 
         @Override
         public void updateFilteredClientList(Predicate<Client> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredDealList(Predicate<Deal> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 

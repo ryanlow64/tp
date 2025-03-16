@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.UniqueClientList;
+import seedu.address.model.deal.Deal;
+import seedu.address.model.deal.UniqueDealList;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyList;
 import seedu.address.model.schedule.Schedule;
@@ -20,6 +22,7 @@ import seedu.address.model.schedule.UniqueScheduleList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueClientList clients;
+    private final UniqueDealList deals;
     private final UniquePropertyList properties;
     private final UniqueScheduleList schedules;
 
@@ -32,6 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         clients = new UniqueClientList();
+        deals = new UniqueDealList();
         properties = new UniquePropertyList();
         schedules = new UniqueScheduleList();
     }
@@ -114,6 +118,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Client> getClientList() {
         return clients.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Deal> getDealList() {
+        return deals.asUnmodifiableObservableList();
     }
 
     @Override

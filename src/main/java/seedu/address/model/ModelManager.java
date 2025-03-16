@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.client.Client;
+import seedu.address.model.deal.Deal;
 import seedu.address.model.property.Property;
 import seedu.address.model.schedule.Schedule;
 
@@ -24,6 +25,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Client> filteredClients;
+    private final FilteredList<Deal> filteredDeals;
     private final FilteredList<Property> filteredProperties;
     private final FilteredList<Schedule> filteredSchedules;
 
@@ -38,6 +40,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredClients = new FilteredList<>(this.addressBook.getClientList());
+        filteredDeals = new FilteredList<>(this.addressBook.getDealList());
         filteredProperties = new FilteredList<>(this.addressBook.getPropertyList());
         filteredSchedules = new FilteredList<>(this.addressBook.getScheduleList());
     }
@@ -132,6 +135,23 @@ public class ModelManager implements Model {
     public void updateFilteredClientList(Predicate<Client> predicate) {
         requireNonNull(predicate);
         filteredClients.setPredicate(predicate);
+    }
+
+    //=========== Filtered Deal List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Deal} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<Deal> getFilteredDealList() {
+        return filteredDeals;
+    }
+
+    @Override
+    public void updateFilteredDealList(Predicate<Deal> predicate) {
+        requireNonNull(predicate);
+        filteredDeals.setPredicate(predicate);
     }
 
     //=========== Filtered Property List Accessors =============================================================

@@ -18,6 +18,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.ui.listpanels.ClientListPanel;
+import seedu.address.ui.listpanels.DealListPanel;
 import seedu.address.ui.listpanels.PropertyListPanel;
 import seedu.address.ui.listpanels.ScheduleListPanel;
 
@@ -36,6 +37,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private ClientListPanel clientListPanel;
+    private DealListPanel dealListPanel;
     private PropertyListPanel propertyListPanel;
     private ScheduleListPanel scheduleListPanel;
     private ResultDisplay resultDisplay;
@@ -114,11 +116,13 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         clientListPanel = new ClientListPanel(logic.getFilteredClientList());
+        dealListPanel = new DealListPanel(logic.getFilteredDealList());
         propertyListPanel = new PropertyListPanel(logic.getFilteredPropertyList());
         scheduleListPanel = new ScheduleListPanel(logic.getFilteredScheduleList());
 
         listPlanesPlaceholder.getItems().add(clientListPanel.getRoot());
         listPlanesPlaceholder.getItems().add(propertyListPanel.getRoot());
+        listPlanesPlaceholder.getItems().add(dealListPanel.getRoot());
         listPlanesPlaceholder.getItems().add(scheduleListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();

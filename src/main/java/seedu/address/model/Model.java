@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.client.Client;
+import seedu.address.model.deal.Deal;
 import seedu.address.model.property.Property;
 import seedu.address.model.schedule.Schedule;
 
@@ -81,6 +82,9 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered client list */
     ObservableList<Client> getFilteredClientList();
 
+    /** Returns an unmodifiable view of the filtered list of deals */
+    ObservableList<Deal> getFilteredDealList();
+
     /** Returns an unmodifiable view of the filtered list of properties */
     ObservableList<Property> getFilteredPropertyList();
 
@@ -92,6 +96,12 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredClientList(Predicate<Client> predicate);
+
+    /**
+     * Updates the filter of the filtered deal list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredDealList(Predicate<Deal> predicate);
 
     /**
      * Updates the filter of the filtered property list to filter by the given {@code predicate}.

@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
+import seedu.address.model.property.Property;
 
 /**
  * The API of the Model component.
@@ -14,6 +15,10 @@ import seedu.address.model.deal.Deal;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Client> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Property> PREDICATE_SHOW_ALL_PROPERTIES = unused -> true;
+
     /** {@code Predicate} that always evaluate to true */
     Predicate<Deal> PREDICATE_SHOW_ALL_DEALS = unused -> true;
 
@@ -89,18 +94,50 @@ public interface Model {
     void updateFilteredClientList(Predicate<Client> predicate);
 
     /**
-     * Returns true if a deal with the same identity as {@code deal} exists in the address book.
+     * Returns true if a property with the same identity as {@code property} exists in the address book.
      */
+    boolean hasProperty(Property property);
+
+    /**
+     * Deletes the given property.
+     * The property must exist in the address book.
+     */
+    void deleteProperty(Property target);
+
+    /**
+     * Adds the given property.
+     * {@code property} must not already exist in the address book.
+     */
+    void addProperty(Property property);
+
+    /**
+     * Replaces the given property {@code target} with {@code editedProperty}.
+     * {@code target} must exist in the address book.
+     * The property identity of {@code editedProperty} must not be the same as another existing property in the AB.
+     */
+    void setProperty(Property target, Property editedProperty);
+
+    /** Returns an unmodifiable view of the filtered property list */
+    ObservableList<Property> getFilteredPropertyList();
+
+    /**
+     * Updates the filter of the filtered property list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredPropertyList(Predicate<Property> predicate);
+
+    /** Returns whether there is a deal */
     boolean hasDeal(Deal deal);
 
-    /**
-     * Adds the given deal.
-     * {@code deal} must not already exist in the address book.
-     */
+    /** Adds a deal */
     void addDeal(Deal deal);
 
-    /**
-     * Returns an unmodifiable view of the filtered deal list
-     */
+    /** Returns an unmodifiable view of the filtered deal list */
     ObservableList<Deal> getFilteredDealList();
+
+    /**
+     * Updates the filter of the filtered deal list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredDealList(Predicate<Deal> predicate);
 }

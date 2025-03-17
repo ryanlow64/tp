@@ -1,15 +1,19 @@
-package seedu.address.model;
+package seedu.address.logic.commands;
 
 import java.nio.file.Path;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
+import seedu.address.model.property.Property;
 
 /**
- * A default model stub that have all of the methods failing.
+ * A default model stub that have all the methods failing.
  */
 public class ModelStub implements Model {
     @Override
@@ -73,16 +77,21 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public ObservableList<Client> getFilteredClientList() {
+    public boolean hasProperty(Property property) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public void updateFilteredClientList(Predicate<Client> predicate) {
+    public void deleteProperty(Property target) {
         throw new AssertionError("This method should not be called.");
     }
+
     @Override
-    public boolean hasDeal(Deal deal) {
+    public void addProperty(Property property) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    public void setProperty(Property target, Property editedProperty) {
         throw new AssertionError("This method should not be called.");
     }
 
@@ -92,7 +101,37 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public boolean hasDeal(Deal deal) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public ObservableList<Client> getFilteredClientList() {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
     public ObservableList<Deal> getFilteredDealList() {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public ObservableList<Property> getFilteredPropertyList() {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void updateFilteredClientList(Predicate<Client> predicate) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void updateFilteredDealList(Predicate<Deal> predicate) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void updateFilteredPropertyList(Predicate<Property> predicate) {
         throw new AssertionError("This method should not be called.");
     }
 }

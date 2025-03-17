@@ -47,4 +47,5 @@ public class ClientListPanel extends UiPart<Region> {
             }
         }
     }
+
 }

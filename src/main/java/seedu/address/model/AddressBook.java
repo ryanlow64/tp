@@ -9,7 +9,9 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.UniqueClientList;
 import seedu.address.model.deal.Deal;
-import seedu.address.model.deal.DealList;
+import seedu.address.model.deal.UniqueDealList;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.UniquePropertyList;
 
 /**
  * Wraps all data at the address-book level
@@ -18,7 +20,8 @@ import seedu.address.model.deal.DealList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueClientList clients;
-    private final DealList deals;
+    private final UniqueDealList deals;
+    private final UniquePropertyList properties;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -29,7 +32,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         clients = new UniqueClientList();
-        deals = new DealList();
+        deals = new UniqueDealList();
+        properties = new UniquePropertyList();
     }
 
     public AddressBook() {}
@@ -53,20 +57,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Replaces the contents of the deal list with {@code deals}.
-     */
-    public void setDeals(List<Deal> deals) {
-        this.deals.setDeals(deals);
-    }
-
-    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
         setClients(newData.getClientList());
-        setDeals(newData.getDealList());
     }
 
     //// client-level operations
@@ -106,6 +102,43 @@ public class AddressBook implements ReadOnlyAddressBook {
         clients.remove(key);
     }
 
+    //// property-level operations
+
+    /**
+     * Returns true if a property with the same identity as {@code property} exists in the address book.
+     */
+    public boolean hasProperty(Property property) {
+        requireNonNull(property);
+        return properties.contains(property);
+    }
+
+    /**
+     * Adds a property to the address book.
+     * The property must not already exist in the address book.
+     */
+    public void addProperty(Property property) {
+        properties.add(property);
+    }
+
+    /**
+     * Replaces the given property {@code target} in the list with {@code editedProperty}.
+     * {@code target} must exist in the address book.
+     * The property identity of {@code editedProperty} must not be the same as another existing property in the address book.
+     */
+    public void setProperty(Property target, Property editedProperty) {
+        requireNonNull(editedProperty);
+
+        properties.setProperty(target, editedProperty);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * {@code key} must exist in the address book.
+     */
+    public void removeProperty(Property key) {
+        properties.remove(key);
+    }
+
     //// deal-level operations
 
     /**
@@ -124,20 +157,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         deals.add(deal);
     }
 
-    /**
-     * Returns an unmodifiable view of the deal list.
-     */
-    public ObservableList<Deal> getDealList() {
-        return deals.asUnmodifiableObservableList();
-    }
-
     //// util methods
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("clients", clients)
-                .add("deals", deals)
                 .toString();
     }
 
@@ -147,21 +172,32 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Deal> getDealList() {
+        return deals.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Property> getPropertyList() {
+        return properties.asUnmodifiableObservableList();
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddressBook otherAddressBook)) {
+        if (!(other instanceof AddressBook)) {
             return false;
         }
 
-        return clients.equals(otherAddressBook.clients) && deals.equals(otherAddressBook.deals);
+        AddressBook otherAddressBook = (AddressBook) other;
+        return clients.equals(otherAddressBook.clients);
     }
 
     @Override
     public int hashCode() {
-        return clients.hashCode() + deals.hashCode();
+        return clients.hashCode();
     }
 }

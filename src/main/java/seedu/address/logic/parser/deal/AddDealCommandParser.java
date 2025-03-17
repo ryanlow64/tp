@@ -3,7 +3,7 @@ package seedu.address.logic.parser.deal;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
@@ -32,16 +32,16 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
      */
     public AddDealCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER,
+                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME , PREFIX_BUYER, PREFIX_SELLER,
                         PREFIX_PRICE, PREFIX_STATUS);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddDealCommand.MESSAGE_USAGE));
         }
 
         // Parse property name
-        String propertyNameStr = argMultimap.getValue(PREFIX_PROPERTY_ID).get();
+        String propertyNameStr = argMultimap.getValue(PREFIX_PROPERTY_NAME).get();
         if (!PropertyName.isValidPropertyName(propertyNameStr)) {
             throw new ParseException(PropertyName.MESSAGE_CONSTRAINTS);
         }
@@ -66,7 +66,8 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
         if (!Price.isValidPrice(priceString)) {
             throw new ParseException(Price.MESSAGE_CONSTRAINTS);
         }
-        long priceValue = Long.parseLong(priceString);
+
+        Long priceValue = Long.parseLong(priceString);
         Price price = new Price(priceValue);
 
         // Parse status (optional)

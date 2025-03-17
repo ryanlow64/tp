@@ -14,15 +14,16 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ModelStub;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.ModelStub;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
 import seedu.address.model.property.PropertyName;
+
 
 public class AddDealCommandTest {
 

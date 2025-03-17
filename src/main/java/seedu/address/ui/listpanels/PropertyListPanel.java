@@ -47,4 +47,5 @@ public class PropertyListPanel extends UiPart<Region> {
             }
         }
     }
+
 }

@@ -13,6 +13,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
+import seedu.address.model.property.Property;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -24,6 +25,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Client> filteredClients;
     private final FilteredList<Deal> filteredDeals;
+    private final FilteredList<Property> filteredProperties;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +39,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredClients = new FilteredList<>(this.addressBook.getClientList());
         filteredDeals = new FilteredList<>(this.addressBook.getDealList());
+        filteredProperties = new FilteredList<>(this.addressBook.getPropertyList());
     }
 
     public ModelManager() {
@@ -114,6 +117,42 @@ public class ModelManager implements Model {
         addressBook.setClient(target, editedClient);
     }
 
+    @Override
+    public boolean hasProperty(Property property) {
+        requireNonNull(property);
+        return addressBook.hasProperty(property);
+    }
+
+    @Override
+    public void deleteProperty(Property target) {
+        addressBook.removeProperty(target);
+    }
+
+    @Override
+    public void addProperty(Property property) {
+        addressBook.addProperty(property);
+        updateFilteredPropertyList(PREDICATE_SHOW_ALL_PROPERTIES);
+    }
+
+    @Override
+    public void setProperty(Property target, Property editedProperty) {
+        requireAllNonNull(target, editedProperty);
+
+        addressBook.setProperty(target, editedProperty);
+    }
+
+    @Override
+    public boolean hasDeal(Deal deal) {
+        requireNonNull(deal);
+        return addressBook.hasDeal(deal);
+    }
+
+    @Override
+    public void addDeal(Deal deal) {
+        addressBook.addDeal(deal);
+        updateFilteredDealList(PREDICATE_SHOW_ALL_DEALS);
+    }
+
     //=========== Filtered Client List Accessors =============================================================
 
     /**
@@ -131,31 +170,34 @@ public class ModelManager implements Model {
         filteredClients.setPredicate(predicate);
     }
 
-    //=========== Filtered Deal List Accessors ================================================================
-
-    @Override
-    public boolean hasDeal(Deal deal) {
-        requireNonNull(deal);
-        return addressBook.hasDeal(deal);
-    }
-
-    @Override
-    public void addDeal(Deal deal) {
-        addressBook.addDeal(deal);
-        updateFilteredDealList(PREDICATE_SHOW_ALL_DEALS);
-    }
-
+    /**
+     * Returns an unmodifiable view of the list of {@code Deal} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
     @Override
     public ObservableList<Deal> getFilteredDealList() {
         return filteredDeals;
     }
 
-    /**
-     * Updates the filter of the filtered deal list to filter by the given {@code predicate}.
-     */
+    @Override
     public void updateFilteredDealList(Predicate<Deal> predicate) {
         requireNonNull(predicate);
         filteredDeals.setPredicate(predicate);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Property} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<Property> getFilteredPropertyList() {
+        return filteredProperties;
+    }
+
+    @Override
+    public void updateFilteredPropertyList(Predicate<Property> predicate) {
+        requireNonNull(predicate);
+        filteredProperties.setPredicate(predicate);
     }
 
     @Override
@@ -165,14 +207,15 @@ public class ModelManager implements Model {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ModelManager otherModelManager)) {
+        if (!(other instanceof ModelManager)) {
             return false;
         }
 
+        ModelManager otherModelManager = (ModelManager) other;
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredClients.equals(otherModelManager.filteredClients)
-                && filteredDeals.equals(otherModelManager.filteredDeals);
+                && filteredProperties.equals(otherModelManager.filteredProperties);
     }
 
 }

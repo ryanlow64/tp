@@ -20,6 +20,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.exceptions.DuplicateClientException;
+import seedu.address.model.deal.Deal;
+import seedu.address.model.property.Property;
 import seedu.address.testutil.ClientBuilder;
 
 public class AddressBookTest {
@@ -85,10 +87,8 @@ public class AddressBookTest {
 
     @Test
     public void toStringMethod() {
-        String toString = addressBook.toString();
-        assertTrue(toString.contains("clients="));
-        assertTrue(toString.contains("deals="));
-        assertTrue(toString.startsWith(AddressBook.class.getCanonicalName()));
+        String expected = AddressBook.class.getCanonicalName() + "{clients=" + addressBook.getClientList() + "}";
+        assertEquals(expected, addressBook.toString());
     }
 
     /**
@@ -96,6 +96,8 @@ public class AddressBookTest {
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Client> clients = FXCollections.observableArrayList();
+        private final ObservableList<Property> properties = FXCollections.observableArrayList();
+        private final ObservableList<Deal> deals = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Client> clients) {
             this.clients.setAll(clients);
@@ -105,9 +107,15 @@ public class AddressBookTest {
         public ObservableList<Client> getClientList() {
             return clients;
         }
+
         @Override
-        public ObservableList<seedu.address.model.deal.Deal> getDealList() {
-            return FXCollections.observableArrayList();
+        public ObservableList<Property> getPropertyList() {
+            return properties;
+        }
+
+        @Override
+        public ObservableList<Deal> getDealList() {
+            return deals;
         }
     }
 

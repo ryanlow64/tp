@@ -9,7 +9,6 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -18,7 +17,6 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.ui.listpanels.ClientListPanel;
-import seedu.address.ui.listpanels.DealListPanel;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -35,7 +33,6 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private ClientListPanel clientListPanel;
-    private DealListPanel dealListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -114,16 +111,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        // Create client list panel
         clientListPanel = new ClientListPanel(logic.getFilteredClientList());
-        // Create deal list panel
-        dealListPanel = new DealListPanel(logic.getFilteredDealList());
-        // Create a VBox to hold both panels
-        VBox listsVBox = new VBox();
-        listsVBox.getChildren().add(clientListPanel.getRoot());
-        listsVBox.getChildren().add(dealListPanel.getRoot());
-        // Add the VBox to the placeholder
-        clientListPanelPlaceholder.getChildren().add(listsVBox);
+        clientListPanelPlaceholder.getChildren().add(clientListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

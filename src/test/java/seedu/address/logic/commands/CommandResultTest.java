@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,26 +13,26 @@ public class CommandResultTest {
         CommandResult commandResult = new CommandResult("feedback");
 
         // same values -> returns true
-        assertEquals(new CommandResult("feedback"), commandResult);
-        assertEquals(new CommandResult("feedback", false, false), commandResult);
+        assertTrue(commandResult.equals(new CommandResult("feedback")));
+        assertTrue(commandResult.equals(new CommandResult("feedback", false, false)));
 
         // same object -> returns true
-        assertEquals(commandResult, commandResult);
+        assertTrue(commandResult.equals(commandResult));
 
         // null -> returns false
-        assertNotEquals(null, commandResult);
+        assertFalse(commandResult.equals(null));
 
         // different types -> returns false
-        assertNotEquals(0.5f, commandResult, String.valueOf(0.0));
+        assertFalse(commandResult.equals(0.5f));
 
         // different feedbackToUser value -> returns false
-        assertNotEquals(new CommandResult("different"), commandResult);
+        assertFalse(commandResult.equals(new CommandResult("different")));
 
         // different showHelp value -> returns false
-        assertNotEquals(new CommandResult("feedback", true, false), commandResult);
+        assertFalse(commandResult.equals(new CommandResult("feedback", true, false)));
 
         // different exit value -> returns false
-        assertNotEquals(new CommandResult("feedback", false, true), commandResult);
+        assertFalse(commandResult.equals(new CommandResult("feedback", false, true)));
     }
 
     @Test

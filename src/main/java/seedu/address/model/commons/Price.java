@@ -1,37 +1,55 @@
 package seedu.address.model.commons;
 
 /**
- * Represents a Property's price.
+ * Represents a Property's price in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPrice(String)}
  */
 public class Price {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Price must be a positive number and be under 9 quintillion.";
+            "Price should only contain numbers from (0, 999.99] (in S$ millions)";
+
+    public static final String VALIDATION_REGEX = "(?!0$)\\d{1,3}(\\.\\d{1,2})?";
 
     public final Long value;
 
     /**
      * Constructs a {@code Price}.
      *
-     * @param value A valid price value.
+     * @param price
      */
-    public Price(long value) {
-        this.value = value;
+    public Price(Long price) {
+        this.value = price;
+    }
+
+    /**
+     * Constructs a {@code Price}.
+     *
+     * @param price
+     */
+    public Price(Integer price) {
+        this.value = Long.valueOf(price);
+    }
+
+    /**
+     * Constructs a {@code Price}.
+     *
+     * @param price
+     */
+    public Price(String price) {
+        this.value = Long.parseLong(price);
     }
 
     /**
      * Returns true if a given string is a valid price.
      */
     public static boolean isValidPrice(String test) {
-        try {
-            long price = Long.parseLong(test);
-            return price > 0 && price < 9000000000000000000L;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return test.isBlank() || test.matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Returns the price if present, otherwise returns "N/A".
+     */
     @Override
     public String toString() {
         return value.toString();
@@ -43,11 +61,11 @@ public class Price {
             return true;
         }
 
-        if (!(other instanceof Price)) {
+        // instanceof handles nulls
+        if (!(other instanceof Price otherPrice)) {
             return false;
         }
 
-        Price otherPrice = (Price) other;
         return value.equals(otherPrice.value);
     }
 

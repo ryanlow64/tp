@@ -20,12 +20,14 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddCommandTest;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ModelStub;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.client.Client;
+import seedu.address.model.property.Property;
 import seedu.address.testutil.ClientBuilder;
 
 public class AddClientCommandTest extends AddCommandTest<Client> {
@@ -86,96 +88,6 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
         AddClientCommand addClientCommand = new AddClientCommand(ALICE);
         String expected = AddClientCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
         assertEquals(expected, addClientCommand.toString());
-    }
-
-    /**
-     * A default model stub that have all the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyUserPrefs getUserPrefs() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public GuiSettings getGuiSettings() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setGuiSettings(GuiSettings guiSettings) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public Path getAddressBookFilePath() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setAddressBookFilePath(Path addressBookFilePath) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addClient(Client client) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setAddressBook(ReadOnlyAddressBook newData) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasClient(Client client) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteClient(Client target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setClient(Client target, Client editedClient) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Client> getFilteredClientList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredClientList(Predicate<Client> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasDeal(seedu.address.model.deal.Deal deal) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addDeal(seedu.address.model.deal.Deal deal) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public javafx.collections.ObservableList<seedu.address.model.deal.Deal> getFilteredDealList() {
-            throw new AssertionError("This method should not be called.");
-        }
     }
 
     /**

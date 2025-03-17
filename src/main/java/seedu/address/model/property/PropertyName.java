@@ -8,12 +8,17 @@ import seedu.address.model.commons.Name;
 /**
  * Represents a Property's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPropertyName(String)}
- * TODO: Implement this class
- * TODO: make all fields final
  */
 public class PropertyName implements Name<Property> {
 
-    public static final String MESSAGE_CONSTRAINTS = "Property name must not be empty.";
+    public static final String MESSAGE_CONSTRAINTS =
+            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     public final String fullName;
 
@@ -32,7 +37,7 @@ public class PropertyName implements Name<Property> {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidPropertyName(String test) {
-        return test != null && !test.trim().isEmpty();
+        return test.matches(VALIDATION_REGEX);
     }
 
     @Override
@@ -46,11 +51,11 @@ public class PropertyName implements Name<Property> {
             return true;
         }
 
-        if (!(other instanceof PropertyName)) {
+        // instanceof handles nulls
+        if (!(other instanceof PropertyName otherName)) {
             return false;
         }
 
-        PropertyName otherName = (PropertyName) other;
         return fullName.equals(otherName.fullName);
     }
 

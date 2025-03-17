@@ -3,7 +3,7 @@ package seedu.address.logic.commands.deal;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_ID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
@@ -26,13 +26,13 @@ public class AddDealCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a property deal to the address book. "
             + "Parameters: "
-            + PREFIX_PROPERTY_ID + "PROPERTY_NAME "
+            + PREFIX_PROPERTY_NAME + "PROPERTY_NAME "
             + PREFIX_BUYER + "BUYER_NAME "
             + PREFIX_SELLER + "SELLER_NAME "
             + PREFIX_PRICE + "PRICE "
             + "[" + PREFIX_STATUS + "STATUS]\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_PROPERTY_ID + "Sunset Villa "
+            + PREFIX_PROPERTY_NAME + "Sunset Villa "
             + PREFIX_BUYER + "John Doe "
             + PREFIX_SELLER + "Jane Smith "
             + PREFIX_PRICE + "690000 "

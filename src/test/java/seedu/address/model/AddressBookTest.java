@@ -85,10 +85,8 @@ public class AddressBookTest {
 
     @Test
     public void toStringMethod() {
-        String toString = addressBook.toString();
-        assertTrue(toString.contains("clients="));
-        assertTrue(toString.contains("deals="));
-        assertTrue(toString.startsWith(AddressBook.class.getCanonicalName()));
+        String expected = AddressBook.class.getCanonicalName() + "{clients=" + addressBook.getClientList() + "}";
+        assertEquals(expected, addressBook.toString());
     }
 
     /**
@@ -104,10 +102,6 @@ public class AddressBookTest {
         @Override
         public ObservableList<Client> getClientList() {
             return clients;
-        }
-        @Override
-        public ObservableList<seedu.address.model.deal.Deal> getDealList() {
-            return FXCollections.observableArrayList();
         }
     }
 

@@ -1,4 +1,4 @@
-package seedu.address.ui.cards;
+package seedu.address.ui.Cards;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

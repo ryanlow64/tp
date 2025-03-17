@@ -274,7 +274,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Product scope
 
-**Target user profile**: Real Estate agents who
+**Target user profile**: Real Estate agents who 
 * need to connect clients (e.g. buyers, sellers, investors) with the best opportunities based on market demands and property locations.
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
@@ -315,7 +315,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | careless real estate agent                 | have an undo button for edits and deletes                                   | recover from mistakes and prevent the accidental loss of valuable information |
 | `*`      | real estate agent                          | compare between multiple property listings side by side                     | help clients make better informed decisions                                   |
 | `*`      | performance-driven real estate agent       | generate reports on closed deals                                            | analyze my sales performance and improve my strategies                        |
-| `*`      | real estate agent with many clients        | favourite some clients that I interact with and meet up regularly           | facilitate interaction with clients that I engage frequently                  |
+| `*`      | real estate agent with many clients        | favourite some clients that I interact with and meet up regularly           | facilitate interaction with clients that I engage frequently                  |    
 | `*`      | organized real estate agent                | archive closed property deals                                               | free up the clutter in the list of deals                                      |
 
 *(More to be added)*

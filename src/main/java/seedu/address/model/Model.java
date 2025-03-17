@@ -6,7 +6,6 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.client.Client;
-import seedu.address.model.deal.Deal;
 
 /**
  * The API of the Model component.
@@ -14,8 +13,6 @@ import seedu.address.model.deal.Deal;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Client> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<Deal> PREDICATE_SHOW_ALL_DEALS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -87,20 +84,4 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredClientList(Predicate<Client> predicate);
-
-    /**
-     * Returns true if a deal with the same identity as {@code deal} exists in the address book.
-     */
-    boolean hasDeal(Deal deal);
-
-    /**
-     * Adds the given deal.
-     * {@code deal} must not already exist in the address book.
-     */
-    void addDeal(Deal deal);
-
-    /**
-     * Returns an unmodifiable view of the filtered deal list
-     */
-    ObservableList<Deal> getFilteredDealList();
 }

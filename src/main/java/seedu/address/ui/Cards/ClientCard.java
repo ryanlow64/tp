@@ -1,4 +1,6 @@
-package seedu.address.ui.cards;
+package seedu.address.ui.Cards;
+
+import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -41,7 +43,7 @@ public class ClientCard extends UiPart<Region> {
     private FlowPane tags;
 
     /**
-     * Creates a {@code ClientCard} with the given {@code Client} and index to display.
+     * Creates a {@code ClientCode} with the given {@code Client} and index to display.
      */
     public ClientCard(Client client, int displayedIndex) {
         super(FXML);
@@ -51,24 +53,8 @@ public class ClientCard extends UiPart<Region> {
         phone.setText(client.getPhone().value);
         address.setText(client.getAddress().value);
         email.setText(client.getEmail().value);
-        client.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof ClientCard)) {
-            return false;
-        }
-
-        // state check
-        ClientCard card = (ClientCard) other;
-        return id.getText().equals(card.id.getText())
-                && client.equals(card.client);
+        client.getTags().stream()
+                .sorted(Comparator.comparing(tag -> tag.tagName))
+                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 }

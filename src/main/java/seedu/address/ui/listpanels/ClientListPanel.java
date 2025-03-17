@@ -1,4 +1,4 @@
-package seedu.address.ui.ListPanels;
+package seedu.address.ui.listpanels;
 
 import java.util.logging.Logger;
 
@@ -9,8 +9,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.client.Client;
-import seedu.address.ui.Cards.ClientCard;
 import seedu.address.ui.UiPart;
+import seedu.address.ui.cards.ClientCard;
 
 /**
  * Panel containing the list of clients.
@@ -47,5 +47,4 @@ public class ClientListPanel extends UiPart<Region> {
             }
         }
     }
-
 }

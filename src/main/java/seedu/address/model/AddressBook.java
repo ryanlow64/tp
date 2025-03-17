@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.UniqueClientList;
+import seedu.address.model.deal.Deal;
+import seedu.address.model.deal.DealList;
 
 /**
  * Wraps all data at the address-book level
@@ -16,6 +18,7 @@ import seedu.address.model.client.UniqueClientList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueClientList clients;
+    private final DealList deals;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -26,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         clients = new UniqueClientList();
+        deals = new DealList();
     }
 
     public AddressBook() {}
@@ -49,12 +53,20 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the deal list with {@code deals}.
+     */
+    public void setDeals(List<Deal> deals) {
+        this.deals.setDeals(deals);
+    }
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
         setClients(newData.getClientList());
+        setDeals(newData.getDealList());
     }
 
     //// client-level operations
@@ -94,12 +106,38 @@ public class AddressBook implements ReadOnlyAddressBook {
         clients.remove(key);
     }
 
+    //// deal-level operations
+
+    /**
+     * Returns true if a deal with the same identity as {@code deal} exists in the address book.
+     */
+    public boolean hasDeal(Deal deal) {
+        requireNonNull(deal);
+        return deals.contains(deal);
+    }
+
+    /**
+     * Adds a deal to the address book.
+     * The deal must not already exist in the address book.
+     */
+    public void addDeal(Deal deal) {
+        deals.add(deal);
+    }
+
+    /**
+     * Returns an unmodifiable view of the deal list.
+     */
+    public ObservableList<Deal> getDealList() {
+        return deals.asUnmodifiableObservableList();
+    }
+
     //// util methods
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("clients", clients)
+                .add("deals", deals)
                 .toString();
     }
 
@@ -115,16 +153,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddressBook)) {
+        if (!(other instanceof AddressBook otherAddressBook)) {
             return false;
         }
 
-        AddressBook otherAddressBook = (AddressBook) other;
-        return clients.equals(otherAddressBook.clients);
+        return clients.equals(otherAddressBook.clients) && deals.equals(otherAddressBook.deals);
     }
 
     @Override
     public int hashCode() {
-        return clients.hashCode();
+        return clients.hashCode() + deals.hashCode();
     }
 }

@@ -152,14 +152,6 @@ public class AddClientCommandParserTest extends AddCommandParserTest<Client> {
         assertParseFailure(parser, CLIENT_NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
                 expectedMessage);
 
-        // missing email prefix
-        assertParseFailure(parser, CLIENT_NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + ADDRESS_DESC_BOB,
-                expectedMessage);
-
-        // missing address prefix
-        assertParseFailure(parser, CLIENT_NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB,
-                expectedMessage);
-
         // all prefixes missing
         assertParseFailure(parser, VALID_CLIENT_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_ADDRESS_BOB,
                 expectedMessage);
@@ -186,6 +178,14 @@ public class AddClientCommandParserTest extends AddCommandParserTest<Client> {
         // invalid tag
         assertParseFailure(parser, CLIENT_NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_CONSTRAINTS);
+
+        // missing email prefix
+        assertParseFailure(parser, CLIENT_NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + ADDRESS_DESC_BOB,
+                Phone.MESSAGE_CONSTRAINTS);
+
+        // missing address prefix
+        assertParseFailure(parser, CLIENT_NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB,
+                Email.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_CLIENT_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC,

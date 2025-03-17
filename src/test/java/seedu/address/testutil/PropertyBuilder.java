@@ -3,8 +3,8 @@ package seedu.address.testutil;
 import java.util.Optional;
 
 import seedu.address.model.commons.Address;
-import seedu.address.model.property.Description;
 import seedu.address.model.commons.Price;
+import seedu.address.model.property.Description;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 import seedu.address.model.property.Size;

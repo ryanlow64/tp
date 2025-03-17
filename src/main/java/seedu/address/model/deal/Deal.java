@@ -1,7 +1,10 @@
 package seedu.address.model.deal;
 
-import seedu.address.commons.core.index.Index;
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Price;
+import seedu.address.model.property.PropertyName;
 
 /**
  * Represents a Deal in the address book.
@@ -9,52 +12,57 @@ import seedu.address.model.commons.Price;
  */
 public class Deal {
 
-    private final Index propertyId;
-    private final Index buyerId;
-    private final Index sellerId;
+    private final PropertyName propertyName;
+    private final ClientName buyer;
+    private final ClientName seller;
     private final Price price;
-    private final DealStatus status;
+    private final DealStatus status; // default status is PENDING
 
     /**
      * Creates a new Deal with the specified details.
      * Status is set to PENDING by default.
      *
-     * @param propertyId The ID of the property involved in the deal
-     * @param buyerId The ID of the buyer client
-     * @param sellerId The ID of the seller client
+     * @param propertyName The name of the property involved in the deal
+     * @param buyer The name of the buyer client
+     * @param seller The name of the seller client
      * @param price The price of the deal
      */
-    public Deal(Index propertyId, Index buyerId, Index sellerId, Price price) {
-        this(propertyId, buyerId, sellerId, price, DealStatus.PENDING);
+    public Deal(PropertyName propertyName, ClientName buyer, ClientName seller, Price price) {
+        this(propertyName, buyer, seller, price, DealStatus.PENDING);
     }
 
     /**
      * Creates a new Deal with the specified details and status.
      *
-     * @param propertyId The ID of the property involved in the deal
-     * @param buyerId The ID of the buyer client
-     * @param sellerId The ID of the seller client
+     * @param propertyName The name of the property involved in the deal
+     * @param buyer The name of the buyer client
+     * @param seller The name of the seller client
      * @param price The price of the deal
      * @param status The status of the deal
      */
-    public Deal(Index propertyId, Index buyerId, Index sellerId, Price price, DealStatus status) {
-        this.propertyId = propertyId;
-        this.buyerId = buyerId;
-        this.sellerId = sellerId;
+    public Deal(PropertyName propertyName, ClientName buyer, ClientName seller, Price price, DealStatus status) {
+        requireNonNull(propertyName);
+        requireNonNull(buyer);
+        requireNonNull(seller);
+        requireNonNull(price);
+        requireNonNull(status);
+        this.propertyName = propertyName;
+        this.buyer = buyer;
+        this.seller = seller;
         this.price = price;
         this.status = status;
     }
 
-    public Index getPropertyId() {
-        return propertyId;
+    public PropertyName getPropertyName() {
+        return propertyName;
     }
 
-    public Index getBuyerId() {
-        return buyerId;
+    public ClientName getBuyer() {
+        return buyer;
     }
 
-    public Index getSellerId() {
-        return sellerId;
+    public ClientName getSeller() {
+        return seller;
     }
 
     public Price getPrice() {
@@ -67,7 +75,22 @@ public class Deal {
 
     /**
      * Returns true if both deals have the same property, buyer, and seller.
+     * This defines a weaker notion of equality between two deals.
+     *
+     * @param otherDeal The other deal to compare with
+     * @return true if both deals have the same property, buyer, and seller
      */
+    public boolean isSameDeal(Deal otherDeal) {
+        if (otherDeal == this) {
+            return true;
+        }
+
+        return otherDeal != null
+                && otherDeal.getPropertyName().equals(getPropertyName())
+                && otherDeal.getBuyer().equals(getBuyer())
+                && otherDeal.getSeller().equals(getSeller());
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -78,20 +101,22 @@ public class Deal {
             return false;
         }
 
-        return propertyId.equals(otherDeal.propertyId)
-                && buyerId.equals(otherDeal.buyerId)
-                && sellerId.equals(otherDeal.sellerId);
+        return propertyName.equals(otherDeal.propertyName)
+                && buyer.equals(otherDeal.buyer)
+                && seller.equals(otherDeal.seller)
+                && price.equals(otherDeal.price)
+                && status.equals(otherDeal.status);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Property ID: ")
-                .append(propertyId.getOneBased())
-                .append(" Buyer ID: ")
-                .append(buyerId.getOneBased())
-                .append(" Seller ID: ")
-                .append(sellerId.getOneBased())
+        builder.append("Property: ")
+                .append(propertyName)
+                .append(" Buyer: ")
+                .append(buyer)
+                .append(" Seller: ")
+                .append(seller)
                 .append(" Price: ")
                 .append(price.value)
                 .append(" Status: ")

@@ -44,7 +44,7 @@ public class DealList {
      * Returns true if the list contains an equivalent deal as the given argument.
      */
     public boolean contains(Deal toCheck) {
-        return internalList.stream().anyMatch(toCheck::equals);
+        return internalList.stream().anyMatch(d -> d.isSameDeal(toCheck));
     }
 
     @Override

@@ -9,16 +9,16 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.stream.Stream;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.deal.AddDealCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.DealStatus;
+import seedu.address.model.property.PropertyName;
 
 /**
  * Parses input arguments and creates a new AddDealCommand object
@@ -40,16 +40,35 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddDealCommand.MESSAGE_USAGE));
         }
 
-        Index propertyId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_PROPERTY_ID).get());
-        Index buyerId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_BUYER).get());
-        Index sellerId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_SELLER).get());
+        // Parse property name
+        String propertyNameStr = argMultimap.getValue(PREFIX_PROPERTY_ID).get();
+        if (!PropertyName.isValidPropertyName(propertyNameStr)) {
+            throw new ParseException(PropertyName.MESSAGE_CONSTRAINTS);
+        }
+        PropertyName propertyName = new PropertyName(propertyNameStr);
+
+        // Parse buyer name
+        String buyerNameStr = argMultimap.getValue(PREFIX_BUYER).get();
+        if (!ClientName.isValidClientName(buyerNameStr)) {
+            throw new ParseException(ClientName.MESSAGE_CONSTRAINTS);
+        }
+        ClientName buyer = new ClientName(buyerNameStr);
+
+        // Parse seller name
+        String sellerNameStr = argMultimap.getValue(PREFIX_SELLER).get();
+        if (!ClientName.isValidClientName(sellerNameStr)) {
+            throw new ParseException(ClientName.MESSAGE_CONSTRAINTS);
+        }
+        ClientName seller = new ClientName(sellerNameStr);
+
         // Parse price
         String priceString = argMultimap.getValue(PREFIX_PRICE).get();
         if (!Price.isValidPrice(priceString)) {
-            throw new ParseException("Invalid price: Price must be a positive number and be under 9 quintillion.");
+            throw new ParseException(Price.MESSAGE_CONSTRAINTS);
         }
         long priceValue = Long.parseLong(priceString);
         Price price = new Price(priceValue);
+
         // Parse status (optional)
         DealStatus status = DealStatus.PENDING; // Default status
         if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
@@ -65,7 +84,7 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
             }
         }
 
-        return new AddDealCommand(propertyId, buyerId, sellerId, price, status);
+        return new AddDealCommand(propertyName, buyer, seller, price, status);
     }
 
     /**

@@ -13,7 +13,7 @@ import seedu.address.model.commons.Name;
  */
 public class PropertyName implements Name<Property> {
 
-    public static final String MESSAGE_CONSTRAINTS = ""; // TODO: Fill in constraints
+    public static final String MESSAGE_CONSTRAINTS = "Property name must not be empty.";
 
     public final String fullName;
 
@@ -30,9 +30,32 @@ public class PropertyName implements Name<Property> {
 
     /**
      * Returns true if a given string is a valid name.
-     * TODO: Implement this method
      */
     public static boolean isValidPropertyName(String test) {
-        return true;
+        return test != null && !test.trim().isEmpty();
+    }
+
+    @Override
+    public String toString() {
+        return fullName;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof PropertyName)) {
+            return false;
+        }
+
+        PropertyName otherName = (PropertyName) other;
+        return fullName.equals(otherName.fullName);
+    }
+
+    @Override
+    public int hashCode() {
+        return fullName.hashCode();
     }
 }

@@ -7,15 +7,15 @@
     "tags": [ "friends" ]
   } ],
   "deals": [ {
-    "propertyId": "1",
-    "buyerId": "1",
-    "sellerId": "2",
+    "propertyName": "Sunset Villa",
+    "buyer": "John Doe",
+    "seller": "Jane Smith",
     "price": "500000",
     "status": "PENDING"
   }, {
-    "propertyId": "1",
-    "buyerId": "1",
-    "sellerId": "2",
+    "propertyName": "Sunset Villa",
+    "buyer": "John Doe",
+    "seller": "Jane Smith",
     "price": "600000",
     "status": "CLOSED"
   } ]

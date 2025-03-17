@@ -36,12 +36,12 @@ public class DealCard extends UiPart<Region> {
         super(FXML);
         this.deal = deal;
         id.setText(displayedIndex + ". ");
-        name.setText("DEAL: Property #" + deal.getPropertyId().getOneBased());
-        phone.setText("Buyer: Client #" + deal.getBuyerId().getOneBased()
-                + " | Seller: Client #" + deal.getSellerId().getOneBased());
-        address.setText("Price: $" + deal.getPrice().value);
+        name.setText(deal.getPropertyName().toString());
+        address.setText("Buyer: " + deal.getBuyer().toString()
+                + " | Seller: " + deal.getSeller().toString());
+        phone.setText("Price: $" + deal.getPrice().value);
         email.setText("Status: " + deal.getStatus());
-        // Make the card visually separaate for now
+        // Make the card visually separate for now
         cardPane.setStyle("-fx-background-color: #f0f8ff;"); // Light blue background
     }
 

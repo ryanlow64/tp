@@ -24,7 +24,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="name" text="\$propertyId" styleClass="cell_big_label" />
+        <Label fx:id="name" text="\$propertyName" styleClass="cell_big_label" />
       </HBox>
       <Label fx:id="phone" styleClass="cell_small_label" text="\$buyerSeller" />
       <Label fx:id="address" styleClass="cell_small_label" text="\$price" />

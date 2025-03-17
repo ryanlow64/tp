@@ -3,11 +3,12 @@ package seedu.address.storage;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
+import seedu.address.model.property.PropertyName;
 
 /**
  * Jackson-friendly version of {@link Deal}.
@@ -15,13 +16,13 @@ import seedu.address.model.deal.DealStatus;
 public class JsonAdaptedDeal {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Deal's %s field is missing!";
-    public static final String INVALID_INDEX_MESSAGE = "Index is not a non-zero unsigned integer.";
     public static final String INVALID_PRICE_MESSAGE = "Price must be a positive number and be under 9 quintillion.";
     public static final String INVALID_STATUS_MESSAGE = "Status must be one of 'PENDING', 'CLOSED', 'IN_NEGOTIATION'.";
+    public static final String INVALID_NAME_MESSAGE = "Name must be a valid string.";
 
-    private final String propertyId;
-    private final String buyerId;
-    private final String sellerId;
+    private final String propertyName;
+    private final String buyer;
+    private final String seller;
     private final String price;
     private final String status;
 
@@ -29,14 +30,14 @@ public class JsonAdaptedDeal {
      * Constructs a {@code JsonAdaptedDeal} with the given deal details.
      */
     @JsonCreator
-    public JsonAdaptedDeal(@JsonProperty("propertyId") String propertyId,
-                          @JsonProperty("buyerId") String buyerId,
-                          @JsonProperty("sellerId") String sellerId,
+    public JsonAdaptedDeal(@JsonProperty("propertyName") String propertyName,
+                          @JsonProperty("buyer") String buyer,
+                          @JsonProperty("seller") String seller,
                           @JsonProperty("price") String price,
                           @JsonProperty("status") String status) {
-        this.propertyId = propertyId;
-        this.buyerId = buyerId;
-        this.sellerId = sellerId;
+        this.propertyName = propertyName;
+        this.buyer = buyer;
+        this.seller = seller;
         this.price = price;
         this.status = status;
     }
@@ -45,9 +46,9 @@ public class JsonAdaptedDeal {
      * Converts a given {@code Deal} into this class for Jackson use.
      */
     public JsonAdaptedDeal(Deal source) {
-        propertyId = String.valueOf(source.getPropertyId().getOneBased());
-        buyerId = String.valueOf(source.getBuyerId().getOneBased());
-        sellerId = String.valueOf(source.getSellerId().getOneBased());
+        propertyName = source.getPropertyName().toString();
+        buyer = source.getBuyer().toString();
+        seller = source.getSeller().toString();
         price = String.valueOf(source.getPrice().value);
         status = source.getStatus().name();
     }
@@ -58,38 +59,32 @@ public class JsonAdaptedDeal {
      * @throws IllegalValueException if there were any data constraints violated in the adapted deal.
      */
     public Deal toModelType() throws IllegalValueException {
-        // Property ID
-        if (propertyId == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Property ID"));
+        // Property Name
+        if (propertyName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Property Name"));
         }
-        Index modelPropertyId;
-        try {
-            modelPropertyId = Index.fromOneBased(Integer.parseInt(propertyId));
-        } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-            throw new IllegalValueException(INVALID_INDEX_MESSAGE);
+        if (!PropertyName.isValidPropertyName(propertyName)) {
+            throw new IllegalValueException(INVALID_NAME_MESSAGE);
         }
+        PropertyName modelPropertyName = new PropertyName(propertyName);
 
-        // Buyer ID
-        if (buyerId == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Buyer ID"));
+        // Buyer
+        if (buyer == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Buyer"));
         }
-        Index modelBuyerId;
-        try {
-            modelBuyerId = Index.fromOneBased(Integer.parseInt(buyerId));
-        } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-            throw new IllegalValueException(INVALID_INDEX_MESSAGE);
+        if (!ClientName.isValidClientName(buyer)) {
+            throw new IllegalValueException(INVALID_NAME_MESSAGE);
         }
+        ClientName modelBuyer = new ClientName(buyer);
 
-        // Seller ID
-        if (sellerId == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Seller ID"));
+        // Seller
+        if (seller == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Seller"));
         }
-        Index modelSellerId;
-        try {
-            modelSellerId = Index.fromOneBased(Integer.parseInt(sellerId));
-        } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-            throw new IllegalValueException(INVALID_INDEX_MESSAGE);
+        if (!ClientName.isValidClientName(seller)) {
+            throw new IllegalValueException(INVALID_NAME_MESSAGE);
         }
+        ClientName modelSeller = new ClientName(seller);
 
         // Price
         if (price == null) {
@@ -111,6 +106,6 @@ public class JsonAdaptedDeal {
             throw new IllegalValueException(INVALID_STATUS_MESSAGE);
         }
 
-        return new Deal(modelPropertyId, modelBuyerId, modelSellerId, modelPrice, modelStatus);
+        return new Deal(modelPropertyName, modelBuyer, modelSeller, modelPrice, modelStatus);
     }
 }

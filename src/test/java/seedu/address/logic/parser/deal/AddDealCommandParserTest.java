@@ -1,6 +1,11 @@
 package seedu.address.logic.parser.deal;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -14,16 +19,16 @@ import seedu.address.model.property.PropertyName;
 
 public class AddDealCommandParserTest {
     // Define test constants
-    private static final String VALID_PROPERTY_NAME_DESC = " pid/Sunset Villa";
-    private static final String INVALID_PROPERTY_NAME_DESC = " pid/"; // empty property name
-    private static final String VALID_BUYER_NAME_DESC = " buyer/John Doe";
-    private static final String INVALID_BUYER_NAME_DESC = " buyer/"; // empty buyer name
-    private static final String VALID_SELLER_NAME_DESC = " seller/Jane Smith";
-    private static final String INVALID_SELLER_NAME_DESC = " seller/"; // empty seller name
-    private static final String VALID_PRICE_DESC = " price/500000";
-    private static final String INVALID_PRICE_DESC = " price/abc"; // price must be numeric
-    private static final String VALID_STATUS_DESC = " status/pending";
-    private static final String INVALID_STATUS_DESC = " status/invalid"; // status must be one of the predefined values
+    private static final String VALID_PROPERTY_NAME_DESC = " " + PREFIX_PROPERTY_NAME + "Sunset Villa";
+    private static final String INVALID_PROPERTY_NAME_DESC = " " + PREFIX_PROPERTY_NAME + ""; // empty property name
+    private static final String VALID_BUYER_NAME_DESC = " " + PREFIX_BUYER + "John Doe";
+    private static final String INVALID_BUYER_NAME_DESC = " " + PREFIX_BUYER + ""; // empty buyer name
+    private static final String VALID_SELLER_NAME_DESC = " " + PREFIX_SELLER + "Jane Smith";
+    private static final String INVALID_SELLER_NAME_DESC = " " + PREFIX_SELLER + ""; // empty seller name
+    private static final String VALID_PRICE_DESC = " " + PREFIX_PRICE + "25";
+    private static final String INVALID_PRICE_DESC = " " + PREFIX_PRICE + "abc"; // price must be numeric
+    private static final String VALID_STATUS_DESC = " " + PREFIX_STATUS + "PENDING";
+    private static final String INVALID_STATUS_DESC = " " + PREFIX_STATUS + "invalid"; // status is a predefined value
 
     private final AddDealCommandParser parser = new AddDealCommandParser();
 
@@ -33,10 +38,11 @@ public class AddDealCommandParserTest {
         PropertyName propertyName = new PropertyName("Sunset Villa");
         ClientName buyer = new ClientName("John Doe");
         ClientName seller = new ClientName("Jane Smith");
-        Price price = new Price(500000);
+        Price price = new Price(25L);
         DealStatus status = DealStatus.PENDING;
         AddDealCommand expectedCommand = new AddDealCommand(propertyName, buyer, seller, price, status);
 
+        // Test with all fields including status
         assertParseSuccess(parser, VALID_PROPERTY_NAME_DESC + VALID_BUYER_NAME_DESC + VALID_SELLER_NAME_DESC
                 + VALID_PRICE_DESC + VALID_STATUS_DESC, expectedCommand);
 

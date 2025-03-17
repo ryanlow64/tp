@@ -90,15 +90,22 @@ public class JsonAdaptedDeal {
         if (price == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Price"));
         }
-        if (!Price.isValidPrice(price)) {
+
+        Price modelPrice;
+        try {
+            if (!Price.isValidPrice(price)) {
+                throw new IllegalValueException(INVALID_PRICE_MESSAGE);
+            }
+            modelPrice = new Price(price);
+        } catch (IllegalArgumentException e) {
             throw new IllegalValueException(INVALID_PRICE_MESSAGE);
         }
-        Price modelPrice = new Price(Long.parseLong(price));
 
         // Status
         if (status == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Status"));
         }
+
         DealStatus modelStatus;
         try {
             modelStatus = DealStatus.valueOf(status);
@@ -107,5 +114,23 @@ public class JsonAdaptedDeal {
         }
 
         return new Deal(modelPropertyName, modelBuyer, modelSeller, modelPrice, modelStatus);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof JsonAdaptedDeal)) {
+            return false;
+        }
+
+        JsonAdaptedDeal otherDeal = (JsonAdaptedDeal) other;
+        return java.util.Objects.equals(propertyName, otherDeal.propertyName)
+                && java.util.Objects.equals(buyer, otherDeal.buyer)
+                && java.util.Objects.equals(seller, otherDeal.seller)
+                && java.util.Objects.equals(price, otherDeal.price)
+                && java.util.Objects.equals(status, otherDeal.status);
     }
 }

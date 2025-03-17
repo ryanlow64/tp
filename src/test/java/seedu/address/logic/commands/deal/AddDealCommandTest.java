@@ -38,7 +38,7 @@ public class AddDealCommandTest {
         PropertyName propertyName = new PropertyName("Test Property");
         ClientName buyer = new ClientName("John Doe");
         ClientName seller = new ClientName("Jane Smith");
-        Price price = new Price(500000);
+        Price price = new Price(500000L);
         DealStatus status = DealStatus.PENDING;
 
         Deal validDeal = new Deal(propertyName, buyer, seller, price, status);

@@ -6,17 +6,18 @@
     "address": "123, Jurong West Ave 6, #08-111",
     "tags": [ "friends" ]
   } ],
+  "properties": [ ],
   "deals": [ {
     "propertyName": "Sunset Villa",
     "buyer": "John Doe",
     "seller": "Jane Smith",
-    "price": "500000",
+    "price": "500",
     "status": "PENDING"
   }, {
     "propertyName": "Sunset Villa",
     "buyer": "John Doe",
     "seller": "Jane Smith",
-    "price": "600000",
+    "price": "600",
     "status": "CLOSED"
   } ]
 }

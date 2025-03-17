@@ -170,6 +170,8 @@ public class ModelManager implements Model {
         filteredClients.setPredicate(predicate);
     }
 
+    //=========== Filtered Deal List Accessors =============================================================
+
     /**
      * Returns an unmodifiable view of the list of {@code Deal} backed by the internal list of
      * {@code versionedAddressBook}
@@ -184,6 +186,8 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredDeals.setPredicate(predicate);
     }
+
+    //=========== Filtered Property List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Property} backed by the internal list of
@@ -215,7 +219,7 @@ public class ModelManager implements Model {
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredClients.equals(otherModelManager.filteredClients)
+                && filteredDeals.equals(otherModelManager.filteredDeals)
                 && filteredProperties.equals(otherModelManager.filteredProperties);
     }
-
 }

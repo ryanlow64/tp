@@ -16,7 +16,7 @@ public class Price {
     /**
      * Constructs a {@code Price}.
      *
-     * @param price
+     * @param price A valid price value
      */
     public Price(Long price) {
         this.value = price;
@@ -25,7 +25,7 @@ public class Price {
     /**
      * Constructs a {@code Price}.
      *
-     * @param price
+     * @param price A valid price value
      */
     public Price(Integer price) {
         this.value = Long.valueOf(price);
@@ -34,17 +34,27 @@ public class Price {
     /**
      * Constructs a {@code Price}.
      *
-     * @param price
+     * @param price A valid price string
      */
     public Price(String price) {
-        this.value = Long.parseLong(price);
+        if (!isValidPrice(price)) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        }
+        try {
+            this.value = Long.parseLong(price);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        }
     }
 
     /**
      * Returns true if a given string is a valid price.
      */
     public static boolean isValidPrice(String test) {
-        return test.isBlank() || test.matches(VALIDATION_REGEX);
+        if (test == null) {
+            return false;
+        }
+        return !test.isBlank() && test.matches(VALIDATION_REGEX);
     }
 
     /**

@@ -84,7 +84,7 @@ public class EditClientCommand extends EditCommand<Client> {
 
         model.setClient(clientToEdit, editedClient);
         model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
-        return new CommandResult(String.format(MESSAGE_EDIT_CLIENT_SUCCESS, Messages.format(editedClient)));
+        return new CommandResult(String.format(MESSAGE_EDIT_CLIENT_SUCCESS, Messages.formatClient(editedClient)));
     }
 
     /**

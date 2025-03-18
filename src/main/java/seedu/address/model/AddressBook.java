@@ -4,12 +4,14 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.UniqueClientList;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.UniqueDealList;
+import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyList;
 
@@ -21,6 +23,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueClientList clients;
     private final UniqueDealList deals;
+    private final ObservableList<Event> events;
     private final UniquePropertyList properties;
 
     /*
@@ -30,9 +33,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
      */
+
     {
         clients = new UniqueClientList();
         deals = new UniqueDealList();
+        events = FXCollections.observableArrayList();
         properties = new UniquePropertyList();
     }
 
@@ -118,6 +123,27 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeClient(Client key) {
         clients.remove(key);
+    }
+
+    //// event operations
+    /**
+     * Adds an event to the address book.
+     */
+    public void addEvent(Event event) {
+        requireNonNull(event);
+        events.add(event);
+    }
+
+    /**
+     * Removes an event from the address book.
+     */
+    public void removeEvent(Event event) {
+        requireNonNull(event);
+        events.remove(event);
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events.setAll(events);
     }
 
     //// property-level operations
@@ -209,6 +235,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Client> getClientList() {
         return clients.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Event> getEventList() {
+        return FXCollections.unmodifiableObservableList(events);
     }
 
     @Override

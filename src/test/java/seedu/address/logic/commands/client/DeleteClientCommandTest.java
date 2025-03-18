@@ -34,7 +34,7 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
         DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST_CLIENT);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
-            Messages.format(clientToDelete));
+            Messages.formatClient(clientToDelete));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deleteClient(clientToDelete);
@@ -58,7 +58,7 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
         DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST_CLIENT);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
-            Messages.format(clientToDelete));
+            Messages.formatClient(clientToDelete));
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deleteClient(clientToDelete);

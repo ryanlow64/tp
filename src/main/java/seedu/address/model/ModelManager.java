@@ -13,6 +13,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
+import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
 
 /**
@@ -25,6 +26,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Client> filteredClients;
     private final FilteredList<Deal> filteredDeals;
+    private final FilteredList<Event> filteredEvents;
     private final FilteredList<Property> filteredProperties;
 
     /**
@@ -39,6 +41,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredClients = new FilteredList<>(this.addressBook.getClientList());
         filteredDeals = new FilteredList<>(this.addressBook.getDealList());
+        filteredEvents = new FilteredList<>(this.addressBook.getEventList());
         filteredProperties = new FilteredList<>(this.addressBook.getPropertyList());
     }
 
@@ -93,6 +96,7 @@ public class ModelManager implements Model {
         return addressBook;
     }
 
+    // === Client Methods ===
     @Override
     public boolean hasClient(Client client) {
         requireNonNull(client);
@@ -117,6 +121,25 @@ public class ModelManager implements Model {
         addressBook.setClient(target, editedClient);
     }
 
+    // === Event Methods ===
+    @Override
+    public void addEvent(Event event) {
+        addressBook.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+    }
+
+    @Override
+    public void deleteEvent(Event event) {
+        addressBook.removeEvent(event);
+    }
+
+    @Override
+    public boolean hasEvent(Event event) {
+        requireNonNull(event);
+        return addressBook.getEventList().contains(event);
+    }
+
+    // === Property Methods ===
     @Override
     public boolean hasProperty(Property property) {
         requireNonNull(property);
@@ -141,6 +164,7 @@ public class ModelManager implements Model {
         addressBook.setProperty(target, editedProperty);
     }
 
+    // === Deal Methods ===
     @Override
     public boolean hasDeal(Deal deal) {
         requireNonNull(deal);
@@ -170,6 +194,19 @@ public class ModelManager implements Model {
         filteredClients.setPredicate(predicate);
     }
 
+    //=========== Filtered Event List Accessors =============================================================
+    @Override
+    public ObservableList<Event> getFilteredEventList() {
+        return filteredEvents;
+    }
+
+    @Override
+    public void updateFilteredEventList(Predicate<Event> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
+    }
+
+    //=========== Filtered Property List Accessors =============================================================
     //=========== Filtered Deal List Accessors =============================================================
 
     /**
@@ -220,6 +257,7 @@ public class ModelManager implements Model {
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredClients.equals(otherModelManager.filteredClients)
                 && filteredDeals.equals(otherModelManager.filteredDeals)
+                && filteredEvents.equals(otherModelManager.filteredEvents)
                 && filteredProperties.equals(otherModelManager.filteredProperties);
     }
 }

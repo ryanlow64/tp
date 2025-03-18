@@ -13,6 +13,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.client.Client;
 import seedu.address.model.event.Event;
+import seedu.address.model.property.Property;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -24,6 +25,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Client> filteredClients;
     private final FilteredList<Event> filteredEvents;
+    private final FilteredList<Property> filteredProperties;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +39,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredClients = new FilteredList<>(this.addressBook.getClientList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
+        filteredProperties = new FilteredList<>(this.addressBook.getPropertyList());
     }
 
     public ModelManager() {
@@ -133,6 +136,31 @@ public class ModelManager implements Model {
         return addressBook.getEventList().contains(event);
     }
 
+    // === Property Methods ===
+    @Override
+    public boolean hasProperty(Property property) {
+        requireNonNull(property);
+        return addressBook.hasProperty(property);
+    }
+
+    @Override
+    public void deleteProperty(Property target) {
+        addressBook.removeProperty(target);
+    }
+
+    @Override
+    public void addProperty(Property property) {
+        addressBook.addProperty(property);
+        updateFilteredPropertyList(PREDICATE_SHOW_ALL_PROPERTIES);
+    }
+
+    @Override
+    public void setProperty(Property target, Property editedProperty) {
+        requireAllNonNull(target, editedProperty);
+
+        addressBook.setProperty(target, editedProperty);
+    }
+
     //=========== Filtered Client List Accessors =============================================================
 
     /**
@@ -162,6 +190,22 @@ public class ModelManager implements Model {
         filteredEvents.setPredicate(predicate);
     }
 
+    //=========== Filtered Property List Accessors =============================================================
+    /**
+     * Returns an unmodifiable view of the list of {@code Property} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<Property> getFilteredPropertyList() {
+        return filteredProperties;
+    }
+
+    @Override
+    public void updateFilteredPropertyList(Predicate<Property> predicate) {
+        requireNonNull(predicate);
+        filteredProperties.setPredicate(predicate);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -176,6 +220,8 @@ public class ModelManager implements Model {
         ModelManager otherModelManager = (ModelManager) other;
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredClients.equals(otherModelManager.filteredClients);
+                && filteredClients.equals(otherModelManager.filteredClients)
+                && filteredEvents.equals(otherModelManager.filteredEvents)
+                && filteredProperties.equals(otherModelManager.filteredProperties);
     }
 }

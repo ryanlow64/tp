@@ -1,4 +1,4 @@
-package seedu.address.ui.Cards;
+package seedu.address.ui.cards;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -48,8 +48,9 @@ public class PropertyCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(property.getPropertyName().fullName);
         address.setText(property.getAddress().value);
-        price.setText(property.getPrice().value.toString());
-        size.setText(property.getSize().map(size -> size.value.toString()).orElse(""));
-        description.setText(property.getDescription().orElse(""));
+        price.setText(property.getPrice().map(p -> p.getPrice().orElse("N/A")).orElse("N/A"));
+        size.setText(property.getSize().map(s -> s.getSize().orElse("N/A")).orElse("N/A"));
+        description.setText(property.getDescription().map(d -> d.getDescription().orElse("N/A"))
+                .orElse("N/A"));
     }
 }

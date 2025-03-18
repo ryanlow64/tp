@@ -40,7 +40,7 @@ public class AddClientCommandParser extends AddCommandParser<Client> {
             ArgumentTokenizer.tokenize(args, PREFIX_CLIENT_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                 PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_CLIENT_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
+        if (!arePrefixesPresent(argMultimap, PREFIX_CLIENT_NAME, PREFIX_PHONE)
             || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClientCommand.MESSAGE_USAGE));
         }
@@ -48,8 +48,14 @@ public class AddClientCommandParser extends AddCommandParser<Client> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
         ClientName clientName = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_CLIENT_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+        Email email = new Email("(blank)");
+        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+            email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+        }
+        Address address = new Address("(blank)");
+        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
+            address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+        }
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Client client = new Client(clientName, phone, email, address, tagList);

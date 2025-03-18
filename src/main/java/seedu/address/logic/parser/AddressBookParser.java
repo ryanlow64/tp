@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -17,16 +16,24 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.client.AddClientCommand;
 import seedu.address.logic.commands.client.ListClientCommand;
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.ListEventCommand;
+import seedu.address.logic.commands.property.AddPropertyCommand;
+import seedu.address.logic.commands.property.DeletePropertyCommand;
+import seedu.address.logic.commands.property.EditPropertyCommand;
+import seedu.address.logic.commands.property.ListPropertyCommand;
 import seedu.address.logic.parser.client.AddClientCommandParser;
 import seedu.address.logic.parser.client.DeleteClientCommandParser;
 import seedu.address.logic.parser.client.EditClientCommandParser;
 import seedu.address.logic.parser.event.AddEventCommandParser;
 import seedu.address.logic.parser.event.DeleteEventCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.property.AddPropertyCommandParser;
+import seedu.address.logic.parser.property.DeletePropertyCommandParser;
+import seedu.address.logic.parser.property.EditPropertyCommandParser;
 
 /**
  * Parses user input.
@@ -63,16 +70,25 @@ public class AddressBookParser {
         switch (commandWord) {
 
         // TODO: Add more add commands here for each entity
-        case AddCommand.COMMAND_WORD:
+        case AddClientCommand.COMMAND_WORD:
             return new AddClientCommandParser().parse(arguments);
+
+        case AddPropertyCommand.COMMAND_WORD:
+            return new AddPropertyCommandParser().parse(arguments);
 
         // TODO: Add more edit commands here for each entity
         case EditCommand.COMMAND_WORD:
             return new EditClientCommandParser().parse(arguments);
 
+        case EditPropertyCommand.COMMAND_WORD:
+            return new EditPropertyCommandParser().parse(arguments);
+
         // TODO: Add more delete commands here for each entity
         case DeleteCommand.COMMAND_WORD:
             return new DeleteClientCommandParser().parse(arguments);
+
+        case DeletePropertyCommand.COMMAND_WORD:
+            return new DeletePropertyCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -83,6 +99,9 @@ public class AddressBookParser {
         // TODO: Add more list commands here for each entity
         case ListCommand.COMMAND_WORD:
             return new ListClientCommand();
+
+        case ListPropertyCommand.COMMAND_WORD:
+            return new ListPropertyCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

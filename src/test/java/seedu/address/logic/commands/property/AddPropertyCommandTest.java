@@ -1,11 +1,12 @@
-package seedu.address.logic.commands.client;
+package seedu.address.logic.commands.property;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalClients.ALICE;
+import static seedu.address.testutil.TypicalProperties.MAPLE;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -27,66 +28,66 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.client.Client;
 import seedu.address.model.property.Property;
-import seedu.address.testutil.ClientBuilder;
+import seedu.address.testutil.PropertyBuilder;
 
-public class AddClientCommandTest extends AddCommandTest<Client> {
+public class AddPropertyCommandTest extends AddCommandTest<Property> {
 
     @Test
-    public void constructor_nullClient_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddClientCommand(null));
+    public void constructor_nullProperty_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new AddPropertyCommand(null));
     }
 
     @Test
-    public void execute_clientAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingClientAdded modelStub = new ModelStubAcceptingClientAdded();
-        Client validClient = new ClientBuilder().build();
+    public void execute_propertyAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingPropertyAdded modelStub = new ModelStubAcceptingPropertyAdded();
+        Property validProperty = new PropertyBuilder().build();
 
-        CommandResult commandResult = new AddClientCommand(validClient).execute(modelStub);
+        CommandResult commandResult = new AddPropertyCommand(validProperty).execute(modelStub);
 
-        assertEquals(String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.formatClient(validClient)),
+        assertEquals(String.format(AddPropertyCommand.MESSAGE_SUCCESS, Messages.format(validProperty)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validClient), modelStub.clientsAdded);
+        assertEquals(Arrays.asList(validProperty), modelStub.propertiesAdded);
     }
 
     @Test
-    public void execute_duplicateClient_throwsCommandException() {
-        Client validClient = new ClientBuilder().build();
-        AddCommand addCommand = new AddClientCommand(validClient);
-        ModelStub modelStub = new ModelStubWithClient(validClient);
+    public void execute_duplicateProperty_throwsCommandException() {
+        Property validProperty = new PropertyBuilder().build();
+        AddCommand addCommand = new AddPropertyCommand(validProperty);
+        ModelStub modelStub = new ModelStubWithProperty(validProperty);
 
-        assertThrows(CommandException.class, AddClientCommand.MESSAGE_DUPLICATE_CLIENT, ()
+        assertThrows(CommandException.class, AddPropertyCommand.MESSAGE_DUPLICATE_PROPERTY, ()
             -> addCommand.execute(modelStub));
     }
 
     @Test
     public void equals() {
-        Client alice = new ClientBuilder().withClientName("Alice").build();
-        Client bob = new ClientBuilder().withClientName("Bob").build();
-        AddCommand<Client> addAliceCommand = new AddClientCommand(alice);
-        AddCommand<Client> addBobCommand = new AddClientCommand(bob);
+        Property maple = new PropertyBuilder().withPropertyName("Maple").build();
+        Property orchid = new PropertyBuilder().withPropertyName("Orchid").build();
+        AddCommand<Property> addMapleCommand = new AddPropertyCommand(maple);
+        AddCommand<Property> addOrchidCommand = new AddPropertyCommand(orchid);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addMapleCommand.equals(addMapleCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddClientCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddCommand addMapleCommandCopy = new AddPropertyCommand(maple);
+        assertTrue(addMapleCommand.equals(addMapleCommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addMapleCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addMapleCommand.equals(null));
 
-        // different client -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        // different property -> returns false
+        assertFalse(addMapleCommand.equals(addOrchidCommand));
     }
 
     @Test
     public void toStringMethod() {
-        AddClientCommand addClientCommand = new AddClientCommand(ALICE);
-        String expected = AddClientCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
-        assertEquals(expected, addClientCommand.toString());
+        AddPropertyCommand addPropertyCommand = new AddPropertyCommand(MAPLE);
+        String expected = AddPropertyCommand.class.getCanonicalName() + "{toAdd=" + MAPLE + "}";
+        assertEquals(expected, addPropertyCommand.toString());
     }
 
     /**
@@ -195,39 +196,39 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
     }
 
     /**
-     * A Model stub that contains a single client.
+     * A Model stub that contains a single property.
      */
-    private class ModelStubWithClient extends ModelStub {
-        private final Client client;
+    private class ModelStubWithProperty extends ModelStub {
+        private final Property property;
 
-        ModelStubWithClient(Client client) {
-            requireNonNull(client);
-            this.client = client;
+        ModelStubWithProperty(Property property) {
+            requireNonNull(property);
+            this.property = property;
         }
 
         @Override
-        public boolean hasClient(Client client) {
-            requireNonNull(client);
-            return this.client.isSameClient(client);
+        public boolean hasProperty(Property property) {
+            requireNonNull(property);
+            return this.property.isSameProperty(property);
         }
     }
 
     /**
-     * A Model stub that always accept the client being added.
+     * A Model stub that always accept the property being added.
      */
-    private class ModelStubAcceptingClientAdded extends ModelStub {
-        final ArrayList<Client> clientsAdded = new ArrayList<>();
+    private class ModelStubAcceptingPropertyAdded extends ModelStub {
+        final ArrayList<Property> propertiesAdded = new ArrayList<>();
 
         @Override
-        public boolean hasClient(Client client) {
-            requireNonNull(client);
-            return clientsAdded.stream().anyMatch(client::isSameClient);
+        public boolean hasProperty(Property property) {
+            requireNonNull(property);
+            return propertiesAdded.stream().anyMatch(property::isSameProperty);
         }
 
         @Override
-        public void addClient(Client client) {
-            requireNonNull(client);
-            clientsAdded.add(client);
+        public void addProperty(Property property) {
+            requireNonNull(property);
+            propertiesAdded.add(property);
         }
 
         @Override

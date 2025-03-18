@@ -5,15 +5,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -29,7 +25,6 @@ import seedu.address.model.client.ClientName;
 import seedu.address.model.client.Email;
 import seedu.address.model.client.Phone;
 import seedu.address.model.commons.Address;
-import seedu.address.model.tag.Tag;
 
 /**
  * Edits the details of an existing client in the address book.
@@ -45,8 +40,7 @@ public class EditClientCommand extends EditCommand<Client> {
             + "[" + PREFIX_CLIENT_NAME + "CLIENTNAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_ADDRESS + "ADDRESS]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -98,9 +92,8 @@ public class EditClientCommand extends EditCommand<Client> {
         Phone updatedPhone = editClientDescriptor.getPhone().orElse(clientToEdit.getPhone());
         Email updatedEmail = editClientDescriptor.getEmail().orElse(clientToEdit.getEmail());
         Address updatedAddress = editClientDescriptor.getAddress().orElse(clientToEdit.getAddress());
-        Set<Tag> updatedTags = editClientDescriptor.getTags().orElse(clientToEdit.getTags());
 
-        return new Client(updatedClientName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Client(updatedClientName, updatedPhone, updatedEmail, updatedAddress);
     }
 
     @Override
@@ -136,20 +129,18 @@ public class EditClientCommand extends EditCommand<Client> {
         private Phone phone;
         private Email email;
         private Address address;
-        private Set<Tag> tags;
 
         public EditClientDescriptor() {}
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
+         *
          */
         public EditClientDescriptor(EditClientDescriptor toCopy) {
             setClientName(toCopy.clientName);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setTags(toCopy.tags);
         }
 
         /**
@@ -157,7 +148,7 @@ public class EditClientCommand extends EditCommand<Client> {
          */
         @Override
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(clientName, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(clientName, phone, email, address);
         }
 
         public void setClientName(ClientName clientName) {
@@ -192,23 +183,6 @@ public class EditClientCommand extends EditCommand<Client> {
             return Optional.ofNullable(address);
         }
 
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -224,8 +198,7 @@ public class EditClientCommand extends EditCommand<Client> {
             return Objects.equals(clientName, otherEditClientDescriptor.clientName)
                     && Objects.equals(phone, otherEditClientDescriptor.phone)
                     && Objects.equals(email, otherEditClientDescriptor.email)
-                    && Objects.equals(address, otherEditClientDescriptor.address)
-                    && Objects.equals(tags, otherEditClientDescriptor.tags);
+                    && Objects.equals(address, otherEditClientDescriptor.address);
         }
 
         @Override
@@ -235,7 +208,6 @@ public class EditClientCommand extends EditCommand<Client> {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
-                    .add("tags", tags)
                     .toString();
         }
     }

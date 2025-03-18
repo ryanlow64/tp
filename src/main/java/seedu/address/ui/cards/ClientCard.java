@@ -1,10 +1,7 @@
 package seedu.address.ui.cards;
 
-import java.util.Comparator;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.client.Client;
@@ -39,8 +36,6 @@ public class ClientCard extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
-    @FXML
-    private FlowPane tags;
 
     /**
      * Creates a {@code ClientCode} with the given {@code Client} and index to display.
@@ -53,8 +48,5 @@ public class ClientCard extends UiPart<Region> {
         phone.setText(client.getPhone().value);
         address.setText(client.getAddress().value);
         email.setText(client.getEmail().value);
-        client.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 }

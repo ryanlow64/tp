@@ -42,7 +42,7 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
 
         CommandResult commandResult = new AddClientCommand(validClient).execute(modelStub);
 
-        assertEquals(String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.format(validClient)),
+        assertEquals(String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.formatClient(validClient)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validClient), modelStub.clientsAdded);
     }

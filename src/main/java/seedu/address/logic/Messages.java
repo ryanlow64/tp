@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.client.Client;
+import seedu.address.model.event.Event;
 
 /**
  * Container for user visible messages.
@@ -34,9 +35,9 @@ public class Messages {
     /**
      * Formats the {@code client} for display to the user.
      */
-    public static String format(Client client) {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(client.getClientName())
+    public static String formatClient(Client client) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(client.getClientName())
                 .append("; Phone: ")
                 .append(client.getPhone())
                 .append("; Email: ")
@@ -44,8 +45,24 @@ public class Messages {
                 .append("; Address: ")
                 .append(client.getAddress())
                 .append("; Tags: ");
-        client.getTags().forEach(builder::append);
-        return builder.toString();
+        client.getTags().forEach(sb::append);
+        return sb.toString();
     }
 
+    /**
+     * Formats the {@code Event} for display to the user.
+     */
+    public static String formatEvent(Event event) {
+        return new StringBuilder("Event: ")
+                .append(event.getEventType())
+                .append("; Property: ")
+                .append(event.getPropertyName())
+                .append("; Client: ")
+                .append(event.getClientName())
+                .append("; Date: ")
+                .append(event.getDateTime())
+                .append("; Notes: ")
+                .append(event.getNote())
+                .toString();
+    }
 }

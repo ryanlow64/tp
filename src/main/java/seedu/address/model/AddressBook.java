@@ -22,21 +22,8 @@ import seedu.address.model.property.UniquePropertyList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueClientList clients;
-    private final ObservableList<Event> events;
-
-    /*
-     * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
-     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
-     *
-     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
-     */
-    {
-        clients = new UniqueClientList();
-        events = FXCollections.observableArrayList();
-    }
-
     private final UniqueDealList deals;
+    private final ObservableList<Event> events;
     private final UniquePropertyList properties;
 
     /*
@@ -46,9 +33,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
      */
+
     {
         clients = new UniqueClientList();
         deals = new UniqueDealList();
+        events = FXCollections.observableArrayList();
         properties = new UniquePropertyList();
     }
 

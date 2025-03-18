@@ -10,12 +10,12 @@ import java.util.regex.Pattern;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.client.AddClientCommand;
+import seedu.address.logic.commands.client.DeleteClientCommand;
 import seedu.address.logic.commands.client.EditClientCommand;
 import seedu.address.logic.commands.client.ListClientCommand;
 import seedu.address.logic.commands.property.AddPropertyCommand;
@@ -79,7 +79,7 @@ public class AddressBookParser {
             return new EditPropertyCommandParser().parse(arguments);
 
         // TODO: Add more delete commands here for each entity
-        case DeleteCommand.COMMAND_WORD:
+        case DeleteClientCommand.COMMAND_WORD:
             return new DeleteClientCommandParser().parse(arguments);
 
         case DeletePropertyCommand.COMMAND_WORD:

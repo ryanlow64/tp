@@ -4,44 +4,37 @@
     "clientName" : "Alice Pauline",
     "phone" : "94351253",
     "email" : "alice@example.com",
-    "address" : "123, Jurong West Ave 6, #08-111",
-    "tags" : [ "friends" ]
+    "address" : "123, Jurong West Ave 6, #08-111"
   }, {
     "clientName" : "Benson Meier",
     "phone" : "98765432",
     "email" : "johnd@example.com",
-    "address" : "311, Clementi Ave 2, #02-25",
-    "tags" : [ "owesMoney", "friends" ]
+    "address" : "311, Clementi Ave 2, #02-25"
   }, {
     "clientName" : "Carl Kurz",
     "phone" : "95352563",
     "email" : "heinz@example.com",
-    "address" : "wall street",
-    "tags" : [ ]
+    "address" : "wall street"
   }, {
     "clientName" : "Daniel Meier",
     "phone" : "87652533",
     "email" : "cornelia@example.com",
-    "address" : "10th street",
-    "tags" : [ "friends" ]
+    "address" : "10th street"
   }, {
     "clientName" : "Elle Meyer",
     "phone" : "94812224",
     "email" : "werner@example.com",
-    "address" : "michegan ave",
-    "tags" : [ ]
+    "address" : "michegan ave"
   }, {
     "clientName" : "Fiona Kunz",
     "phone" : "94812427",
     "email" : "lydia@example.com",
-    "address" : "little tokyo",
-    "tags" : [ ]
+    "address" : "little tokyo"
   }, {
     "clientName" : "George Best",
     "phone" : "94821442",
     "email" : "anna@example.com",
-    "address" : "4th street",
-    "tags" : [ ]
+    "address" : "4th street"
   } ],
   "properties" : [ ],
   "deals" : [ ]

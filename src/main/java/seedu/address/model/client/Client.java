@@ -2,14 +2,10 @@ package seedu.address.model.client;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.commons.Address;
-import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Client in the address book.
@@ -24,18 +20,16 @@ public class Client {
 
     // Data fields
     private final Address address;
-    private final Set<Tag> tags = new HashSet<>(); // TODO: Remove tags from Client in all files if not needed
 
     /**
      * Every field must be present and not null.
      */
-    public Client(ClientName clientName, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(clientName, phone, email, address, tags);
+    public Client(ClientName clientName, Phone phone, Email email, Address address) {
+        requireAllNonNull(clientName, phone, email, address);
         this.clientName = clientName;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.tags.addAll(tags);
     }
 
     public ClientName getClientName() {
@@ -52,14 +46,6 @@ public class Client {
 
     public Address getAddress() {
         return address;
-    }
-
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
     }
 
     /**
@@ -94,14 +80,13 @@ public class Client {
         return clientName.equals(otherClient.clientName)
                 && phone.equals(otherClient.phone)
                 && email.equals(otherClient.email)
-                && address.equals(otherClient.address)
-                && tags.equals(otherClient.tags);
+                && address.equals(otherClient.address);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(clientName, phone, email, address, tags);
+        return Objects.hash(clientName, phone, email, address);
     }
 
     @Override
@@ -111,7 +96,6 @@ public class Client {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
-                .add("tags", tags)
                 .toString();
     }
 

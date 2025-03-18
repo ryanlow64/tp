@@ -141,7 +141,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
+         *
          */
         public EditPropertyDescriptor(EditPropertyDescriptor toCopy) {
             setPropertyName(toCopy.propertyName);

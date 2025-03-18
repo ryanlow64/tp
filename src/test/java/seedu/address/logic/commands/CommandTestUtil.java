@@ -16,11 +16,15 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.client.EditClientCommand.EditClientDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.property.EditPropertyCommand.EditPropertyDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.NameContainsKeywordsPredicate;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.PropertyNameContainsKeywordsPredicate;
 import seedu.address.testutil.EditClientDescriptorBuilder;
+import seedu.address.testutil.EditPropertyDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -49,6 +53,17 @@ public class CommandTestUtil {
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
+    public static final String VALID_PROPERTY_NAME_MAPLE = "Maple Villa Condominium";
+    public static final String VALID_PROPERTY_NAME_ORCHID = "Orchid Gardens Condominium";
+    public static final String VALID_ADDRESS_MAPLE = "123 Maple Street";
+    public static final String VALID_ADDRESS_ORCHID = "234 Orchid Street";
+    public static final String VALID_PRICE_MAPLE = "240";
+    public static final String VALID_PRICE_ORCHID = "120";
+    public static final String VALID_SIZE_MAPLE = "1000";
+    public static final String VALID_SIZE_ORCHID = "500";
+    public static final String VALID_DESCRIPTION_MAPLE = "Spacious 4-bedroom home";
+    public static final String VALID_DESCRIPTION_ORCHID = "Spacious 2-bedroom home";
+
     // '&' not allowed in clientNames
     public static final String INVALID_CLIENT_NAME_DESC = " " + PREFIX_CLIENT_NAME + "James&";
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -61,6 +76,8 @@ public class CommandTestUtil {
 
     public static final EditClientDescriptor DESC_AMY;
     public static final EditClientDescriptor DESC_BOB;
+    public static final EditPropertyDescriptor DESC_MAPLE;
+    public static final EditPropertyDescriptor DESC_ORCHID;
 
     static {
         DESC_AMY = new EditClientDescriptorBuilder().withClientName(VALID_CLIENT_NAME_AMY)
@@ -69,6 +86,12 @@ public class CommandTestUtil {
         DESC_BOB = new EditClientDescriptorBuilder().withClientName(VALID_CLIENT_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_MAPLE = new EditPropertyDescriptorBuilder().withPropertyName(VALID_PROPERTY_NAME_MAPLE)
+                .withAddress(VALID_ADDRESS_MAPLE).withPrice(VALID_PRICE_MAPLE).withSize(VALID_SIZE_MAPLE)
+                .withDescription(VALID_DESCRIPTION_MAPLE).build();
+        DESC_ORCHID = new EditPropertyDescriptorBuilder().withPropertyName(VALID_PROPERTY_NAME_ORCHID)
+                .withAddress(VALID_ADDRESS_ORCHID).withPrice(VALID_PRICE_ORCHID).withSize(VALID_SIZE_ORCHID)
+                .withDescription(VALID_DESCRIPTION_ORCHID).build();
     }
 
     /**
@@ -113,6 +136,7 @@ public class CommandTestUtil {
         assertEquals(expectedAddressBook, actualModel.getAddressBook());
         assertEquals(expectedFilteredList, actualModel.getFilteredClientList());
     }
+
     /**
      * Updates {@code model}'s filtered list to show only the client at the given {@code targetIndex} in the
      * {@code model}'s address book.
@@ -127,4 +151,18 @@ public class CommandTestUtil {
         assertEquals(1, model.getFilteredClientList().size());
     }
 
+    /**
+     * Updates {@code model}'s filtered list to show only the property at the given {@code targetIndex} in the
+     * {@code model}'s address book.
+     */
+    public static void showPropertyAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredPropertyList().size());
+
+        Property property = model.getFilteredPropertyList().get(targetIndex.getZeroBased());
+        final String[] splitPropertyName = property.getPropertyName().fullName.split("\\s+");
+        model.updateFilteredPropertyList(new PropertyNameContainsKeywordsPredicate(Arrays
+                .asList(splitPropertyName[0])));
+
+        assertEquals(1, model.getFilteredPropertyList().size());
+    }
 }

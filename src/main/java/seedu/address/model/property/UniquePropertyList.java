@@ -26,7 +26,7 @@ public class UniquePropertyList implements Iterable<Property> {
 
     private final ObservableList<Property> internalList = FXCollections.observableArrayList();
     private final ObservableList<Property> internalUnmodifiableList =
-        FXCollections.unmodifiableObservableList(internalList);
+            FXCollections.unmodifiableObservableList(internalList);
 
     /**
      * Returns true if the list contains an equivalent property as the given argument.
@@ -116,12 +116,10 @@ public class UniquePropertyList implements Iterable<Property> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof seedu.address.model.property.UniquePropertyList)) {
+        if (!(other instanceof UniquePropertyList otherUniquePropertyList)) {
             return false;
         }
 
-        seedu.address.model.property.UniquePropertyList
-            otherUniquePropertyList = (seedu.address.model.property.UniquePropertyList) other;
         return internalList.equals(otherUniquePropertyList.internalList);
     }
 

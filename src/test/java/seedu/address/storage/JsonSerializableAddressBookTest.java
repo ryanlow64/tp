@@ -1,7 +1,7 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +19,7 @@ public class JsonSerializableAddressBookTest {
     private static final Path TYPICAL_CLIENTS_FILE = TEST_DATA_FOLDER.resolve("typicalClientsAddressBook.json");
     private static final Path INVALID_CLIENT_FILE = TEST_DATA_FOLDER.resolve("invalidClientAddressBook.json");
     private static final Path DUPLICATE_CLIENT_FILE = TEST_DATA_FOLDER.resolve("duplicateClientAddressBook.json");
+    private static final Path DUPLICATE_DEAL_FILE = TEST_DATA_FOLDER.resolve("duplicateDealAddressBook.json");
 
     @Test
     public void toModelType_typicalClientsFile_success() throws Exception {
@@ -40,8 +41,15 @@ public class JsonSerializableAddressBookTest {
     public void toModelType_duplicateClients_throwsIllegalValueException() throws Exception {
         JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(DUPLICATE_CLIENT_FILE,
                 JsonSerializableAddressBook.class).get();
-        assertThrows(IllegalValueException.class, JsonSerializableAddressBook.MESSAGE_DUPLICATE_CLIENT,
-                dataFromFile::toModelType);
+        IllegalValueException exception = assertThrows(IllegalValueException.class, dataFromFile::toModelType);
+        assertEquals(JsonSerializableAddressBook.MESSAGE_DUPLICATE_CLIENT, exception.getMessage());
     }
 
+    @Test
+    public void toModelType_duplicateDeals_throwsIllegalValueException() throws Exception {
+        JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(DUPLICATE_DEAL_FILE,
+                JsonSerializableAddressBook.class).get();
+        IllegalValueException exception = assertThrows(IllegalValueException.class, dataFromFile::toModelType);
+        assertEquals(JsonSerializableAddressBook.MESSAGE_DUPLICATE_DEAL, exception.getMessage());
+    }
 }

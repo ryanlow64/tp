@@ -17,6 +17,12 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Client> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Property> PREDICATE_SHOW_ALL_PROPERTIES = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Deal> PREDICATE_SHOW_ALL_DEALS = unused -> true;
+
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
@@ -98,10 +104,28 @@ public interface Model {
     void updateFilteredClientList(Predicate<Client> predicate);
 
     /**
-     * Updates the filter of the filtered deal list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
+     * Returns true if a property with the same identity as {@code property} exists in the address book.
      */
-    void updateFilteredDealList(Predicate<Deal> predicate);
+    boolean hasProperty(Property property);
+
+    /**
+     * Deletes the given property.
+     * The property must exist in the address book.
+     */
+    void deleteProperty(Property target);
+
+    /**
+     * Adds the given property.
+     * {@code property} must not already exist in the address book.
+     */
+    void addProperty(Property property);
+
+    /**
+     * Replaces the given property {@code target} with {@code editedProperty}.
+     * {@code target} must exist in the address book.
+     * The property identity of {@code editedProperty} must not be the same as another existing property in the AB.
+     */
+    void setProperty(Property target, Property editedProperty);
 
     /**
      * Updates the filter of the filtered property list to filter by the given {@code predicate}.
@@ -109,9 +133,15 @@ public interface Model {
      */
     void updateFilteredPropertyList(Predicate<Property> predicate);
 
+    /** Returns whether there is a deal */
+    boolean hasDeal(Deal deal);
+
+    /** Adds a deal */
+    void addDeal(Deal deal);
+
     /**
-     * Updates the filter of the filtered schedule list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered deal list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredScheduleList(Predicate<Schedule> predicate);
+    void updateFilteredDealList(Predicate<Deal> predicate);
 }

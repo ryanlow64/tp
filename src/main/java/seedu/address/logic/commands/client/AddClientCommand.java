@@ -21,14 +21,14 @@ import seedu.address.model.client.Client;
  */
 public class AddClientCommand extends AddCommand<Client> {
 
-    public static final String COMMAND_WORD = "add";
+    public static final String COMMAND_WORD = "add_client";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a client to the address book. "
         + "Parameters: "
         + PREFIX_CLIENT_NAME + "CLIENT_NAME "
         + PREFIX_PHONE + "PHONE "
-        + PREFIX_EMAIL + "EMAIL "
-        + PREFIX_ADDRESS + "ADDRESS "
+        + "(Optional)" + PREFIX_EMAIL + "EMAIL "
+        + "(Optional)" + PREFIX_ADDRESS + "ADDRESS "
         + "[" + PREFIX_TAG + "TAG]...\n"
         + "Example: " + COMMAND_WORD + " "
         + PREFIX_CLIENT_NAME + "John Doe "

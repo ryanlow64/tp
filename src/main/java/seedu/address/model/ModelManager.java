@@ -120,6 +120,42 @@ public class ModelManager implements Model {
         addressBook.setClient(target, editedClient);
     }
 
+    @Override
+    public boolean hasProperty(Property property) {
+        requireNonNull(property);
+        return addressBook.hasProperty(property);
+    }
+
+    @Override
+    public void deleteProperty(Property target) {
+        addressBook.removeProperty(target);
+    }
+
+    @Override
+    public void addProperty(Property property) {
+        addressBook.addProperty(property);
+        updateFilteredPropertyList(PREDICATE_SHOW_ALL_PROPERTIES);
+    }
+
+    @Override
+    public void setProperty(Property target, Property editedProperty) {
+        requireAllNonNull(target, editedProperty);
+
+        addressBook.setProperty(target, editedProperty);
+    }
+
+    @Override
+    public boolean hasDeal(Deal deal) {
+        requireNonNull(deal);
+        return addressBook.hasDeal(deal);
+    }
+
+    @Override
+    public void addDeal(Deal deal) {
+        addressBook.addDeal(deal);
+        updateFilteredDealList(PREDICATE_SHOW_ALL_DEALS);
+    }
+
     //=========== Filtered Client List Accessors =============================================================
 
     /**
@@ -174,18 +210,12 @@ public class ModelManager implements Model {
     //=========== Filtered Schedule List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Schedule} backed by the internal list of
+     * Returns an unmodifiable view of the list of {@code Property} backed by the internal list of
      * {@code versionedAddressBook}
      */
     @Override
     public ObservableList<Schedule> getFilteredScheduleList() {
         return filteredSchedules;
-    }
-
-    @Override
-    public void updateFilteredScheduleList(Predicate<Schedule> predicate) {
-        requireNonNull(predicate);
-        filteredSchedules.setPredicate(predicate);
     }
 
     @Override
@@ -202,7 +232,8 @@ public class ModelManager implements Model {
         ModelManager otherModelManager = (ModelManager) other;
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredClients.equals(otherModelManager.filteredClients);
+                && filteredClients.equals(otherModelManager.filteredClients)
+                && filteredDeals.equals(otherModelManager.filteredDeals)
+                && filteredProperties.equals(otherModelManager.filteredProperties);
     }
-
 }

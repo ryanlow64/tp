@@ -26,7 +26,7 @@ public class UniqueDealList implements Iterable<Deal> {
 
     private final ObservableList<Deal> internalList = FXCollections.observableArrayList();
     private final ObservableList<Deal> internalUnmodifiableList =
-        FXCollections.unmodifiableObservableList(internalList);
+            FXCollections.unmodifiableObservableList(internalList);
 
     /**
      * Returns true if the list contains an equivalent deal as the given argument.
@@ -121,7 +121,7 @@ public class UniqueDealList implements Iterable<Deal> {
         }
 
         UniqueDealList
-            otherUniqueDealList = (UniqueDealList) other;
+                otherUniqueDealList = (UniqueDealList) other;
         return internalList.equals(otherUniqueDealList.internalList);
     }
 

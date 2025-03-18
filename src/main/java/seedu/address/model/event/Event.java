@@ -52,6 +52,9 @@ public class Event {
         return note;
     }
 
+    public boolean isSameEvent(Event otherEvent) {
+        return false;
+    }
     @Override
     public boolean equals(Object other) {
         if (this == other) {

@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -211,5 +209,36 @@ public class ParserUtil {
             throw new ParseException(Description.MESSAGE_CONSTRAINTS);
         }
         return Optional.of(new Description(trimmedDescription));
+    }
+
+    /**
+     * Parses a {@code String eventType} into an {@code EventType}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code eventType} is invalid.
+     */
+    public static EventType parseEventType(String eventType) throws ParseException {
+        requireNonNull(eventType);
+        String trimmedEventType = eventType.trim();
+        try {
+            return EventType.valueOf(trimmedEventType.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(EventType.MESSAGE_CONSTRAINTS);
+        }
+    }
+
+    /**
+     * Parses a {@code String note} into an {@code Note}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code note} is invalid.
+     */
+    public static Note parseNote(String note) throws ParseException {
+        requireNonNull(note);
+        String trimmedNote = note.trim();
+        if (trimmedNote.isEmpty()) {
+            throw new ParseException(Note.MESSAGE_CONSTRAINTS);
+        }
+        return new Note(trimmedNote);
     }
 }

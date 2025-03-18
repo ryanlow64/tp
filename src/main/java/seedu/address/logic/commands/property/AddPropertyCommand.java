@@ -55,7 +55,7 @@ public class AddPropertyCommand extends AddCommand<Property> {
         }
 
         model.addProperty(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatProperty(toAdd)));
     }
 
     @Override

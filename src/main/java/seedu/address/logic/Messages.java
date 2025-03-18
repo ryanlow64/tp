@@ -46,14 +46,14 @@ public class Messages {
                 .append("; Email: ")
                 .append(client.getEmail())
                 .append("; Address: ")
-                .append(client.getAddress())
+                .append(client.getAddress());
         return sb.toString();
     }
 
     /**
      * Formats the {@code property} for display to the user.
      */
-    public static String format(Property property) {
+    public static String formatProperty(Property property) {
         final StringBuilder builder = new StringBuilder();
         builder.append(property.getPropertyName())
                 .append("; Address: ")

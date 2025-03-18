@@ -42,7 +42,8 @@ public class DeletePropertyCommand extends DeleteCommand<Property> {
 
         Property propertyToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deleteProperty(propertyToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PROPERTY_SUCCESS, Messages.format(propertyToDelete)));
+        return new CommandResult(String.format(
+                MESSAGE_DELETE_PROPERTY_SUCCESS, Messages.formatProperty(propertyToDelete)));
     }
 
     @Override

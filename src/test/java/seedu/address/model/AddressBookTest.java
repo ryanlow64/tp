@@ -22,7 +22,6 @@ import seedu.address.model.client.exceptions.DuplicateClientException;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
-import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.ClientBuilder;
 
 public class AddressBookTest {
@@ -99,7 +98,7 @@ public class AddressBookTest {
         private final ObservableList<Client> clients = FXCollections.observableArrayList();
         private final ObservableList<Deal> deals = FXCollections.observableArrayList();
         private final ObservableList<Property> properties = FXCollections.observableArrayList();
-        private final ObservableList<Schedule> schedules = FXCollections.observableArrayList();
+        private final ObservableList<Event> events = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Client> clients) {
             this.clients.setAll(clients);
@@ -121,8 +120,8 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<Schedule> getScheduleList() {
-            return schedules;
+        public ObservableList<Event> getEventList() {
+            return events;
         }
     }
 

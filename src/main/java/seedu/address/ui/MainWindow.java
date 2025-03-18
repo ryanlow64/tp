@@ -19,8 +19,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.ui.listpanels.ClientListPanel;
 import seedu.address.ui.listpanels.DealListPanel;
+import seedu.address.ui.listpanels.EventListPanel;
 import seedu.address.ui.listpanels.PropertyListPanel;
-import seedu.address.ui.listpanels.ScheduleListPanel;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -39,7 +39,7 @@ public class MainWindow extends UiPart<Stage> {
     private ClientListPanel clientListPanel;
     private DealListPanel dealListPanel;
     private PropertyListPanel propertyListPanel;
-    private ScheduleListPanel scheduleListPanel;
+    private EventListPanel eventListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -118,12 +118,12 @@ public class MainWindow extends UiPart<Stage> {
         clientListPanel = new ClientListPanel(logic.getFilteredClientList());
         dealListPanel = new DealListPanel(logic.getFilteredDealList());
         propertyListPanel = new PropertyListPanel(logic.getFilteredPropertyList());
-        scheduleListPanel = new ScheduleListPanel(logic.getFilteredScheduleList());
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
 
         listPlanesPlaceholder.getItems().add(clientListPanel.getRoot());
         listPlanesPlaceholder.getItems().add(propertyListPanel.getRoot());
         listPlanesPlaceholder.getItems().add(dealListPanel.getRoot());
-        listPlanesPlaceholder.getItems().add(scheduleListPanel.getRoot());
+        listPlanesPlaceholder.getItems().add(eventListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.client.Client;
@@ -12,10 +11,9 @@ import seedu.address.model.client.UniqueClientList;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.UniqueDealList;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyList;
-import seedu.address.model.schedule.Schedule;
-import seedu.address.model.schedule.UniqueScheduleList;
 
 /**
  * Wraps all data at the address-book level
@@ -25,9 +23,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueClientList clients;
     private final UniqueDealList deals;
-    private final ObservableList<Event> events;
+    private final UniqueEventList events;
     private final UniquePropertyList properties;
-    private final UniqueScheduleList schedules;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -40,9 +37,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         clients = new UniqueClientList();
         deals = new UniqueDealList();
-        events = FXCollections.observableArrayList();
+        events = new UniqueEventList();
         properties = new UniquePropertyList();
-        schedules = new UniqueScheduleList();
     }
 
     public AddressBook() {}
@@ -147,7 +143,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public void setEvents(List<Event> events) {
-        this.events.setAll(events);
+        this.events.setEvents(events);
     }
 
     //// property-level operations
@@ -243,7 +239,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<Event> getEventList() {
-        return FXCollections.unmodifiableObservableList(events);
+        return events.asUnmodifiableObservableList();
     }
 
     @Override
@@ -254,11 +250,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Property> getPropertyList() {
         return properties.asUnmodifiableObservableList();
-    }
-
-    @Override
-    public ObservableList<Schedule> getScheduleList() {
-        return schedules.asUnmodifiableObservableList();
     }
 
     @Override
@@ -275,11 +266,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         AddressBook otherAddressBook = (AddressBook) other;
         return clients.equals(otherAddressBook.clients)
                 && deals.equals(otherAddressBook.deals)
+                && events.equals(otherAddressBook.events)
                 && properties.equals(otherAddressBook.properties);
     }
 
     @Override
     public int hashCode() {
-        return clients.hashCode() + deals.hashCode() + properties.hashCode();
+        return clients.hashCode() + deals.hashCode() + events.hashCode() + properties.hashCode();
     }
 }

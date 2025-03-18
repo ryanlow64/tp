@@ -9,7 +9,6 @@ import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
-import seedu.address.model.schedule.Schedule;
 
 /**
  * The API of the Model component.
@@ -96,8 +95,8 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered list of properties */
     ObservableList<Property> getFilteredPropertyList();
 
-    /** Returns an unmodifiable view of the filtered list of schedules */
-    ObservableList<Schedule> getFilteredScheduleList();
+    /** Returns an unmodifiable view of the filtered list of events */
+    ObservableList<Event> getFilteredEventList();
 
     /**
      * Updates the filter of the filtered client list to filter by the given {@code predicate}.
@@ -110,8 +109,6 @@ public interface Model {
     void addEvent(Event event);
 
     void deleteEvent(Event event);
-
-    ObservableList<Event> getFilteredEventList();
 
     void updateFilteredEventList(Predicate<Event> predicate);
 

@@ -12,7 +12,7 @@ import seedu.address.ui.UiPart;
  */
 public class EventCard extends UiPart<Region> {
 
-    private static final String FXML = "ScheduleListCard.fxml";
+    private static final String FXML = "EventListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -38,7 +38,7 @@ public class EventCard extends UiPart<Region> {
     private Label note;
 
     /**
-     * Creates a {@code ScheduleCode} with the given {@code Event} and index to display.
+     * Creates a {@code EventCode} with the given {@code Event} and index to display.
      */
     public EventCard(Event event, int displayedIndex) {
         super(FXML);

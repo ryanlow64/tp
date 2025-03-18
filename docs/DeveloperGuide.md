@@ -432,17 +432,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: Add Client Meeting**
+**Use case: Add Event to Schedule**
 
 **Actor:** User (Real Estate Agent)\
 **Preconditions:** The system is running.
 
 **MSS**
 
-1. User requests to add a new meeting and provides meeting details.
+1. User requests to add a new event and provides event details.
 2. System validates input.
-3. System checks for clashes in event.
-4. System adds the meeting to the event.
+3. System checks for clashes in schedule.
+4. System adds the event to the schedule.
 5. System informs user the outcome of the addition.
 
 **Use case ends.**
@@ -455,7 +455,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
 
-3a. Meeting clashes with the existing event.\
+3a. Meeting clashes with the existing schedule.\
 &nbsp;&nbsp;&nbsp;&nbsp;3a1. System prompts the user to choose a different date or time.\
 &nbsp;&nbsp;&nbsp;&nbsp;3a2. User enters new data.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 2.**

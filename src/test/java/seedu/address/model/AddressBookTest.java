@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalClients.ALICE;
 import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
@@ -23,6 +22,7 @@ import seedu.address.model.client.exceptions.DuplicateClientException;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.ClientBuilder;
 
 public class AddressBookTest {
@@ -49,8 +49,7 @@ public class AddressBookTest {
     @Test
     public void resetData_withDuplicateClients_throwsDuplicateClientException() {
         // Two clients with the same identity fields
-        Client editedAlice = new ClientBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
+        Client editedAlice = new ClientBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
         List<Client> newClients = Arrays.asList(ALICE, editedAlice);
         AddressBookStub newData = new AddressBookStub(newClients);
 
@@ -76,8 +75,7 @@ public class AddressBookTest {
     @Test
     public void hasClient_clientWithSameIdentityFieldsInAddressBook_returnsTrue() {
         addressBook.addClient(ALICE);
-        Client editedAlice = new ClientBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
+        Client editedAlice = new ClientBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
         assertTrue(addressBook.hasClient(editedAlice));
     }
 
@@ -99,9 +97,9 @@ public class AddressBookTest {
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Client> clients = FXCollections.observableArrayList();
-        private final ObservableList<Property> properties = FXCollections.observableArrayList();
         private final ObservableList<Deal> deals = FXCollections.observableArrayList();
-        private final ObservableList<Event> events = FXCollections.observableArrayList();
+        private final ObservableList<Property> properties = FXCollections.observableArrayList();
+        private final ObservableList<Schedule> schedules = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Client> clients) {
             this.clients.setAll(clients);
@@ -113,18 +111,18 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<Property> getPropertyList() {
-            return properties;
-        }
-
-        @Override
         public ObservableList<Deal> getDealList() {
             return deals;
         }
 
         @Override
-        public ObservableList<Event> getEventList() {
-            return events;
+        public ObservableList<Property> getPropertyList() {
+            return properties;
+        }
+
+        @Override
+        public ObservableList<Schedule> getScheduleList() {
+            return schedules;
         }
     }
 

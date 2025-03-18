@@ -21,12 +21,13 @@ import seedu.address.logic.commands.property.EditPropertyCommand.EditPropertyDes
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.property.Property;
 import seedu.address.testutil.EditPropertyDescriptorBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
  */
-public class EditPropertyCommandTest extends EditCommandTest {
+public class EditPropertyCommandTest extends EditCommandTest<Property> {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 

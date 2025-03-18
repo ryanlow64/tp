@@ -9,6 +9,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.client.Client;
+import seedu.address.model.deal.Deal;
+import seedu.address.model.property.Property;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * API of the Logic component
@@ -32,6 +35,15 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of clients */
     ObservableList<Client> getFilteredClientList();
+
+    /** Returns an unmodifiable view of the filtered list of deals */
+    ObservableList<Deal> getFilteredDealList();
+
+    /** Returns an unmodifiable view of the filtered list of properties */
+    ObservableList<Property> getFilteredPropertyList();
+
+    /** Returns an unmodifiable view of the filtered list of schedules */
+    ObservableList<Schedule> getFilteredScheduleList();
 
     /**
      * Returns the user prefs' address book file path.

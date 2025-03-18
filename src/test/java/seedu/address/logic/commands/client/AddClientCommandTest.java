@@ -45,7 +45,7 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
     @Test
     public void execute_duplicateClient_throwsCommandException() {
         Client validClient = new ClientBuilder().build();
-        AddCommand addCommand = new AddClientCommand(validClient);
+        AddCommand<Client> addCommand = new AddClientCommand(validClient);
         ModelStub modelStub = new ModelStubWithClient(validClient);
 
         assertThrows(CommandException.class, AddClientCommand.MESSAGE_DUPLICATE_CLIENT, ()
@@ -63,7 +63,7 @@ public class AddClientCommandTest extends AddCommandTest<Client> {
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddClientCommand(alice);
+        AddCommand<Client> addAliceCommandCopy = new AddClientCommand(alice);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false

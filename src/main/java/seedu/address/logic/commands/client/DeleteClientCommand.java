@@ -18,7 +18,7 @@ import seedu.address.model.client.Client;
  */
 public class DeleteClientCommand extends DeleteCommand<Client> {
 
-    public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_WORD = "delete_client";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
         + ": Deletes the client identified by the index number used in the displayed client list.\n"

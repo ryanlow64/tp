@@ -61,7 +61,7 @@ public class LogicManagerTest {
 
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
-        String deleteCommand = "delete 9";
+        String deleteCommand = "delete_client 9";
         assertCommandException(deleteCommand, MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
     }
 
@@ -168,7 +168,7 @@ public class LogicManagerTest {
         // Triggers the saveAddressBook method by executing an add command
         String addCommand = AddClientCommand.COMMAND_WORD + CLIENT_NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        Client expectedClient = new ClientBuilder(AMY).withTags().build();
+        Client expectedClient = new ClientBuilder(AMY).build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addClient(expectedClient);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);

@@ -15,6 +15,7 @@ import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -28,6 +29,7 @@ public class ModelManager implements Model {
     private final FilteredList<Deal> filteredDeals;
     private final FilteredList<Event> filteredEvents;
     private final FilteredList<Property> filteredProperties;
+    private final FilteredList<Schedule> filteredSchedules;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -43,6 +45,7 @@ public class ModelManager implements Model {
         filteredDeals = new FilteredList<>(this.addressBook.getDealList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
         filteredProperties = new FilteredList<>(this.addressBook.getPropertyList());
+        filteredSchedules = new FilteredList<>(this.addressBook.getScheduleList());
     }
 
     public ModelManager() {
@@ -239,6 +242,17 @@ public class ModelManager implements Model {
     public void updateFilteredPropertyList(Predicate<Property> predicate) {
         requireNonNull(predicate);
         filteredProperties.setPredicate(predicate);
+    }
+
+    //=========== Filtered Schedule List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Property} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<Schedule> getFilteredScheduleList() {
+        return filteredSchedules;
     }
 
     @Override

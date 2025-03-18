@@ -47,8 +47,6 @@ public class Messages {
                 .append(client.getEmail())
                 .append("; Address: ")
                 .append(client.getAddress())
-                .append("; Tags: ");
-        client.getTags().forEach(sb::append);
         return sb.toString();
     }
 

@@ -64,10 +64,7 @@ public class Property {
 
         return otherProperty != null
                 && otherProperty.getPropertyName().equals(getPropertyName())
-                && otherProperty.getAddress().equals(getAddress())
-                && otherProperty.getPrice().equals(getPrice())
-                && otherProperty.getSize().equals(getSize())
-                && otherProperty.getDescription().equals(getDescription());
+                && otherProperty.getAddress().equals(getAddress());
     }
 
     /**

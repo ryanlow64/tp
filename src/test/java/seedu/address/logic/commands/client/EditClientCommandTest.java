@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CLIENT_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showClientAtIndex;
@@ -33,7 +32,7 @@ import seedu.address.testutil.EditClientDescriptorBuilder;
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
  */
-public class EditClientCommandTest extends EditCommandTest {
+public class EditClientCommandTest extends EditCommandTest<Client> {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -59,10 +58,10 @@ public class EditClientCommandTest extends EditCommandTest {
 
         ClientBuilder clientInList = new ClientBuilder(lastClient);
         Client editedClient = clientInList.withClientName(VALID_CLIENT_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withTags(VALID_TAG_HUSBAND).build();
+            .build();
 
         EditClientDescriptor descriptor = new EditClientDescriptorBuilder().withClientName(VALID_CLIENT_NAME_BOB)
-            .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+            .withPhone(VALID_PHONE_BOB).build();
         EditClientCommand editCommand = new EditClientCommand(indexLastClient, descriptor);
 
         String expectedMessage = String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS,

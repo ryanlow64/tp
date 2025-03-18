@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
@@ -25,7 +24,6 @@ import seedu.address.model.event.Note;
 import seedu.address.model.property.Description;
 import seedu.address.model.property.PropertyName;
 import seedu.address.model.property.Size;
-import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -158,64 +156,6 @@ public class ParserUtil {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
         return new Email(trimmedEmail);
-    }
-
-    /**
-     * Parses a {@code String tag} into a {@code Tag}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code tag} is invalid.
-     */
-    public static Tag parseTag(String tag) throws ParseException {
-        requireNonNull(tag);
-        String trimmedTag = tag.trim();
-        if (!Tag.isValidTagName(trimmedTag)) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
-        }
-        return new Tag(trimmedTag);
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
-     */
-    public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagClientName : tags) {
-            tagSet.add(parseTag(tagClientName));
-        }
-        return tagSet;
-    }
-
-    /**
-     * Parses a {@code String eventType} into an {@code EventType}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code eventType} is invalid.
-     */
-    public static EventType parseEventType(String eventType) throws ParseException {
-        requireNonNull(eventType);
-        String trimmedEventType = eventType.trim();
-        try {
-            return EventType.valueOf(trimmedEventType.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new ParseException(EventType.MESSAGE_CONSTRAINTS);
-        }
-    }
-
-    /**
-     * Parses a {@code String note} into an {@code Note}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code note} is invalid.
-     */
-    public static Note parseNote(String note) throws ParseException {
-        requireNonNull(note);
-        String trimmedNote = note.trim();
-        if (trimmedNote.isEmpty()) {
-            throw new ParseException(Note.MESSAGE_CONSTRAINTS);
-        }
-        return new Note(trimmedNote);
     }
 
     /**

@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.client.Client;
+import seedu.address.model.deal.Deal;
 import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
 
@@ -24,6 +25,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Client> filteredClients;
+    private final FilteredList<Deal> filteredDeals;
     private final FilteredList<Event> filteredEvents;
     private final FilteredList<Property> filteredProperties;
 
@@ -38,6 +40,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredClients = new FilteredList<>(this.addressBook.getClientList());
+        filteredDeals = new FilteredList<>(this.addressBook.getDealList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
         filteredProperties = new FilteredList<>(this.addressBook.getPropertyList());
     }
@@ -161,6 +164,19 @@ public class ModelManager implements Model {
         addressBook.setProperty(target, editedProperty);
     }
 
+    // === Deal Methods ===
+    @Override
+    public boolean hasDeal(Deal deal) {
+        requireNonNull(deal);
+        return addressBook.hasDeal(deal);
+    }
+
+    @Override
+    public void addDeal(Deal deal) {
+        addressBook.addDeal(deal);
+        updateFilteredDealList(PREDICATE_SHOW_ALL_DEALS);
+    }
+
     //=========== Filtered Client List Accessors =============================================================
 
     /**
@@ -191,6 +207,25 @@ public class ModelManager implements Model {
     }
 
     //=========== Filtered Property List Accessors =============================================================
+    //=========== Filtered Deal List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Deal} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<Deal> getFilteredDealList() {
+        return filteredDeals;
+    }
+
+    @Override
+    public void updateFilteredDealList(Predicate<Deal> predicate) {
+        requireNonNull(predicate);
+        filteredDeals.setPredicate(predicate);
+    }
+
+    //=========== Filtered Property List Accessors =============================================================
+
     /**
      * Returns an unmodifiable view of the list of {@code Property} backed by the internal list of
      * {@code versionedAddressBook}
@@ -221,6 +256,7 @@ public class ModelManager implements Model {
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredClients.equals(otherModelManager.filteredClients)
+                && filteredDeals.equals(otherModelManager.filteredDeals)
                 && filteredEvents.equals(otherModelManager.filteredEvents)
                 && filteredProperties.equals(otherModelManager.filteredProperties);
     }

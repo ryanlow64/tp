@@ -9,6 +9,8 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.UniqueClientList;
+import seedu.address.model.deal.Deal;
+import seedu.address.model.deal.UniqueDealList;
 import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyList;
@@ -34,6 +36,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         events = FXCollections.observableArrayList();
     }
 
+    private final UniqueDealList deals;
     private final UniquePropertyList properties;
 
     /*
@@ -44,6 +47,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
+        clients = new UniqueClientList();
+        deals = new UniqueDealList();
         properties = new UniquePropertyList();
     }
 
@@ -68,6 +73,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the deal list with {@code deals}.
+     * {@code deals} must not contain duplicate deals.
+     */
+    public void setDeals(List<Deal> deals) {
+        this.deals.setDeals(deals);
+    }
+
+    /**
      * Replaces the contents of the property list with {@code properties}.
      * {@code properties} must not contain duplicate properties.
      */
@@ -82,6 +95,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setClients(newData.getClientList());
+        setDeals(newData.getDealList());
+        setProperties(newData.getPropertyList());
     }
 
     //// client-level operations
@@ -156,14 +171,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a property to the address book.
      * The property must not already exist in the address book.
      */
-    public void addProperty(Property p) {
-        properties.add(p);
+    public void addProperty(Property property) {
+        properties.add(property);
     }
 
     /**
      * Replaces the given property {@code target} in the list with {@code editedProperty}.
      * {@code target} must exist in the address book.
-     * The property identity of {@code editedProperty} must not be the same as another existing property in the AB.
+     * The property identity of {@code editedProperty} must not be the same as
+     * another existing property in the address book.
      */
     public void setProperty(Property target, Property editedProperty) {
         requireNonNull(editedProperty);
@@ -179,12 +195,51 @@ public class AddressBook implements ReadOnlyAddressBook {
         properties.remove(key);
     }
 
+    //// deal-level operations
+
+    /**
+     * Returns true if a deal with the same identity as {@code deal} exists in the address book.
+     */
+    public boolean hasDeal(Deal deal) {
+        requireNonNull(deal);
+        return deals.contains(deal);
+    }
+
+    /**
+     * Adds a deal to the address book.
+     * The deal must not already exist in the address book.
+     */
+    public void addDeal(Deal deal) {
+        deals.add(deal);
+    }
+
+    /**
+     * Replaces the given deal {@code target} in the list with {@code editedDeal}.
+     * {@code target} must exist in the address book.
+     * The deal identity of {@code editedDeal} must not be the same as another existing deal in the address book.
+     */
+    public void setDeal(Deal target, Deal editedDeal) {
+        requireNonNull(editedDeal);
+
+        deals.setDeal(target, editedDeal);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * {@code key} must exist in the address book.
+     */
+    public void removeDeal(Deal key) {
+        deals.remove(key);
+    }
+
     //// util methods
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("clients", clients)
+                .add("deals", deals)
+                .add("properties", properties)
                 .toString();
     }
 
@@ -196,6 +251,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Event> getEventList() {
         return FXCollections.unmodifiableObservableList(events);
+    }
+
+    @Override
+    public ObservableList<Deal> getDealList() {
+        return deals.asUnmodifiableObservableList();
     }
 
     @Override
@@ -215,11 +275,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         AddressBook otherAddressBook = (AddressBook) other;
-        return clients.equals(otherAddressBook.clients);
+        return clients.equals(otherAddressBook.clients)
+                && deals.equals(otherAddressBook.deals)
+                && properties.equals(otherAddressBook.properties);
     }
 
     @Override
     public int hashCode() {
-        return clients.hashCode();
+        return clients.hashCode() + deals.hashCode() + properties.hashCode();
     }
 }

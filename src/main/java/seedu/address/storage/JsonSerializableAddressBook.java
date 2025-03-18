@@ -11,6 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.client.Client;
+import seedu.address.model.deal.Deal;
 import seedu.address.model.property.Property;
 
 /**
@@ -21,18 +22,24 @@ class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_CLIENT = "Clients list contains duplicate client(s).";
     public static final String MESSAGE_DUPLICATE_PROPERTY = "Properties list contains duplicate properties.";
+    public static final String MESSAGE_DUPLICATE_DEAL = "Deals list contains duplicate deal(s).";
 
     private final List<JsonAdaptedClient> clients = new ArrayList<>();
     private final List<JsonAdaptedProperty> properties = new ArrayList<>();
+    private final List<JsonAdaptedDeal> deals = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given clients.
+     * Constructs a {@code JsonSerializableAddressBook} with the given clients, properties and deals.
      */
     @JsonCreator
     public JsonSerializableAddressBook(@JsonProperty("clients") List<JsonAdaptedClient> clients,
-                                       @JsonProperty("properties") List<JsonAdaptedProperty> properties) {
+                                       @JsonProperty("properties") List<JsonAdaptedProperty> properties,
+                                       @JsonProperty("deals") List<JsonAdaptedDeal> deals) {
         this.clients.addAll(clients);
         this.properties.addAll(properties);
+        if (deals != null) {
+            this.deals.addAll(deals);
+        }
     }
 
     /**
@@ -43,6 +50,7 @@ class JsonSerializableAddressBook {
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         clients.addAll(source.getClientList().stream().map(JsonAdaptedClient::new).toList());
         properties.addAll(source.getPropertyList().stream().map(JsonAdaptedProperty::new).toList());
+        deals.addAll(source.getDealList().stream().map(JsonAdaptedDeal::new).toList());
     }
 
     /**
@@ -67,6 +75,14 @@ class JsonSerializableAddressBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PROPERTY);
             }
             addressBook.addProperty(property);
+        }
+
+        for (JsonAdaptedDeal jsonAdaptedDeal : deals) {
+            Deal deal = jsonAdaptedDeal.toModelType();
+            if (addressBook.hasDeal(deal)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_DEAL);
+            }
+            addressBook.addDeal(deal);
         }
 
         return addressBook;

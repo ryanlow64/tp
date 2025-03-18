@@ -3,8 +3,8 @@ package seedu.address.testutil;
 import java.util.Optional;
 
 import seedu.address.model.commons.Address;
+import seedu.address.model.commons.Price;
 import seedu.address.model.property.Description;
-import seedu.address.model.property.Price;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 import seedu.address.model.property.Size;
@@ -17,7 +17,7 @@ public class PropertyBuilder {
 
     public static final String DEFAULT_PROPERTY_NAME = "Maple Villa Condominium";
     public static final String DEFAULT_ADDRESS = "123 Maple Street";
-    public static final String DEFAULT_PRICE = "2.4";
+    public static final String DEFAULT_PRICE = "240";
     public static final String DEFAULT_SIZE = "1000";
     public static final String DEFAULT_DESCRIPTION = "Spacious 4-bedroom home";
 

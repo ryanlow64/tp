@@ -13,20 +13,20 @@ import seedu.address.model.property.Property;
 public class TypicalProperties {
 
     public static final Property MAPLE = new PropertyBuilder().withPropertyName("Maple Villa Condominium")
-            .withAddress("123 Maple Street").withPrice("2.4")
+            .withAddress("123 Maple Street").withPrice("240")
             .withSize("1000")
             .withDescription("Spacious 4-bedroom home").build();
     public static final Property ORCHID = new PropertyBuilder().withPropertyName("Orchid Gardens Condominium")
             .withAddress("234 Orchid Street")
-            .withPrice("1.2").withSize("500")
+            .withPrice("120").withSize("500")
             .withDescription("Spacious 2-bedroom home").build();
     public static final Property JURONG = new PropertyBuilder().withPropertyName("Jurong Lake Gardens HDB")
             .withAddress("336 Tah Ching Rd")
-            .withPrice("0.6").withSize("600")
+            .withPrice("60").withSize("600")
             .withDescription("Spacious 3-bedroom home").build();
     public static final Property PUNGGOL = new PropertyBuilder().withPropertyName("Punggol Waterway Ridges HDB")
             .withAddress("670C Edgefield Plains")
-            .withPrice("0.9").withSize("1200")
+            .withPrice("90").withSize("1200")
             .withDescription("Spacious 5-bedroom home").build();
 
     private TypicalProperties() {} // prevents instantiation

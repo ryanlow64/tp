@@ -1,0 +1,23 @@
+{
+  "clients": [ {
+    "clientName": "Alice Pauline",
+    "phone": "94351253",
+    "email": "alice@example.com",
+    "address": "123, Jurong West Ave 6, #08-111",
+    "tags": [ "friends" ]
+  } ],
+  "properties": [ ],
+  "deals": [ {
+    "propertyName": "Sunset Villa",
+    "buyer": "John Doe",
+    "seller": "Jane Smith",
+    "price": "500",
+    "status": "PENDING"
+  }, {
+    "propertyName": "Sunset Villa",
+    "buyer": "John Doe",
+    "seller": "Jane Smith",
+    "price": "600",
+    "status": "CLOSED"
+  } ]
+}

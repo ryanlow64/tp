@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.client.Client;
+import seedu.address.model.deal.Deal;
 import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
 
@@ -19,6 +20,9 @@ public interface Model {
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Property> PREDICATE_SHOW_ALL_PROPERTIES = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Deal> PREDICATE_SHOW_ALL_DEALS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -133,4 +137,19 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPropertyList(Predicate<Property> predicate);
+
+    /** Returns whether there is a deal */
+    boolean hasDeal(Deal deal);
+
+    /** Adds a deal */
+    void addDeal(Deal deal);
+
+    /** Returns an unmodifiable view of the filtered deal list */
+    ObservableList<Deal> getFilteredDealList();
+
+    /**
+     * Updates the filter of the filtered deal list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredDealList(Predicate<Deal> predicate);
 }

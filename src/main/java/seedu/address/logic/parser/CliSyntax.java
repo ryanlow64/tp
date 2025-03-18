@@ -18,5 +18,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_PRICE = new Prefix("price/");
     public static final Prefix PREFIX_SIZE = new Prefix("size/");
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("d/");
-
+    public static final Prefix PREFIX_SELLER = new Prefix("seller/");
+    public static final Prefix PREFIX_BUYER = new Prefix("buyer/");
+    public static final Prefix PREFIX_STATUS = new Prefix("status/");
 }

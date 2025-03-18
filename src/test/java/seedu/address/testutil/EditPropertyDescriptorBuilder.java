@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import seedu.address.logic.commands.property.EditPropertyCommand.EditPropertyDescriptor;
 import seedu.address.model.commons.Address;
+import seedu.address.model.commons.Price;
 import seedu.address.model.property.Description;
-import seedu.address.model.property.Price;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 import seedu.address.model.property.Size;

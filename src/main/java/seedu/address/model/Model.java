@@ -8,6 +8,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.property.Property;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * The API of the Model component.
@@ -87,6 +88,15 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered client list */
     ObservableList<Client> getFilteredClientList();
 
+    /** Returns an unmodifiable view of the filtered list of deals */
+    ObservableList<Deal> getFilteredDealList();
+
+    /** Returns an unmodifiable view of the filtered list of properties */
+    ObservableList<Property> getFilteredPropertyList();
+
+    /** Returns an unmodifiable view of the filtered list of schedules */
+    ObservableList<Schedule> getFilteredScheduleList();
+
     /**
      * Updates the filter of the filtered client list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -117,9 +127,6 @@ public interface Model {
      */
     void setProperty(Property target, Property editedProperty);
 
-    /** Returns an unmodifiable view of the filtered property list */
-    ObservableList<Property> getFilteredPropertyList();
-
     /**
      * Updates the filter of the filtered property list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -131,9 +138,6 @@ public interface Model {
 
     /** Adds a deal */
     void addDeal(Deal deal);
-
-    /** Returns an unmodifiable view of the filtered deal list */
-    ObservableList<Deal> getFilteredDealList();
 
     /**
      * Updates the filter of the filtered deal list to filter by the given {@code predicate}.

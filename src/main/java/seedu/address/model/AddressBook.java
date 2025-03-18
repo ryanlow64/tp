@@ -12,6 +12,8 @@ import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.UniqueDealList;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyList;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.UniqueScheduleList;
 
 /**
  * Wraps all data at the address-book level
@@ -22,6 +24,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueClientList clients;
     private final UniqueDealList deals;
     private final UniquePropertyList properties;
+    private final UniqueScheduleList schedules;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -34,6 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         clients = new UniqueClientList();
         deals = new UniqueDealList();
         properties = new UniquePropertyList();
+        schedules = new UniqueScheduleList();
     }
 
     public AddressBook() {}
@@ -219,6 +223,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Property> getPropertyList() {
         return properties.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Schedule> getScheduleList() {
+        return schedules.asUnmodifiableObservableList();
     }
 
     @Override

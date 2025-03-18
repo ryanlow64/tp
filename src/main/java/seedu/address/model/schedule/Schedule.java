@@ -18,6 +18,13 @@ public class Schedule {
     private LocalDateTime dateTime;
     private Note note; // make Note compulsory as it will be used as the title of the schedule card
 
+    /**
+     * TODO: Implement this method
+     */
+    public boolean isSameSchedule(Schedule otherSchedule) {
+        return false;
+    }
+
     public PropertyName getPropertyName() {
         return propertyName;
     }

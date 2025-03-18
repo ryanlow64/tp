@@ -11,6 +11,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.property.Property;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * A default model stub that have all the methods failing.
@@ -117,6 +118,11 @@ public class ModelStub implements Model {
 
     @Override
     public ObservableList<Property> getFilteredPropertyList() {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public ObservableList<Schedule> getFilteredScheduleList() {
         throw new AssertionError("This method should not be called.");
     }
 

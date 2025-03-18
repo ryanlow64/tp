@@ -7,6 +7,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 
+import java.time.LocalDateTime;
+import java.util.stream.Stream;
+
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.parser.AddCommandParser;
 import seedu.address.logic.parser.ArgumentMultimap;
@@ -20,9 +23,9 @@ import seedu.address.model.event.EventType;
 import seedu.address.model.event.Note;
 import seedu.address.model.property.PropertyName;
 
-import java.time.LocalDateTime;
-import java.util.stream.Stream;
-
+/**
+ * Parses input arguments and creates a new AddEventCommand object.
+ */
 public class AddEventCommandParser extends AddCommandParser<Event> {
     @Override
     public AddEventCommand parse(String args) throws ParseException {

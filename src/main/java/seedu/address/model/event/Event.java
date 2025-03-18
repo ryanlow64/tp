@@ -20,7 +20,11 @@ public class Event {
     private LocalDateTime dateTime;
     private Note note; // make Note compulsory as it will be used as the title of the event card
 
-    public Event(EventType eventType, PropertyName propertyName, ClientName clientName, LocalDateTime dateTime, Note note) {
+    /**
+     * Creates a new {@code Event} object.
+     */
+    public Event(EventType eventType, PropertyName propertyName,
+                 ClientName clientName, LocalDateTime dateTime, Note note) {
         this.eventType = eventType;
         this.propertyName = propertyName;
         this.clientName = clientName;

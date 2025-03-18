@@ -99,11 +99,17 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// event operations
+    /**
+     * Adds an event to the address book.
+     */
     public void addEvent(Event event) {
         requireNonNull(event);
         events.add(event);
     }
 
+    /**
+     * Removes an event from the address book.
+     */
     public void removeEvent(Event event) {
         requireNonNull(event);
         events.remove(event);

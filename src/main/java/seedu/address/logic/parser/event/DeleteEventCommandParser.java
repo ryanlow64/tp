@@ -8,6 +8,9 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 
+/**
+ * Parses input arguments and creates a new DeleteEventCommand object.
+ */
 public class DeleteEventCommandParser extends DeleteCommandParser<Event> {
     @Override
     public DeleteEventCommand parse(String args) throws ParseException {

@@ -27,13 +27,13 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
-    protected static final DateTimeFormatter DATE_FORMAT_TEXT = DateTimeFormatter
-            .ofPattern("dd-MM-yyyy HHmm", Locale.ENGLISH)
-            .withResolverStyle(ResolverStyle.SMART);
-
     public static final String MESSAGE_INVALID_DATETIME =
             "Invalid date: %s%nUse dd-mm-yyyy OR dd-mm-yyyy hhmm (e.g. 30-04-2025 1742).";
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+
+    protected static final DateTimeFormatter DATE_FORMAT_TEXT = DateTimeFormatter
+            .ofPattern("dd-MM-yyyy HHmm", Locale.ENGLISH)
+            .withResolverStyle(ResolverStyle.SMART);
 
     /**
      * Parses a string representation of date and time into an {@code LocalDateTime}.

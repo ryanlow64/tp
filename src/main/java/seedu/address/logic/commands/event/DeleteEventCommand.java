@@ -1,17 +1,16 @@
 package seedu.address.logic.commands.event;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.client.Client;
 import seedu.address.model.event.Event;
-
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Deletes an event identified using its index from the address book.
@@ -30,7 +29,7 @@ public class DeleteEventCommand extends DeleteCommand<Event> {
     public static final String MESSAGE_SUCCESS = "Deleted event: %s";
     public static final String MESSAGE_INVALID_EVENT = "This event index provided is invalid.";
 
-    public DeleteEventCommand(Index targetIndex)  {
+    public DeleteEventCommand(Index targetIndex) {
         super(targetIndex);
     }
 

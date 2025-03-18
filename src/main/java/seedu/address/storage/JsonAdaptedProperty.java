@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.commons.Address;
+import seedu.address.model.commons.Price;
 import seedu.address.model.property.Description;
-import seedu.address.model.property.Price;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 import seedu.address.model.property.Size;
@@ -47,7 +47,7 @@ public class JsonAdaptedProperty {
     public JsonAdaptedProperty(Property source) {
         propertyName = source.getPropertyName().fullName;
         address = source.getAddress().value;
-        price = source.getPrice().map(p -> p.price.get()).orElse(null);
+        price = source.getPrice().map(p -> p.value.toString()).orElse(null);
         size = source.getSize().map(s -> s.size.get()).orElse(null);
         description = source.getDescription().map(d -> d.description.get()).orElse(null);
     }

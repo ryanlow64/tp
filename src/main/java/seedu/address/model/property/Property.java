@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.commons.Address;
+import seedu.address.model.commons.Price;
 
 /**
  * Represents a Property in the address book.

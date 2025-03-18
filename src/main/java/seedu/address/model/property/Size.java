@@ -35,6 +35,9 @@ public class Size {
      * Returns true if a given string is a valid size.
      */
     public static boolean isValidSize(String test) {
+        if (test == null) {
+            return false;
+        }
         return test.isBlank() || test.matches(VALIDATION_REGEX);
     }
 

@@ -22,7 +22,7 @@ public class JsonAdaptedProperty {
 
     private final String propertyName;
     private final String address;
-    private final String price;
+    private final Long price;
     private final String size;
     private final String description;
 
@@ -32,7 +32,7 @@ public class JsonAdaptedProperty {
     @JsonCreator
     public JsonAdaptedProperty(@JsonProperty("propertyName") String propertyName,
                                @JsonProperty("address") String address,
-                               @JsonProperty("price") String price, @JsonProperty("size") String size,
+                               @JsonProperty("price") Long price, @JsonProperty("size") String size,
                                @JsonProperty("description") String description) {
         this.propertyName = propertyName;
         this.address = address;
@@ -47,7 +47,7 @@ public class JsonAdaptedProperty {
     public JsonAdaptedProperty(Property source) {
         propertyName = source.getPropertyName().fullName;
         address = source.getAddress().value;
-        price = source.getPrice().map(p -> p.value.toString()).orElse(null);
+        price = source.getPrice().value;
         size = source.getSize().map(s -> s.size.get()).orElse(null);
         description = source.getDescription().map(d -> d.description.get()).orElse(null);
     }
@@ -75,8 +75,13 @@ public class JsonAdaptedProperty {
         }
         final Address modelAddress = new Address(address);
 
-        final Optional<Price> modelPrice = (price == null || price.isEmpty())
-                ? Optional.empty() : Optional.of(new Price(price));
+        if (price == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Price.class.getSimpleName()));
+        }
+        if (!Price.isValidPrice(price)) {
+            throw new IllegalValueException(Price.MESSAGE_CONSTRAINTS);
+        }
+        final Price modelPrice = new Price(price);
 
         final Optional<Size> modelSize = (size == null || size.isEmpty())
                 ? Optional.empty() : Optional.of(new Size(size));

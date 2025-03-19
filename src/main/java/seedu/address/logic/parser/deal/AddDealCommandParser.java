@@ -3,7 +3,7 @@ package seedu.address.logic.parser.deal;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
@@ -19,7 +19,6 @@ import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.DealStatus;
-import seedu.address.model.property.PropertyName;
 
 /**
  * Parses input arguments and creates a new AddDealCommand object
@@ -33,20 +32,21 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
      */
     public AddDealCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER,
+                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER,
                         PREFIX_PRICE, PREFIX_STATUS);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddDealCommand.MESSAGE_USAGE));
         }
 
-        // Parse property name
-        String propertyNameStr = argMultimap.getValue(PREFIX_PROPERTY_NAME).get();
-        if (!PropertyName.isValidPropertyName(propertyNameStr)) {
-            throw new ParseException(PropertyName.MESSAGE_CONSTRAINTS);
+        // Parse property ID
+        Index propertyId;
+        try {
+            propertyId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_PROPERTY_ID).get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format("Invalid property ID: %s", pe.getMessage()));
         }
-        PropertyName propertyName = new PropertyName(propertyNameStr);
 
         // Parse buyer ID
         Index buyerId;
@@ -65,18 +65,17 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
         }
 
         // Parse price
-        String priceString = argMultimap.getValue(PREFIX_PRICE).get();
-        if (!Price.isValidPrice(priceString)) {
-            throw new ParseException(Price.MESSAGE_CONSTRAINTS);
-        }
-
-        // Check if price exceeds limit
+        String priceInput = argMultimap.getValue(PREFIX_PRICE).get();
         try {
-            Long priceValue = Long.parseLong(priceString);
+            Long priceValue = Long.parseLong(priceInput);
+            if (!Price.isValidPrice(priceValue)) {
+                throw new ParseException(Price.MESSAGE_CONSTRAINTS);
+            }
             if (priceValue > 999_990_000) {
                 throw new ParseException("Price exceeds the limit of 999.99");
             }
             Price price = new Price(priceValue);
+
             // Parse status (optional)
             DealStatus status = DealStatus.PENDING; // Default status
             if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
@@ -92,7 +91,7 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
                 }
             }
 
-            return new AddDealCommand(propertyName, buyerId, sellerId, price, status);
+            return new AddDealCommand(propertyId, buyerId, sellerId, price, status);
         } catch (NumberFormatException e) {
             throw new ParseException(Price.MESSAGE_CONSTRAINTS);
         }

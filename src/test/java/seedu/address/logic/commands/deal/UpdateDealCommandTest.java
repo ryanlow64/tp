@@ -34,9 +34,9 @@ public class UpdateDealCommandTest {
 
     private static final PropertyName VALID_PROPERTY_NAME = new PropertyName("Palm Spring");
     private static final PropertyName VALID_PROPERTY_NAME_2 = new PropertyName("Maple Villa");
-    private static final Price VALID_PRICE = new Price(200);
-    private static final Price VALID_PRICE_2 = new Price(300);
-    private static final Price PRICE_LIMIT = new Price(999);
+    private static final Price VALID_PRICE = new Price(200L);
+    private static final Price VALID_PRICE_2 = new Price(300L);
+    private static final Price PRICE_LIMIT = new Price(999L);
     private static final DealStatus VALID_STATUS = DealStatus.PENDING;
     private static final DealStatus VALID_STATUS_2 = DealStatus.CLOSED;
     private static final Index INDEX_FIRST = Index.fromOneBased(1);
@@ -282,10 +282,10 @@ public class UpdateDealCommandTest {
 
         // different types -> returns false
         assertFalse(standardCommand.equals(new AddDealCommand(
-                new PropertyName("Test"),
+                Index.fromOneBased(1),
                 Index.fromOneBased(1),
                 Index.fromOneBased(2),
-                new Price(1000),
+                new Price(1000L),
                 DealStatus.PENDING)));
 
         // different index -> returns false

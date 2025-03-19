@@ -128,11 +128,11 @@ public class UpdateDealCommandParser implements Parser<UpdateDealCommand> {
         }
 
         String priceString = argMultimap.getValue(PREFIX_PRICE).get();
-        if (!Price.isValidPrice(priceString)) {
-            throw new ParseException(Price.MESSAGE_CONSTRAINTS);
-        }
         try {
             Long priceValue = Long.parseLong(priceString);
+            if (!Price.isValidPrice(priceValue)) {
+                throw new ParseException(Price.MESSAGE_CONSTRAINTS);
+            }
             if (priceValue > 999_990_000) {
                 throw new ParseException("Price exceeds the limit of 999.99");
             }

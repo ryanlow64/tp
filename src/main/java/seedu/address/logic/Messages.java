@@ -59,7 +59,7 @@ public class Messages {
                 .append("; Address: ")
                 .append(property.getAddress())
                 .append("; Price: S$")
-                .append(property.getPrice().orElseThrow()).append(" million")
+                .append(property.getPrice()).append(" thousand")
                 .append("; Size: ")
                 .append(property.getSize().orElseThrow()).append(" square feet")
                 .append("; Description: ")

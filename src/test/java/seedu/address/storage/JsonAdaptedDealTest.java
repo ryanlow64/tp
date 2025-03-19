@@ -20,13 +20,13 @@ public class JsonAdaptedDealTest {
     private static final String INVALID_PROPERTY_NAME = "";
     private static final String INVALID_BUYER_NAME = "";
     private static final String INVALID_SELLER_NAME = "";
-    private static final String INVALID_PRICE = "-100";
+    private static final Long INVALID_PRICE = -100L;
     private static final String INVALID_STATUS = "UNKNOWN";
 
     private static final String VALID_PROPERTY_NAME = "Sunset Villa";
     private static final String VALID_BUYER_NAME = "John Doe";
     private static final String VALID_SELLER_NAME = "Jane Smith";
-    private static final String VALID_PRICE = "500";
+    private static final Long VALID_PRICE = 500L;
     private static final String VALID_STATUS = "PENDING";
 
     @Test
@@ -35,7 +35,7 @@ public class JsonAdaptedDealTest {
             new PropertyName(VALID_PROPERTY_NAME),
             new ClientName(VALID_BUYER_NAME),
             new ClientName(VALID_SELLER_NAME),
-            new Price(Long.parseLong(VALID_PRICE)),
+            new Price(VALID_PRICE),
             DealStatus.valueOf(VALID_STATUS)
         );
         JsonAdaptedDeal jsonDeal = new JsonAdaptedDeal(deal);

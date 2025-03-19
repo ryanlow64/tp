@@ -6,6 +6,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLIENT;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,8 @@ import seedu.address.model.client.ClientName;
 import seedu.address.model.client.Email;
 import seedu.address.model.client.Phone;
 import seedu.address.model.commons.Address;
+import seedu.address.model.property.Description;
+import seedu.address.model.property.Size;
 
 public class ParserUtilTest {
     private static final String INVALID_CLIENTNAME = "R@chel";
@@ -160,5 +163,33 @@ public class ParserUtilTest {
         String emailWithWhitespace = WHITESPACE + VALID_EMAIL + WHITESPACE;
         Email expectedEmail = new Email(VALID_EMAIL);
         assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
+    }
+
+    @Test
+    public void parseSize_validSize_success() throws ParseException {
+        String validSize1 = "1000";
+        String validSize2 = "500";
+
+        assertEquals(Optional.of(new Size(validSize1)), ParserUtil.parseSize(validSize1));
+        assertEquals(Optional.of(new Size(validSize2)), ParserUtil.parseSize(validSize2));
+    }
+
+    @Test
+    public void parseSize_nullSize_failure() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseSize(null));
+    }
+
+    @Test
+    public void parseDescription_validDescription_success() throws ParseException {
+        String validDescription1 = "Spacious 4-bedroom house";
+        String validDescription2 = "Cozy 2-bedroom apartment";
+
+        assertEquals(Optional.of(new Description(validDescription1)), ParserUtil.parseDescription(validDescription1));
+        assertEquals(Optional.of(new Description(validDescription2)), ParserUtil.parseDescription(validDescription2));
+    }
+
+    @Test
+    public void parseDescription_nullDescription_failure() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseDescription(null));
     }
 }

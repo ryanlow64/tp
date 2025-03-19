@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
@@ -27,8 +27,10 @@ import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
+import seedu.address.model.property.Description;
+import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
-
+import seedu.address.model.property.Size;
 
 public class AddDealCommandTest {
 
@@ -41,6 +43,19 @@ public class AddDealCommandTest {
     public void execute_dealAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingDealAdded modelStub = new ModelStubAcceptingDealAdded();
         PropertyName propertyName = new PropertyName("Test Property");
+
+        // Create property and add to model
+        Property testProperty = new Property(
+            propertyName,
+            new Address("123 Test St"),
+            new Price(500000L),
+            Optional.of(new Size("1000")),
+            Optional.of(new Description("Test description"))
+        );
+        modelStub.addProperty(testProperty);
+
+        // Property ID
+        Index propertyId = Index.fromOneBased(1);
 
         // Create client objects
         ClientName buyerName = new ClientName("John Doe");
@@ -62,7 +77,7 @@ public class AddDealCommandTest {
         DealStatus status = DealStatus.PENDING;
 
         Deal validDeal = new Deal(propertyName, buyerName, sellerName, price, status);
-        CommandResult commandResult = new AddDealCommand(propertyName, buyerId, sellerId, price, status)
+        CommandResult commandResult = new AddDealCommand(propertyId, buyerId, sellerId, price, status)
                 .execute(modelStub);
 
         assertEquals(String.format(AddDealCommand.MESSAGE_SUCCESS,
@@ -79,6 +94,16 @@ public class AddDealCommandTest {
     @Test
     public void execute_duplicateDeal_throwsCommandException() {
         PropertyName propertyName = new PropertyName("Test Property");
+
+        // Create property and add to model
+        Property testProperty = new Property(
+            propertyName,
+            new Address("123 Test St"),
+            new Price(500000L),
+            Optional.of(new Size("1000")),
+            Optional.of(new Description("Test description"))
+        );
+
         ClientName buyerName = new ClientName("John Doe");
         ClientName sellerName = new ClientName("Jane Smith");
         Client buyer = new Client(buyerName, new Phone("91234567"),
@@ -87,15 +112,17 @@ public class AddDealCommandTest {
                 new Email("jane@example.com"), new Address("456 Seller St"));
 
         // Use indices
+        Index propertyId = Index.fromOneBased(1);
         Index buyerId = Index.fromOneBased(1);
         Index sellerId = Index.fromOneBased(2);
 
-        Price price = new Price(500000);
+        Price price = new Price(500000L);
         DealStatus status = DealStatus.PENDING;
 
         Deal validDeal = new Deal(propertyName, buyerName, sellerName, price, status);
-        AddDealCommand addDealCommand = new AddDealCommand(propertyName, buyerId, sellerId, price, status);
+        AddDealCommand addDealCommand = new AddDealCommand(propertyId, buyerId, sellerId, price, status);
         ModelStubWithDeal modelStub = new ModelStubWithDeal(validDeal);
+        modelStub.addProperty(testProperty);
         modelStub.addClient(buyer);
         modelStub.addClient(seller);
 
@@ -107,18 +134,30 @@ public class AddDealCommandTest {
     @Test
     public void execute_sameBuyerAndSeller_throwsCommandException() {
         PropertyName propertyName = new PropertyName("Test Property");
+
+        // Create property and add to model
+        Property testProperty = new Property(
+            propertyName,
+            new Address("123 Test St"),
+            new Price(500000L),
+            Optional.of(new Size("1000")),
+            Optional.of(new Description("Test description"))
+        );
+
         ClientName personName = new ClientName("Same Person");
         Client person = new Client(personName, new Phone("91234567"),
                 new Email("same@example.com"), new Address("123 Same St"));
 
-        // Use same index for buyer and seller
+        // Use indices for property and clients
+        Index propertyId = Index.fromOneBased(1);
         Index personId = Index.fromOneBased(1);
 
-        Price price = new Price(500000);
+        Price price = new Price(500000L);
         DealStatus status = DealStatus.PENDING;
 
-        AddDealCommand addDealCommand = new AddDealCommand(propertyName, personId, personId, price, status);
+        AddDealCommand addDealCommand = new AddDealCommand(propertyId, personId, personId, price, status);
         ModelStubWithClients modelStub = new ModelStubWithClients();
+        modelStub.addProperty(testProperty);
         modelStub.addClient(person);
 
         CommandException exception = assertThrows(CommandException.class, (
@@ -129,6 +168,16 @@ public class AddDealCommandTest {
     @Test
     public void execute_propertyAlreadyInDeal_throwsCommandException() {
         PropertyName propertyName = new PropertyName("Test Property");
+
+        // Create property and add to model
+        Property testProperty = new Property(
+            propertyName,
+            new Address("123 Test St"),
+            new Price(500000L),
+            Optional.of(new Size("1000")),
+            Optional.of(new Description("Test description"))
+        );
+
         // First set of clients
         ClientName buyer1Name = new ClientName("John Doe");
         ClientName seller1Name = new ClientName("Jane Smith");
@@ -146,17 +195,19 @@ public class AddDealCommandTest {
                 new Email("bob@example.com"), new Address("012 Seller St"));
 
         // Use indices
+        Index propertyId = Index.fromOneBased(1);
         Index buyer1Id = Index.fromOneBased(1);
         Index seller1Id = Index.fromOneBased(2);
         Index buyer2Id = Index.fromOneBased(3);
         Index seller2Id = Index.fromOneBased(4);
 
-        Price price = new Price(500000);
+        Price price = new Price(500000L);
         DealStatus status = DealStatus.PENDING;
 
         Deal existingDeal = new Deal(propertyName, buyer1Name, seller1Name, price, status);
-        AddDealCommand addDealCommand = new AddDealCommand(propertyName, buyer2Id, seller2Id, price, status);
+        AddDealCommand addDealCommand = new AddDealCommand(propertyId, buyer2Id, seller2Id, price, status);
         ModelStubWithDealAndClients modelStub = new ModelStubWithDealAndClients(existingDeal);
+        modelStub.addProperty(testProperty);
         modelStub.addClient(buyer1);
         modelStub.addClient(seller1);
         modelStub.addClient(buyer2);
@@ -169,26 +220,27 @@ public class AddDealCommandTest {
 
     @Test
     public void equals() {
-        PropertyName property1 = new PropertyName("Property 1");
-        PropertyName property2 = new PropertyName("Property 2");
+        Index property1Id = Index.fromOneBased(1);
+        Index property2Id = Index.fromOneBased(2);
+
         // Use indices for clients
         Index buyer1Id = Index.fromOneBased(1);
         Index buyer2Id = Index.fromOneBased(2);
         Index seller1Id = Index.fromOneBased(3);
         Index seller2Id = Index.fromOneBased(4);
-        Price price1 = new Price(500000);
-        Price price2 = new Price(600000);
+        Price price1 = new Price(500000L);
+        Price price2 = new Price(600000L);
         DealStatus status1 = DealStatus.PENDING;
         DealStatus status2 = DealStatus.CLOSED;
 
-        AddDealCommand addFirstCommand = new AddDealCommand(property1, buyer1Id, seller1Id, price1, status1);
-        AddDealCommand addSecondCommand = new AddDealCommand(property2, buyer2Id, seller2Id, price2, status2);
+        AddDealCommand addFirstCommand = new AddDealCommand(property1Id, buyer1Id, seller1Id, price1, status1);
+        AddDealCommand addSecondCommand = new AddDealCommand(property2Id, buyer2Id, seller2Id, price2, status2);
 
         // same object -> returns true
         assertTrue(addFirstCommand.equals(addFirstCommand));
 
         // same values -> returns true
-        AddDealCommand addFirstCommandCopy = new AddDealCommand(property1, buyer1Id, seller1Id, price1, status1);
+        AddDealCommand addFirstCommandCopy = new AddDealCommand(property1Id, buyer1Id, seller1Id, price1, status1);
         assertTrue(addFirstCommand.equals(addFirstCommandCopy));
 
         // different types -> returns false
@@ -207,6 +259,7 @@ public class AddDealCommandTest {
     private class ModelStubWithDeal extends ModelStub {
         private final Deal deal;
         private final ArrayList<Client> clients = new ArrayList<>();
+        private final ArrayList<Property> properties = new ArrayList<>();
 
         ModelStubWithDeal(Deal deal) {
             requireNonNull(deal);
@@ -229,6 +282,17 @@ public class AddDealCommandTest {
         public ObservableList<Client> getFilteredClientList() {
             return FXCollections.observableArrayList(clients);
         }
+
+        @Override
+        public void addProperty(Property property) {
+            requireNonNull(property);
+            properties.add(property);
+        }
+
+        @Override
+        public ObservableList<Property> getFilteredPropertyList() {
+            return FXCollections.observableArrayList(properties);
+        }
     }
 
     /**
@@ -236,6 +300,7 @@ public class AddDealCommandTest {
      */
     private class ModelStubWithClients extends ModelStub {
         private final ArrayList<Client> clients = new ArrayList<>();
+        private final ArrayList<Property> properties = new ArrayList<>();
 
         @Override
         public boolean hasDeal(Deal deal) {
@@ -252,14 +317,26 @@ public class AddDealCommandTest {
         public ObservableList<Client> getFilteredClientList() {
             return FXCollections.observableArrayList(clients);
         }
+
+        @Override
+        public void addProperty(Property property) {
+            requireNonNull(property);
+            properties.add(property);
+        }
+
+        @Override
+        public ObservableList<Property> getFilteredPropertyList() {
+            return FXCollections.observableArrayList(properties);
+        }
     }
 
     /**
-     * A Model stub that contains both clients and a deal.
+     * A Model stub that contains a deal and clients.
      */
     private class ModelStubWithDealAndClients extends ModelStub {
         private final Deal deal;
         private final ArrayList<Client> clients = new ArrayList<>();
+        private final ArrayList<Property> properties = new ArrayList<>();
 
         ModelStubWithDealAndClients(Deal deal) {
             requireNonNull(deal);
@@ -269,14 +346,14 @@ public class AddDealCommandTest {
         @Override
         public boolean hasDeal(Deal deal) {
             requireNonNull(deal);
-            // For property already in deal test, we should return false here
-            // so that the check for property already in deal can be triggered
-            return false;
+            return this.deal.isSameDeal(deal);
         }
 
         @Override
         public ObservableList<Deal> getFilteredDealList() {
-            return FXCollections.observableArrayList(List.of(deal));
+            ArrayList<Deal> deals = new ArrayList<>();
+            deals.add(deal);
+            return FXCollections.observableArrayList(deals);
         }
 
         @Override
@@ -289,19 +366,31 @@ public class AddDealCommandTest {
         public ObservableList<Client> getFilteredClientList() {
             return FXCollections.observableArrayList(clients);
         }
+
+        @Override
+        public void addProperty(Property property) {
+            requireNonNull(property);
+            properties.add(property);
+        }
+
+        @Override
+        public ObservableList<Property> getFilteredPropertyList() {
+            return FXCollections.observableArrayList(properties);
+        }
     }
 
     /**
-     * A Model stub that always accepts the deal being added.
+     * A Model stub that accepts deal additions.
      */
     private class ModelStubAcceptingDealAdded extends ModelStub {
         final ArrayList<Deal> dealsAdded = new ArrayList<>();
         final ArrayList<Client> clients = new ArrayList<>();
+        final ArrayList<Property> properties = new ArrayList<>();
 
         @Override
         public boolean hasDeal(Deal deal) {
             requireNonNull(deal);
-            return dealsAdded.stream().anyMatch(d -> d.isSameDeal(deal));
+            return dealsAdded.stream().anyMatch(deal::isSameDeal);
         }
 
         @Override
@@ -317,6 +406,12 @@ public class AddDealCommandTest {
         }
 
         @Override
+        public void addProperty(Property property) {
+            requireNonNull(property);
+            properties.add(property);
+        }
+
+        @Override
         public ObservableList<Deal> getFilteredDealList() {
             return FXCollections.observableArrayList(dealsAdded);
         }
@@ -324,6 +419,11 @@ public class AddDealCommandTest {
         @Override
         public ObservableList<Client> getFilteredClientList() {
             return FXCollections.observableArrayList(clients);
+        }
+
+        @Override
+        public ObservableList<Property> getFilteredPropertyList() {
+            return FXCollections.observableArrayList(properties);
         }
 
         @Override

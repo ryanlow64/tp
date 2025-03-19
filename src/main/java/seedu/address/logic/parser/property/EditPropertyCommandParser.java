@@ -56,7 +56,8 @@ public class EditPropertyCommandParser extends EditCommandParser<Property> {
             editPropertyDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
         if (argMultimap.getValue(PREFIX_PRICE).isPresent()) {
-            editPropertyDescriptor.setPrice(ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE).get()));
+            editPropertyDescriptor.setPrice(ParserUtil
+                    .parsePrice(Long.valueOf(argMultimap.getValue(PREFIX_PRICE).get())));
         }
         if (argMultimap.getValue(PREFIX_SIZE).isPresent()) {
             editPropertyDescriptor.setSize(ParserUtil.parseSize(argMultimap.getValue(PREFIX_SIZE).get()));

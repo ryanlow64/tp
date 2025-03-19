@@ -4,8 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -52,8 +55,8 @@ public class CommandTestUtil {
     public static final String VALID_PROPERTY_NAME_ORCHID = "Orchid Gardens Condominium";
     public static final String VALID_ADDRESS_MAPLE = "123 Maple Street";
     public static final String VALID_ADDRESS_ORCHID = "234 Orchid Street";
-    public static final String VALID_PRICE_MAPLE = "240";
-    public static final String VALID_PRICE_ORCHID = "120";
+    public static final Long VALID_PRICE_MAPLE = 2400L;
+    public static final Long VALID_PRICE_ORCHID = 1200L;
     public static final String VALID_SIZE_MAPLE = "1000";
     public static final String VALID_SIZE_ORCHID = "500";
     public static final String VALID_DESCRIPTION_MAPLE = "Spacious 4-bedroom home";
@@ -64,7 +67,10 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
-
+    public static final String INVALID_PROPERTY_NAME_DESC = " " + PREFIX_PROPERTY_NAME + "Maple&";
+    public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"; // exceed 50 chars
+    public static final String INVALID_PRICE_DESC = " " + PREFIX_PRICE + -100L; // cannot be negative number
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 

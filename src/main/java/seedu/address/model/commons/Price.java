@@ -2,14 +2,14 @@ package seedu.address.model.commons;
 
 /**
  * Represents a Property's price in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPrice(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidPrice(Long)}
  */
 public class Price {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Price should only contain numbers from (0, 999.99] (in S$ millions)";
+            "Price should only contain positive numbers (in S$ thousands) between 3 to 6 digits";
 
-    public static final String VALIDATION_REGEX = "(?!0$)\\d{1,3}(\\.\\d{1,2})?";
+    public static final String VALIDATION_REGEX = "^[1-9]\\d{2,5}$";
 
     public final Long value;
 
@@ -23,38 +23,15 @@ public class Price {
     }
 
     /**
-     * Constructs a {@code Price}.
-     *
-     * @param price A valid price value
-     */
-    public Price(Integer price) {
-        this.value = Long.valueOf(price);
-    }
-
-    /**
-     * Constructs a {@code Price}.
-     *
-     * @param price A valid price string
-     */
-    public Price(String price) {
-        if (!isValidPrice(price)) {
-            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
-        }
-        try {
-            this.value = Long.parseLong(price);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
-        }
-    }
-
-    /**
      * Returns true if a given string is a valid price.
      */
-    public static boolean isValidPrice(String test) {
-        if (test == null) {
+    public static boolean isValidPrice(Long test) {
+        if (test == null || test <= 0) {
             return false;
         }
-        return !test.isBlank() && test.matches(VALIDATION_REGEX);
+
+        String testString = test.toString();
+        return testString.matches(VALIDATION_REGEX);
     }
 
     /**

@@ -20,21 +20,21 @@ public class TypicalDeals {
             new PropertyName("Sunset Villa"),
             new ClientName("John Doe"),
             new ClientName("Jane Smith"),
-            new Price(500000),
+            new Price(500000L),
             DealStatus.PENDING);
 
     public static final Deal DEAL2 = new Deal(
             new PropertyName("Ocean View Condo"),
             new ClientName("Alice Brown"),
             new ClientName("Bob Wilson"),
-            new Price(750000),
+            new Price(750000L),
             DealStatus.CLOSED);
 
     public static final Deal DEAL3 = new Deal(
             new PropertyName("Mountain Lodge"),
             new ClientName("Charlie Davis"),
             new ClientName("Diana Evans"),
-            new Price(1000000),
+            new Price(1000000L),
             DealStatus.IN_NEGOTIATION);
 
     private TypicalDeals() {} // prevents instantiation

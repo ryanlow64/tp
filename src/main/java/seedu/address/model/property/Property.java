@@ -16,14 +16,14 @@ import seedu.address.model.commons.Price;
 public class Property {
     private final PropertyName propertyName;
     private final Address address;
-    private final Optional<Price> price;
+    private final Price price;
     private final Optional<Size> size;
     private final Optional<Description> description;
 
     /**
      * Every field must be present and not null.
      */
-    public Property(PropertyName propertyName, Address address, Optional<Price> price,
+    public Property(PropertyName propertyName, Address address, Price price,
                     Optional<Size> size, Optional<Description> description) {
         requireAllNonNull(propertyName, address, price, size, description);
         this.propertyName = propertyName;
@@ -41,7 +41,7 @@ public class Property {
         return address;
     }
 
-    public Optional<Price> getPrice() {
+    public Price getPrice() {
         return price;
     }
 

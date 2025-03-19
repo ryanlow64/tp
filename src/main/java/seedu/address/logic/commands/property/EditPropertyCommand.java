@@ -41,12 +41,12 @@ public class EditPropertyCommand extends EditCommand<Property> {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_PROPERTY_NAME + "PROPERTYNAME] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_PRICE + "PRICE (in S$ millions)] "
+            + "[" + PREFIX_PRICE + "PRICE (in S$ thousands)] "
             + "[" + PREFIX_SIZE + "SIZE (in square feet)] "
             + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ADDRESS + "234 Maple Street "
-            + PREFIX_PRICE + "1.5";
+            + PREFIX_PRICE + "2000";
 
     public static final String MESSAGE_EDIT_PROPERTY_SUCCESS = "Edited Property: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -95,7 +95,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
         PropertyName updatedPropertyName = editPropertyDescriptor.getPropertyName()
                 .orElse(propertyToEdit.getPropertyName());
         Address updatedAddress = editPropertyDescriptor.getAddress().orElse(propertyToEdit.getAddress());
-        Optional<Price> updatedPrice = editPropertyDescriptor.getPrice().orElse(propertyToEdit.getPrice());
+        Price updatedPrice = editPropertyDescriptor.getPrice().orElse(propertyToEdit.getPrice());
         Optional<Size> updatedSize = editPropertyDescriptor.getSize().orElse(propertyToEdit.getSize());
         Optional<Description> updatedDescription = editPropertyDescriptor.getDescription()
                 .orElse(propertyToEdit.getDescription());
@@ -133,7 +133,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
     public static class EditPropertyDescriptor extends EditDescriptor<Property> {
         private PropertyName propertyName;
         private Address address;
-        private Optional<Price> price;
+        private Price price;
         private Optional<Size> size;
         private Optional<Description> description;
 
@@ -175,11 +175,11 @@ public class EditPropertyCommand extends EditCommand<Property> {
             return Optional.ofNullable(address);
         }
 
-        public void setPrice(Optional<Price> price) {
+        public void setPrice(Price price) {
             this.price = price;
         }
 
-        public Optional<Optional<Price>> getPrice() {
+        public Optional<Price> getPrice() {
             return Optional.ofNullable(price);
         }
 

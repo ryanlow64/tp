@@ -11,7 +11,7 @@ import java.util.Optional;
 public class Size {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Size should only contain numbers from [100, 99999] (in square feet)";
+            "Size should only contain integers from [100, 99999] (in square feet)";
 
     public static final String VALIDATION_REGEX = "([1-9]\\d{2,4})";
 

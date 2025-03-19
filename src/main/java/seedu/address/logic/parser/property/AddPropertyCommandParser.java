@@ -50,7 +50,17 @@ public class AddPropertyCommandParser extends AddCommandParser<Property> {
         PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_PROPERTY_NAME)
                 .get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-        Optional<Price> price = ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE).get());
+
+        String priceArg = argMultimap.getValue(PREFIX_PRICE).get();
+        if (priceArg.contains(".")) {
+            throw new ParseException("Price must be an integer!");
+        }
+        if (!priceArg.matches(Price.VALIDATION_REGEX)) {
+            throw new ParseException(Price.MESSAGE_CONSTRAINTS);
+        }
+        Long priceValue = Long.valueOf(priceArg);
+        Price price = ParserUtil.parsePrice(priceValue);
+
         Optional<Size> size = ParserUtil.parseSize(argMultimap.getValue(PREFIX_SIZE).get());
         Optional<Description> description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)
                 .get());

@@ -25,7 +25,7 @@ public class AddDealCommandParserTest {
     private static final String INVALID_BUYER_NAME_DESC = " " + PREFIX_BUYER + ""; // empty buyer name
     private static final String VALID_SELLER_NAME_DESC = " " + PREFIX_SELLER + "Jane Smith";
     private static final String INVALID_SELLER_NAME_DESC = " " + PREFIX_SELLER + ""; // empty seller name
-    private static final String VALID_PRICE_DESC = " " + PREFIX_PRICE + "25";
+    private static final String VALID_PRICE_DESC = " " + PREFIX_PRICE + 2500L;
     private static final String INVALID_PRICE_DESC = " " + PREFIX_PRICE + "abc"; // price must be numeric
     private static final String VALID_STATUS_DESC = " " + PREFIX_STATUS + "PENDING";
     private static final String INVALID_STATUS_DESC = " " + PREFIX_STATUS + "invalid"; // status is a predefined value
@@ -38,7 +38,7 @@ public class AddDealCommandParserTest {
         PropertyName propertyName = new PropertyName("Sunset Villa");
         ClientName buyer = new ClientName("John Doe");
         ClientName seller = new ClientName("Jane Smith");
-        Price price = new Price(25L);
+        Price price = new Price(2500L);
         DealStatus status = DealStatus.PENDING;
         AddDealCommand expectedCommand = new AddDealCommand(propertyName, buyer, seller, price, status);
 

@@ -26,8 +26,12 @@ public class Price {
      * Returns true if a given string is a valid price.
      */
     public static boolean isValidPrice(Long test) {
+        if (test == null || test <= 0) {
+            return false;
+        }
+
         String testString = test.toString();
-        return testString.matches("^[1-9]\\d*$") && test > 0;
+        return testString.matches(VALIDATION_REGEX);
     }
 
     /**

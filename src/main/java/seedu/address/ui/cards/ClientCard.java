@@ -8,7 +8,7 @@ import seedu.address.model.client.Client;
 import seedu.address.ui.UiPart;
 
 /**
- * An UI component that displays information of a {@code Client}.
+ * A UI component that displays information of a {@code Client}.
  */
 public class ClientCard extends UiPart<Region> {
 

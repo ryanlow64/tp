@@ -34,7 +34,7 @@ public class AddClientCommandIntegrationTest {
         expectedModel.addClient(validClient);
 
         assertCommandSuccess(new AddClientCommand(validClient), model,
-                String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.format(validClient)),
+                String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.formatClient(validClient)),
                 expectedModel);
     }
 

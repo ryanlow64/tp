@@ -4,15 +4,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.schedule.Schedule;
+import seedu.address.logic.parser.ParserUtil;
+import seedu.address.model.event.Event;
 import seedu.address.ui.UiPart;
 
 /**
- * An UI component that displays information of a {@code Schedule}.
+ * A UI component that displays information of a {@code Event}.
  */
-public class ScheduleCard extends UiPart<Region> {
+public class EventCard extends UiPart<Region> {
 
-    private static final String FXML = "ScheduleListCard.fxml";
+    private static final String FXML = "EventListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -22,12 +23,14 @@ public class ScheduleCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final Schedule schedule;
+    public final Event event;
 
     @FXML
     private HBox cardPane;
     @FXML
     private Label id;
+    @FXML
+    private Label eventType;
     @FXML
     private Label property;
     @FXML
@@ -38,15 +41,16 @@ public class ScheduleCard extends UiPart<Region> {
     private Label note;
 
     /**
-     * Creates a {@code ScheduleCode} with the given {@code Schedule} and index to display.
+     * Creates a {@code EventCode} with the given {@code Event} and index to display.
      */
-    public ScheduleCard(Schedule schedule, int displayedIndex) {
+    public EventCard(Event event, int displayedIndex) {
         super(FXML);
-        this.schedule = schedule;
+        this.event = event;
         id.setText(displayedIndex + ". ");
-        property.setText(schedule.getPropertyName().fullName);
-        client.setText(schedule.getClientName().fullName);
-        dateTime.setText(schedule.getDateTime().toString());
-        note.setText(schedule.getNote().note);
+        eventType.setText(event.getEventType().toFormattedString());
+        property.setText(event.getPropertyName().fullName);
+        client.setText(event.getClientName().fullName);
+        dateTime.setText(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT));
+        note.setText(event.getNote().toString());
     }
 }

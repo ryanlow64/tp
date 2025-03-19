@@ -10,10 +10,10 @@ import seedu.address.model.client.Client;
 import seedu.address.model.client.UniqueClientList;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.UniqueDealList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyList;
-import seedu.address.model.schedule.Schedule;
-import seedu.address.model.schedule.UniqueScheduleList;
 
 /**
  * Wraps all data at the address-book level
@@ -23,8 +23,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueClientList clients;
     private final UniqueDealList deals;
+    private final UniqueEventList events;
     private final UniquePropertyList properties;
-    private final UniqueScheduleList schedules;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -33,11 +33,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
      */
+
     {
         clients = new UniqueClientList();
         deals = new UniqueDealList();
+        events = new UniqueEventList();
         properties = new UniquePropertyList();
-        schedules = new UniqueScheduleList();
     }
 
     public AddressBook() {}
@@ -122,6 +123,27 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeClient(Client key) {
         clients.remove(key);
+    }
+
+    //// event operations
+    /**
+     * Adds an event to the address book.
+     */
+    public void addEvent(Event event) {
+        requireNonNull(event);
+        events.add(event);
+    }
+
+    /**
+     * Removes an event from the address book.
+     */
+    public void removeEvent(Event event) {
+        requireNonNull(event);
+        events.remove(event);
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events.setEvents(events);
     }
 
     //// property-level operations
@@ -216,6 +238,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Event> getEventList() {
+        return events.asUnmodifiableObservableList();
+    }
+
+    @Override
     public ObservableList<Deal> getDealList() {
         return deals.asUnmodifiableObservableList();
     }
@@ -223,11 +250,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Property> getPropertyList() {
         return properties.asUnmodifiableObservableList();
-    }
-
-    @Override
-    public ObservableList<Schedule> getScheduleList() {
-        return schedules.asUnmodifiableObservableList();
     }
 
     @Override
@@ -244,11 +266,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         AddressBook otherAddressBook = (AddressBook) other;
         return clients.equals(otherAddressBook.clients)
                 && deals.equals(otherAddressBook.deals)
+                && events.equals(otherAddressBook.events)
                 && properties.equals(otherAddressBook.properties);
     }
 
     @Override
     public int hashCode() {
-        return clients.hashCode() + deals.hashCode() + properties.hashCode();
+        return clients.hashCode() + deals.hashCode() + events.hashCode() + properties.hashCode();
     }
 }

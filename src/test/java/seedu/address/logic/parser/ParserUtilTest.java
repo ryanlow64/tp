@@ -5,6 +5,8 @@ import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLIENT;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -25,6 +27,28 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
 
     private static final String WHITESPACE = " \t\r\n";
+
+    @Test
+    void parseDateTime_validInput_success() throws ParseException {
+        assertEquals(LocalDateTime.of(1889, 4, 20, 17, 42),
+                ParserUtil.parseDateTime("20-04-1889 1742"));
+
+        assertEquals(LocalDateTime.of(2024, 2, 29, 0, 0),
+                ParserUtil.parseDateTime("29-02-2024 0000"));
+    }
+
+    @Test
+    void parseDateTime_invalidInput_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseDateTime("arnold schwarzenegger"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseDateTime("30/04/2025 1742"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseDateTime("30-04-25 1742"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseDateTime("30 Apr 2025 1742"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseDateTime("30-04-2025 17:42"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseDateTime("30-04-2025 faketime"));
+
+        assertThrows(ParseException.class, () -> ParserUtil.parseDateTime("29-02-2025 1742"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseDateTime("31-04-2025 1742"));
+    }
 
     @Test
     public void parseIndex_invalidInput_throwsParseException() {

@@ -8,7 +8,7 @@ import seedu.address.model.property.Property;
 import seedu.address.ui.UiPart;
 
 /**
- * An UI component that displays information of a {@code Property}.
+ * A UI component that displays information of a {@code Property}.
  */
 public class PropertyCard extends UiPart<Region> {
 

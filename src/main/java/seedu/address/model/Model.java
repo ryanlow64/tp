@@ -7,8 +7,8 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
+import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
-import seedu.address.model.schedule.Schedule;
 
 /**
  * The API of the Model component.
@@ -16,6 +16,7 @@ import seedu.address.model.schedule.Schedule;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Client> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
+    Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Property> PREDICATE_SHOW_ALL_PROPERTIES = unused -> true;
@@ -94,14 +95,22 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered list of properties */
     ObservableList<Property> getFilteredPropertyList();
 
-    /** Returns an unmodifiable view of the filtered list of schedules */
-    ObservableList<Schedule> getFilteredScheduleList();
+    /** Returns an unmodifiable view of the filtered list of events */
+    ObservableList<Event> getFilteredEventList();
 
     /**
      * Updates the filter of the filtered client list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredClientList(Predicate<Client> predicate);
+
+    boolean hasEvent(Event event);
+
+    void addEvent(Event event);
+
+    void deleteEvent(Event event);
+
+    void updateFilteredEventList(Predicate<Event> predicate);
 
     /**
      * Returns true if a property with the same identity as {@code property} exists in the address book.

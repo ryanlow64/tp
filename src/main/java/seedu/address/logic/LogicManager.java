@@ -17,8 +17,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
+import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
-import seedu.address.model.schedule.Schedule;
 import seedu.address.storage.Storage;
 
 /**
@@ -85,8 +85,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Schedule> getFilteredScheduleList() {
-        return model.getFilteredScheduleList();
+    public ObservableList<Event> getFilteredEventList() {
+        return model.getFilteredEventList();
     }
 
     @Override

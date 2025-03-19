@@ -43,7 +43,7 @@ public class EditClientCommandTest extends EditCommandTest<Client> {
         EditClientCommand editCommand = new EditClientCommand(INDEX_FIRST_CLIENT, descriptor);
 
         String expectedMessage = String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS,
-            Messages.format(editedClient));
+            Messages.formatClient(editedClient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setClient(model.getFilteredClientList().get(0), editedClient);
@@ -65,7 +65,7 @@ public class EditClientCommandTest extends EditCommandTest<Client> {
         EditClientCommand editCommand = new EditClientCommand(indexLastClient, descriptor);
 
         String expectedMessage = String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS,
-            Messages.format(editedClient));
+            Messages.formatClient(editedClient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setClient(lastClient, editedClient);
@@ -79,7 +79,7 @@ public class EditClientCommandTest extends EditCommandTest<Client> {
         Client editedClient = model.getFilteredClientList().get(INDEX_FIRST_CLIENT.getZeroBased());
 
         String expectedMessage = String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS,
-            Messages.format(editedClient));
+            Messages.formatClient(editedClient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -96,7 +96,7 @@ public class EditClientCommandTest extends EditCommandTest<Client> {
             new EditClientDescriptorBuilder().withClientName(VALID_CLIENT_NAME_BOB).build());
 
         String expectedMessage = String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS,
-            Messages.format(editedClient));
+            Messages.formatClient(editedClient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setClient(model.getFilteredClientList().get(0), editedClient);

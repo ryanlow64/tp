@@ -38,7 +38,7 @@ public class AddPropertyCommandTest extends AddCommandTest<Property> {
 
         CommandResult commandResult = new AddPropertyCommand(validProperty).execute(modelStub);
 
-        assertEquals(String.format(AddPropertyCommand.MESSAGE_SUCCESS, Messages.format(validProperty)),
+        assertEquals(String.format(AddPropertyCommand.MESSAGE_SUCCESS, Messages.formatProperty(validProperty)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validProperty), modelStub.propertiesAdded);
     }

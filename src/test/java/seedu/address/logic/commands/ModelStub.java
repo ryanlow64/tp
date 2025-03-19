@@ -10,8 +10,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
+import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
-import seedu.address.model.schedule.Schedule;
 
 /**
  * A default model stub that have all the methods failing.
@@ -122,12 +122,32 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public ObservableList<Schedule> getFilteredScheduleList() {
+    public void updateFilteredClientList(Predicate<Client> predicate) {
         throw new AssertionError("This method should not be called.");
     }
 
     @Override
-    public void updateFilteredClientList(Predicate<Client> predicate) {
+    public boolean hasEvent(Event event) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void addEvent(Event event) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void deleteEvent(Event event) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public ObservableList<Event> getFilteredEventList() {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void updateFilteredEventList(Predicate<Event> predicate) {
         throw new AssertionError("This method should not be called.");
     }
 

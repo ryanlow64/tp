@@ -81,7 +81,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
 
         model.setProperty(propertyToEdit, editedProperty);
         model.updateFilteredPropertyList(PREDICATE_SHOW_ALL_PROPERTIES);
-        return new CommandResult(String.format(MESSAGE_EDIT_PROPERTY_SUCCESS, Messages.format(editedProperty)));
+        return new CommandResult(String.format(MESSAGE_EDIT_PROPERTY_SUCCESS, Messages.formatProperty(editedProperty)));
     }
 
     /**

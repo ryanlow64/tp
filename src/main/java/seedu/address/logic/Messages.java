@@ -4,8 +4,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.client.Client;
+import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
 
 /**
@@ -37,24 +39,23 @@ public class Messages {
     /**
      * Formats the {@code client} for display to the user.
      */
-    public static String format(Client client) {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(client.getClientName())
+    public static String formatClient(Client client) {
+        return new StringBuilder(String.valueOf(client.getClientName()))
+                .append(client.getClientName())
                 .append("; Phone: ")
                 .append(client.getPhone())
                 .append("; Email: ")
                 .append(client.getEmail())
                 .append("; Address: ")
-                .append(client.getAddress());
-        return builder.toString();
+                .append(client.getAddress())
+                .toString();
     }
 
     /**
      * Formats the {@code property} for display to the user.
      */
-    public static String format(Property property) {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(property.getPropertyName())
+    public static String formatProperty(Property property) {
+        return new StringBuilder(String.valueOf(property.getPropertyName()))
                 .append("; Address: ")
                 .append(property.getAddress())
                 .append("; Price: S$")
@@ -62,8 +63,23 @@ public class Messages {
                 .append("; Size: ")
                 .append(property.getSize().orElseThrow()).append(" square feet")
                 .append("; Description: ")
-                .append(property.getDescription().orElseThrow());
-        return builder.toString();
+                .append(property.getDescription().orElseThrow())
+                .toString();
     }
 
+    /**
+     * Formats the {@code Event} for display to the user.
+     */
+    public static String formatEvent(Event event) {
+        return new StringBuilder(event.getEventType().toFormattedString())
+                .append(": Property: ")
+                .append(event.getPropertyName())
+                .append("; Client: ")
+                .append(event.getClientName())
+                .append("; Date: ")
+                .append(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT))
+                .append("; Notes: ")
+                .append(event.getNote().toString())
+                .toString();
+    }
 }

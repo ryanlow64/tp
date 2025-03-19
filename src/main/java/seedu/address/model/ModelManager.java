@@ -177,6 +177,13 @@ public class ModelManager implements Model {
         updateFilteredDealList(PREDICATE_SHOW_ALL_DEALS);
     }
 
+    @Override
+    public void setDeal(Deal target, Deal editedDeal) {
+        requireAllNonNull(target, editedDeal);
+
+        addressBook.setDeal(target, editedDeal);
+    }
+
     //=========== Filtered Client List Accessors =============================================================
 
     /**

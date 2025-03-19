@@ -149,6 +149,13 @@ public interface Model {
     void addDeal(Deal deal);
 
     /**
+     * Replaces the given deal {@code target} with {@code editedDeal}.
+     * {@code target} must exist in the address book.
+     * The deal identity of {@code editedDeal} must not be the same as another existing deal in the address book.
+     */
+    void setDeal(Deal target, Deal editedDeal);
+
+    /**
      * Updates the filter of the filtered deal list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */

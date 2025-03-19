@@ -13,12 +13,12 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.client.AddClientCommand;
 import seedu.address.logic.commands.client.DeleteClientCommand;
 import seedu.address.logic.commands.client.EditClientCommand;
 import seedu.address.logic.commands.client.ListClientCommand;
 import seedu.address.logic.commands.deal.AddDealCommand;
+import seedu.address.logic.commands.deal.UpdateDealCommand;
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.ListEventCommand;
@@ -30,6 +30,7 @@ import seedu.address.logic.parser.client.AddClientCommandParser;
 import seedu.address.logic.parser.client.DeleteClientCommandParser;
 import seedu.address.logic.parser.client.EditClientCommandParser;
 import seedu.address.logic.parser.deal.AddDealCommandParser;
+import seedu.address.logic.parser.deal.UpdateDealCommandParser;
 import seedu.address.logic.parser.event.AddEventCommandParser;
 import seedu.address.logic.parser.event.DeleteEventCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -42,11 +43,12 @@ import seedu.address.logic.parser.property.EditPropertyCommandParser;
  */
 public class AddressBookParser {
 
+    private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
+
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
-    private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
 
     /**
      * Parses user input into command for execution.
@@ -63,37 +65,16 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-
-        // Note to developers: Change the log level in config.json to enable lower level (i.e., FINE, FINER and lower)
-        // log messages such as the one below.
-        // Lower level log messages are used sparingly to minimize noise in the code.
-        logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
-
         switch (commandWord) {
 
-        // TODO: Add more add commands here for each entity
         case AddClientCommand.COMMAND_WORD:
             return new AddClientCommandParser().parse(arguments);
 
-        case AddPropertyCommand.COMMAND_WORD:
-            return new AddPropertyCommandParser().parse(arguments);
-
-        case AddDealCommand.COMMAND_WORD:
-            return new AddDealCommandParser().parse(arguments);
-
-        // TODO: Add more edit commands here for each entity
         case EditClientCommand.COMMAND_WORD:
             return new EditClientCommandParser().parse(arguments);
 
-        case EditPropertyCommand.COMMAND_WORD:
-            return new EditPropertyCommandParser().parse(arguments);
-
-        // TODO: Add more delete commands here for each entity
         case DeleteClientCommand.COMMAND_WORD:
             return new DeleteClientCommandParser().parse(arguments);
-
-        case DeletePropertyCommand.COMMAND_WORD:
-            return new DeletePropertyCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -101,18 +82,20 @@ public class AddressBookParser {
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
-        // TODO: Add more list commands here for each entity
-        case ListCommand.COMMAND_WORD:
+        case ListClientCommand.COMMAND_WORD:
             return new ListClientCommand();
+
+        case AddPropertyCommand.COMMAND_WORD:
+            return new AddPropertyCommandParser().parse(arguments);
+
+        case EditPropertyCommand.COMMAND_WORD:
+            return new EditPropertyCommandParser().parse(arguments);
+
+        case DeletePropertyCommand.COMMAND_WORD:
+            return new DeletePropertyCommandParser().parse(arguments);
 
         case ListPropertyCommand.COMMAND_WORD:
             return new ListPropertyCommand();
-
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
 
         case AddEventCommand.COMMAND_WORD:
             return new AddEventCommandParser().parse(arguments);
@@ -123,8 +106,19 @@ public class AddressBookParser {
         case ListEventCommand.COMMAND_WORD:
             return new ListEventCommand();
 
+        case AddDealCommand.COMMAND_WORD:
+            return new AddDealCommandParser().parse(arguments);
+
+        case UpdateDealCommand.COMMAND_WORD:
+            return new UpdateDealCommandParser().parse(arguments);
+
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
+
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
+
         default:
-            logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }

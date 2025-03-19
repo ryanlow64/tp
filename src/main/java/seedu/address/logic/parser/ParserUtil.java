@@ -177,11 +177,12 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code price} is invalid.
      */
-    public static Optional<Price> parsePrice(String price) throws ParseException {
+    public static Price parsePrice(Long price) throws ParseException {
+        requireNonNull(price);
         if (!Price.isValidPrice(price)) {
             throw new ParseException(Price.MESSAGE_CONSTRAINTS);
         }
-        return Optional.of(new Price(price));
+        return new Price(price);
     }
 
     /**

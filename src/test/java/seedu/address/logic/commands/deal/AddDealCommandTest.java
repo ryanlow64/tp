@@ -61,7 +61,7 @@ public class AddDealCommandTest {
         PropertyName propertyName = new PropertyName("Test Property");
         ClientName buyer = new ClientName("John Doe");
         ClientName seller = new ClientName("Jane Smith");
-        Price price = new Price(500000);
+        Price price = new Price(500000L);
         DealStatus status = DealStatus.PENDING;
 
         Deal validDeal = new Deal(propertyName, buyer, seller, price, status);
@@ -77,7 +77,7 @@ public class AddDealCommandTest {
     public void execute_sameBuyerAndSeller_throwsCommandException() {
         PropertyName propertyName = new PropertyName("Test Property");
         ClientName person = new ClientName("Same Person");
-        Price price = new Price(500000);
+        Price price = new Price(500000L);
         DealStatus status = DealStatus.PENDING;
 
         AddDealCommand addDealCommand = new AddDealCommand(propertyName, person, person, price, status);
@@ -95,7 +95,7 @@ public class AddDealCommandTest {
         ClientName seller1 = new ClientName("Jane Smith");
         ClientName buyer2 = new ClientName("Alice Brown");
         ClientName seller2 = new ClientName("Bob Wilson");
-        Price price = new Price(500000);
+        Price price = new Price(500000L);
         DealStatus status = DealStatus.PENDING;
 
         Deal existingDeal = new Deal(propertyName, buyer1, seller1, price, status);
@@ -115,8 +115,8 @@ public class AddDealCommandTest {
         ClientName buyer2 = new ClientName("Jane Doe");
         ClientName seller1 = new ClientName("Bob Smith");
         ClientName seller2 = new ClientName("Alice Smith");
-        Price price1 = new Price(500000);
-        Price price2 = new Price(600000);
+        Price price1 = new Price(500000L);
+        Price price2 = new Price(600000L);
         DealStatus status1 = DealStatus.PENDING;
         DealStatus status2 = DealStatus.CLOSED;
 

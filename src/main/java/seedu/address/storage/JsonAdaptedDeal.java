@@ -23,7 +23,7 @@ public class JsonAdaptedDeal {
     private final String propertyName;
     private final String buyer;
     private final String seller;
-    private final String price;
+    private final Long price;
     private final String status;
 
     /**
@@ -33,7 +33,7 @@ public class JsonAdaptedDeal {
     public JsonAdaptedDeal(@JsonProperty("propertyName") String propertyName,
                           @JsonProperty("buyer") String buyer,
                           @JsonProperty("seller") String seller,
-                          @JsonProperty("price") String price,
+                          @JsonProperty("price") Long price,
                           @JsonProperty("status") String status) {
         this.propertyName = propertyName;
         this.buyer = buyer;
@@ -49,7 +49,7 @@ public class JsonAdaptedDeal {
         propertyName = source.getPropertyName().toString();
         buyer = source.getBuyer().toString();
         seller = source.getSeller().toString();
-        price = String.valueOf(source.getPrice().value);
+        price = source.getPrice().value;
         status = source.getStatus().name();
     }
 

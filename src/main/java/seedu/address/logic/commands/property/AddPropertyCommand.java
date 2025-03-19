@@ -26,13 +26,13 @@ public class AddPropertyCommand extends AddCommand<Property> {
             + "Parameters: "
             + PREFIX_PROPERTY_NAME + "PROPERTY "
             + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_PRICE + "PRICE (in S$ millions) "
+            + PREFIX_PRICE + "PRICE (in S$ thousands) "
             + PREFIX_SIZE + "SIZE (in square feet) "
             + PREFIX_DESCRIPTION + "DESCRIPTION \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PROPERTY_NAME + "Maple Villa Condominium "
             + PREFIX_ADDRESS + "123 Maple Street "
-            + PREFIX_PRICE + "2.40 "
+            + PREFIX_PRICE + "2400 "
             + PREFIX_SIZE + "1000 "
             + PREFIX_DESCRIPTION + "Spacious 4-bedroom home";
 

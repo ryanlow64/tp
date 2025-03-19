@@ -62,13 +62,12 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
         ClientName seller = new ClientName(sellerNameStr);
 
         // Parse price
-        String priceString = argMultimap.getValue(PREFIX_PRICE).get();
+        Long priceString = Long.valueOf(argMultimap.getValue(PREFIX_PRICE).get());
         if (!Price.isValidPrice(priceString)) {
             throw new ParseException(Price.MESSAGE_CONSTRAINTS);
         }
 
-        Long priceValue = Long.parseLong(priceString);
-        Price price = new Price(priceValue);
+        Price price = new Price(priceString);
 
         // Parse status (optional)
         DealStatus status = DealStatus.PENDING; // Default status

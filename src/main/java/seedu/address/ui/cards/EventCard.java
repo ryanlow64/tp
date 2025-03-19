@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.event.Event;
 import seedu.address.ui.UiPart;
 
@@ -29,6 +30,8 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
+    private Label eventType;
+    @FXML
     private Label property;
     @FXML
     private Label client;
@@ -44,9 +47,10 @@ public class EventCard extends UiPart<Region> {
         super(FXML);
         this.event = event;
         id.setText(displayedIndex + ". ");
+        eventType.setText(event.getEventType().toFormattedString());
         property.setText(event.getPropertyName().fullName);
         client.setText(event.getClientName().fullName);
-        dateTime.setText(event.getDateTime().toString());
-        note.setText(event.getNote().note);
+        dateTime.setText(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT));
+        note.setText(event.getNote().toString());
     }
 }

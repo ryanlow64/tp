@@ -9,9 +9,14 @@ package seedu.address.model.event;
 public class Note {
 
     public static final String MESSAGE_CONSTRAINTS = "Note should not be blank.";
-    public final String note;
+    private final String note;
 
     public Note(String note) {
         this.note = note;
+    }
+
+    @Override
+    public String toString() {
+        return note;
     }
 }

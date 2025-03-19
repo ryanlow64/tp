@@ -31,7 +31,7 @@ public class ParserUtil {
             "Invalid date: %s%nUse dd-mm-yyyy OR dd-mm-yyyy hhmm (e.g. 30-04-2025 1742).";
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
 
-    protected static final DateTimeFormatter DATE_FORMAT_TEXT = DateTimeFormatter
+    public static final DateTimeFormatter DATE_FORMAT_TEXT = DateTimeFormatter
             .ofPattern("dd-MM-yyyy HHmm", Locale.ENGLISH)
             .withResolverStyle(ResolverStyle.SMART);
 

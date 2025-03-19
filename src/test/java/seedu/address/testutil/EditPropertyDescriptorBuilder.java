@@ -56,7 +56,7 @@ public class EditPropertyDescriptorBuilder {
     /**
      * Sets the {@code Price} of the {@code EditPropertyDescriptor} that we are building.
      */
-    public EditPropertyDescriptorBuilder withPrice(String price) {
+    public EditPropertyDescriptorBuilder withPrice(Long price) {
         descriptor.setPrice(new Price(price));
         return this;
     }

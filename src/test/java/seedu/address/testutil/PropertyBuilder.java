@@ -17,13 +17,13 @@ public class PropertyBuilder {
 
     public static final String DEFAULT_PROPERTY_NAME = "Maple Villa Condominium";
     public static final String DEFAULT_ADDRESS = "123 Maple Street";
-    public static final String DEFAULT_PRICE = "240";
+    public static final Long DEFAULT_PRICE = 2400L;
     public static final String DEFAULT_SIZE = "1000";
     public static final String DEFAULT_DESCRIPTION = "Spacious 4-bedroom home";
 
     private PropertyName propertyName;
     private Address address;
-    private Optional<Price> price;
+    private Price price;
     private Optional<Size> size;
     private Optional<Description> description;
 
@@ -33,7 +33,7 @@ public class PropertyBuilder {
     public PropertyBuilder() {
         propertyName = new PropertyName(DEFAULT_PROPERTY_NAME);
         address = new Address(DEFAULT_ADDRESS);
-        price = Optional.of(new Price(DEFAULT_PRICE));
+        price = new Price(DEFAULT_PRICE);
         size = Optional.of(new Size(DEFAULT_SIZE));
         description = Optional.of(new Description(DEFAULT_DESCRIPTION));
     }
@@ -68,8 +68,8 @@ public class PropertyBuilder {
     /**
      * Sets the {@code Price} of the {@code Property} that we are building.
      */
-    public PropertyBuilder withPrice(String price) {
-        this.price = Optional.of(new Price(price));
+    public PropertyBuilder withPrice(Long price) {
+        this.price = new Price(price);
         return this;
     }
 

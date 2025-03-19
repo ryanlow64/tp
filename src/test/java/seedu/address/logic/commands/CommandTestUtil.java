@@ -52,8 +52,8 @@ public class CommandTestUtil {
     public static final String VALID_PROPERTY_NAME_ORCHID = "Orchid Gardens Condominium";
     public static final String VALID_ADDRESS_MAPLE = "123 Maple Street";
     public static final String VALID_ADDRESS_ORCHID = "234 Orchid Street";
-    public static final String VALID_PRICE_MAPLE = "240";
-    public static final String VALID_PRICE_ORCHID = "120";
+    public static final Long VALID_PRICE_MAPLE = 2400L;
+    public static final Long VALID_PRICE_ORCHID = 1200L;
     public static final String VALID_SIZE_MAPLE = "1000";
     public static final String VALID_SIZE_ORCHID = "500";
     public static final String VALID_DESCRIPTION_MAPLE = "Spacious 4-bedroom home";

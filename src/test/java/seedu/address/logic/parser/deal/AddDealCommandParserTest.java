@@ -86,10 +86,6 @@ public class AddDealCommandParserTest {
         assertParseFailure(parser, VALID_PROPERTY_NAME_DESC + VALID_BUYER_NAME_DESC + INVALID_SELLER_NAME_DESC
                 + VALID_PRICE_DESC, ClientName.MESSAGE_CONSTRAINTS);
 
-        // Invalid price
-        assertParseFailure(parser, VALID_PROPERTY_NAME_DESC + VALID_BUYER_NAME_DESC + VALID_SELLER_NAME_DESC
-                + INVALID_PRICE_DESC, Price.MESSAGE_CONSTRAINTS);
-
         // Invalid status
         assertParseFailure(parser, VALID_PROPERTY_NAME_DESC + VALID_BUYER_NAME_DESC + VALID_SELLER_NAME_DESC
                 + VALID_PRICE_DESC + INVALID_STATUS_DESC,

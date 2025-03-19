@@ -9,13 +9,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.stream.Stream;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.deal.AddDealCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.DealStatus;
 import seedu.address.model.property.PropertyName;
@@ -32,7 +33,7 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
      */
     public AddDealCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME , PREFIX_BUYER, PREFIX_SELLER,
+                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER,
                         PREFIX_PRICE, PREFIX_STATUS);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE)
@@ -47,19 +48,21 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
         }
         PropertyName propertyName = new PropertyName(propertyNameStr);
 
-        // Parse buyer name
-        String buyerNameStr = argMultimap.getValue(PREFIX_BUYER).get();
-        if (!ClientName.isValidClientName(buyerNameStr)) {
-            throw new ParseException(ClientName.MESSAGE_CONSTRAINTS);
+        // Parse buyer ID
+        Index buyerId;
+        try {
+            buyerId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_BUYER).get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format("Invalid buyer ID: %s", pe.getMessage()));
         }
-        ClientName buyer = new ClientName(buyerNameStr);
 
-        // Parse seller name
-        String sellerNameStr = argMultimap.getValue(PREFIX_SELLER).get();
-        if (!ClientName.isValidClientName(sellerNameStr)) {
-            throw new ParseException(ClientName.MESSAGE_CONSTRAINTS);
+        // Parse seller ID
+        Index sellerId;
+        try {
+            sellerId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_SELLER).get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format("Invalid seller ID: %s", pe.getMessage()));
         }
-        ClientName seller = new ClientName(sellerNameStr);
 
         // Parse price
         String priceString = argMultimap.getValue(PREFIX_PRICE).get();
@@ -67,25 +70,32 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
             throw new ParseException(Price.MESSAGE_CONSTRAINTS);
         }
 
-        Long priceValue = Long.parseLong(priceString);
-        Price price = new Price(priceValue);
-
-        // Parse status (optional)
-        DealStatus status = DealStatus.PENDING; // Default status
-        if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
-            String statusString = argMultimap.getValue(PREFIX_STATUS).get().toUpperCase();
-            try {
-                // Convert to the format expected by the enum (e.g., "in_negotiation" to "IN_NEGOTIATION")
-                if (statusString.equals("IN NEGOTIATION")) {
-                    statusString = "IN_NEGOTIATION";
-                }
-                status = DealStatus.valueOf(statusString);
-            } catch (IllegalArgumentException e) {
-                throw new ParseException("Invalid status: Must be one of 'PENDING', 'CLOSED', 'IN_NEGOTIATION'.");
+        // Check if price exceeds limit
+        try {
+            Long priceValue = Long.parseLong(priceString);
+            if (priceValue > 999_990_000) {
+                throw new ParseException("Price exceeds the limit of 999.99");
             }
-        }
+            Price price = new Price(priceValue);
+            // Parse status (optional)
+            DealStatus status = DealStatus.PENDING; // Default status
+            if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
+                String statusString = argMultimap.getValue(PREFIX_STATUS).get().toUpperCase();
+                try {
+                    // Convert to the format expected by the enum (e.g., "in_negotiation" to "IN_NEGOTIATION")
+                    if (statusString.equals("IN NEGOTIATION")) {
+                        statusString = "IN_NEGOTIATION";
+                    }
+                    status = DealStatus.valueOf(statusString);
+                } catch (IllegalArgumentException e) {
+                    throw new ParseException("Invalid status: Must be one of 'PENDING', 'CLOSED', 'IN_NEGOTIATION'.");
+                }
+            }
 
-        return new AddDealCommand(propertyName, buyer, seller, price, status);
+            return new AddDealCommand(propertyName, buyerId, sellerId, price, status);
+        } catch (NumberFormatException e) {
+            throw new ParseException(Price.MESSAGE_CONSTRAINTS);
+        }
     }
 
     /**

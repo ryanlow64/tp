@@ -33,6 +33,10 @@ public class DealCard extends UiPart<Region> {
     @FXML
     private Label propertyName;
     @FXML
+    private Label buyer;
+    @FXML
+    private Label seller;
+    @FXML
     private Label price;
     @FXML
     private Label status;
@@ -44,9 +48,10 @@ public class DealCard extends UiPart<Region> {
         super(FXML);
         this.deal = deal;
         id.setText(displayedIndex + ". ");
-        title.setText(String.format("%s -> %s", deal.getSeller().fullName, deal.getBuyer().fullName));
         propertyName.setText(deal.getPropertyName().fullName);
-        price.setText("Price: " + deal.getPrice().value);
-        status.setText(deal.getStatus().toString());
+        buyer.setText("Buyer: " + deal.getBuyer().fullName);
+        seller.setText("Seller: " + deal.getSeller().fullName);
+        price.setText("Price: $" + deal.getPrice().value);
+        status.setText("Status: " + deal.getStatus().toString());
     }
 }

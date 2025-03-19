@@ -1,0 +1,1105 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+
+
+I am going to copy paste some files here for your reference to follow when coding. It is copied from a print version so the formatting might not be well done but I hope it gives you some idea of the codin standard.
+
+Advanced Java Coding standard "Naming
+ Names representing packages should be in all lower case.
+com.company.application.ui
+More on package naming
+For school projects, the root name of the package should be your group name or project name followed by logical group names. todobuddy.ui, todobuddy.file etc .
+e.g.
+ Rationale: Your code is not officially ‘produced by NUS’, therefore do not use edu.nus.comp.* or anything similar.
+ Class/enum names must be nouns and written in PascalCase.
+Line, AudioSystem
+ Variable names must be in camelCase.
+line, audioSystem
+ Constant names must be all uppercase using underscore to separate words (aka SCREAMING_SNAKE_CASE). To find what
+exactly are considered c
+onstants, refer to this page in the Google Java Style Guide.
+MAX
+_
+ITERATIONS, COLOR
+_
+RED
+ Names representing methods must be verbs and written in camelCase.
+getName(), computeTotalWidth()
+Underscores may be used in test method names using the following three part format featureUnderTest
+testScenario
+_
+_
+expectedBehavior()
+https://se-education.org/guides/conventions/java/index.html 1/10
+21/02/2025, 21:31 Java coding standard
+e.g. sortList
+_
+emptyList
+_
+exceptionThrown() getMember
+memberNotFound
+_
+_
+nullReturned
+Third part or both second and third parts can be omitted depending on what's covered in the test. For example, the test method
+sortList
+_
+emptyList() will test sortList() method for all variations of the 'empty list' scenario and the test method sortList() will test
+the sortList() method for all scenarios.
+ Abbreviations and acronyms should not be uppercase when used as a part of a name.
+ Good Bad
+exportHtmlSource();
+openDvdPlayer();
+exportHTMLSource();
+openDVDPlayer();
+ All names should be written in English.
+ Rationale: The code is meant for an international audience.
+ Variables with a large scope should have long names, variables with a small scope can have short names.
+Scratch variables used for temporary storage or indices can be kept short. A programmer reading such variables should be able to assume
+that its value is not used outside a few lines of code. Common scratch variables for integers are i, j, k, m, n and for characters c and
+d .
+ Rationale: When the scope is small, the reader does not have to remember it for long.
+ Boolean variables/methods should be named to sound like booleans
+// variables
+isSet, isVisible, isFinished, isFound, isOpen, hasData, wasOpen
+// methods
+boolean hasLicense();
+boolean canEvaluate();
+boolean shouldAbort = false;
+ As much as possible, use a prefix such as is , has , was , etc. for boolean variable/method names so that linters can
+automatically
+verify that this style rule is being followed.
+Setter methods for boolean variables must be of the form:
+void setFound(boolean isFound);
+ Rationale: This is the naming convention for boolean methods and variables used by Java core packages. It also makes the code read like
+normal English e.g. if(isOpen) ...
+ Plural form should be used on names representing a collection of objects.
+Collection<Point> points;
+int[] values;
+ Rationale: Enhances readability since the name gives the user an immediate clue of the type of the variable and the operations that can
+be performed on its elements. One space character after the variable type is enough to obtain clarity.
+ Iterator variables can be called i, j, k etc.
+Variables named j, k etc. should be used for nested loops only.
+for (Iterator i = points.iterator(); i.hasNext(); ) {
+...
+}
+for (int i = 0; i < nTables; i++) {
+...
+https://se-education.org/guides/conventions/java/index.html 2/10
+21/02/2025, 21:31 Java coding standard
+}
+ Rationale: The notation is taken from mathematics where it is an established convention for indicating iterators.
+ Associated constants should have a common prefix.
+static final int COLOR
+_
+static final int COLOR
+_
+static final int COLOR
+_
+RED = 1;
+GREEN = 2;
+BLUE = 3;
+ Rationale: This indicates that they belong together, and make them appear together when sorted alphabetically.
+Layout
+ Basic indentation should be 4 spaces (not tabs).
+for (i = 0; i < nElements; i++) {
+a[i] = 0;
+}
+ Rationale: Just follow it 
+ Line length should be no longer than 120 chars.
+Try to keep line length shorter than 110 characters (soft limit). But it is OK to exceed the limit slightly (hard limit: 120 chars). If the line
+exceeds the limit, use line wrapping at appropriate places of the line.
+Indentation for wrapped lines should be 8 spaces (i.e. twice the normal indentation of 4 spaces) more than the parent line.
+setText("Long line split"
++ "into two parts.
+");
+if (isReady) {
+setText("Long line split"
++ "into two parts.
+");
+}
+ Place line break to improve readability
+When wrapping lines, the main objective is to improve readability. Do not always accept the auto-formatting suggested by the IDE.
+In general:
+Break after a comma.
+Break before an operator. This also applies to the following "opera
+tor-like" symbols: the dot separator bounds <T extends Foo & Bar> , and the pipe in catch blocks catch (FooException | BarException e)
+. , the ampersand in type
+totalSum = a + b + c
++ d + e;
+setText("Long line split"
++ "into two parts.
+method(param1,
+object.method()
+.method2(),
+");
+param3);
+A method or constructor name stays attached to the open parenthesis ( that follows it.
+
+Good
+someMethodWithVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongName(
+int anArg, Object anotherArg);
+https://se-education.org/guides/conventions/java/index.html 3/10
+21/02/2025, 21:31 Java coding standard
+
+Bad
+someMethodWithVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongName
+(int anArg, Object anotherArg);
+Prefer higher-level breaks to lower-level breaks. In the example below, the first is preferred, since the break occurs outside the
+parenthesized expression, which is at a higher level.
+
+Good
+longName1 = longName2 * (longName3 + longName4 - longName5)
++ 4 * longname6
+
+Bad
+longName1 = longName2 * (longName3 + longName4
+- longName5) + 4 * longname6;
+Here are two acceptable ways to format ternary expressions:
+alpha = (aLongBooleanExpression) ? beta : gamma;
+alpha = (aLongBooleanExpression)
+? beta
+: gamma;
+ Use K&R style brackets (aka Egyptian style).
+ Good Bad
+while (!done) {
+doSomething();
+done = moreToDo();
+while (!done)
+{
+doSomething();
+done = moreToDo();
+}
+}
+ Rationale: Just follow it. 
+ Method definitions should have the following form:
+public void someMethod() throws SomeException {
+...
+}
+ The if-else class of statements should have the following form:
+if (condition) {
+statements;
+}
+if (condition) {
+statements;
+} else {
+statements;
+}
+if (condition) {
+statements;
+} else if (condition) {
+statements;
+} else {
+statements;
+}
+ The f
+or statement should have the following form:
+for (initialization; condition; update) {
+statements;
+}
+ The while and the do-while statements should have the following form:
+while (condition) {
+statements;
+do {
+}
+statements;
+} while (condition);
+ The switch statement should have the following form:Note there is no indentation for case clauses.
+ Configure your IDE to follow this style instead.
+switch (condition) {
+case ABC:
+statements;
+https://se-education.org/guides/conventions/java/index.html 4/10
+21/02/2025, 21:31 Java coding standard
+// Fallthrough
+case DEF:
+statements;
+break;
+case XYZ:
+statements;
+break;
+default:
+statements;
+break;
+}
+Lambda-style switch statements/expressions can have indented case blocks (as shown below):
+switch (condition) {
+case ABC -> method("1");
+case DEF -> method("2");
+case XYZ -> method("3");
+default -> method("0");
+}
+int size = switch (condition) {
+case ABC -> 1;
+case DEF -> 2;
+case XYZ -> 3;
+default -> 0;
+}
+The explicit // Fallthrough comment should be included whenever there is a case statement without a break statement.
+ Rationale: Leaving out the break is a common error, and it must be made clear that it is intentional when it is not there.
+ A try-c
+a
+tch statement should have the following form:
+try {
+try {
+statements;
+} catch (Exception exception) {
+statements;
+}
+statements;
+} catch (Exception exception) {
+statements;
+} finally {
+statements;
+}
+ White space within a statement
+It is difficult to give a complete list of the suggested use of whitespace in Java code. The examples below however should give a general
+idea of the intentions.
+R
+ule Good Bad
+Operators should be surrounded by a space character. Java reserved words should be followed by a white space. Commas should be followed by a white space. Colons should be surrounded by white space when
+used as a binary/ternary operator.
+Does not apply to switch x: . Semicolons in for
+statements should be followed by a space character.
+a = (b + c) * d; while (true) { doSomething(a, b, c, d); for (i = 0; i < 10; i++) { a=(b+c)*d;
+while(true){
+doSomething(a,b,c,d);
+for(i=0;i<10;i++){
+ Rationale: Makes the individual components of the statements stand out and enhances readability.
+ Logical units within a block should be separated by one blank line.
+// Create a new identity matrix
+Matrix4x4 matrix = new Matrix4x4();
+https://se-education.org/guides/conventions/java/index.html 5/10
+21/02/2025, 21:31 Java coding standard
+// Precompute angles for efficiency
+double cosAngle = Math.cos(angle);
+double sinAngle = Math.sin(angle);
+// Specify matrix as a rotation transformation
+matrix.setElement(1, 1, cosAngle);
+matrix.setElement(1, 2, sinAngle);
+matrix.setElement(2, 1,
+-sinAngle);
+matrix.setElement(2, 2, cosAngle);
+// Apply rotation
+transformation.multiply(matrix);
+ Rationale: Enhances readability by introducing white space between logical units. Each block is often introduced by a comment as
+indicated in the example above.
+Statements
+Package and Import Statements
+ Put every class in a package.
+Every class should be part of some package.
+ Rationale: It will help you and other developers easily understand the code base when all the classes have been grouped in packages.
+ Put related classes in a single package.
+Package together the classes that are related. For example in Java, the classes related to file writing is grouped in the package and the classes which handle lists, maps etc are grouped in java.util package.
+java.io
+ The ordering of import statements must be consistent.
+ Rationale: A consistent ordering of import statements makes it easier to browse the list and determine the dependencies when there are
+many imports.
+Example:
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import java.io.File;
+import java.io.IOException;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import org.loadui.testfx.GuiTest;
+import org.testfx.api.FxToolkit;
+import com.google.common.io.Files;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import junit.framework.AssertionFailedError;
+ IDEs have support for auto-ordering import statements. However, note that the default orderings of different IDEs are not always the
+same. It is recommended that you and your team use the same IDE and stick to a consistent ordering.
+ Imported classes should always be listed explicitly.
+ Good Bad
+import java.util.List;
+import java.util.ArrayList;
+import java.util.*;
+https://se-education.org/guides/conventions/java/index.html 6/10
+21/02/2025, 21:31 Java coding standard
+import java.util.HashSet;
+ Rationale: Importing classes explicitly gives an excellent documentation value for the class at hand and makes the class easier to
+comprehend and maintain. Appropriate tools should be used in order to always keep the import list minimal and up to date. IDE's can be
+configured to do this easily.
+Classes and Interfaces
+ Class and Interface declarations should be organized in the following manner:
+1. Class/Interface documentation (Comments)
+2. class or interface statement
+3. Class (static) variables in the order public, protected, package (no access modifier), private
+4. Instance variables in the order public, protected, package (no access modifier), private
+5. Constructors
+6. Methods (no specific order)
+ Rationale: Make code easy to navigate by making the location of each class element predictable.
+Methods
+ Method modifiers should be given in the following order:
+<access> static abstract synchronized <unusual> final native
+<access> = public | protected | private
+<unusual> = volatile | transient
+The <access> modifier (if present) must be the first modifier.
+ Good Bad
+public static double square(double a); static public double square(double a);
+ Rationale: The most important point here is to keep the a
+modifiers , but it make sense to have a fixed convention.
+ccess modifier as the first modifier. The order is less important for the other
+Types
+ Array specifiers must be attached to the type not the variable.
+ Good Bad
+int[] a = new int[20]; int a[] = new int[20];
+ Rationale: The arrayness is a feature of the base type, not the variable. Java allows both forms however.
+Variables
+ Variables should be initialized where they are declared and they should be declared in the smallest scope possible.
+ Good Bad
+int sum = 0;
+for (int i = 0; i < 10; i++) {
+for (int j = 0; j < 10; j++) {
+int i, j, sum;
+sum = 0;
+for (i = 0; i < 10; i++) {
+https://se-education.org/guides/conventions/java/index.html 7/10
+21/02/2025, 21:31 Java coding standard
+sum += i * j;
+}
+for (j = 0; j < 10; j++) {
+sum += i * j;
+}
+}
+}
+ Rationale: This ensures that variables are valid at any time. Sometimes it is impossible to initialize a variable to a valid value where it is
+declared. In these cases it should be left uninitialized rather than initialized to some phony
+Class variables should never be declared public unless the class is a da
+ta
+cla
+value.
+ss with no behavior. This rule does not apply to
+ constants.
+ Bad
+public class Foo{
+public int bar;
+}
+ Rationale: The concept of
+f
+unctions instead.
+Java information hiding and encapsulation is violated by public variables. Use non-public variables and access
+ Avoid unnecessary use of this with fields.
+Use the this keyword only when a field is shadowed by a method or constructor parameter.
+ Good Bad
+public User(String name) {
+this.name = name;
+...
+public User(String name) {
+// 'id' is not shadowed by any method parameters
+this.id = User.getNewId();
+}
+...
+}
+ Rationale: to reduce unnecessary noise.
+Loops
+ The loop body should be wrapped by curly brackets irrespective of how many lines there are in the body.
+ Good Bad
+for (i = 0; i < 100; i++) {
+sum += value[i];
+for (i = 0, sum = 0; i < 100; i++)
+sum += value[i];
+}
+ Rationale: When there is only one statement in the loop body, Java allows it to be written without wrapping it between is error prone and very strongly discouraged from using.
+{ } . However that
+Conditionals
+ The conditional should be put on a separate line.
+ Good Bad
+if (isDone) {
+doCleanup();
+if (isDone) doCleanup();
+}
+ Rationale: This helps when debugging using an IDE debugger. When writing on a single line, it is not apparent whether the condition is
+really true or not.
+https://se-education.org/guides/conventions/java/index.html 8/10
+21/02/2025, 21:31 Java coding standard
+ Single statement conditionals should still be wrapped by curly brackets.
+ Good Bad
+InputStream stream = File.open(fileName,
+if (stream != null) {
+readFile(stream);
+"w");
+InputStream stream = File.open(fileName,
+if (stream != null)
+readFile(stream);
+"w");
+}
+The body of the conditional should be wrapped by curly brackets irrespective of how many statements.
+ Rationale: Omitting braces can lead to subtle bugs.
+Comments
+ All comments should be written in English.
+Furthermore, use American spelling and avoid local slang.
+ Rationale: The code is meant for an international audience.
+ Write descriptive header comments for all public classes/methods.
+You M
+i. Getters/setters
+UST write header comments for all classes, public methods. But they c
+an be omitted for the following cases:
+ii. When overriding methods (provided the parent method's Javadoc applies exactly a
+s is to the overridden method)
+ Rationale: public supposed to do.
+method are meant to be used by others and the users should not be forced to read the code of the method to
+understand its exact behavior. The code, even if it is self-explanatory, can only tell the reader HOW the code works, not WHAT the code is
+ All non-trivial private methods should carry header comments.
+ Rationale: Writing header comments will help programmers to self-detect abstraction problems. e.g. If it is hard to describe the method
+succinctly, there is something wrong with the method abstraction.
+ Javadoc comments should have the following form:
+/**
+* Returns lateral location of the specified position.
+* If the position is unset, NaN is returned.
+*
+* @param x X coordinate of position.
+* @param y Y coordinate of position.
+* @param zone Zone of position.
+* @return Lateral location.
+* @throws IllegalArgumentException If zone is <= 0.
+*/
+public double computeLocation(double x, double y, int zone)
+throws IllegalArgumentException {
+// ...
+}
+Note in particular:
+The opening /** on a separate line.
+Write the first sentence as a short summary of the method, as Javadoc automatically places it in the method summary table (and
+index).
+In method header comments, the first sentence should start in the form Returns ... , Sends ... , Adds ... etc. (not Return or
+Returning etc.)
+Subsequent * is aligned with the first one.
+Space after each * .
+Empty line between description and parameter section.
+Punctuation behind each parameter description.
+https://se-education.org/guides/conventions/java/index.html 9/10
+21/02/2025, 21:31 Java coding standard
+No blank line between the documentation block and the method/class.
+@return can be omitted if the method does not return anything or the return value is ob
+vious from the rest of the comment.
+@param s can be omitted if
+all parameters of a method have self-explanatory names, or they are already explained in the main part of
+the comment i.e., if none of the @param s add any
+value. This means the comment will have @param for all its parameters, or none.
+When writing Javadocs for overridden methods, the @inheritDoc tag can be used to reuse the header comment from the parent
+method but with f
+urther modifications e.g., when the method has a slightly different behavior from the parent method.
+Javadoc of class members can be specified on a single line as follows:
+/** Number of connections to this database */
+private int connectionCount;
+ Comments should be indented relative to their position in the code.
+ Good Bad Bad
+while (true) {
+// Do something
+something();
+while (true) {
+// Do something
+something();
+while (true) {
+// Do something
+something();
+}
+}
+}
+ Rationale: This is to avoid the comments from breaking the logical structure of the program.
+Note that trailing comments such as the below are allowed as well.
+process('ABC'); // process a dummy String frst"
+
+
+Markdown coding standard "Markdown coding standard
+The term 'markdown' in this document refers to GitHub Flavored Markdown.
+Follow the syntax as strictly as specified here.
+RATIONALE: Minor deviations from the markdown syntax are sometimes forgiven by GitHub markdown rendering but may
+not be forgiven by GitHub Pages html rendering.
+Do not wrap lines at a specific length. Coding standards for other languages typically specify a maximum length for a statement.
+However, Markdown is used to write natural language content which should not be chopped into a sentence fragments.
+RATIONALE: Doing so could throw off grammar checkers, and make it harder to modify content later (because a simple
+change might require re-sizing many adjacent lines).
+Add a blank line at the beginning of a list.
+ Good
+Here is a list:
+* item 1
+* item 2
+ Bad
+Here is a list:
+* item 1
+* item 2
+Add a blank line at the beginning of a code block.
+Add a space at the start of a heading.
+ Good
+# Heading
+ Bad
+#Heading
+Use blank lines to separate headings
+ Good
+## Heading
+Content of the paragraph.
+ Bad
+## Heading
+Content of the paragraph.
+Use blockquote symbol in every line of the blockquote.
+ Good
+> first line
+> second line
+ Bad
+> first line
+second line
+https://se-education.org/guides/conventions/markdown.html 1/2
+30/01/2025, 02:14 Markdown coding standard
+Use generic numbering for ordered lists. i.e., use 1. for every item in an ordered list can make it easy to insert more items later.
+Generic numbers are converted to the correct numbers by GitHub markdown renderer.
+RATIONALE: If you use generic numbers, you can insert items into the middle of the list without modifying any existing
+items.
+ Good
+1. item 1
+1. item 2
+1. item 3
+ Bad
+1. item 1
+2. item 2
+3. item 3
+Use * for bullet-points (not - ).
+RATIONALE: Although both work, * closer to the final outcome.
+ Good
+* item 1
+* item 2
+* item 3
+ Bad
+- item 1
+- item 2
+- item 3
+Use
+_ for italics (not * ).
+RATIONALE: Although both work, _
+is easier to relate to italics.
+ Good
+He
+_
+really_
+meant it.
+ Bad
+He *really* meant it."
+
+More Checkstyle:
+Lines must not exceed 120 characters
+Lines must not have trailing white spaces
+There must be a newline after the last "}" bracket in a file
+
+
+The context of my current product is "Product Name:
+REconnect
+
+Target User:
+Real Estate agents who need to connect clients (e.g. buyers, sellers, investors) with the best opportunities based on market demands and property locations.
+
+Value Proposition:
+Our product provides the user with easier real estate networking by having an organized contact log. Its intuitive design organizes industry contacts and scheduling. Less time would be spent on such administrative tasks, and more could be spent on closing deals and strengthening their network.
+
+Target users’ needs we want to satisfy:
+Centralising listings -> REconnect contains all the property listings allowing for buyers to view potential homes and sellers to list their properties for sale
+Scheduling -> REconnect will keep track of the meetings between real estate agents and their clients in a calendar
+Client interactions -> REconnect will also contain client meeting summaries for meetings that have already occurred for easier referencing and follow ups
+
+"
+
+
+*IMPORTANT* you need this context, Our project feature list is currently "Team: CS2103-T12-3
+
+1. Add Property Details
+Purpose: Allows the user to create and store a new property in the system.
+
+add_property p/PROPERTY_NAME addr/ADDRESS [price/PRICE] [size/SIZE] [desc/DESCRIPTION]quni
+
+add_property p/Maple Villa addr/123 Maple Street price/690000 size/600 desc/Spacious 4-bedroom home.
+
+Parameter Details:
+PROPERTY_NAME:
+A non-empty string containing letters, numbers, spaces, and basic punctuation. Leading/trailing spaces are trimmed. Multiple internal spaces are reduced to a single space.
+Error Message: “Invalid property name: Must be at least 3 characters long and not empty.”
+Rationale: Ensures that property names are meaningful and consistently formatted.
+ADDRESS:
+Acceptable values: A non-empty string that includes street information, numbers, and optionally apartment/suite info.
+Validation: Trim extra spaces; must be provided.
+Error Message: “Invalid address: Address cannot be empty.”
+PRICE (optional):
+Acceptable values: A positive number (integer or decimal) representing the price in dollars.
+Validation: Must be numeric and > 0 and < LONG.MAX_VALUE.
+Error Message: “Invalid price: Price must be a positive number from 1 to 999.99 inclusive.”
+SIZE (optional):
+Acceptable values: A positive number (integer or decimal) representing the price in dollars.
+Validation: Must be numeric and > 0 and Integer.MAX_VALUE.
+Error Message: “Invalid price: Size must be a positive number and be under 2 billion.”
+DESCRIPTION (optional):
+Acceptable values: Free text up to 500 characters.
+Validation: If provided, should not exceed 500 characters.
+Error Message: “Invalid description: Description is too long (max 500 characters).”
+
+Outputs:
+On Success:
+The new property is added to the property list.
+A confirmation message such as “Property ‘Maple Villa’ added successfully.” is displayed.
+On Failure:
+An error message is displayed indicating which parameter is invalid or missing.
+
+Duplicate Handling:
+The system considers a property duplicate if the PROPERTY_NAME, ADDRESS, [PRICE if any] match an existing entry.
+Action: Reject the duplicate with an error: “Duplicate property detected – this property already exists.”
+
+Possible Errors:
+Missing required parameters (PROPERTY_NAME, ADDRESS).
+PRICE not a valid positive number.
+Duplicate entry detected.
+Inconsistent formatting (e.g., extra spaces are auto-trimmed, but inconsistent internal spacing should trigger a warning if it deviates from our standard).
+
+
+2. Edit Property Details
+Purpose: Allows the user to update existing property details.
+
+edit_property <pid> [p/NEW_PROPERTY_NAME] [addr/NEW_ADDRESS] [price/NEW_PRICE] [size/NEW_SIZE] [desc/NEW_DESCRIPTION]
+
+edit_property 8 p/Maple Villa addr/123 Maple Street price/690000 desc/Spacious 4-bedroom home.
+
+Parameter Details:
+PROPERTY_ID:
+Acceptable values: A unique numeric identifier assigned to each property 
+Validation: Must be a valid and existing property ID.
+Error Message: “Invalid property ID: No such property exists.”
+NEW_PROPERTY_NAME, NEW_ADDRESS, NEW_PRICE, NEW_DESCRIPTION (optional):
+Rules: Follow the same validation rules as in “Add Property Details.”
+Extra Handling: If a field is omitted, the original value is retained.
+Error Message: “Invalid [field]: [specific error]”
+Ensure that at least ONE of the NEW_PROPERTY_NAME, NEW_ADDRESS, NEW_PRICE, NEW_DESCRIPTION parameters is provided.
+
+Outputs:
+On Success:
+The property details are updated in the system.
+Confirmation message: “Property details updated successfully.”
+On Failure:
+The command is rejected with a detailed error message for the invalid parameter(s).
+
+Duplicate Handling:
+If the update results in a duplicate (i.e., the new name and address match another property), the system will reject the edit.
+Error Message: “Edit would create duplicate property entry.”
+
+Possible Errors:
+Non-existent property ID.
+Invalid parameter format.
+Duplicate resulting from changes.
+
+
+3. Remove Property Details
+Purpose: Deletion of a property record from the system.
+
+remove_property <pid>
+
+remove_property 12
+
+Parameter Details:
+PROPERTY_ID:
+Acceptable values: A valid, existing property ID.
+Validation: Must correspond to an existing property.
+Error Message: “Invalid property ID: Cannot find property with provided ID.”
+
+Outputs:
+On Success:
+The property is removed from the property list.
+Confirmation message: “Property ‘Maple Estate’ removed successfully.”
+On Failure:
+An error message is shown if the ID is invalid or if the property is linked to active deals (if applicable).
+
+Duplicate Handling:
+Not applicable for removals.
+
+Possible Errors:
+Invalid or non-existent property ID.
+Attempt to remove a property that is currently referenced by active deals (if business rules require prevention).
+
+UI Mock-up Concept:
+A confirmation dialog may appear before deletion.
+
+
+4. Add Client Contact Details
+Purpose: Stores a new client’s contact information in the system.
+
+add_client name/CLIENT_NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]
+
+add_client name/John Doe phone/91234567 email/johnd@example.com addr/12 Baker Street
+
+Parameter Details:
+CLIENT_NAME:
+Acceptable values: A string with letters, spaces, and limited punctuation. Minimum 3 characters.
+Validation: Trim extra spaces; case-insensitive comparison for duplicates.
+Error Message: “Invalid client name: Must be at least 3 characters.”
+PHONE_NUMBER:
+Acceptable values: A string of digits (optionally formatted with spaces or dashes). Must match the local telephone number format (e.g., 8 digits).
+Validation: Remove non-digit characters; validate length.
+Error Message: “Invalid phone number: Must contain exactly 8 digits.”
+EMAIL (optional):
+Acceptable values: A valid email address format (local-part@domain).
+Validation: Use regex to validate format.
+Error Message: “Invalid email address.”
+ADDRESS (optional):
+Acceptable values: Any non-empty string if provided.
+Validation: None for now.
+Outputs:
+On Success:
+The client contact is added to the central contacts list.
+Confirmation message: “Client ‘John Doe’ added successfully.”
+The UI updates the client list view.
+On Failure:
+Appropriate error message for the invalid parameter(s).
+
+Duplicate Handling:
+Duplicate criteria: A contact is considered a duplicate if the name (case-insensitive) and phone number are identical.
+Action: Reject duplicate with message: “Duplicate client contact detected.”
+
+Possible Errors:
+Missing required fields (name, phone).
+Incorrect phone or email format.
+Duplicate detection.
+
+
+5. Edit Client Contact Details
+Purpose: Allows updating of an existing client’s contact information.
+
+edit_client <cid> [name/NEW_NAME] [phone/NEW_PHONE] [email/NEW_EMAIL] [addr/NEW_ADDRESS]
+
+edit_client 5 name/Tronald Dump phone/91234567 email/tronald@whitehouse.org
+
+Parameter Details:
+CLIENT_ID:
+Acceptable values: A unique identifier for the client, must exist in the system.
+Validation: Must be valid.
+Error Message: “Invalid client ID: No matching client found.”
+Other parameters:
+Rules: Same as in “Add Client Contact Details.”
+Validation: Each field must satisfy the same rules as when adding a client.
+Error Message: “Invalid [field]: [specific error]”
+
+Outputs:
+On Success:
+Updates the client contact details.
+Confirmation message: “Client details updated successfully.”
+GUI reflects the updated contact information.
+On Failure:
+Errors indicating invalid client ID or parameter errors.
+
+Duplicate Handling:
+If the updated details result in a duplicate (by the same name and phone), the system will reject the change.
+Error Message: “Error: Duplicate client contact detected.”
+
+Possible Errors:
+Non-existent client ID.
+Invalid field formats.
+Duplicate detection upon update.
+
+
+6. Remove Outdated Client Contact Details
+Purpose: Allows the deletion of client contacts that are no longer valid or required.
+
+remove_client <cid>
+
+remove_client 5
+
+Parameter Details:
+CLIENT_ID:
+Acceptable values: Must be an existing client ID.
+Validation: Ensure the client exists.
+Error Message: “Invalid client ID: Cannot find specified client.”
+
+Outputs:
+On Success:
+The client contact is removed.
+Confirmation message: “Client contact removed successfully.”
+On Failure:
+Display an error if the client does not exist.
+
+Duplicate Handling:
+Not applicable for removal.
+
+Possible Errors:
+Non-existent client ID.
+Possibly, removal of a client who is involved in pending property viewings/deals (if business rules require confirmation).
+
+UI Mock-up Concept:
+A confirmation prompt appears before final deletion, then the contacts list refreshes after successful removal.
+
+
+7. Add Scheduled Property Viewings with Clients
+Purpose: Allows the scheduling of viewings for a property with one or more clients, associating a date/time and location with the appointment.
+
+schedule_viewing pid/PROPERTY_ID cid/CLIENT_ID at/DATE⌴TIME [note/NOTE]
+
+schedule_viewing pid/12 cid/5 at/2025-03-01 1400 note/Initial viewing.
+
+Parameter Details:
+PROPERTY_ID:
+Acceptable values: Must be an existing property ID.
+Validation: Check existence.
+Error Message: “Invalid property ID.”
+CLIENT_ID:
+Acceptable values: Must be an existing client ID.
+Validation: Check existence.
+Error Message: “Invalid client ID.”
+DATE:
+Acceptable values: A date string in ISO format (YYYY-MM-DD).
+Validation: Must be a valid future date.
+Error Message: “Invalid date: Use format YYYY-MM-DD and ensure the date is in the future.”
+TIME:
+Acceptable values: 24-hour format (HH:MM).
+Validation: Must be a valid time.
+Error Message: “Invalid time: Use 24-hour format HH:MM.”
+NOTE (optional):
+Acceptable values: Free text up to 200 characters.
+Validation: Maximum length check.
+Error Message: “Invalid note: Exceeds 200 characters.”
+
+Outputs:
+On Success:
+The viewing is added to the schedule.
+Confirmation message: “Viewing scheduled successfully for property [ID] with client [ID] on [DATE] at [TIME].”
+On Failure:
+Display error messages detailing the problematic parameter(s).
+
+Duplicate Handling:
+If a viewing for the same property, client, date, and time already exists, reject with: “Viewing already scheduled for the specified time.”
+
+Possible Errors:
+Missing required parameters.
+Date/time format errors.
+Scheduling conflicts (if a client or property already has a viewing at the same time).
+
+
+8. Edit Scheduled Property Viewings
+Purpose: Allows modifications to an existing property viewing appointment, such as rescheduling or updating notes.
+
+edit_viewing id/VIEWING_ID [at/NEW_DATE⌴NEW_TIME] [note/NEW_NOTE]
+
+edit_viewing id/7 date/2025-03-02 1500 note/Rescheduled due to client request.
+
+Parameter Details:
+VIEWING_ID:
+Acceptable values: A valid identifier for an existing viewing.
+Validation: Must exist.
+Error Message: “Invalid viewing ID.”
+NEW_DATE, NEW_TIME, NEW_NOTE:
+Rules: Same validations as in the “Add Scheduled Property Viewings” command.
+Note: Omitted parameters mean retaining original values.
+
+Outputs:
+On Success:
+The viewing is updated.
+Confirmation message: “Viewing updated successfully.”
+On Failure:
+Detailed error messages for invalid updates or conflicts.
+
+Duplicate Handling:
+Similar duplicate check as adding a viewing: if the changes would duplicate an existing viewing, reject the edit.
+
+Possible Errors:
+Non-existent viewing ID.
+Invalid date/time formats.
+Conflict with another scheduled viewing.
+
+UI Mock-up Concept:
+A modal dialog pre-filled with existing viewing details that allows for inline editing.
+
+
+9. Delete Scheduled Property Viewings
+Purpose: Allows the removal of a scheduled viewing from the system.
+
+delete_viewing <vid>
+
+delete_viewing 7
+
+Parameter Details:
+VIEWING_ID:
+Acceptable values: Must correspond to an existing scheduled viewing.
+Validation: Must exist.
+Error Message: “Invalid viewing ID: No such viewing found.”
+
+Outputs:
+On Success:
+The viewing is removed from the schedule.
+Confirmation message: “Viewing deleted successfully.”
+On Failure:
+Appropriate error if the ID is invalid.
+
+Duplicate Handling:
+Not applicable.
+
+Possible Errors:
+Non-existent viewing ID.
+Potential conflict if deletion violates business rules (e.g., if linked to a confirmed deal).
+
+UI Mock-up Concept:
+A confirmation prompt before deletion; updated schedule view post-deletion.
+
+
+10. Add Property Deals
+Purpose: Allows the user to add property deals (e.g., pending, closed, in negotiation).
+
+add_deal pid/PROPERTY_ID buyer/BUYER_ID seller/SELLER_ID price/PRICE [status/STATUS]
+
+add_deal pid/4 buyer/5 seller/6 price/690000 status/closed
+
+Parameter Details:
+PROPERTY_ID:
+Acceptable values: Must be a valid identifier for an existing property deal.
+Validation: Must exist.
+Error Message: “Invalid property ID.”
+BUYER_ID, SELLER_ID
+Acceptable values: Must be a valid identifier for an existing client.
+Validation: Must exist.
+Error Message: “Invalid buyer/seller.”
+PRICE:
+Acceptable values: A positive number (integer or decimal) representing the price in dollars.
+Validation: Must be numeric and > 0 and < LONG.MAX_VALUE.
+Error Message: “Invalid price: Price must be a positive number from 1 to 999.99 inclusive.”
+STATUS (optional - default pending):
+Acceptable values: One of the predefined statuses: pending, closed, or in negotiation.
+Validation: Case-insensitive match to these values.
+Error Message: “Invalid status: Must be one of ‘pending’, ‘closed’, ‘in negotiation’.”
+
+Outputs:
+On Success:
+The deal’s status is updated.
+Confirmation message: “Deal status updated to ‘closed’ successfully.”
+On Failure:
+Error message indicating invalid ID or status.
+
+Duplicate Handling:
+Not applicable; status updates overwrite previous status.
+
+Possible Errors:
+Non-existent deal ID.
+Invalid status value.
+
+
+11. Update the Status of Property Deals
+Purpose: Allows the user to modify the status of property deals (e.g., pending, closed, in negotiation).
+
+update_deal deadId/DEAL_ID [pid/PROPERTY_ID] [buyer/BUYER_ID] [seller/SELLER_ID] [price/PRICE] [status/STATUS]
+
+update_deal dealId/3 status/closed
+
+Parameter Details:
+DEAL_ID:
+Acceptable values: Must be a valid identifier for an existing property deal.
+Validation: Must exist.
+Error Message: “Invalid deal ID.”
+PROPERTY_ID, BUYER_ID, SELLER_ID, PRICE, STATUS (optional):
+Rules: Follow the same validation rules as in “Add Property Deals.”
+Extra Handling: If a field is omitted, the original value is retained.
+Error Message: “Invalid [field]: [specific error]”
+Ensure that at least ONE of the PROPERTY_ID, BUYER_ID, SELLER_ID, PRICE, STATUS parameters is provided.
+
+Outputs:
+On Success:
+The deal’s status is updated.
+Confirmation message: “Deal status updated to ‘closed’ successfully.”
+GUI: Deal list refreshes to reflect new status.
+On Failure:
+Error message indicating invalid ID or status.
+
+Duplicate Handling:
+Not applicable; status updates overwrite previous status.
+
+Possible Errors:
+Non-existent deal ID.
+Invalid status value.
+
+
+12. List all property details
+Purpose: Consolidates all properties in a single listing, accessible through a dedicated command and UI view.
+
+list_properties
+
+Parameter Details:
+No additional parameters.
+
+Outputs:
+On Success:
+Displays the entire list of properties in a structured format (table view with columns: Property name, Address, Price, Size, Description).
+On Failure:
+If the properties list is empty, display “No properties found.”
+
+Duplicate Handling:
+Duplicates should have been handled during add/edit commands; the list displays all unique properties.
+
+Possible Errors:
+No errors expected other than an empty list.
+
+
+13. List client contacts
+Purpose: Consolidates all client contacts in a single list, accessible through a dedicated command and UI view.
+
+list_clients
+
+Parameter Details:
+No additional parameters.
+
+Outputs:
+On Success:
+Displays the entire list of client contacts in a structured format (table view with columns: Client ID, Name, Phone, Email, Address).
+On Failure:
+If the contacts list is empty, display “No client contacts found.”
+
+Duplicate Handling:
+Duplicates should have been handled during add/edit commands; the list displays all unique contacts.
+
+Possible Errors:
+No errors expected other than an empty list.
+
+
+14. List all scheduled property viewings
+Purpose: Consolidates all scheduled property viewings in a single list, accessible through a dedicated command and UI view.
+
+list_viewings
+
+Parameter Details:
+No additional parameters.
+
+Outputs:
+On Success:
+Displays the entire list of scheduled property viewings in a structured format (table view with columns: Property ID, Client ID, Date & Time, Note).
+On Failure:
+If the properties viewings list is empty, display “No scheduled property viewings found.”
+
+Duplicate Handling:
+Duplicates should have been handled during add/edit commands; the list displays all unique properties viewings.
+
+Possible Errors:
+No errors expected other than an empty list.
+
+
+15. List all property deals
+Purpose: Consolidates all property deals in a single list, accessible through a dedicated command and UI view.
+
+list_deals
+
+Parameter Details:
+No additional parameters.
+
+Outputs:
+On Success:
+Displays the entire list of property deals in a structured format (table view with columns: Property id, Buyer id, Seller id, Price, Status).
+On Failure:
+If the property deals list is empty, display “No properties deals found.”
+
+Duplicate Handling:
+Duplicates should have been handled during add/edit commands; the list displays all unique properties deals.
+
+Possible Errors:
+No errors expected other than an empty list.
+
+
+
+Disclaimer: This is a preliminary write-up. Promised features stated above are subject to change at the developers’ discretion.
+"
+

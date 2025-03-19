@@ -26,42 +26,40 @@
         <padding>
           <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
         </padding>
-        <VBox>
-          <MenuBar style="-fx-background-color: #60c6d6;" VBox.vgrow="NEVER">
-            <menus>
-              <Menu mnemonicParsing="false" text="File">
-                <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
-              </Menu>
-              <Menu mnemonicParsing="false" text="Help">
-                <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
-              </Menu>
-            </menus>
-            <VBox.margin>
-              <Insets/>
-            </VBox.margin>
-          </MenuBar>
+        <MenuBar style="-fx-background-color: #60c6d6;" VBox.vgrow="NEVER">
+          <menus>
+            <Menu mnemonicParsing="false" text="File">
+              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+              <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
+            </Menu>
+          </menus>
+          <VBox.margin>
+            <Insets/>
+          </VBox.margin>
+        </MenuBar>
 
-          <SplitPane fx:id="listPlanesPlaceholder" dividerPositions="0.25, 0.50, 0.75" focusTraversable="true"
-                     style="-fx-background-color: #EBF5FB;" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-            <padding>
-              <Insets top="5" right="5" bottom="5" left="5"/>
-            </padding>
-          </SplitPane>
+        <SplitPane fx:id="listPlanesPlaceholder" dividerPositions="0.25, 0.50, 0.75" focusTraversable="true"
+                   style="-fx-background-color: #EBF5FB;" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+          <padding>
+            <Insets top="5" right="5" bottom="5" left="5"/>
+          </padding>
+        </SplitPane>
 
-          <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" style="-fx-background-color: #EBF5FB;"
-                     minHeight="100" prefHeight="100" maxHeight="100">
-            <padding>
-              <Insets top="2" right="4" bottom="2" left="4"/>
-            </padding>
-          </StackPane>
+        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" style="-fx-background-color: #EBF5FB;"
+                   minHeight="100" prefHeight="100" maxHeight="100">
+          <padding>
+            <Insets top="2" right="4" bottom="2" left="4"/>
+          </padding>
+        </StackPane>
 
-          <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" style="-fx-background-color: #EBF5FB;">
-            <padding>
-              <Insets top="2" right="4" bottom="2" left="4"/>
-            </padding>
-          </StackPane>
-
-        </VBox>
+        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" style="-fx-background-color: #EBF5FB;"
+                  minHeight="30" prefHeight="30" maxHeight="30">
+          <padding>
+            <Insets top="2" right="4" bottom="2" left="4"/>
+          </padding>
+        </StackPane>
       </VBox>
     </Scene>
   </scene>

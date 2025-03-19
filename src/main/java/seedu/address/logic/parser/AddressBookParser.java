@@ -18,6 +18,7 @@ import seedu.address.logic.commands.client.AddClientCommand;
 import seedu.address.logic.commands.client.DeleteClientCommand;
 import seedu.address.logic.commands.client.EditClientCommand;
 import seedu.address.logic.commands.client.ListClientCommand;
+import seedu.address.logic.commands.deal.AddDealCommand;
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.ListEventCommand;
@@ -28,6 +29,7 @@ import seedu.address.logic.commands.property.ListPropertyCommand;
 import seedu.address.logic.parser.client.AddClientCommandParser;
 import seedu.address.logic.parser.client.DeleteClientCommandParser;
 import seedu.address.logic.parser.client.EditClientCommandParser;
+import seedu.address.logic.parser.deal.AddDealCommandParser;
 import seedu.address.logic.parser.event.AddEventCommandParser;
 import seedu.address.logic.parser.event.DeleteEventCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -75,6 +77,9 @@ public class AddressBookParser {
 
         case AddPropertyCommand.COMMAND_WORD:
             return new AddPropertyCommandParser().parse(arguments);
+
+        case AddDealCommand.COMMAND_WORD:
+            return new AddDealCommandParser().parse(arguments);
 
         // TODO: Add more edit commands here for each entity
         case EditClientCommand.COMMAND_WORD:

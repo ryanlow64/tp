@@ -5,6 +5,8 @@ import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLIENT;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -12,9 +14,6 @@ import seedu.address.model.client.ClientName;
 import seedu.address.model.client.Email;
 import seedu.address.model.client.Phone;
 import seedu.address.model.commons.Address;
-
-import javax.naming.PartialResultException;
-import java.time.LocalDateTime;
 
 public class ParserUtilTest {
     private static final String INVALID_CLIENTNAME = "R@chel";

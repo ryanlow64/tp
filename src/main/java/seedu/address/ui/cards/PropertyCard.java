@@ -49,7 +49,8 @@ public class PropertyCard extends UiPart<Region> {
         name.setText(property.getPropertyName().fullName);
         address.setText(property.getAddress().value);
         price.setText(String.format("Price: $%sk", property.getPrice().value.toString()));
-        size.setText(String.format("Size: %s square feet", property.getSize().map(s -> s.value).orElse("N/A")));
+        String sizeValue = property.getSize().map(s -> s.value).orElse("N/A");
+        size.setText(sizeValue.equals("N/A") ? "Size: N/A" : String.format("Size: %s square feet", sizeValue));
         description.setText(property.getDescription().map(d -> d.getDescription().orElse("N/A"))
                 .orElse("N/A"));
     }

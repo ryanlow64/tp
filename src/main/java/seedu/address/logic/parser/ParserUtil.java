@@ -192,9 +192,17 @@ public class ParserUtil {
      * @throws ParseException if the given {@code size} is invalid.
      */
     public static Optional<Size> parseSize(String size) throws ParseException {
+        if (size == null) {
+            throw new ParseException(Size.MESSAGE_CONSTRAINTS);
+        }
+
+        if (size.isBlank()) {
+            return Optional.empty();
+        }
         if (!Size.isValidSize(size)) {
             throw new ParseException(Size.MESSAGE_CONSTRAINTS);
         }
+
         return Optional.of(new Size(size));
     }
 
@@ -205,10 +213,19 @@ public class ParserUtil {
      * @throws ParseException if the given {@code description} is invalid.
      */
     public static Optional<Description> parseDescription(String description) throws ParseException {
+        if (description == null) {
+            throw new ParseException(Description.MESSAGE_CONSTRAINTS);
+        }
+
+        if (description.isBlank()) {
+            return Optional.empty();
+        }
+
         String trimmedDescription = description.trim();
         if (!Description.isValidDescription(trimmedDescription)) {
             throw new ParseException(Description.MESSAGE_CONSTRAINTS);
         }
+
         return Optional.of(new Description(trimmedDescription));
     }
 

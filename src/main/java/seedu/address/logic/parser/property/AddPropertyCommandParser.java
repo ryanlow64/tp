@@ -48,12 +48,12 @@ public class AddPropertyCommandParser extends AddCommandParser<Property> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_SIZE,
                 PREFIX_DESCRIPTION);
         PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_PROPERTY_NAME)
-                .get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+                .orElse("N/A"));
+        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse("N/A"));
 
-        String priceArg = argMultimap.getValue(PREFIX_PRICE).get();
-        if (priceArg.contains(".")) {
-            throw new ParseException("Price must be an integer!");
+        String priceArg = argMultimap.getValue(PREFIX_PRICE).orElse("N/A");
+        if (!priceArg.matches("^[0-9]+$")) {
+            throw new ParseException("Price must be an integer and should not contain any special characters!");
         }
         if (!priceArg.matches(Price.VALIDATION_REGEX)) {
             throw new ParseException(Price.MESSAGE_CONSTRAINTS);
@@ -61,9 +61,9 @@ public class AddPropertyCommandParser extends AddCommandParser<Property> {
         Long priceValue = Long.valueOf(priceArg);
         Price price = ParserUtil.parsePrice(priceValue);
 
-        Optional<Size> size = ParserUtil.parseSize(argMultimap.getValue(PREFIX_SIZE).get());
+        Optional<Size> size = ParserUtil.parseSize(argMultimap.getValue(PREFIX_SIZE).orElse("N/A"));
         Optional<Description> description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)
-                .get());
+                .orElse("N/A"));
         Property property = new Property(propertyName, address, price, size, description);
 
         return new AddPropertyCommand(property);

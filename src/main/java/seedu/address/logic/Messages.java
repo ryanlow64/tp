@@ -61,9 +61,10 @@ public class Messages {
                 .append("; Price: S$")
                 .append(property.getPrice()).append(" thousand")
                 .append("; Size: ")
-                .append(property.getSize().orElseThrow()).append(" square feet")
+                .append(property.getSize().isPresent() ? property.getSize().get() : "N/A")
+                .append(" square feet")
                 .append("; Description: ")
-                .append(property.getDescription().orElseThrow())
+                .append(property.getDescription().isPresent() ? property.getDescription().get() : "N/A")
                 .toString();
     }
 

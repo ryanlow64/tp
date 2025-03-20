@@ -39,9 +39,6 @@ public class Description {
      * Returns true if a given string is a valid description.
      */
     public static boolean isValidDescription(String test) {
-        if (test == null) {
-            return false;
-        }
         return test.isBlank() || test.matches(VALIDATION_REGEX);
     }
 

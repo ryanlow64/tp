@@ -190,6 +190,6 @@ public class ParserUtilTest {
 
     @Test
     public void parseDescription_nullDescription_failure() {
-        assertThrows(NullPointerException.class, () -> ParserUtil.parseDescription(null));
+        assertThrows(ParseException.class, () -> ParserUtil.parseDescription(null));
     }
 }

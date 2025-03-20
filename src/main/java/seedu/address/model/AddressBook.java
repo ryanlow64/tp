@@ -85,6 +85,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setClients(newData.getClientList());
         setDeals(newData.getDealList());
+        setEvents(newData.getEventList());
         setProperties(newData.getPropertyList());
     }
 
@@ -126,6 +127,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// event operations
+    /**
+     * Returns true if an event with the same identity as {@code event} exists in the address book.
+     */
+    public boolean hasEvent(Event event) {
+        requireNonNull(event);
+        return events.contains(event);
+    }
     /**
      * Adds an event to the address book.
      */
@@ -229,6 +237,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .add("clients", clients)
                 .add("deals", deals)
                 .add("properties", properties)
+                .add("events", events)
                 .toString();
     }
 

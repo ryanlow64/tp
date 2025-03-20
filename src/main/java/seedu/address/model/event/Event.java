@@ -18,7 +18,7 @@ public class Event {
     private PropertyName propertyName; // store property name instead of property index
     private ClientName clientName; // store client name instead of client index
     private LocalDateTime dateTime;
-    private Note note; // make Note compulsory as it will be used as the title of the event card
+    private Note note;
 
     /**
      * Creates a new {@code Event} object.

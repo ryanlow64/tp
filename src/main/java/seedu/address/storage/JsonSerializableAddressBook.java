@@ -12,6 +12,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
+import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
 
 /**
@@ -20,25 +21,31 @@ import seedu.address.model.property.Property;
 @JsonRootName(value = "addressbook")
 class JsonSerializableAddressBook {
 
-    public static final String MESSAGE_DUPLICATE_CLIENT = "Clients list contains duplicate client(s).";
-    public static final String MESSAGE_DUPLICATE_PROPERTY = "Properties list contains duplicate properties.";
-    public static final String MESSAGE_DUPLICATE_DEAL = "Deals list contains duplicate deal(s).";
+    public static final String MESSAGE_DUPLICATE_CLIENT = "Client list contains duplicate client(s).";
+    public static final String MESSAGE_DUPLICATE_PROPERTY = "Property list contains duplicate properties.";
+    public static final String MESSAGE_DUPLICATE_DEAL = "Deal list contains duplicate deal(s).";
+    public static final String MESSAGE_DUPLICATE_EVENT = "Event list contains duplicate event(s).";
 
     private final List<JsonAdaptedClient> clients = new ArrayList<>();
     private final List<JsonAdaptedProperty> properties = new ArrayList<>();
     private final List<JsonAdaptedDeal> deals = new ArrayList<>();
+    private final List<JsonAdaptedEvent> events = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given clients, properties and deals.
+     * Constructs a {@code JsonSerializableAddressBook} with the given clients, properties, deals and events.
      */
     @JsonCreator
     public JsonSerializableAddressBook(@JsonProperty("clients") List<JsonAdaptedClient> clients,
                                        @JsonProperty("properties") List<JsonAdaptedProperty> properties,
-                                       @JsonProperty("deals") List<JsonAdaptedDeal> deals) {
+                                       @JsonProperty("deals") List<JsonAdaptedDeal> deals,
+                                       @JsonProperty("events") List<JsonAdaptedEvent> events) {
         this.clients.addAll(clients);
         this.properties.addAll(properties);
         if (deals != null) {
             this.deals.addAll(deals);
+        }
+        if (events != null) {
+            this.events.addAll(events);
         }
     }
 
@@ -51,6 +58,7 @@ class JsonSerializableAddressBook {
         clients.addAll(source.getClientList().stream().map(JsonAdaptedClient::new).toList());
         properties.addAll(source.getPropertyList().stream().map(JsonAdaptedProperty::new).toList());
         deals.addAll(source.getDealList().stream().map(JsonAdaptedDeal::new).toList());
+        events.addAll(source.getEventList().stream().map(JsonAdaptedEvent::new).toList());
     }
 
     /**
@@ -83,6 +91,14 @@ class JsonSerializableAddressBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_DEAL);
             }
             addressBook.addDeal(deal);
+        }
+
+        for (JsonAdaptedEvent jsonAdaptedEvent : events) {
+            Event event = jsonAdaptedEvent.toModelType();
+            if (addressBook.hasEvent(event)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_EVENT);
+            }
+            addressBook.addEvent(event);
         }
 
         return addressBook;

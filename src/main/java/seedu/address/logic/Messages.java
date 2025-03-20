@@ -61,7 +61,7 @@ public class Messages {
                 .append("; Price: S$")
                 .append(property.getPrice()).append(" thousand")
                 .append("; Size: ")
-                .append(property.getSize().orElseThrow()).append(" square feet")
+                .append(property.getSize()).append(" square feet")
                 .append("; Description: ")
                 .append(property.getDescription().orElseThrow())
                 .toString();

@@ -2,6 +2,7 @@ package seedu.address.ui.cards;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.logic.parser.ParserUtil;
@@ -36,7 +37,7 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label client;
     @FXML
-    private Label dateTime;
+    private FlowPane dateTime;
     @FXML
     private Label note;
 
@@ -48,9 +49,9 @@ public class EventCard extends UiPart<Region> {
         this.event = event;
         id.setText(displayedIndex + ". ");
         eventType.setText(event.getEventType().toFormattedString());
-        property.setText(event.getPropertyName().fullName);
-        client.setText(event.getClientName().fullName);
-        dateTime.setText(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT));
-        note.setText(event.getNote().toString());
+        property.setText("About: " + event.getPropertyName().fullName);
+        client.setText("With: " + event.getClientName().fullName);
+        dateTime.getChildren().add(new Label(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT)));
+        note.setText("Note: " + event.getNote().toString());
     }
 }

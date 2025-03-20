@@ -26,7 +26,7 @@ public class JsonAdaptedPropertyTest {
     private static final String VALID_PROPERTY_NAME = MAPLE.getPropertyName().toString();
     private static final String VALID_ADDRESS = MAPLE.getAddress().toString();
     private static final Long VALID_PRICE = MAPLE.getPrice().value;
-    private static final String VALID_SIZE = MAPLE.getSize().map(s -> s.size.get()).orElse("");
+    private static final String VALID_SIZE = MAPLE.getSize().map(s -> s.value).orElse("");
     private static final String VALID_DESCRIPTION =
             MAPLE.getDescription().map(d -> d.description.get()).orElse("");
 

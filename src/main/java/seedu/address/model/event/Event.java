@@ -14,11 +14,11 @@ import seedu.address.model.property.PropertyName;
  * TODO: make all fields final
  */
 public class Event {
-    private EventType eventType;
-    private PropertyName propertyName; // store property name instead of property index
-    private ClientName clientName; // store client name instead of client index
-    private LocalDateTime dateTime;
-    private Note note;
+    private final EventType eventType;
+    private final PropertyName propertyName; // store property name instead of property index
+    private final ClientName clientName; // store client name instead of client index
+    private final LocalDateTime dateTime;
+    private final Note note;
 
     /**
      * Creates a new {@code Event} object.

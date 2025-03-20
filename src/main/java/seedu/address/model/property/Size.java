@@ -2,8 +2,6 @@ package seedu.address.model.property;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.util.Optional;
-
 /**
  * Represents a Property's size in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidSize(String)}
@@ -15,7 +13,7 @@ public class Size {
 
     public static final String VALIDATION_REGEX = "([1-9]\\d{2,4})";
 
-    public final Optional<String> size;
+    public final String value;
 
     /**
      * Constructs a {@code Size}.
@@ -24,10 +22,10 @@ public class Size {
      */
     public Size(String size) {
         if (size == null || size.isBlank()) {
-            this.size = Optional.empty();
+            this.value = "N/A";
         } else {
             checkArgument(isValidSize(size), MESSAGE_CONSTRAINTS);
-            this.size = Optional.of(size);
+            this.value = size;
         }
     }
 
@@ -46,14 +44,7 @@ public class Size {
      */
     @Override
     public String toString() {
-        return size.orElse("N/A");
-    }
-
-    /**
-     * Returns the optional size.
-     */
-    public Optional<String> getSize() {
-        return size;
+        return value;
     }
 
     @Override
@@ -67,11 +58,11 @@ public class Size {
             return false;
         }
 
-        return size.equals(otherSize.size);
+        return value.equals(otherSize.value);
     }
 
     @Override
     public int hashCode() {
-        return size.hashCode();
+        return value.hashCode();
     }
 }

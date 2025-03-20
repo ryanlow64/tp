@@ -2,6 +2,7 @@ package seedu.address.ui.cards;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.deal.Deal;
@@ -39,7 +40,7 @@ public class DealCard extends UiPart<Region> {
     @FXML
     private Label price;
     @FXML
-    private Label status;
+    private FlowPane status;
 
     /**
      * Creates a {@code DealCode} with the given {@code Deal} and index to display.
@@ -51,7 +52,7 @@ public class DealCard extends UiPart<Region> {
         propertyName.setText(deal.getPropertyName().fullName);
         buyer.setText("Buyer: " + deal.getBuyer().fullName);
         seller.setText("Seller: " + deal.getSeller().fullName);
-        price.setText("Price: $" + deal.getPrice().value);
-        status.setText("Status: " + deal.getStatus().toString());
+        price.setText(String.format("Price: $%sk", deal.getPrice().value.toString()));
+        status.getChildren().add(new Label(deal.getStatus().toString()));
     }
 }

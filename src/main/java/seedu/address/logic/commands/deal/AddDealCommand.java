@@ -46,7 +46,6 @@ public class AddDealCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New deal added successfully:"
             + " Property: %1$s, Buyer: %2$s, Seller: %3$s, Price $%4$d, Status %5$s";
     public static final String MESSAGE_DUPLICATE_DEAL = "This deal already exists in the address book";
-    public static final String MESSAGE_INVALID_PROPERTY = "Invalid property name.";
     public static final String MESSAGE_INVALID_PROPERTY_ID = "Invalid property ID.";
     public static final String MESSAGE_INVALID_BUYER_ID = "Invalid buyer ID.";
     public static final String MESSAGE_INVALID_SELLER_ID = "Invalid seller ID.";

@@ -1,10 +1,6 @@
 *TODOs*
 
-Clients:
-- Update commands' syntax
-
 Events:
-- Write to storage
 - Add test cases
 - JavaDoc
 - Edge case error handling

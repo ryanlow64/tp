@@ -14,10 +14,12 @@ public class CliSyntax {
     public static final Prefix PREFIX_EVENT_START = new Prefix("at/");
     public static final Prefix PREFIX_EVENT_NOTE = new Prefix("note/");
     public static final Prefix PREFIX_PROPERTY_NAME = new Prefix("prop/");
+    public static final Prefix PREFIX_PROPERTY_ID = new Prefix("pid/");
     public static final Prefix PREFIX_PRICE = new Prefix("price/");
     public static final Prefix PREFIX_SIZE = new Prefix("size/");
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("d/");
     public static final Prefix PREFIX_SELLER = new Prefix("seller/");
     public static final Prefix PREFIX_BUYER = new Prefix("buyer/");
     public static final Prefix PREFIX_STATUS = new Prefix("status/");
+    public static final Prefix PREFIX_DEAL_ID = new Prefix("dealId/");
 }

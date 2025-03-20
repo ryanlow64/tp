@@ -92,6 +92,7 @@ public class ModelStub implements Model {
         throw new AssertionError("This method should not be called.");
     }
 
+    @Override
     public void setProperty(Property target, Property editedProperty) {
         throw new AssertionError("This method should not be called.");
     }
@@ -103,6 +104,11 @@ public class ModelStub implements Model {
 
     @Override
     public boolean hasDeal(Deal deal) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void setDeal(Deal target, Deal editedDeal) {
         throw new AssertionError("This method should not be called.");
     }
 

@@ -65,8 +65,12 @@ dependencies {
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jUnitVersion
 }
 
+application {
+    mainClass.set("seedu.address.Main")
+}
+
 shadowJar {
-    archiveFileName = 'addressbook.jar'
+    archiveFileName = 'REconnect.jar'
 }
 
 defaultTasks 'clean', 'test'

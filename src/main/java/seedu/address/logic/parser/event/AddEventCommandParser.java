@@ -1,7 +1,6 @@
 package seedu.address.logic.parser.event;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START;

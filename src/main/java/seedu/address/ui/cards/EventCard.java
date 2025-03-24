@@ -46,6 +46,8 @@ public class EventCard extends UiPart<Region> {
      */
     public EventCard(Event event, int displayedIndex) {
         super(FXML);
+        assert event != null : "Event should not be null";
+        assert displayedIndex > 0 : "Index should be greater than 0";
         this.event = event;
         id.setText(displayedIndex + ". ");
         eventType.setText(event.getEventType().toFormattedString());

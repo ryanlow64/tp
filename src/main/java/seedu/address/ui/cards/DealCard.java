@@ -47,6 +47,8 @@ public class DealCard extends UiPart<Region> {
      */
     public DealCard(Deal deal, int displayedIndex) {
         super(FXML);
+        assert deal != null : "Deal should not be null";
+        assert displayedIndex > 0 : "Index should be greater than 0";
         this.deal = deal;
         id.setText(displayedIndex + ". ");
         propertyName.setText(deal.getPropertyName().fullName);

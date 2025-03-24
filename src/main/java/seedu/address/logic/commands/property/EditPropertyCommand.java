@@ -2,6 +2,7 @@ package seedu.address.logic.commands.property;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
@@ -21,6 +22,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
 import seedu.address.model.property.Description;
@@ -39,11 +41,12 @@ public class EditPropertyCommand extends EditCommand<Property> {
             + "by the index number used in the displayed property list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_PROPERTY_NAME + "PROPERTYNAME] "
+            + "[" + PREFIX_PROPERTY_NAME + "PROPERTY_NAME] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_PRICE + "PRICE (in S$ thousands)] "
             + "[" + PREFIX_SIZE + "SIZE (in square feet)] "
-            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] \n"
+            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
+            + "[" + PREFIX_CLIENT_NAME + "CLIENT_NAME] \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ADDRESS + "234 Maple Street "
             + PREFIX_PRICE + "2000";
@@ -99,8 +102,11 @@ public class EditPropertyCommand extends EditCommand<Property> {
         Optional<Size> updatedSize = editPropertyDescriptor.getSize().orElse(propertyToEdit.getSize());
         Optional<Description> updatedDescription = editPropertyDescriptor.getDescription()
                 .orElse(propertyToEdit.getDescription());
+        ClientName updatedOwner = editPropertyDescriptor.getOwner()
+                .orElse(propertyToEdit.getOwner());
 
-        return new Property(updatedPropertyName, updatedAddress, updatedPrice, updatedSize, updatedDescription);
+        return new Property(updatedPropertyName, updatedAddress, updatedPrice, updatedSize, updatedDescription,
+                updatedOwner);
     }
 
     @Override
@@ -136,6 +142,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
         private Price price;
         private Optional<Size> size;
         private Optional<Description> description;
+        private ClientName owner;
 
         public EditPropertyDescriptor() {}
 
@@ -149,6 +156,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
             setPrice(toCopy.price);
             setSize(toCopy.size);
             setDescription(toCopy.description);
+            setOwner(toCopy.owner);
         }
 
         /**
@@ -156,7 +164,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
          */
         @Override
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(propertyName, address, price, size, description);
+            return CollectionUtil.isAnyNonNull(propertyName, address, price, size, description, owner);
         }
 
         public void setPropertyName(PropertyName propertyName) {
@@ -199,6 +207,14 @@ public class EditPropertyCommand extends EditCommand<Property> {
             return Optional.ofNullable(description);
         }
 
+        public void setOwner(ClientName owner) {
+            this.owner = owner;
+        }
+
+        public Optional<ClientName> getOwner() {
+            return Optional.ofNullable(owner);
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -214,7 +230,8 @@ public class EditPropertyCommand extends EditCommand<Property> {
                     && Objects.equals(address, otherEditPropertyDescriptor.address)
                     && Objects.equals(price, otherEditPropertyDescriptor.price)
                     && Objects.equals(size, otherEditPropertyDescriptor.size)
-                    && Objects.equals(description, otherEditPropertyDescriptor.description);
+                    && Objects.equals(description, otherEditPropertyDescriptor.description)
+                    && Objects.equals(owner, otherEditPropertyDescriptor.owner);
         }
 
         @Override
@@ -225,6 +242,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
                     .add("price", price)
                     .add("size", size)
                     .add("description", description)
+                    .add("owner", owner)
                     .toString();
         }
     }

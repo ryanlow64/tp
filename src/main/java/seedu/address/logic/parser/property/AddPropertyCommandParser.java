@@ -2,6 +2,7 @@ package seedu.address.logic.parser.property;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
@@ -17,6 +18,7 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
 import seedu.address.model.property.Description;
@@ -38,7 +40,7 @@ public class AddPropertyCommandParser extends AddCommandParser<Property> {
     public AddPropertyCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_SIZE,
-                        PREFIX_DESCRIPTION);
+                        PREFIX_DESCRIPTION, PREFIX_CLIENT_NAME);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_NAME, PREFIX_ADDRESS)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -46,7 +48,7 @@ public class AddPropertyCommandParser extends AddCommandParser<Property> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_SIZE,
-                PREFIX_DESCRIPTION);
+                PREFIX_DESCRIPTION, PREFIX_CLIENT_NAME);
         PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_PROPERTY_NAME)
                 .orElse("N/A"));
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse("N/A"));
@@ -64,7 +66,8 @@ public class AddPropertyCommandParser extends AddCommandParser<Property> {
         Optional<Size> size = ParserUtil.parseSize(argMultimap.getValue(PREFIX_SIZE).orElse("N/A"));
         Optional<Description> description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)
                 .orElse("N/A"));
-        Property property = new Property(propertyName, address, price, size, description);
+        ClientName owner = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_CLIENT_NAME).get());
+        Property property = new Property(propertyName, address, price, size, description, owner);
 
         return new AddPropertyCommand(property);
     }

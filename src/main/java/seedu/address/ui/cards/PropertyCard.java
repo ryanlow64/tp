@@ -38,6 +38,8 @@ public class PropertyCard extends UiPart<Region> {
     private Label size;
     @FXML
     private Label description;
+    @FXML
+    private Label owner;
 
     /**
      * Creates a {@code PropertyCode} with the given {@code Property} and index to display.
@@ -53,5 +55,6 @@ public class PropertyCard extends UiPart<Region> {
         size.setText(sizeValue.equals("N/A") ? "Size: N/A" : String.format("Size: %s square feet", sizeValue));
         description.setText(property.getDescription().map(d -> d.getDescription().orElse("N/A"))
                 .orElse("N/A"));
+        owner.setText(property.getOwner().fullName);
     }
 }

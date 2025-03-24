@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
 
@@ -19,18 +20,20 @@ public class Property {
     private final Price price;
     private final Optional<Size> size;
     private final Optional<Description> description;
+    private final ClientName owner;
 
     /**
      * Every field must be present and not null.
      */
     public Property(PropertyName propertyName, Address address, Price price,
-                    Optional<Size> size, Optional<Description> description) {
-        requireAllNonNull(propertyName, address, price, size, description);
+                    Optional<Size> size, Optional<Description> description, ClientName owner) {
+        requireAllNonNull(propertyName, address, price, size, description, owner);
         this.propertyName = propertyName;
         this.address = address;
         this.price = price;
         this.size = size;
         this.description = description;
+        this.owner = owner;
     }
 
     public PropertyName getPropertyName() {
@@ -52,9 +55,12 @@ public class Property {
     public Optional<Description> getDescription() {
         return description;
     }
+    public ClientName getOwner() {
+        return owner;
+    }
 
     /**
-     * Returns true if both properties have the same propertyName.
+     * Returns true if both properties have the same propertyName and address.
      * This defines a weaker notion of equality between two properties.
      */
     public boolean isSameProperty(Property otherProperty) {
@@ -68,8 +74,8 @@ public class Property {
     }
 
     /**
-     * Returns true if both persons have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * Returns true if both properties have the same identity and data fields.
+     * This defines a stronger notion of equality between two properties.
      */
     @Override
     public boolean equals(Object other) {
@@ -86,13 +92,14 @@ public class Property {
                 && address.equals(otherProperty.address)
                 && price.equals(otherProperty.price)
                 && size.equals(otherProperty.size)
-                && description.equals(otherProperty.description);
+                && description.equals(otherProperty.description)
+                && owner.equals(otherProperty.owner);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(propertyName, address, price, size, description);
+        return Objects.hash(propertyName, address, price, size, description, owner);
     }
 
     @Override
@@ -103,6 +110,7 @@ public class Property {
                 .add("price", price)
                 .add("size", size)
                 .add("description", description)
+                .add("owner", owner)
                 .toString();
     }
 }

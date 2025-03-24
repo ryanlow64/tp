@@ -10,8 +10,13 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
-      - uses: actions/checkout@main
-      - uses: codecov/codecov-action@v5
+      - name: Set up repository
+        uses: actions/checkout@main
+        with:
+          ref: master
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true # optional (default = false)
           files: ./coverage1.xml,./coverage2.xml # optional

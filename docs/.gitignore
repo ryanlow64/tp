@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 _markbind/logs/
+build.gradle
 
 # Dependency directories
 node_modules/

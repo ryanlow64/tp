@@ -61,6 +61,8 @@ public class CommandTestUtil {
     public static final String VALID_SIZE_ORCHID = "500";
     public static final String VALID_DESCRIPTION_MAPLE = "Spacious 4-bedroom home";
     public static final String VALID_DESCRIPTION_ORCHID = "Spacious 2-bedroom home";
+    public static final String VALID_OWNER_MAPLE = "Amy Bee";
+    public static final String VALID_OWNER_ORCHID = "Bob Choo";
 
     // '&' not allowed in clientNames
     public static final String INVALID_CLIENT_NAME_DESC = " " + PREFIX_CLIENT_NAME + "James&";

@@ -27,6 +27,7 @@ public class ClientListPanel extends UiPart<Region> {
      */
     public ClientListPanel(ObservableList<Client> clientList) {
         super(FXML);
+        logger.info("Initializing ClientListPanel...");
         clientListView.setItems(clientList);
         clientListView.setCellFactory(listView -> new ClientListViewCell());
     }

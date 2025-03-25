@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
 import seedu.address.model.property.Description;
@@ -25,6 +26,7 @@ public class JsonAdaptedProperty {
     private final Long price;
     private final String size;
     private final String description;
+    private final String owner;
 
     /**
      * Constructs a {@code JsonAdaptedProperty} with the given property details.
@@ -33,12 +35,14 @@ public class JsonAdaptedProperty {
     public JsonAdaptedProperty(@JsonProperty("propertyName") String propertyName,
                                @JsonProperty("address") String address,
                                @JsonProperty("price") Long price, @JsonProperty("size") String size,
-                               @JsonProperty("description") String description) {
+                               @JsonProperty("description") String description,
+                               @JsonProperty("owner") String owner) {
         this.propertyName = propertyName;
         this.address = address;
         this.price = price;
         this.size = size;
         this.description = description;
+        this.owner = owner;
     }
 
     /**
@@ -50,6 +54,7 @@ public class JsonAdaptedProperty {
         price = source.getPrice().value;
         size = source.getSize().map(s -> s.value).orElse(null);
         description = source.getDescription().map(d -> d.description.get()).orElse(null);
+        owner = source.getOwner().fullName;
     }
 
     /**
@@ -89,6 +94,15 @@ public class JsonAdaptedProperty {
         final Optional<Description> modelDescription = (description == null || description.isEmpty())
                 ? Optional.empty() : Optional.of(new Description(description));
 
-        return new Property(modelPropertyName, modelAddress, modelPrice, modelSize, modelDescription);
+        if (owner == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    ClientName.class.getSimpleName()));
+        }
+        if (!ClientName.isValidClientName(owner)) {
+            throw new IllegalValueException(ClientName.MESSAGE_CONSTRAINTS);
+        }
+        final ClientName modelClientName = new ClientName(owner);
+
+        return new Property(modelPropertyName, modelAddress, modelPrice, modelSize, modelDescription, modelClientName);
     }
 }

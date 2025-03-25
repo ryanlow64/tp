@@ -65,6 +65,8 @@ public class Messages {
                 .append(" square feet")
                 .append("; Description: ")
                 .append(property.getDescription().isPresent() ? property.getDescription().get() : "N/A")
+                .append("; Owner: ")
+                .append(property.getOwner())
                 .toString();
     }
 

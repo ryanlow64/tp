@@ -37,7 +37,7 @@ public class EditClientCommand extends EditCommand<Client> {
             + "by the index number used in the displayed client list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_CLIENT_NAME + "CLIENTNAME] "
+            + "[" + PREFIX_CLIENT_NAME + "CLIENT_NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS]\n"

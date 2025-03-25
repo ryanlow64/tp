@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import java.util.Optional;
 
+import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
 import seedu.address.model.property.Description;
@@ -20,12 +21,14 @@ public class PropertyBuilder {
     public static final Long DEFAULT_PRICE = 2400L;
     public static final String DEFAULT_SIZE = "1000";
     public static final String DEFAULT_DESCRIPTION = "Spacious 4-bedroom home";
+    public static final String DEFAULT_OWNER = "Amy Bee";
 
     private PropertyName propertyName;
     private Address address;
     private Price price;
     private Optional<Size> size;
     private Optional<Description> description;
+    private ClientName owner;
 
     /**
      * Creates a {@code PropertyBuilder} with the default details.
@@ -36,6 +39,7 @@ public class PropertyBuilder {
         price = new Price(DEFAULT_PRICE);
         size = Optional.of(new Size(DEFAULT_SIZE));
         description = Optional.of(new Description(DEFAULT_DESCRIPTION));
+        owner = new ClientName(DEFAULT_OWNER);
     }
 
     /**
@@ -47,6 +51,7 @@ public class PropertyBuilder {
         price = propertyToCopy.getPrice();
         size = propertyToCopy.getSize();
         description = propertyToCopy.getDescription();
+        owner = propertyToCopy.getOwner();
     }
 
     /**
@@ -89,7 +94,15 @@ public class PropertyBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Owner} of the {@code Property} that we are building.
+     */
+    public PropertyBuilder withOwner(String owner) {
+        this.owner = new ClientName(owner);
+        return this;
+    }
+
     public Property build() {
-        return new Property(propertyName, address, price, size, description);
+        return new Property(propertyName, address, price, size, description, owner);
     }
 }

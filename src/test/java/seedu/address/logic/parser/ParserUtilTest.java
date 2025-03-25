@@ -15,7 +15,9 @@ import seedu.address.model.client.ClientName;
 import seedu.address.model.client.Email;
 import seedu.address.model.client.Phone;
 import seedu.address.model.commons.Address;
+import seedu.address.model.commons.Price;
 import seedu.address.model.property.Description;
+import seedu.address.model.property.PropertyName;
 import seedu.address.model.property.Size;
 
 public class ParserUtilTest {
@@ -191,5 +193,72 @@ public class ParserUtilTest {
     @Test
     public void parseDescription_nullDescription_failure() {
         assertThrows(ParseException.class, () -> ParserUtil.parseDescription(null));
+    }
+
+    @Test
+    public void parsePropertyName_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parsePropertyName(null));
+    }
+
+    @Test
+    public void parsePropertyName_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parsePropertyName(""));
+    }
+
+    @Test
+    public void parsePropertyName_validValue_success() throws Exception {
+        String validPropertyName = "Sunset Villa";
+        assertEquals(new PropertyName(validPropertyName), ParserUtil.parsePropertyName(validPropertyName));
+    }
+
+    @Test
+    public void parsePrice_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parsePrice(null));
+    }
+
+    @Test
+    public void parsePrice_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parsePrice(0L));
+    }
+
+    @Test
+    public void parsePrice_validValue_success() throws Exception {
+        assertEquals(new Price(3000L), ParserUtil.parsePrice(3000L));
+    }
+
+    @Test
+    public void parseOwner_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseOwner(null));
+    }
+
+    @Test
+    public void parseOwner_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseOwner("J@ne"));
+    }
+
+    @Test
+    public void parseOwner_validValue_success() throws Exception {
+        String validOwner = "Jane Doe";
+        assertEquals(new ClientName(validOwner), ParserUtil.parseOwner(validOwner));
+    }
+
+    @Test
+    public void parseEventType_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseEventType(null));
+    }
+
+    @Test
+    public void parseEventType_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseEventType("holiday"));
+    }
+
+    @Test
+    public void parseNote_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseNote(null));
+    }
+
+    @Test
+    public void parseNote_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseNote("   "));
     }
 }

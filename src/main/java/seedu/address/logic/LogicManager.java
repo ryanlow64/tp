@@ -40,6 +40,8 @@ public class LogicManager implements Logic {
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
      */
     public LogicManager(Model model, Storage storage) {
+        assert model != null : "Model cannot be null";
+        assert storage != null : "Storage cannot be null";
         this.model = model;
         this.storage = storage;
         addressBookParser = new AddressBookParser();

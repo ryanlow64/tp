@@ -27,6 +27,7 @@ public class DealListPanel extends UiPart<Region> {
      */
     public DealListPanel(ObservableList<Deal> dealList) {
         super(FXML);
+        logger.info("Initializing DealListPanel...");
         dealListView.setItems(dealList);
         dealListView.setCellFactory(listView -> new DealListViewCell());
     }

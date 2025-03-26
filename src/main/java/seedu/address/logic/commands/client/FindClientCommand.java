@@ -7,13 +7,14 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.Model;
+import seedu.address.model.client.Client;
 import seedu.address.model.client.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all clients in address book whose name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Keyword matching is case-insensitive.
  */
-public class FindClientCommand extends FindCommand {
+public class FindClientCommand extends FindCommand<Client> {
 
     public static final String COMMAND_WORD = "find_client";
 

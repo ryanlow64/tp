@@ -4,17 +4,18 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.Model;
+import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyNameContainsKeywordsPredicate;
 
 
 /**
  * Finds and lists all properties in address book whose property name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Keyword matching is case-insensitive.
  */
-public class FindPropertyCommand extends Command {
+public class FindPropertyCommand extends FindCommand<Property> {
 
     public static final String COMMAND_WORD = "find_property";
 
@@ -25,7 +26,11 @@ public class FindPropertyCommand extends Command {
 
     private final PropertyNameContainsKeywordsPredicate predicate;
 
+    /**
+     * Creates an FindPropertyCommand to find the specified property.
+     */
     public FindPropertyCommand(PropertyNameContainsKeywordsPredicate predicate) {
+        super(predicate);
         this.predicate = predicate;
     }
 

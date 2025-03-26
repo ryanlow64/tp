@@ -107,7 +107,7 @@ Finds clients whose names contain any of the given keywords.
 
 Format: `find_client KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-sensitive. e.g `hans` will not match `Hans`
+* The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
@@ -180,7 +180,7 @@ Finds properties whose names contain any of the given keywords.
 
 Format: `find_property KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-sensitive. e.g `villa` will not match `Villa`
+* The search is case-insensitive. e.g `villa` will match `Villa`
 * The order of the keywords does not matter
 * Only the property name is searched
 * Only full words will be matched e.g. `Sun` will not match `Sunset`

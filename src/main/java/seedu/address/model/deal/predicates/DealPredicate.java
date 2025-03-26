@@ -1,7 +1,9 @@
 package seedu.address.model.deal.predicates;
 
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.deal.Deal;
 
 /**
@@ -9,6 +11,7 @@ import seedu.address.model.deal.Deal;
  */
 public abstract class DealPredicate<T> implements Predicate<Deal> {
 
+    protected final Logger logger = LogsCenter.getLogger(this.getClass());
     protected final T value;
 
     /**
@@ -18,6 +21,7 @@ public abstract class DealPredicate<T> implements Predicate<Deal> {
      */
     public DealPredicate(T value) {
         this.value = value;
+        logger.fine("Created " + this.getClass().getSimpleName() + " with value: " + value);
     }
 
     @Override

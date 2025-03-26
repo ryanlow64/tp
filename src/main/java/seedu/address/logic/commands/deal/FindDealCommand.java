@@ -7,7 +7,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
@@ -22,6 +24,8 @@ import seedu.address.model.deal.Deal;
 public class FindDealCommand extends FindCommand<Deal> {
 
     public static final String COMMAND_WORD = "find_deal";
+
+    private static final Logger logger = LogsCenter.getLogger(FindDealCommand.class);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all deals that match the specified criteria "
             + "and displays them as a list with index numbers.\n"
@@ -41,14 +45,19 @@ public class FindDealCommand extends FindCommand<Deal> {
      */
     public FindDealCommand(Predicate<Deal> predicate) {
         super(predicate);
+        logger.info("FindDealCommand initialized with predicate: " + predicate);
     }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        logger.info("Executing FindDealCommand...");
+
         model.updateFilteredDealList(predicate);
-        return new CommandResult(
-                String.format(Messages.MESSAGE_DEALS_LISTED_OVERVIEW, model.getFilteredDealList().size()));
+        int dealsFound = model.getFilteredDealList().size();
+        logger.info("Found " + dealsFound + " deals matching the criteria");
+
+        return new CommandResult(String.format(Messages.MESSAGE_DEALS_LISTED_OVERVIEW, dealsFound));
     }
 
     @Override

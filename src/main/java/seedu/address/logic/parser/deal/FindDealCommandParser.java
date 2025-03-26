@@ -9,7 +9,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.deal.FindDealCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
@@ -27,6 +29,7 @@ import seedu.address.model.deal.predicates.DealStatusPredicate;
  */
 public class FindDealCommandParser implements Parser<FindDealCommand> {
 
+    private static final Logger logger = LogsCenter.getLogger(FindDealCommandParser.class);
     private static final String BLANK = "BLANK";
 
     /**
@@ -35,12 +38,15 @@ public class FindDealCommandParser implements Parser<FindDealCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindDealCommand parse(String args) throws ParseException {
+        logger.info("Parsing arguments for FindDealCommand: " + args);
+
         ArgumentMultimap argMultimap =
             ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER, PREFIX_STATUS);
 
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
+            logger.warning("Empty arguments provided for FindDealCommand");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindDealCommand.MESSAGE_USAGE));
         }
 
@@ -50,14 +56,17 @@ public class FindDealCommandParser implements Parser<FindDealCommand> {
         // Parse property name
         List<String> propertyNameKeywords = parseKeywords(
                 argMultimap.getValue(PREFIX_PROPERTY_NAME).orElse(BLANK));
+        logger.fine("Property name keywords: " + propertyNameKeywords);
 
         // Parse buyer name
         List<String> buyerNameKeywords = parseKeywords(
                 argMultimap.getValue(PREFIX_BUYER).orElse(BLANK));
+        logger.fine("Buyer name keywords: " + buyerNameKeywords);
 
         // Parse seller name
         List<String> sellerNameKeywords = parseKeywords(
                 argMultimap.getValue(PREFIX_SELLER).orElse(BLANK));
+        logger.fine("Seller name keywords: " + sellerNameKeywords);
 
         // Parse status
         DealStatus status = null;
@@ -69,7 +78,9 @@ public class FindDealCommandParser implements Parser<FindDealCommand> {
                     statusString = "IN_NEGOTIATION";
                 }
                 status = DealStatus.valueOf(statusString);
+                logger.fine("Status specified: " + status);
             } catch (IllegalArgumentException e) {
+                logger.warning("Invalid status value provided: " + argMultimap.getValue(PREFIX_STATUS).get());
                 throw new ParseException("Invalid status: Must be one of 'PENDING', 'CLOSED', 'IN_NEGOTIATION'.");
             }
         }
@@ -90,6 +101,7 @@ public class FindDealCommandParser implements Parser<FindDealCommand> {
             combinedPredicate = combinedPredicate.or(statusPredicate);
         }
 
+        logger.info("FindDealCommand created with combined predicates");
         return new FindDealCommand(combinedPredicate);
     }
 
@@ -102,6 +114,8 @@ public class FindDealCommandParser implements Parser<FindDealCommand> {
         if (input.equals(BLANK)) {
             return List.of();
         }
-        return Arrays.asList(input.split("\\s+"));
+        List<String> keywords = Arrays.asList(input.split("\\s+"));
+        logger.fine("Parsed keywords from input '" + input + "': " + keywords);
+        return keywords;
     }
 }

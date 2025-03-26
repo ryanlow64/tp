@@ -3,13 +3,17 @@ package seedu.address.model.deal.predicates;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import seedu.address.model.deal.Deal;
+
 
 /**
  * Tests that a {@code Deal}'s {@code PropertyName} contains any of the keywords.
  */
 public class DealPropertyNameContainsPredicate extends DealPredicate<List<String>> {
+
+    private static final Logger logger = Logger.getLogger(DealPropertyNameContainsPredicate.class.getName());
 
     /**
      * Constructs a {@code DealPropertyNameContainsPredicate}.
@@ -23,10 +27,16 @@ public class DealPropertyNameContainsPredicate extends DealPredicate<List<String
 
     @Override
     public boolean test(Deal deal) {
-        return value.stream()
+        String propertyName = deal.getPropertyName().fullName.toLowerCase();
+        logger.fine("Testing deal with property name: " + propertyName);
+
+        boolean result = value.stream()
                 .anyMatch(keyword ->
-                    deal.getPropertyName().fullName.toLowerCase()
-                        .contains(keyword.toLowerCase()));
+                    propertyName.contains(keyword.toLowerCase()));
+
+        logger.fine("Deal with property name '" + propertyName + "' " + (result ? "matches" : "does not match")
+                + " property name keywords: " + value);
+        return result;
     }
 
     @Override

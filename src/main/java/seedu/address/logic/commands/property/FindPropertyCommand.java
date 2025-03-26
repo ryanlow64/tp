@@ -13,7 +13,7 @@ import seedu.address.model.property.PropertyNameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all properties in address book whose property name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Keyword matching is case-insensitive.
  */
 public class FindPropertyCommand extends FindCommand<Property> {
 

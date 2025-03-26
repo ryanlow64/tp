@@ -8,9 +8,7 @@ import seedu.address.model.event.Event;
 /**
  * Tests that a {@code Event}'s {@code Client} matches the client given.
  */
-public class EventWithClientPredicate extends EventPredicate {
-
-    private final ClientName clientName;
+public class EventWithClientPredicate extends EventPredicate<ClientName> {
 
     /**
      * Constructs a {@code EventWithClientPredicate}.
@@ -18,25 +16,12 @@ public class EventWithClientPredicate extends EventPredicate {
      * @param clientName The client name to test against.
      */
     public EventWithClientPredicate(ClientName clientName) {
+        super(clientName);
         requireNonNull(clientName);
-        this.clientName = clientName;
     }
 
     @Override
     public boolean test(Event event) {
-        return event.getClientName().equals(clientName);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        if (!(other instanceof EventWithClientPredicate otherPredicate)) {
-            return false;
-        }
-
-        return clientName.equals(otherPredicate.clientName);
+        return event.getClientName().equals(value);
     }
 }

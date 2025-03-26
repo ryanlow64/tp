@@ -3,6 +3,8 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -45,7 +47,14 @@ public class UniqueEventList implements Iterable<Event> {
         if (contains(toAdd)) {
             throw new DuplicateEventException();
         }
-        internalList.add(toAdd);
+        int index = 0;
+        while (index < internalList.size()) {
+            if (toAdd.compareTo(internalList.get(index)) < 0) {
+                break;
+            }
+            index++;
+        }
+        internalList.add(index, toAdd);
     }
 
     /**
@@ -82,6 +91,7 @@ public class UniqueEventList implements Iterable<Event> {
     public void setEvents(UniqueEventList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
+        FXCollections.sort(internalList);
     }
 
     /**
@@ -93,8 +103,9 @@ public class UniqueEventList implements Iterable<Event> {
         if (!eventsAreUnique(events)) {
             throw new DuplicateEventException();
         }
-
-        internalList.setAll(events);
+        List<Event> sortedEvents = new ArrayList<>(events);
+        Collections.sort(sortedEvents);
+        internalList.setAll(sortedEvents);
     }
 
     /**

@@ -27,6 +27,7 @@ public class PropertyListPanel extends UiPart<Region> {
      */
     public PropertyListPanel(ObservableList<Property> propertyList) {
         super(FXML);
+        logger.info("Initializing PropertyListPanel...");
         propertyListView.setItems(propertyList);
         propertyListView.setCellFactory(listView -> new PropertyListViewCell());
     }

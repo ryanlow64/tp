@@ -1,5 +1,7 @@
 package seedu.address.model.event;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -10,10 +12,8 @@ import seedu.address.model.property.PropertyName;
 /**
  * Represents an Event in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
- * TODO: Implement this class
- * TODO: make all fields final
  */
-public class Event {
+public class Event implements Comparable<Event> {
     private final EventType eventType;
     private final PropertyName propertyName; // store property name instead of property index
     private final ClientName clientName; // store client name instead of client index
@@ -25,6 +25,7 @@ public class Event {
      */
     public Event(EventType eventType, PropertyName propertyName,
                  ClientName clientName, LocalDateTime dateTime, Note note) {
+        requireAllNonNull(eventType, propertyName, clientName, dateTime, note);
         this.eventType = eventType;
         this.propertyName = propertyName;
         this.clientName = clientName;
@@ -84,5 +85,10 @@ public class Event {
                 .add("dateTime", dateTime)
                 .add("note", note)
                 .toString();
+    }
+
+    @Override
+    public int compareTo(Event other) {
+        return this.dateTime.compareTo(other.dateTime);
     }
 }

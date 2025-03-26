@@ -69,6 +69,10 @@ application {
     mainClass.set("seedu.address.Main")
 }
 
+run {
+    enableAssertions = true
+}
+
 shadowJar {
     archiveFileName = 'REconnect.jar'
 }

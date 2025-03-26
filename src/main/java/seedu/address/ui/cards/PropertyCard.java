@@ -46,6 +46,8 @@ public class PropertyCard extends UiPart<Region> {
      */
     public PropertyCard(Property property, int displayedIndex) {
         super(FXML);
+        assert property != null : "Property should not be null";
+        assert displayedIndex > 0 : "Index should be greater than 0";
         this.property = property;
         id.setText(displayedIndex + ". ");
         name.setText(property.getPropertyName().fullName);

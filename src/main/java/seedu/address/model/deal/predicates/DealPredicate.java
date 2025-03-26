@@ -32,4 +32,4 @@ public abstract class DealPredicate<T> implements Predicate<Deal> {
 
         return value.equals(otherPredicate.value);
     }
-} 
+}

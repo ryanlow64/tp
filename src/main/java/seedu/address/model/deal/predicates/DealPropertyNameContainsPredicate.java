@@ -24,7 +24,7 @@ public class DealPropertyNameContainsPredicate extends DealPredicate<List<String
     @Override
     public boolean test(Deal deal) {
         return value.stream()
-                .anyMatch(keyword -> 
+                .anyMatch(keyword ->
                     deal.getPropertyName().fullName.toLowerCase()
                         .contains(keyword.toLowerCase()));
     }
@@ -33,4 +33,4 @@ public class DealPropertyNameContainsPredicate extends DealPredicate<List<String
     public boolean equals(Object other) {
         return super.equals(other);
     }
-} 
+}

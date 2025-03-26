@@ -21,4 +21,4 @@ public class ListDealCommand extends ListCommand<Deal> {
         model.updateFilteredDealList(PREDICATE_SHOW_ALL_DEALS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
-} 
+}

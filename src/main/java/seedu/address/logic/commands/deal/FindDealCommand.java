@@ -30,8 +30,8 @@ public class FindDealCommand extends FindCommand<Deal> {
             + "[" + PREFIX_BUYER + "BUYER_NAME] "
             + "[" + PREFIX_SELLER + "SELLER_NAME] "
             + "[" + PREFIX_STATUS + "STATUS]\n"
-            + "Example: " + COMMAND_WORD + " " 
-            + PREFIX_PROPERTY_NAME + "Villa " 
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PROPERTY_NAME + "Villa "
             + PREFIX_STATUS + "PENDING";
 
     /**
@@ -71,4 +71,4 @@ public class FindDealCommand extends FindCommand<Deal> {
                 .add("predicate", predicate)
                 .toString();
     }
-} 
+}

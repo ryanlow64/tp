@@ -14,7 +14,6 @@ import seedu.address.logic.commands.deal.FindDealCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
@@ -79,7 +78,7 @@ public class FindDealCommandParser implements Parser<FindDealCommand> {
         Predicate<Deal> propertyNamePredicate = new DealPropertyNameContainsPredicate(propertyNameKeywords);
         Predicate<Deal> buyerNamePredicate = new DealBuyerNameContainsPredicate(buyerNameKeywords);
         Predicate<Deal> sellerNamePredicate = new DealSellerNameContainsPredicate(sellerNameKeywords);
-        
+
         // Start with a combined predicate of name-based searches
         Predicate<Deal> combinedPredicate = propertyNamePredicate
                 .or(buyerNamePredicate)
@@ -105,4 +104,4 @@ public class FindDealCommandParser implements Parser<FindDealCommand> {
         }
         return Arrays.asList(input.split("\\s+"));
     }
-} 
+}

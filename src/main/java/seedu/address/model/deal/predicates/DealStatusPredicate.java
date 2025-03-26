@@ -29,4 +29,4 @@ public class DealStatusPredicate extends DealPredicate<DealStatus> {
     public boolean equals(Object other) {
         return super.equals(other);
     }
-} 
+}

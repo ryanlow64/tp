@@ -23,6 +23,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.NameContainsKeywordsPredicate;
+import seedu.address.model.deal.Deal;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyNameContainsKeywordsPredicate;
 import seedu.address.testutil.EditClientDescriptorBuilder;
@@ -167,4 +168,19 @@ public class CommandTestUtil {
 
         assertEquals(1, model.getFilteredPropertyList().size());
     }
+
+    // /**
+    //  * Updates {@code model}'s filtered list to show only the Deal at the given {@code targetIndex} in the
+    //  * {@code model}'s address book.
+    //  */
+    // public static void showDealAtIndex(Model model, Index targetIndex) {
+    //     assertTrue(targetIndex.getZeroBased() < model.getFilteredDealList().size());
+
+    //     Deal deal = model.getFilteredDealList().get(targetIndex.getZeroBased());
+    //     final String[] splitDealName = deal.getDealName().fullName.split("\\s+");
+    //     model.updateFilteredDealList(new DealNameContainsKeywordsPredicate(Arrays
+    //             .asList(splitDealName[0])));
+
+    //     assertEquals(1, model.getFilteredPropertyList().size());
+    // }
 }

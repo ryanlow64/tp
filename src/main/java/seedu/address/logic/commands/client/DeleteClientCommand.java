@@ -2,6 +2,7 @@ package seedu.address.logic.commands.client;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -12,6 +13,11 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
+import seedu.address.model.client.ClientName;
+import seedu.address.model.deal.Deal;
+import seedu.address.model.deal.DealStatus;
+import seedu.address.model.event.Event;
+import seedu.address.model.property.Property;
 
 /**
  * Deletes a client identified using it's displayed index from the address book.
@@ -27,6 +33,10 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
 
     public static final String MESSAGE_DELETE_CLIENT_SUCCESS = "Deleted Client: %1$s";
 
+    public static final String MESSAGE_DELETE_CLIENT_ERROR = "Client cannot be deleted.\n"
+        + "Client exists in either property, deals, or events.\n"
+        + "Please delete the client from the categories before deleting the client itself.";
+
     public DeleteClientCommand(Index targetIndex) {
         super(targetIndex);
     }
@@ -34,15 +44,58 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Client> lastShownList = model.getFilteredClientList();
+        List<Client> lastShownClientList = model.getFilteredClientList();
+        List<Deal> lastShownDealList = model.getFilteredDealList();
+        List<Event> lastShownEventList = model.getFilteredEventList();
+        List<Property> lastShownPropertyList = model.getFilteredPropertyList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        if (targetIndex.getZeroBased() >= lastShownClientList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
         }
 
-        Client clientToDelete = lastShownList.get(targetIndex.getZeroBased());
+        Client clientToDelete = lastShownClientList.get(targetIndex.getZeroBased());
+
+        if (existInDeals(clientToDelete, lastShownDealList)
+            || existInEvents(clientToDelete, lastShownEventList)
+            || existInProperties(clientToDelete, lastShownPropertyList)) {
+            throw new CommandException(MESSAGE_DELETE_CLIENT_ERROR);
+        }
+
         model.deleteClient(clientToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_CLIENT_SUCCESS, Messages.formatClient(clientToDelete)));
+    }
+
+    private boolean existInDeals(Client clientToDelete, List<Deal> dealList) {
+        ClientName clientNameToDelete = clientToDelete.getClientName();
+        for (Deal deal : dealList) {
+            if ((clientNameToDelete.equals(deal.getBuyer())
+                || clientNameToDelete.equals(deal.getSeller()))
+                && deal.getStatus() != DealStatus.CLOSED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean existInEvents(Client clientToDelete, List<Event> eventList) {
+        ClientName clientNameToDelete = clientToDelete.getClientName();
+        for (Event event : eventList) {
+            if (clientNameToDelete.equals(event.getClientName())
+                && LocalDateTime.now().isBefore(event.getDateTime())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean existInProperties(Client clientToDelete, List<Property> propertyList) {
+        ClientName clientNameToDelete = clientToDelete.getClientName();
+        for (Property property : propertyList) {
+            if (clientNameToDelete.equals(property.getOwner())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

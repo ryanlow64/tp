@@ -19,6 +19,8 @@ import seedu.address.logic.commands.client.EditClientCommand;
 import seedu.address.logic.commands.client.FindClientCommand;
 import seedu.address.logic.commands.client.ListClientCommand;
 import seedu.address.logic.commands.deal.AddDealCommand;
+import seedu.address.logic.commands.deal.FindDealCommand;
+import seedu.address.logic.commands.deal.ListDealCommand;
 import seedu.address.logic.commands.deal.UpdateDealCommand;
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
@@ -34,6 +36,7 @@ import seedu.address.logic.parser.client.DeleteClientCommandParser;
 import seedu.address.logic.parser.client.EditClientCommandParser;
 import seedu.address.logic.parser.client.FindClientCommandParser;
 import seedu.address.logic.parser.deal.AddDealCommandParser;
+import seedu.address.logic.parser.deal.FindDealCommandParser;
 import seedu.address.logic.parser.deal.UpdateDealCommandParser;
 import seedu.address.logic.parser.event.AddEventCommandParser;
 import seedu.address.logic.parser.event.DeleteEventCommandParser;
@@ -126,6 +129,11 @@ public class AddressBookParser {
 
         case ListAllCommand.COMMAND_WORD:
             return new ListAllCommand();
+        case FindDealCommand.COMMAND_WORD:
+            return new FindDealCommandParser().parse(arguments);
+
+        case ListDealCommand.COMMAND_WORD:
+            return new ListDealCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

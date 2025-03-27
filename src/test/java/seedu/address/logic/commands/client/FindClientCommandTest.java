@@ -75,6 +75,26 @@ public class FindClientCommandTest {
     }
 
     @Test
+    public void execute_caseInsensitiveMatching_success() {
+        String expectedMessage = String.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 1);
+        NameContainsKeywordsPredicate predicate = preparePredicate("kuRz");
+        FindClientCommand command = new FindClientCommand(predicate);
+        expectedModel.updateFilteredClientList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.singletonList(CARL), model.getFilteredClientList());
+    }
+
+    @Test
+    public void execute_partialKeyword_noClientFound() {
+        String expectedMessage = String.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 0);
+        NameContainsKeywordsPredicate predicate = preparePredicate("arl");
+        FindClientCommand command = new FindClientCommand(predicate);
+        expectedModel.updateFilteredClientList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredClientList());
+    }
+
+    @Test
     public void toStringMethod() {
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
         FindClientCommand findCommand = new FindClientCommand(predicate);

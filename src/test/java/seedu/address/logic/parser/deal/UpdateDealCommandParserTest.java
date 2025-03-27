@@ -70,7 +70,7 @@ public class UpdateDealCommandParserTest {
         // Invalid status
         assertParseFailure(parser,
                 " " + PREFIX_DEAL_ID + "1 " + PREFIX_STATUS + INVALID_STATUS,
-                "Invalid status: Must be one of 'PENDING', 'CLOSED', 'IN_NEGOTIATION'.");
+                "Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED'.");
     }
 
     @Test

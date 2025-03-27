@@ -206,25 +206,25 @@ Examples:
 
 ## Deal Commands
 
-<!-- This is not accurate and needs changes -->
 ### Adding a deal : `add_deal`
 
 Creates a new property deal in REconnect.
 
-Format: `add_deal pid/PROPERTY_ID buyer/BUYER_ID seller/SELLER_ID price/PRICE [status/STATUS]`
+Format: `add_deal pid/PROPERTY_ID buyer/BUYER_ID price/PRICE [status/STATUS]`
 
-* Creates a deal with the specified property, buyer, seller and price details
-* The property ID, buyer ID and seller ID refer to the index numbers shown in the displayed lists
+* Creates a deal with the specified property, buyer and price details
+* The property ID and buyer ID refer to the index numbers shown in the displayed lists
 * The IDs **must be positive integers** 1, 2, 3, ...
-* The property, buyer and seller must exist in REconnect
-* The buyer and seller cannot be the same person
+* The property and buyer must exist in REconnect
+* The property owner will automatically be set as the seller
 * The property must not be involved in another existing deal
 * The price must be less than 999.99 (in thousands)
-* Status is optional and indicates the deal progress
+* Status is optional and indicates the deal progress (PENDING, CLOSED, IN_NEGOTIATION)
+* If status is not specified, it defaults to PENDING
 
 Examples:
-* `add_deal pid/1 buyer/1 seller/2 price/100 status/closed` creates a `CLOSED` deal for property #1 between buyer #1 and seller #2 at $100,000
-* `add_deal pid/3 buyer/2 seller/1 price/500` creates a deal for property #3 between buyer #2 and seller #1 at $500,000 with default status of `PENDING`
+* `add_deal pid/1 buyer/1 price/100 status/CLOSED` creates a `CLOSED` deal for property #1 with buyer #1 at $100,000
+* `add_deal pid/3 buyer/2 price/500` creates a deal for property #3 with buyer #2 at $500,000 with default status of `PENDING`
 
 ### Updating a deal : `update_deal`
 
@@ -255,15 +255,17 @@ Shows a list of deals that match the given criteria.
 
 Format: `find_deal [prop/PROPERTY_NAME] [buyer/BUYER_NAME] [seller/SELLER_NAME] [status/STATUS]`
 
-* At least one search criteria must be provided
-* The search is case-insensitive
-* Partial matches are allowed
-* Multiple criteria will be combined with AND logic
+* At least one search criterion must be provided
+* The search for names is case-insensitive (e.g., "villa" will match "Villa")
+* Partial name matches are supported (e.g., "John" will match "Johnny")
+* For status, the match must be exact (PENDING, CLOSED, or IN_NEGOTIATION)
+* If multiple criteria are provided, deals matching ANY of the criteria will be shown (OR logic)
 
 Examples:
 * `find_deal prop/Villa` finds all deals involving properties with "Villa" in their names
 * `find_deal status/CLOSED` finds all closed deals
-* `find_deal buyer/John seller/Mary` finds all deals between buyer "John" and seller "Mary"
+* `find_deal buyer/John seller/Mary` finds all deals with buyers containing "John" in their name OR sellers containing "Mary" in their name
+* `find_deal prop/Ocean status/PENDING` finds all deals with properties containing "Ocean" in their name OR with PENDING status
 
 ## Event Commands
 
@@ -362,7 +364,7 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add Client**    | `add_client name/NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]` <br> e.g., `add_client name/James Ho phone/22224444 email/jamesho@example.com addr/123, Clementi Rd, 1234665`
-**Add Deal**      | `add_deal pid/PROPERTY_ID buyer/BUYER_ID seller/SELLER_ID price/PRICE [status/STATUS]` <br> e.g., `add_deal pid/1 buyer/1 seller/2 price/100 status/closed`
+**Add Deal**      | `add_deal pid/PROPERTY_ID buyer/BUYER_ID price/PRICE [status/STATUS]` <br> e.g., `add_deal pid/1 buyer/1 price/100 status/CLOSED`
 **Add Event**     | `add_event etype/EVENT_TYPE pid/PROPERTY_ID cid/CLIENT_ID at/EVENT_DATE_TIME [note/NOTE]` <br> e.g., `add_event etype/meeting pid/1 cid/2 at/30-03-2025 1730 note/N/A`
 **Add Property**  | `add_property prop/PROPERTY_NAME price/PRICE [size/SIZE] [desc/DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa price/1000000 size/1200 desc/Beautiful sunset view`
 **Delete Client** | `delete_client INDEX`<br> e.g., `delete_client 3`
@@ -371,9 +373,11 @@ Action     | Format, Examples
 **Edit Client**   | `edit_client INDEX [name/NAME] [phone/PHONE_NUMBER] [email/EMAIL] [addr/ADDRESS]`<br> e.g.,`edit_client 2 name/James Lee email/jameslee@example.com`
 **Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1200000 desc/Newly renovated`
 **Find Client**   | `find_client KEYWORD [MORE_KEYWORDS]`<br> e.g., `find_client James Jake`
+**Find Deal**     | `find_deal [prop/PROPERTY_NAME] [buyer/BUYER_NAME] [seller/SELLER_NAME] [status/STATUS]`<br> e.g., `find_deal prop/Villa status/PENDING`
 **Find Event**    | `find_event etype/EVENT_TYPE`<br> e.g., `find_event etype/viewing`
 **Find Property** | `find_property KEYWORD [MORE_KEYWORDS]`<br> e.g., `find_property Villa Condo`
 **List Clients**  | `list_client`
+**List Deals**    | `list_deal`
 **List Events**   | `list_event`
 **List Properties** | `list_property`
 **Update Deal**   | `update_deal dealId/DEAL_ID [prop/PROPERTY_NAME] [buyer/BUYER_ID] [seller/SELLER_ID] [price/PRICE] [status/STATUS]`<br> e.g., `update_deal dealId/3 status/CLOSED`

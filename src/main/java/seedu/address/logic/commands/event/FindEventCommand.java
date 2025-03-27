@@ -49,8 +49,7 @@ public class FindEventCommand extends FindCommand<Event> {
 
         model.updateFilteredEventList(predicate);
         int eventsFound = model.getFilteredEventList().size();
-        logger.info("Found " + eventsFound + " deals satisfying the predicate");
-
+        logger.info("Found " + eventsFound + " events satisfying the predicate");
         return new CommandResult(String.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, eventsFound));
     }
 }

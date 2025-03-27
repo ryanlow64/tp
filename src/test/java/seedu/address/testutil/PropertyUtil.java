@@ -1,8 +1,8 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
@@ -33,7 +33,7 @@ public class PropertyUtil {
         sb.append(PREFIX_PRICE + String.valueOf(property.getPrice().value + " "));
         property.getSize().ifPresent(size -> sb.append(PREFIX_SIZE + size.value + " "));
         property.getDescription().ifPresent(desc -> sb.append(PREFIX_DESCRIPTION + desc.getDescription() + " "));
-        sb.append(PREFIX_CLIENT_NAME + property.getOwner().fullName + " ");
+        sb.append(PREFIX_OWNER + property.getOwner().fullName + " ");
         return sb.toString();
     }
 
@@ -51,7 +51,7 @@ public class PropertyUtil {
         descriptor.getDescription().ifPresent(descOpt ->
                 descOpt.ifPresent(desc -> sb.append(PREFIX_DESCRIPTION).append(desc.getDescription())
                         .append(" ")));
-        descriptor.getOwner().ifPresent(owner -> sb.append(PREFIX_CLIENT_NAME).append(owner.fullName).append(" "));
+        descriptor.getOwner().ifPresent(owner -> sb.append(PREFIX_OWNER).append(owner.fullName).append(" "));
         return sb.toString();
     }
 }

@@ -15,7 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.deal.FindDealCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
-import seedu.address.logic.parser.Parser;
+import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
@@ -27,7 +27,7 @@ import seedu.address.model.deal.predicates.DealStatusPredicate;
 /**
  * Parses input arguments and creates a new FindDealCommand object
  */
-public class FindDealCommandParser implements Parser<FindDealCommand> {
+public class FindDealCommandParser extends FindCommandParser<Deal> {
 
     private static final Logger logger = LogsCenter.getLogger(FindDealCommandParser.class);
     private static final String BLANK = "BLANK";

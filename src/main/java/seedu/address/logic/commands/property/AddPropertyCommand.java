@@ -2,8 +2,8 @@ package seedu.address.logic.commands.property;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
@@ -26,18 +26,18 @@ public class AddPropertyCommand extends AddCommand<Property> {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a property to the address book. "
             + "Parameters: "
             + PREFIX_PROPERTY_NAME + "PROPERTY "
+            + PREFIX_OWNER + "OWNER "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_PRICE + "PRICE (in S$ thousands) "
             + PREFIX_SIZE + "SIZE (in square feet) "
-            + PREFIX_DESCRIPTION + "DESCRIPTION "
-            + PREFIX_CLIENT_NAME + "CLIENT_NAME \n"
+            + PREFIX_DESCRIPTION + "DESCRIPTION \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PROPERTY_NAME + "Maple Villa Condominium "
+            + PREFIX_OWNER + "Amy Bee "
             + PREFIX_ADDRESS + "123 Maple Street "
             + PREFIX_PRICE + "2400 "
             + PREFIX_SIZE + "1000 "
-            + PREFIX_DESCRIPTION + "Spacious 4-bedroom home "
-            + PREFIX_CLIENT_NAME + "Amy Bee";
+            + PREFIX_DESCRIPTION + "Spacious 4-bedroom home ";
 
     public static final String MESSAGE_SUCCESS = "New property added: %1$s";
     public static final String MESSAGE_DUPLICATE_PROPERTY = "This property already exists in the address book";

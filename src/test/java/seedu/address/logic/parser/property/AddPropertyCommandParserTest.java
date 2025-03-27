@@ -9,8 +9,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_MAPLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROPERTY_NAME_MAPLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SIZE_MAPLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
@@ -47,7 +47,7 @@ public class AddPropertyCommandParserTest {
                 + PREFIX_PRICE + VALID_PRICE_MAPLE + " "
                 + PREFIX_SIZE + VALID_SIZE_MAPLE + " "
                 + PREFIX_DESCRIPTION + VALID_DESCRIPTION_MAPLE + " "
-                + PREFIX_CLIENT_NAME + VALID_OWNER_MAPLE;
+                + PREFIX_OWNER + VALID_OWNER_MAPLE;
 
         assertParseSuccess(parser, userInput, new AddPropertyCommand(expectedProperty));
     }
@@ -58,7 +58,7 @@ public class AddPropertyCommandParserTest {
 
         // missing property name prefix
         assertParseFailure(parser, VALID_PROPERTY_NAME_MAPLE + PREFIX_ADDRESS + VALID_ADDRESS_MAPLE
-                + PREFIX_PRICE + VALID_PRICE_MAPLE + PREFIX_CLIENT_NAME + VALID_OWNER_MAPLE, expectedMessage);
+                + PREFIX_PRICE + VALID_PRICE_MAPLE + PREFIX_OWNER + VALID_OWNER_MAPLE, expectedMessage);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class AddPropertyCommandParserTest {
         userInput = " " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME_MAPLE
                 + " " + PREFIX_ADDRESS + VALID_ADDRESS_MAPLE
                 + " " + PREFIX_PRICE + VALID_PRICE_MAPLE
-                + " " + PREFIX_CLIENT_NAME + "James&";
+                + " " + PREFIX_OWNER + "James&";
         assertParseFailure(parser, userInput, ClientName.MESSAGE_CONSTRAINTS);
 
         // invalid size

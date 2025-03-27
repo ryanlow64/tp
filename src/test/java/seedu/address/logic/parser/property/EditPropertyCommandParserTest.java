@@ -9,8 +9,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_MAPLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROPERTY_NAME_MAPLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SIZE_MAPLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
@@ -56,7 +56,7 @@ public class EditPropertyCommandParserTest {
                 + " " + PREFIX_PRICE + VALID_PRICE_MAPLE
                 + " " + PREFIX_SIZE + VALID_SIZE_MAPLE
                 + " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_MAPLE
-                + " " + PREFIX_CLIENT_NAME + VALID_CLIENT_NAME_AMY;
+                + " " + PREFIX_OWNER + VALID_CLIENT_NAME_AMY;
 
         EditPropertyDescriptor descriptor = new EditPropertyDescriptorBuilder()
                 .withPropertyName(VALID_PROPERTY_NAME_MAPLE)

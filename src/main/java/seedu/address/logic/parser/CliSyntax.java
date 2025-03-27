@@ -14,6 +14,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_EVENT_TYPE = new Prefix("etype/");
     public static final Prefix PREFIX_EVENT_START = new Prefix("at/");
     public static final Prefix PREFIX_EVENT_NOTE = new Prefix("note/");
+    public static final Prefix PREFIX_EVENT_WITH = new Prefix("with/");
+    public static final Prefix PREFIX_EVENT_ABOUT = new Prefix("about/");
     public static final Prefix PREFIX_PROPERTY_NAME = new Prefix("prop/");
     public static final Prefix PREFIX_PROPERTY_ID = new Prefix("pid/");
     public static final Prefix PREFIX_PRICE = new Prefix("price/");

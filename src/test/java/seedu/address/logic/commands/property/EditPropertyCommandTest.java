@@ -120,6 +120,27 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
     }
 
     @Test
+    public void execute_editOwner_success() {
+        Property propertyToEdit = model.getFilteredPropertyList().get(INDEX_FIRST_PROPERTY.getZeroBased());
+        Property editedProperty = new PropertyBuilder(propertyToEdit)
+                .withOwner("Bob Choo")
+                .build();
+
+        EditPropertyDescriptor descriptor = new EditPropertyDescriptorBuilder()
+                .withOwner("Bob Choo")
+                .build();
+        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_FIRST_PROPERTY, descriptor);
+
+        String expectedMessage = String.format(EditPropertyCommand.MESSAGE_EDIT_PROPERTY_SUCCESS,
+                Messages.formatProperty(editedProperty));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setProperty(propertyToEdit, editedProperty);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void equals() {
         final EditPropertyCommand standardCommand = new EditPropertyCommand(INDEX_FIRST, DESC_MAPLE);
 

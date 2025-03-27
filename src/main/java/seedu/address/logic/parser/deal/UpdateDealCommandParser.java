@@ -153,13 +153,9 @@ public class UpdateDealCommandParser implements Parser<UpdateDealCommand> {
 
         String statusString = argMultimap.getValue(PREFIX_STATUS).get().toUpperCase();
         try {
-            // Convert to the format expected by the enum (e.g., "in_negotiation" to "IN_NEGOTIATION")
-            if (statusString.equals("IN NEGOTIATION")) {
-                statusString = "IN_NEGOTIATION";
-            }
             return Optional.of(DealStatus.valueOf(statusString));
         } catch (IllegalArgumentException e) {
-            throw new ParseException("Invalid status: Must be one of 'PENDING', 'CLOSED', 'IN_NEGOTIATION'.");
+            throw new ParseException("Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED'.");
         }
     }
 }

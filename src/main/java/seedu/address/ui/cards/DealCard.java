@@ -55,6 +55,13 @@ public class DealCard extends UiPart<Region> {
         buyer.setText("Buyer: " + deal.getBuyer().fullName);
         seller.setText("Seller: " + deal.getSeller().fullName);
         price.setText(String.format("Price: $%sk", deal.getPrice().value.toString()));
-        status.getChildren().add(new Label(deal.getStatus().toString()));
+        Label statusLabel = new Label("Status: " + deal.getStatus().toString());
+        switch (deal.getStatus()) {
+        case OPEN -> statusLabel.setStyle("-fx-background-color: #36dc36;");
+        case PENDING -> statusLabel.setStyle("-fx-background-color: #FFA500;");
+        case CLOSED -> statusLabel.setStyle("-fx-background-color: #ec1919;");
+        default -> throw new AssertionError("Invalid status");
+        }
+        status.getChildren().add(statusLabel);
     }
 }

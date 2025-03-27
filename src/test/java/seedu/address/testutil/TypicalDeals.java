@@ -37,12 +37,19 @@ public class TypicalDeals {
             new Price(1000000L),
             DealStatus.IN_NEGOTIATION);
 
+    public static final Deal DEAL4 = new Deal(
+            new PropertyName("Marina Bay"),
+            new ClientName("Alice Pauline"),
+            new ClientName("Benson Meier"),
+            new Price(750000L),
+            DealStatus.CLOSED);
+
     private TypicalDeals() {} // prevents instantiation
 
     /**
      * Returns an {@code AddressBook} with all the typical deals.
      */
-    public static AddressBook getTypicalAddressBookWithDeals() {
+    public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
         for (Deal deal : getTypicalDeals()) {
             ab.addDeal(deal);

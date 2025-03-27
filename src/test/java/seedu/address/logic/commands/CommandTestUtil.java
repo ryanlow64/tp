@@ -23,7 +23,12 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.NameContainsKeywordsPredicate;
+import seedu.address.model.deal.Deal;
+import seedu.address.model.deal.predicates.DealPropertyNameContainsPredicate;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.predicates.EventAboutPropertyPredicate;
 import seedu.address.model.property.Property;
+import seedu.address.model.property.PropertyName;
 import seedu.address.model.property.PropertyNameContainsKeywordsPredicate;
 import seedu.address.testutil.EditClientDescriptorBuilder;
 import seedu.address.testutil.EditPropertyDescriptorBuilder;
@@ -164,6 +169,36 @@ public class CommandTestUtil {
         final String[] splitPropertyName = property.getPropertyName().fullName.split("\\s+");
         model.updateFilteredPropertyList(new PropertyNameContainsKeywordsPredicate(Arrays
                 .asList(splitPropertyName[0])));
+
+        assertEquals(1, model.getFilteredPropertyList().size());
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the Deal at the given {@code targetIndex} in the
+     * {@code model}'s address book.
+     */
+    public static void showDealAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredDealList().size());
+
+        Deal deal = model.getFilteredDealList().get(targetIndex.getZeroBased());
+        final String[] splitDealName = deal.getPropertyName().fullName.split("\\s+");
+        model.updateFilteredDealList(new DealPropertyNameContainsPredicate(Arrays
+                .asList(splitDealName[0])));
+
+        assertEquals(1, model.getFilteredDealList().size());
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the event at the given {@code targetIndex} in the
+     * {@code model}'s address book.
+     */
+    public static void showEventAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredEventList().size());
+
+        Event event = model.getFilteredEventList().get(targetIndex.getZeroBased());
+        final String[] splitEventName = event.getPropertyName().fullName.split("\\s+");
+        model.updateFilteredEventList(new EventAboutPropertyPredicate(
+            new PropertyName(splitEventName[0])));
 
         assertEquals(1, model.getFilteredPropertyList().size());
     }

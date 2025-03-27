@@ -19,4 +19,17 @@ public class Note {
     public String toString() {
         return note;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Note note)) {
+            return false;
+        }
+
+        return this.note.equals(note.note);
+    }
 }

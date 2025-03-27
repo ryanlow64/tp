@@ -129,7 +129,7 @@ public class AddressBookParser {
 
         case ListAllCommand.COMMAND_WORD:
             return new ListAllCommand();
-            
+
         case FindDealCommand.COMMAND_WORD:
             return new FindDealCommandParser().parse(arguments);
 

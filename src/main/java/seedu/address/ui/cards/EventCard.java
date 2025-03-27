@@ -1,5 +1,7 @@
 package seedu.address.ui.cards;
 
+import java.time.LocalDateTime;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -53,7 +55,12 @@ public class EventCard extends UiPart<Region> {
         eventType.setText(event.getEventType().toFormattedString());
         property.setText("About: " + event.getPropertyName().fullName);
         client.setText("With: " + event.getClientName().fullName);
-        dateTime.getChildren().add(new Label(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT)));
-        note.setText("Note: " + event.getNote().toString());
+        String noteValue = event.getNote().toString();
+        note.setText("Note: " + (noteValue.equals("N/A") ? "-" : noteValue));
+        Label dateTimeLabel = new Label("At: " + event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT));
+        if (event.getDateTime().isBefore(LocalDateTime.now())) {
+            dateTimeLabel.setStyle("-fx-background-color: #ef1818;");
+        }
+        dateTime.getChildren().add(dateTimeLabel);
     }
 }

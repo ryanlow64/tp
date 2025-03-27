@@ -22,9 +22,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLIENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_CLIENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_CLIENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 
 import org.junit.jupiter.api.Test;
 
@@ -92,7 +92,7 @@ public class EditClientCommandParserTest extends EditCommandParserTest<Client> {
 
     @Test
     public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_CLIENT;
+        Index targetIndex = INDEX_SECOND;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB
             + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + CLIENT_NAME_DESC_AMY;
 
@@ -106,7 +106,7 @@ public class EditClientCommandParserTest extends EditCommandParserTest<Client> {
 
     @Test
     public void parse_someFieldsSpecified_success() {
-        Index targetIndex = INDEX_FIRST_CLIENT;
+        Index targetIndex = INDEX_FIRST;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + EMAIL_DESC_AMY;
 
         EditClientDescriptor descriptor = new EditClientDescriptorBuilder().withPhone(VALID_PHONE_BOB)
@@ -119,7 +119,7 @@ public class EditClientCommandParserTest extends EditCommandParserTest<Client> {
     @Test
     public void parse_oneFieldSpecified_success() {
         // client_name
-        Index targetIndex = INDEX_THIRD_CLIENT;
+        Index targetIndex = INDEX_THIRD;
         String userInput = targetIndex.getOneBased() + CLIENT_NAME_DESC_AMY;
         EditClientDescriptor descriptor = new EditClientDescriptorBuilder().withClientName(VALID_CLIENT_NAME_AMY)
             .build();
@@ -151,7 +151,7 @@ public class EditClientCommandParserTest extends EditCommandParserTest<Client> {
         // AddCommandParserTest#parse_repeatedNonTagValue_failure()
 
         // valid followed by invalid
-        Index targetIndex = INDEX_FIRST_CLIENT;
+        Index targetIndex = INDEX_FIRST;
         String userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + PHONE_DESC_BOB;
 
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));

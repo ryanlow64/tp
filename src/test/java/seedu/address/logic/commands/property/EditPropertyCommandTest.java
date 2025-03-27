@@ -9,8 +9,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PROPERTY_NAME_O
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPropertyAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PROPERTY;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PROPERTY;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalProperties.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Property editedProperty = new PropertyBuilder().build();
         EditPropertyDescriptor descriptor = new EditPropertyDescriptorBuilder(editedProperty).build();
-        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_FIRST_PROPERTY, descriptor);
+        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_FIRST, descriptor);
 
         String expectedMessage = String.format(EditPropertyCommand.MESSAGE_EDIT_PROPERTY_SUCCESS,
                 Messages.formatProperty(editedProperty));
@@ -77,8 +77,8 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_FIRST_PROPERTY, new EditPropertyDescriptor());
-        Property editedProperty = model.getFilteredPropertyList().get(INDEX_FIRST_PROPERTY.getZeroBased());
+        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_FIRST, new EditPropertyDescriptor());
+        Property editedProperty = model.getFilteredPropertyList().get(INDEX_FIRST.getZeroBased());
 
         String expectedMessage = String.format(EditPropertyCommand.MESSAGE_EDIT_PROPERTY_SUCCESS,
                 Messages.formatProperty(editedProperty));
@@ -90,9 +90,9 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
 
     @Test
     public void execute_duplicatePropertyUnfilteredList_failure() {
-        Property firstProperty = model.getFilteredPropertyList().get(INDEX_FIRST_PROPERTY.getZeroBased());
+        Property firstProperty = model.getFilteredPropertyList().get(INDEX_FIRST.getZeroBased());
         EditPropertyDescriptor descriptor = new EditPropertyDescriptorBuilder(firstProperty).build();
-        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_SECOND_PROPERTY, descriptor);
+        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_SECOND, descriptor);
 
         assertCommandFailure(editCommand, model, EditPropertyCommand.MESSAGE_DUPLICATE_PROPERTY);
     }
@@ -109,8 +109,8 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
 
     @Test
     public void execute_invalidPropertyIndexFilteredList_failure() {
-        showPropertyAtIndex(model, INDEX_FIRST_PROPERTY);
-        Index outOfBoundIndex = INDEX_SECOND_PROPERTY;
+        showPropertyAtIndex(model, INDEX_FIRST);
+        Index outOfBoundIndex = INDEX_SECOND;
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPropertyList().size());
 
         EditPropertyCommand editCommand = new EditPropertyCommand(outOfBoundIndex,
@@ -121,11 +121,11 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
 
     @Test
     public void equals() {
-        final EditPropertyCommand standardCommand = new EditPropertyCommand(INDEX_FIRST_PROPERTY, DESC_MAPLE);
+        final EditPropertyCommand standardCommand = new EditPropertyCommand(INDEX_FIRST, DESC_MAPLE);
 
         // same values -> returns true
         EditPropertyDescriptor copyDescriptor = new EditPropertyDescriptor(DESC_MAPLE);
-        EditPropertyCommand commandWithSameValues = new EditPropertyCommand(INDEX_FIRST_PROPERTY, copyDescriptor);
+        EditPropertyCommand commandWithSameValues = new EditPropertyCommand(INDEX_FIRST, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -138,10 +138,10 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditPropertyCommand(INDEX_SECOND_PROPERTY, DESC_MAPLE)));
+        assertFalse(standardCommand.equals(new EditPropertyCommand(INDEX_SECOND, DESC_MAPLE)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditPropertyCommand(INDEX_FIRST_PROPERTY, DESC_ORCHID)));
+        assertFalse(standardCommand.equals(new EditPropertyCommand(INDEX_FIRST, DESC_ORCHID)));
     }
 
     @Test

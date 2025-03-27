@@ -42,7 +42,7 @@ public class TypicalDeals {
     /**
      * Returns an {@code AddressBook} with all the typical deals.
      */
-    public static AddressBook getTypicalAddressBookWithDeals() {
+    public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
         for (Deal deal : getTypicalDeals()) {
             ab.addDeal(deal);

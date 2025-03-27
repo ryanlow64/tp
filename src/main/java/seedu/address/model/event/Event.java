@@ -53,22 +53,27 @@ public class Event implements Comparable<Event> {
         return note;
     }
 
+    /**
+     * Returns true if both events are considered the same.
+     * An event is the same as another if they both have the same event type, property, client and date/time.
+     */
     public boolean isSameEvent(Event otherEvent) {
-        return false;
+        return otherEvent != null
+                && this.eventType.equals(otherEvent.eventType)
+                && this.propertyName.equals(otherEvent.propertyName)
+                && this.clientName.equals(otherEvent.clientName)
+                && this.dateTime.equals(otherEvent.dateTime);
     }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof Event)) {
-            return false;
+        if (other instanceof Event otherEvent) {
+            return isSameEvent(otherEvent);
         }
-        Event event = (Event) other;
-        return this.eventType.equals(event.eventType)
-                && this.propertyName.equals(event.propertyName)
-                && this.clientName.equals(event.clientName)
-                && this.dateTime.equals(event.dateTime);
+        return false;
     }
 
     @Override

@@ -9,7 +9,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_ID;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
@@ -54,6 +56,8 @@ public class AddEventCommand extends Command {
     public static final String MESSAGE_INVALID_CLIENT_ID = "Invalid client ID.";
     public static final String MESSAGE_EVENT_IN_PAST = "Event cannot be before 01-01-2025 0000.";
 
+    private static final Logger logger = LogsCenter.getLogger(AddEventCommand.class);
+
     private final EventType eventType;
     private final Index propertyId;
     private final Index clientId;
@@ -80,6 +84,8 @@ public class AddEventCommand extends Command {
         this.clientId = clientId;
         this.dateTime = dateTime;
         this.note = note;
+        logger.info(String.format("AddEventCommand initialized with: %s, %d, %d, %s, %s",
+                eventType, propertyId.getZeroBased(), clientId.getZeroBased(), dateTime, note));
     }
 
     /**
@@ -90,40 +96,52 @@ public class AddEventCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        logger.info("Executing AddEventCommand");
 
         // Get the property by ID
         List<Property> propertyList = model.getFilteredPropertyList();
-        if (propertyId.getZeroBased() >= propertyList.size()) {
+        int propertyIdZeroBased = propertyId.getZeroBased();
+        if (propertyIdZeroBased >= propertyList.size()) {
+            logger.warning("Invalid property ID: " + propertyIdZeroBased);
             throw new CommandException(MESSAGE_INVALID_PROPERTY_ID);
         }
-        Property property = propertyList.get(propertyId.getZeroBased());
+        Property property = propertyList.get(propertyIdZeroBased);
         PropertyName propertyName = property.getPropertyName();
+        logger.fine("Property ID: " + propertyIdZeroBased);
 
         // Fetch clients by index
         List<Client> clientList = model.getFilteredClientList();
         // Check if client ID is valid
-        if (clientId.getZeroBased() >= clientList.size()) {
+        int clientIdZeroBased = clientId.getZeroBased();
+        if (clientIdZeroBased >= clientList.size()) {
+            logger.warning("Invalid client ID: " + clientIdZeroBased);
             throw new CommandException(MESSAGE_INVALID_CLIENT_ID);
         }
-        Client client = clientList.get(clientId.getZeroBased());
+        Client client = clientList.get(clientIdZeroBased);
         ClientName clientName = client.getClientName();
+        logger.fine("Client ID: " + clientIdZeroBased);
 
         // check if event is way too far back
         if (dateTime.isBefore(LocalDateTime.of(2025, 1, 1, 0, 0))) {
+            logger.warning("Date & time before 2025: " + dateTime);
             throw new CommandException(MESSAGE_EVENT_IN_PAST);
         }
+        logger.fine("Date & time: " + dateTime);
 
         // check if event conflicts with existing events
         for (Event event : model.getFilteredEventList()) {
             if (event.getDateTime().equals(dateTime)) {
+                logger.warning("Conflict with existing event");
                 throw new CommandException(MESSAGE_EVENT_CONFLICT);
             }
         }
 
         Event toAdd = new Event(eventType, propertyName, clientName, dateTime, note);
-
         model.addEvent(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatEvent(toAdd)));
+        String eventDescription = Messages.formatEvent(toAdd);
+        logger.info("Added event: " + eventDescription);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, eventDescription));
     }
 
     @Override

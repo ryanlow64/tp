@@ -6,7 +6,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_WITH;
 
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.FindCommand;
@@ -28,6 +30,8 @@ public class FindEventCommand extends FindCommand<Event> {
             + PREFIX_EVENT_WITH + "WITH \n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_EVENT_WITH + "Alice Yeo";
 
+    private static final Logger logger = LogsCenter.getLogger(FindEventCommand.class);
+
     /**
      * Constructs a {@code FindEventCommand} with the given predicate.
      *
@@ -35,13 +39,18 @@ public class FindEventCommand extends FindCommand<Event> {
      */
     public FindEventCommand(Predicate<Event> predicate) {
         super(predicate);
+        logger.info("FindEventCommand initialized with predicate: " + predicate);
     }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        logger.info("Executing FindEventCommand");
+
         model.updateFilteredEventList(predicate);
-        return new CommandResult(String.format(
-            Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, model.getFilteredEventList().size()));
+        int eventsFound = model.getFilteredEventList().size();
+        logger.info("Found " + eventsFound + " deals satisfying the predicate");
+
+        return new CommandResult(String.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, eventsFound));
     }
 }

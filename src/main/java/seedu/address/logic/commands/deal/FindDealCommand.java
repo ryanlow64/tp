@@ -51,11 +51,11 @@ public class FindDealCommand extends FindCommand<Deal> {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        logger.info("Executing FindDealCommand...");
+        logger.info("Executing FindDealCommand");
 
         model.updateFilteredDealList(predicate);
         int dealsFound = model.getFilteredDealList().size();
-        logger.info("Found " + dealsFound + " deals matching the criteria");
+        logger.info("Found " + dealsFound + " deals satisfying the predicate");
 
         return new CommandResult(String.format(Messages.MESSAGE_DEALS_LISTED_OVERVIEW, dealsFound));
     }

@@ -121,7 +121,7 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
 
     @Test
     public void execute_editOwner_success() {
-        Property propertyToEdit = model.getFilteredPropertyList().get(INDEX_FIRST_PROPERTY.getZeroBased());
+        Property propertyToEdit = model.getFilteredPropertyList().get(INDEX_FIRST.getZeroBased());
         Property editedProperty = new PropertyBuilder(propertyToEdit)
                 .withOwner("Bob Choo")
                 .build();
@@ -129,7 +129,7 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
         EditPropertyDescriptor descriptor = new EditPropertyDescriptorBuilder()
                 .withOwner("Bob Choo")
                 .build();
-        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_FIRST_PROPERTY, descriptor);
+        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_FIRST, descriptor);
 
         String expectedMessage = String.format(EditPropertyCommand.MESSAGE_EDIT_PROPERTY_SUCCESS,
                 Messages.formatProperty(editedProperty));

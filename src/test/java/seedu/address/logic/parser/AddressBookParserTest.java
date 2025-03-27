@@ -121,17 +121,17 @@ public class AddressBookParserTest {
     public void parseCommand_editProperty() throws Exception {
         Property property = new PropertyBuilder().build();
         EditPropertyCommand.EditPropertyDescriptor descriptor = new EditPropertyDescriptorBuilder(property).build();
-        String commandString = EditPropertyCommand.COMMAND_WORD + " " + INDEX_FIRST_CLIENT.getOneBased()
+        String commandString = EditPropertyCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased()
                 + " " + PropertyUtil.getEditPropertyDescriptorDetails(descriptor);
         EditPropertyCommand command = (EditPropertyCommand) parser.parseCommand(commandString);
-        assertEquals(new EditPropertyCommand(INDEX_FIRST_CLIENT, descriptor), command);
+        assertEquals(new EditPropertyCommand(INDEX_FIRST, descriptor), command);
     }
 
     @Test
     public void parseCommand_deleteProperty() throws Exception {
         DeletePropertyCommand command = (DeletePropertyCommand) parser.parseCommand(
-                DeletePropertyCommand.COMMAND_WORD + " " + INDEX_FIRST_CLIENT.getOneBased());
-        assertEquals(new DeletePropertyCommand(INDEX_FIRST_CLIENT), command);
+                DeletePropertyCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new DeletePropertyCommand(INDEX_FIRST), command);
     }
 
     @Test

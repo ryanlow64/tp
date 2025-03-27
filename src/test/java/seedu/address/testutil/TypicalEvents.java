@@ -41,6 +41,14 @@ public class TypicalEvents {
             new Note("nil")
     );
 
+    public static final Event EVENT4 = new Event(
+            EventType.OTHERS,
+            new PropertyName("Marina Bay"),
+            new ClientName("Alice Pauline"),
+            LocalDateTime.of(2024, 12, 1, 6, 0),
+            new Note("nil")
+    );
+
     public static List<Event> getTypicalEvents() {
         return new ArrayList<>(Arrays.asList(EVENT1, EVENT2, EVENT3));
     }

@@ -55,9 +55,9 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
 
         Client clientToDelete = lastShownClientList.get(targetIndex.getZeroBased());
 
-        if (existInDeal(clientToDelete, lastShownDealList)
-            || existInEvent(clientToDelete, lastShownEventList)
-            || existInProperty(clientToDelete, lastShownPropertyList)) {
+        if (existInDeals(clientToDelete, lastShownDealList)
+            || existInEvents(clientToDelete, lastShownEventList)
+            || existInProperties(clientToDelete, lastShownPropertyList)) {
             throw new CommandException(MESSAGE_DELETE_CLIENT_ERROR);
         }
 
@@ -65,46 +65,37 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
         return new CommandResult(String.format(MESSAGE_DELETE_CLIENT_SUCCESS, Messages.formatClient(clientToDelete)));
     }
 
-    private boolean existInDeal(Client clientToDelete, List<Deal> dealList) {
-        boolean isInDeal = false;
+    private boolean existInDeals(Client clientToDelete, List<Deal> dealList) {
         ClientName clientNameToDelete = clientToDelete.getClientName();
         for (Deal deal : dealList) {
-            if (clientNameToDelete.equals(deal.getBuyer()) || clientNameToDelete.equals(deal.getSeller())) {
-                if (deal.getStatus() == DealStatus.CLOSED) {
-                    continue;
-                }
-                isInDeal = true;
-                break;
+            if ((clientNameToDelete.equals(deal.getBuyer())
+                || clientNameToDelete.equals(deal.getSeller()))
+                && deal.getStatus() != DealStatus.CLOSED) {
+                return true;
             }
         }
-        return isInDeal;
+        return false;
     }
 
-    private boolean existInEvent(Client clientToDelete, List<Event> eventList) {
-        boolean isInEvent = false;
+    private boolean existInEvents(Client clientToDelete, List<Event> eventList) {
         ClientName clientNameToDelete = clientToDelete.getClientName();
         for (Event event : eventList) {
-            if (clientNameToDelete.equals(event.getClientName())) {
-                if (LocalDateTime.now().isAfter(event.getDateTime())) {
-                    continue;
-                }
-                isInEvent = true;
-                break;
+            if (clientNameToDelete.equals(event.getClientName())
+                && LocalDateTime.now().isBefore(event.getDateTime())) {
+                return true;
             }
         }
-        return isInEvent;
+        return false;
     }
 
-    private boolean existInProperty(Client clientToDelete, List<Property> propertyList) {
-        boolean isInProperty = false;
+    private boolean existInProperties(Client clientToDelete, List<Property> propertyList) {
         ClientName clientNameToDelete = clientToDelete.getClientName();
         for (Property property : propertyList) {
             if (clientNameToDelete.equals(property.getOwner())) {
-                isInProperty = true;
-                break;
+                return true;
             }
         }
-        return isInProperty;
+        return false;
     }
 
     @Override

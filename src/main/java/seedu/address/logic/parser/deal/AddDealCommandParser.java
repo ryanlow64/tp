@@ -4,7 +4,6 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_ID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.stream.Stream;
@@ -32,10 +31,10 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
      */
     public AddDealCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER,
+                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_ID, PREFIX_BUYER,
                         PREFIX_PRICE, PREFIX_STATUS);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_PRICE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddDealCommand.MESSAGE_USAGE));
         }
@@ -54,14 +53,6 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
             buyerId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_BUYER).get());
         } catch (ParseException pe) {
             throw new ParseException(String.format("Invalid buyer ID: %s", pe.getMessage()));
-        }
-
-        // Parse seller ID
-        Index sellerId;
-        try {
-            sellerId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_SELLER).get());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format("Invalid seller ID: %s", pe.getMessage()));
         }
 
         // Parse price
@@ -91,7 +82,7 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
                 }
             }
 
-            return new AddDealCommand(propertyId, buyerId, sellerId, price, status);
+            return new AddDealCommand(propertyId, buyerId, price, status);
         } catch (NumberFormatException e) {
             throw new ParseException(Price.MESSAGE_CONSTRAINTS);
         }

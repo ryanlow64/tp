@@ -284,7 +284,6 @@ public class UpdateDealCommandTest {
         assertFalse(standardCommand.equals(new AddDealCommand(
                 Index.fromOneBased(1),
                 Index.fromOneBased(1),
-                Index.fromOneBased(2),
                 new Price(1000L),
                 DealStatus.PENDING)));
 

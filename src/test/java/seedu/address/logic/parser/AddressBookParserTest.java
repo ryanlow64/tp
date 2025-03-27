@@ -113,7 +113,6 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_addProperty() throws Exception {
         Property property = new PropertyBuilder().build();
-        System.out.println(property);
         AddPropertyCommand command = (AddPropertyCommand) parser.parseCommand(PropertyUtil.getAddCommand(property));
         assertEquals(new AddPropertyCommand(property), command);
     }

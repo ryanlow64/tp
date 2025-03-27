@@ -7,8 +7,11 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showClientAtIndex;
 import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalDeals.DEAL1;
+import static seedu.address.testutil.TypicalEvents.EVENT1;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLIENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_CLIENT;
+import static seedu.address.testutil.TypicalProperties.MAPLE;
 
 import org.junit.jupiter.api.Test;
 
@@ -78,6 +81,36 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
         DeleteClientCommand deleteClientCommand = new DeleteClientCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteClientCommand, model, Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_clientInOpenDeal_failure() {
+        model.addDeal(DEAL1);
+        model.addClient(new seedu.address.testutil.ClientBuilder().withClientName("John Doe").build());
+
+        Index johnIndex = Index.fromOneBased(model.getFilteredClientList().size());
+        DeleteClientCommand command = new DeleteClientCommand(johnIndex);
+
+        assertCommandFailure(command, model, DeleteClientCommand.MESSAGE_DELETE_CLIENT_ERROR);
+    }
+
+    @Test
+    public void execute_clientInFutureEvent_failure() {
+        model.addEvent(EVENT1);
+        DeleteClientCommand command = new DeleteClientCommand(INDEX_FIRST_CLIENT);
+
+        assertCommandFailure(command, model, DeleteClientCommand.MESSAGE_DELETE_CLIENT_ERROR);
+    }
+
+    @Test
+    public void execute_clientIsPropertyOwner_failure() {
+        model.addProperty(MAPLE);
+        model.addClient(new seedu.address.testutil.ClientBuilder().withClientName("Amy Bee").build());
+
+        Index amyIndex = Index.fromOneBased(model.getFilteredClientList().size());
+        DeleteClientCommand command = new DeleteClientCommand(amyIndex);
+
+        assertCommandFailure(command, model, DeleteClientCommand.MESSAGE_DELETE_CLIENT_ERROR);
     }
 
     @Test

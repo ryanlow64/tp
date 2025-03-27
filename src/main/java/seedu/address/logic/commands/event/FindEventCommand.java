@@ -28,6 +28,11 @@ public class FindEventCommand extends FindCommand<Event> {
             + PREFIX_EVENT_WITH + "WITH \n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_EVENT_WITH + "Alice Yeo";
 
+    /**
+     * Constructs a {@code FindEventCommand} with the given predicate.
+     *
+     * @param predicate Predicate used to filter the events.
+     */
     public FindEventCommand(Predicate<Event> predicate) {
         super(predicate);
     }

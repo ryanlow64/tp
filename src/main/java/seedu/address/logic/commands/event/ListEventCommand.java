@@ -15,6 +15,9 @@ public class ListEventCommand extends ListCommand<Event> {
     public static final String COMMAND_WORD = "list_event";
     public static final String MESSAGE_SUCCESS = "Listed all events";
 
+    /**
+     * Executes the {@code ListEventCommand} and shows all events in the list, removing the find filter (if any).
+     */
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);

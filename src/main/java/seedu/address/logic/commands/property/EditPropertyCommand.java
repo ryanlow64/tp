@@ -2,8 +2,8 @@ package seedu.address.logic.commands.property;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
@@ -42,11 +42,11 @@ public class EditPropertyCommand extends EditCommand<Property> {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_PROPERTY_NAME + "PROPERTY_NAME] "
+            + "[" + PREFIX_OWNER + "OWNER] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_PRICE + "PRICE (in S$ thousands)] "
             + "[" + PREFIX_SIZE + "SIZE (in square feet)] "
-            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
-            + "[" + PREFIX_CLIENT_NAME + "CLIENT_NAME] \n"
+            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ADDRESS + "234 Maple Street "
             + PREFIX_PRICE + "2000";

@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 import seedu.address.logic.commands.event.FindEventCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
-import seedu.address.logic.parser.Parser;
+import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.client.ClientName;
@@ -24,7 +24,7 @@ import seedu.address.model.property.PropertyName;
 /**
  * Parses input arguments and creates a new FindEventCommand object
  */
-public class FindEventCommandParser implements Parser<FindEventCommand> {
+public class FindEventCommandParser extends FindCommandParser<Event> {
 
     private static final String BLANK = "BLANK";
 

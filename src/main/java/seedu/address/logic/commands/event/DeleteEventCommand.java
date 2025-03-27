@@ -3,7 +3,9 @@ package seedu.address.logic.commands.event;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
@@ -29,6 +31,8 @@ public class DeleteEventCommand extends DeleteCommand<Event> {
     public static final String MESSAGE_SUCCESS = "Deleted event: %s";
     public static final String MESSAGE_INVALID_EVENT = "This event index provided is invalid.";
 
+    private static final Logger logger = LogsCenter.getLogger(DeleteEventCommand.class);
+
     /**
      * Constructs a {@code DeleteEventCommand} with the target index.
      *
@@ -36,20 +40,27 @@ public class DeleteEventCommand extends DeleteCommand<Event> {
      */
     public DeleteEventCommand(Index targetIndex) {
         super(targetIndex);
+        logger.info("DeleteEventCommand initialized with index: " + targetIndex.getZeroBased());
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        logger.info("Executing DeleteEventCommand");
         List<Event> lastShownList = model.getFilteredEventList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        int targetIndexZeroBased = targetIndex.getZeroBased();
+        if (targetIndexZeroBased >= lastShownList.size()) {
+            logger.warning("Invalid index: " + targetIndexZeroBased);
             throw new CommandException(MESSAGE_INVALID_EVENT);
         }
+        logger.fine("Index: " + targetIndexZeroBased);
 
-        Event eventToDelete = lastShownList.get(targetIndex.getZeroBased());
+        Event eventToDelete = lastShownList.get(targetIndexZeroBased);
         model.deleteEvent(eventToDelete);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatEvent(eventToDelete)));
+        String eventDescription = Messages.formatEvent(eventToDelete);
+        logger.info("Deleted event: " + eventDescription);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, eventDescription));
     }
 
     @Override

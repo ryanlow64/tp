@@ -6,7 +6,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_WITH;
 
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.event.FindEventCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
@@ -26,6 +28,7 @@ import seedu.address.model.property.PropertyName;
  */
 public class FindEventCommandParser implements Parser<FindEventCommand> {
 
+    private static final Logger logger = LogsCenter.getLogger(FindEventCommandParser.class);
     private static final String BLANK = "BLANK";
 
     /**
@@ -34,25 +37,34 @@ public class FindEventCommandParser implements Parser<FindEventCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindEventCommand parse(String args) throws ParseException {
+        logger.info("Parsing arguments for FindEventCommand: " + args);
         ArgumentMultimap argMultimap =
             ArgumentTokenizer.tokenize(args, PREFIX_EVENT_ABOUT, PREFIX_EVENT_WITH, PREFIX_EVENT_TYPE);
 
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
+            logger.warning("Missing arguments");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT_ABOUT, PREFIX_EVENT_WITH, PREFIX_EVENT_TYPE);
+        logger.fine("No repeated arguments supplied");
+
         ClientName clientName = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_EVENT_WITH).orElse(BLANK));
+        logger.fine("Client name: " + clientName);
+
         PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_EVENT_ABOUT)
             .orElse(BLANK));
+        logger.fine("Property name: " + propertyName);
 
         EventType eventType;
         try {
             eventType = ParserUtil.parseEventType(argMultimap.getValue(PREFIX_EVENT_TYPE).orElse(BLANK));
+            logger.fine("Event type: " + eventType);
         } catch (ParseException e) {
             eventType = null;
+            logger.warning("Event type: " + eventType);
         }
 
         EventWithClientPredicate eventWithClientPredicate = new EventWithClientPredicate(clientName);
@@ -60,6 +72,7 @@ public class FindEventCommandParser implements Parser<FindEventCommand> {
         EventOfTypePredicate eventOfTypePredicate = new EventOfTypePredicate(eventType);
         Predicate<Event> predicate = eventWithClientPredicate.or(eventAboutPropertyPredicate).or(eventOfTypePredicate);
 
+        logger.info("FindEventCommand created with combined predicates");
         return new FindEventCommand(predicate);
     }
 }

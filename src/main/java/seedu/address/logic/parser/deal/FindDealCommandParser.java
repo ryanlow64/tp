@@ -46,12 +46,13 @@ public class FindDealCommandParser implements Parser<FindDealCommand> {
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
-            logger.warning("Empty arguments provided for FindDealCommand");
+            logger.warning("Missing arguments");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindDealCommand.MESSAGE_USAGE));
         }
 
         // Verify no duplicate prefixes
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER, PREFIX_STATUS);
+        logger.fine("No repeated arguments supplied");
 
         // Parse property name
         List<String> propertyNameKeywords = parseKeywords(

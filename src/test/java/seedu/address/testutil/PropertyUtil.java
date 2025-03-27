@@ -32,8 +32,7 @@ public class PropertyUtil {
         sb.append(PREFIX_ADDRESS + property.getAddress().value + " ");
         sb.append(PREFIX_PRICE + String.valueOf(property.getPrice().value + " "));
         property.getSize().ifPresent(size -> sb.append(PREFIX_SIZE + size.value + " "));
-        property.getDescription().ifPresent(desc -> sb.append(PREFIX_DESCRIPTION + desc.getDescription()
-                .orElse("") + " "));
+        property.getDescription().ifPresent(desc -> sb.append(PREFIX_DESCRIPTION + desc.getDescription() + " "));
         sb.append(PREFIX_CLIENT_NAME + property.getOwner().fullName + " ");
         return sb.toString();
     }
@@ -50,7 +49,7 @@ public class PropertyUtil {
         descriptor.getSize().ifPresent(sizeOpt ->
                 sizeOpt.ifPresent(size -> sb.append(PREFIX_SIZE).append(size.value).append(" ")));
         descriptor.getDescription().ifPresent(descOpt ->
-                descOpt.ifPresent(desc -> sb.append(PREFIX_DESCRIPTION).append(desc.getDescription().orElse(""))
+                descOpt.ifPresent(desc -> sb.append(PREFIX_DESCRIPTION).append(desc.getDescription())
                         .append(" ")));
         descriptor.getOwner().ifPresent(owner -> sb.append(PREFIX_CLIENT_NAME).append(owner.fullName).append(" "));
         return sb.toString();

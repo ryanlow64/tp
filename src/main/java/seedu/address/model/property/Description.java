@@ -2,8 +2,6 @@ package seedu.address.model.property;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.util.Optional;
-
 /**
  * Represents a Property's description in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDescription(String)}
@@ -19,7 +17,7 @@ public class Description {
      */
     public static final String VALIDATION_REGEX = ".{1,50}";
 
-    public final Optional<String> description;
+    public final String description;
 
     /**
      * Constructs a {@code Description}.
@@ -27,11 +25,11 @@ public class Description {
      * @param description A valid description or empty string.
      */
     public Description(String description) {
-        if (description == null || description.isBlank()) {
-            this.description = Optional.empty();
+        if (description == null || description.isBlank() || description.equals("N/A")) {
+            this.description = "-";
         } else {
             checkArgument(isValidDescription(description), MESSAGE_CONSTRAINTS);
-            this.description = Optional.of(description);
+            this.description = description;
         }
     }
 
@@ -43,17 +41,17 @@ public class Description {
     }
 
     /**
-     * Returns the description if present, otherwise returns "N/A".
+     * Returns the description if present, otherwise returns "-".
      */
     @Override
     public String toString() {
-        return description.orElse("N/A");
+        return description;
     }
 
     /**
      * Returns the optional description.
      */
-    public Optional<String> getDescription() {
+    public String getDescription() {
         return description;
     }
 

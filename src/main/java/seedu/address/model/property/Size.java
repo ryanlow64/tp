@@ -21,8 +21,8 @@ public class Size {
      * @param size A valid size or empty string.
      */
     public Size(String size) {
-        if (size == null || size.isBlank()) {
-            this.value = "N/A";
+        if (size == null || size.isBlank() || size.equals("N/A")) {
+            this.value = "-";
         } else {
             checkArgument(isValidSize(size), MESSAGE_CONSTRAINTS);
             this.value = size;
@@ -37,7 +37,7 @@ public class Size {
     }
 
     /**
-     * Returns the size if present, otherwise returns "N/A".
+     * Returns the size if present, otherwise returns "-".
      */
     @Override
     public String toString() {

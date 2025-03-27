@@ -25,7 +25,7 @@ public class DescriptionTest {
     @Test
     public void constructor_emptyDescription_setsToNA() {
         Description desc = new Description("");
-        assertEquals("N/A", desc.toString());
+        assertEquals("-", desc.toString());
     }
 
     @Test

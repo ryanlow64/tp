@@ -18,7 +18,7 @@ public class SizeTest {
     @Test
     public void constructor_emptySize_setsToNA() {
         Size size = new Size("");
-        assertEquals("N/A", size.toString());
+        assertEquals("-", size.toString());
     }
 
     @Test

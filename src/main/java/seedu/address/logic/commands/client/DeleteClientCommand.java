@@ -33,6 +33,10 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
 
     public static final String MESSAGE_DELETE_CLIENT_SUCCESS = "Deleted Client: %1$s";
 
+    public static final String MESSAGE_DELETE_CLIENT_ERROR = "Client cannot be deleted.\n"
+        + "Client exists in either property, deals, or events.\n"
+        + "Please delete the client from the categories before deleting the client itself.";
+
     public DeleteClientCommand(Index targetIndex) {
         super(targetIndex);
     }
@@ -54,7 +58,7 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
         if (existInDeal(clientToDelete, lastShownDealList)
             || existInEvent(clientToDelete, lastShownEventList)
             || existInProperty(clientToDelete, lastShownPropertyList)) {
-            throw new CommandException("Cannot delete");
+            throw new CommandException(MESSAGE_DELETE_CLIENT_ERROR);
         }
 
         model.deleteClient(clientToDelete);

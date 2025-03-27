@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.deal.AddDealCommand;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.DealStatus;
 
@@ -67,11 +68,11 @@ public class AddDealCommandParserTest {
     public void parse_invalidValue_failure() {
         // Invalid property ID
         assertParseFailure(parser, INVALID_PROPERTY_ID_DESC + VALID_BUYER_ID_DESC
-                + VALID_PRICE_DESC, "Invalid property ID: Index is not a non-zero unsigned integer.");
+                + VALID_PRICE_DESC, "Invalid property ID: " + ParserUtil.MESSAGE_INVALID_INDEX);
 
         // Invalid buyer ID
         assertParseFailure(parser, VALID_PROPERTY_ID_DESC + INVALID_BUYER_ID_DESC
-                + VALID_PRICE_DESC, "Invalid buyer ID: Index is not a non-zero unsigned integer.");
+                + VALID_PRICE_DESC, "Invalid buyer ID: " + ParserUtil.MESSAGE_INVALID_INDEX);
 
         // Invalid price
         assertParseFailure(parser, VALID_PROPERTY_ID_DESC + VALID_BUYER_ID_DESC

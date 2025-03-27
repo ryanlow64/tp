@@ -49,9 +49,10 @@ public class AddEventCommand extends Command {
             .toString();
 
     public static final String MESSAGE_SUCCESS = "New event added: %s";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book.";
+    public static final String MESSAGE_EVENT_CONFLICT = "Event conflicts with existing event.";
     public static final String MESSAGE_INVALID_PROPERTY_ID = "Invalid property ID.";
     public static final String MESSAGE_INVALID_CLIENT_ID = "Invalid client ID.";
+    public static final String MESSAGE_EVENT_IN_PAST = "Event cannot be before 01-01-2025 0000.";
 
     private final EventType eventType;
     private final Index propertyId;
@@ -107,25 +108,38 @@ public class AddEventCommand extends Command {
         Client client = clientList.get(clientId.getZeroBased());
         ClientName clientName = client.getClientName();
 
-        // check if event is in the future
-        if (dateTime.isBefore(LocalDateTime.now())) {
-            throw new CommandException("Event cannot be in the past.");
+        // check if event is way too far back
+        if (dateTime.isBefore(LocalDateTime.of(2025, 1, 1, 0, 0))) {
+            throw new CommandException(MESSAGE_EVENT_IN_PAST);
         }
 
         // check if event conflicts with existing events
         for (Event event : model.getFilteredEventList()) {
             if (event.getDateTime().equals(dateTime)) {
-                throw new CommandException("Event conflicts with existing event.");
+                throw new CommandException(MESSAGE_EVENT_CONFLICT);
             }
         }
 
         Event toAdd = new Event(eventType, propertyName, clientName, dateTime, note);
 
-        if (model.hasEvent(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
-        }
-
         model.addEvent(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatEvent(toAdd)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof AddEventCommand otherAddCommand)) {
+            return false;
+        }
+
+        return this.eventType.equals(otherAddCommand.eventType)
+                && this.propertyId.equals(otherAddCommand.propertyId)
+                && this.clientId.equals(otherAddCommand.clientId)
+                && this.dateTime.equals(otherAddCommand.dateTime)
+                && this.note.equals(otherAddCommand.note);
     }
 }

@@ -51,4 +51,17 @@ public class DeleteEventCommand extends DeleteCommand<Event> {
         model.deleteEvent(eventToDelete);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatEvent(eventToDelete)));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof DeleteEventCommand otherDeleteCommand)) {
+            return false;
+        }
+
+        return this.targetIndex.equals(otherDeleteCommand.targetIndex);
+    }
 }

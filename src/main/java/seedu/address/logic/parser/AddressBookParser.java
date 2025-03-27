@@ -11,32 +11,37 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.client.AddClientCommand;
 import seedu.address.logic.commands.client.DeleteClientCommand;
 import seedu.address.logic.commands.client.EditClientCommand;
+import seedu.address.logic.commands.client.FindClientCommand;
 import seedu.address.logic.commands.client.ListClientCommand;
 import seedu.address.logic.commands.deal.AddDealCommand;
 import seedu.address.logic.commands.deal.UpdateDealCommand;
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
+import seedu.address.logic.commands.event.FindEventCommand;
 import seedu.address.logic.commands.event.ListEventCommand;
 import seedu.address.logic.commands.property.AddPropertyCommand;
 import seedu.address.logic.commands.property.DeletePropertyCommand;
 import seedu.address.logic.commands.property.EditPropertyCommand;
+import seedu.address.logic.commands.property.FindPropertyCommand;
 import seedu.address.logic.commands.property.ListPropertyCommand;
 import seedu.address.logic.parser.client.AddClientCommandParser;
 import seedu.address.logic.parser.client.DeleteClientCommandParser;
 import seedu.address.logic.parser.client.EditClientCommandParser;
+import seedu.address.logic.parser.client.FindClientCommandParser;
 import seedu.address.logic.parser.deal.AddDealCommandParser;
 import seedu.address.logic.parser.deal.UpdateDealCommandParser;
 import seedu.address.logic.parser.event.AddEventCommandParser;
 import seedu.address.logic.parser.event.DeleteEventCommandParser;
+import seedu.address.logic.parser.event.FindEventCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.property.AddPropertyCommandParser;
 import seedu.address.logic.parser.property.DeletePropertyCommandParser;
 import seedu.address.logic.parser.property.EditPropertyCommandParser;
+import seedu.address.logic.parser.property.FindPropertyCommandParser;
 
 /**
  * Parses user input.
@@ -79,8 +84,8 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+        case FindClientCommand.COMMAND_WORD:
+            return new FindClientCommandParser().parse(arguments);
 
         case ListClientCommand.COMMAND_WORD:
             return new ListClientCommand();
@@ -94,6 +99,9 @@ public class AddressBookParser {
         case DeletePropertyCommand.COMMAND_WORD:
             return new DeletePropertyCommandParser().parse(arguments);
 
+        case FindPropertyCommand.COMMAND_WORD:
+            return new FindPropertyCommandParser().parse(arguments);
+
         case ListPropertyCommand.COMMAND_WORD:
             return new ListPropertyCommand();
 
@@ -102,6 +110,9 @@ public class AddressBookParser {
 
         case DeleteEventCommand.COMMAND_WORD:
             return new DeleteEventCommandParser().parse(arguments);
+
+        case FindEventCommand.COMMAND_WORD:
+            return new FindEventCommandParser().parse(arguments);
 
         case ListEventCommand.COMMAND_WORD:
             return new ListEventCommand();

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_ORCHID;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_ORCHID;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_OWNER_ORCHID;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_ORCHID;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROPERTY_NAME_ORCHID;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SIZE_ORCHID;
@@ -28,7 +29,7 @@ public class PropertyTest {
         // same name, all other attributes different -> returns false
         Property editedMaple = new PropertyBuilder(MAPLE).withAddress(VALID_ADDRESS_ORCHID)
                 .withPrice(VALID_PRICE_ORCHID).withSize(VALID_SIZE_ORCHID)
-                .withDescription(VALID_DESCRIPTION_ORCHID).build();
+                .withDescription(VALID_DESCRIPTION_ORCHID).withOwner(VALID_OWNER_ORCHID).build();
         assertFalse(MAPLE.isSameProperty(editedMaple));
 
         // different name, all other attributes same -> returns false
@@ -72,7 +73,7 @@ public class PropertyTest {
         editedMaple = new PropertyBuilder(MAPLE).withPrice(VALID_PRICE_ORCHID).build();
         assertFalse(MAPLE.equals(editedMaple));
 
-        // different email -> returns false
+        // different size -> returns false
         editedMaple = new PropertyBuilder(MAPLE).withSize(VALID_SIZE_ORCHID).build();
         assertFalse(MAPLE.equals(editedMaple));
 
@@ -83,13 +84,17 @@ public class PropertyTest {
         // different description -> returns false
         editedMaple = new PropertyBuilder(MAPLE).withDescription(VALID_DESCRIPTION_ORCHID).build();
         assertFalse(MAPLE.equals(editedMaple));
+
+        // different owner -> returns false
+        editedMaple = new PropertyBuilder(MAPLE).withOwner(VALID_OWNER_ORCHID).build();
+        assertFalse(MAPLE.equals(editedMaple));
     }
 
     @Test
     public void toStringMethod() {
         String expected = Property.class.getCanonicalName() + "{propertyName=" + MAPLE.getPropertyName() + ", address="
                 + MAPLE.getAddress() + ", price=" + MAPLE.getPrice() + ", size=" + MAPLE.getSize() + ", description="
-                + MAPLE.getDescription() + "}";
+                + MAPLE.getDescription() + ", owner=" + MAPLE.getOwner() + "}";
         assertEquals(expected, MAPLE.toString());
     }
 }

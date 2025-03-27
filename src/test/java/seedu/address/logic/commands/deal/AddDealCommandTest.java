@@ -50,7 +50,8 @@ public class AddDealCommandTest {
             new Address("123 Test St"),
             new Price(500000L),
             Optional.of(new Size("1000")),
-            Optional.of(new Description("Test description"))
+            Optional.of(new Description("Test description")),
+            new ClientName("Tester")
         );
         modelStub.addProperty(testProperty);
 
@@ -101,7 +102,8 @@ public class AddDealCommandTest {
             new Address("123 Test St"),
             new Price(500000L),
             Optional.of(new Size("1000")),
-            Optional.of(new Description("Test description"))
+            Optional.of(new Description("Test description")),
+            new ClientName("Tester")
         );
 
         ClientName buyerName = new ClientName("John Doe");
@@ -141,7 +143,8 @@ public class AddDealCommandTest {
             new Address("123 Test St"),
             new Price(500000L),
             Optional.of(new Size("1000")),
-            Optional.of(new Description("Test description"))
+            Optional.of(new Description("Test description")),
+            new ClientName("Tester")
         );
 
         ClientName personName = new ClientName("Same Person");
@@ -175,7 +178,8 @@ public class AddDealCommandTest {
             new Address("123 Test St"),
             new Price(500000L),
             Optional.of(new Size("1000")),
-            Optional.of(new Description("Test description"))
+            Optional.of(new Description("Test description")),
+            new ClientName("Tester")
         );
 
         // First set of clients

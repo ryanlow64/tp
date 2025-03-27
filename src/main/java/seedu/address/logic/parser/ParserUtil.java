@@ -230,6 +230,20 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String owner} into a {@code ClientName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code owner} is invalid.
+     */
+    public static ClientName parseOwner(String owner) throws ParseException {
+        requireNonNull(owner);
+        if (!ClientName.isValidClientName(owner)) {
+            throw new ParseException(ClientName.MESSAGE_CONSTRAINTS);
+        }
+        return new ClientName(owner);
+    }
+
+    /**
      * Parses a {@code String eventType} into an {@code EventType}.
      * Leading and trailing whitespaces will be trimmed.
      *

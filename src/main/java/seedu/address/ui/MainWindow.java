@@ -116,19 +116,29 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         clientListPanel = new ClientListPanel(logic.getFilteredClientList());
-        dealListPanel = new DealListPanel(logic.getFilteredDealList());
-        propertyListPanel = new PropertyListPanel(logic.getFilteredPropertyList());
-        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        logger.info("Creating client list panel...");
 
+        dealListPanel = new DealListPanel(logic.getFilteredDealList());
+        logger.info("Creating deal list panel...");
+
+        propertyListPanel = new PropertyListPanel(logic.getFilteredPropertyList());
+        logger.info("Creating property list panel...");
+
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        logger.info("Creating event list panel...");
+
+        assert listPlanesPlaceholder != null : "List planes placeholder must be present";
         listPlanesPlaceholder.getItems().add(clientListPanel.getRoot());
         listPlanesPlaceholder.getItems().add(propertyListPanel.getRoot());
         listPlanesPlaceholder.getItems().add(dealListPanel.getRoot());
         listPlanesPlaceholder.getItems().add(eventListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
+        assert resultDisplayPlaceholder != null : "Result display placeholder must be present";
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
+        assert commandBoxPlaceholder != null : "Command box placeholder must be present";
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 

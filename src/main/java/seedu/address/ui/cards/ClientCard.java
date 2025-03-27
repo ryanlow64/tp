@@ -44,6 +44,8 @@ public class ClientCard extends UiPart<Region> {
      */
     public ClientCard(Client client, int displayedIndex) {
         super(FXML);
+        assert client != null : "Client should not be null";
+        assert displayedIndex > 0 : "Index should be greater than 0";
         this.client = client;
         id.setText(displayedIndex + ". ");
         name.setText(client.getClientName().fullName);

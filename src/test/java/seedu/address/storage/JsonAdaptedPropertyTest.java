@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
 import seedu.address.model.property.Property;
@@ -22,6 +23,7 @@ public class JsonAdaptedPropertyTest {
     private static final Long INVALID_PRICE = 0L;
     private static final String INVALID_SIZE = "5000a";
     private static final String INVALID_DESCRIPTION = " ";
+    private static final String INVALID_OWNER = "$#@!%";
 
     private static final String VALID_PROPERTY_NAME = MAPLE.getPropertyName().toString();
     private static final String VALID_ADDRESS = MAPLE.getAddress().toString();
@@ -29,6 +31,7 @@ public class JsonAdaptedPropertyTest {
     private static final String VALID_SIZE = MAPLE.getSize().map(s -> s.value).orElse("");
     private static final String VALID_DESCRIPTION =
             MAPLE.getDescription().map(d -> d.description.get()).orElse("");
+    private static final String VALID_OWNER = MAPLE.getOwner().fullName;
 
     @Test
     public void toModelType_validPropertyDetails_returnsProperty() throws Exception {
@@ -40,7 +43,7 @@ public class JsonAdaptedPropertyTest {
     public void toModelType_invalidPropertyName_throwsIllegalValueException() {
         JsonAdaptedProperty jsonAdaptedProperty =
                 new JsonAdaptedProperty(INVALID_PROPERTY_NAME, VALID_ADDRESS, VALID_PRICE, VALID_SIZE,
-                        VALID_DESCRIPTION);
+                        VALID_DESCRIPTION, VALID_OWNER);
         String expectedMessage = PropertyName.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, jsonAdaptedProperty::toModelType);
     }
@@ -48,7 +51,8 @@ public class JsonAdaptedPropertyTest {
     @Test
     public void toModelType_nullPropertyName_throwsIllegalValueException() {
         JsonAdaptedProperty jsonAdaptedProperty =
-                new JsonAdaptedProperty(null, VALID_ADDRESS, VALID_PRICE, VALID_SIZE, VALID_DESCRIPTION);
+                new JsonAdaptedProperty(null, VALID_ADDRESS, VALID_PRICE, VALID_SIZE, VALID_DESCRIPTION,
+                        VALID_OWNER);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, PropertyName.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, jsonAdaptedProperty::toModelType);
     }
@@ -57,7 +61,7 @@ public class JsonAdaptedPropertyTest {
     public void toModelType_invalidAddress_throwsIllegalValueException() {
         JsonAdaptedProperty jsonAdaptedProperty =
                 new JsonAdaptedProperty(VALID_PROPERTY_NAME, INVALID_ADDRESS, VALID_PRICE, VALID_SIZE,
-                        VALID_DESCRIPTION);
+                        VALID_DESCRIPTION, VALID_OWNER);
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, jsonAdaptedProperty::toModelType);
     }
@@ -65,7 +69,8 @@ public class JsonAdaptedPropertyTest {
     @Test
     public void toModelType_nullAddress_throwsIllegalValueException() {
         JsonAdaptedProperty jsonAdaptedProperty =
-                new JsonAdaptedProperty(VALID_PROPERTY_NAME, null, VALID_PRICE, VALID_SIZE, VALID_DESCRIPTION);
+                new JsonAdaptedProperty(VALID_PROPERTY_NAME, null, VALID_PRICE, VALID_SIZE, VALID_DESCRIPTION,
+                        VALID_OWNER);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, jsonAdaptedProperty::toModelType);
     }
@@ -74,7 +79,7 @@ public class JsonAdaptedPropertyTest {
     public void toModelType_invalidPrice_throwsIllegalValueException() {
         JsonAdaptedProperty jsonAdaptedProperty =
                 new JsonAdaptedProperty(VALID_PROPERTY_NAME, VALID_ADDRESS, INVALID_PRICE, VALID_SIZE,
-                        VALID_DESCRIPTION);
+                        VALID_DESCRIPTION, VALID_OWNER);
         String expectedMessage = Price.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, jsonAdaptedProperty::toModelType);
     }
@@ -82,7 +87,8 @@ public class JsonAdaptedPropertyTest {
     @Test
     public void toModelType_nullPrice_throwsIllegalValueException() {
         JsonAdaptedProperty jsonAdaptedProperty =
-                new JsonAdaptedProperty(VALID_PROPERTY_NAME, VALID_ADDRESS, null, VALID_SIZE, VALID_DESCRIPTION);
+                new JsonAdaptedProperty(VALID_PROPERTY_NAME, VALID_ADDRESS, null, VALID_SIZE, VALID_DESCRIPTION,
+                        VALID_OWNER);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Price.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, jsonAdaptedProperty::toModelType);
     }
@@ -91,7 +97,7 @@ public class JsonAdaptedPropertyTest {
     public void toModelType_invalidSize_throwsIllegalValueException() {
         JsonAdaptedProperty jsonAdaptedProperty =
                 new JsonAdaptedProperty(VALID_PROPERTY_NAME, VALID_ADDRESS, VALID_PRICE, INVALID_SIZE,
-                        VALID_DESCRIPTION);
+                        VALID_DESCRIPTION, VALID_OWNER);
         String expectedMessage = Size.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalArgumentException.class, expectedMessage, jsonAdaptedProperty::toModelType);
     }
@@ -99,7 +105,8 @@ public class JsonAdaptedPropertyTest {
     @Test
     public void toModelType_nullSize_returnsPropertyWithEmptySize() throws Exception {
         JsonAdaptedProperty jsonAdaptedProperty =
-                new JsonAdaptedProperty(VALID_PROPERTY_NAME, VALID_ADDRESS, VALID_PRICE, null, VALID_DESCRIPTION);
+                new JsonAdaptedProperty(VALID_PROPERTY_NAME, VALID_ADDRESS, VALID_PRICE, null, VALID_DESCRIPTION,
+                        VALID_OWNER);
         Property property = jsonAdaptedProperty.toModelType();
         assertEquals(Optional.empty(), property.getSize());
     }
@@ -107,8 +114,18 @@ public class JsonAdaptedPropertyTest {
     @Test
     public void toModelType_nullDescription_returnsPropertyWithEmptyDescription() throws Exception {
         JsonAdaptedProperty jsonAdaptedProperty =
-                new JsonAdaptedProperty(VALID_PROPERTY_NAME, VALID_ADDRESS, VALID_PRICE, VALID_SIZE, null);
+                new JsonAdaptedProperty(VALID_PROPERTY_NAME, VALID_ADDRESS, VALID_PRICE, VALID_SIZE, null,
+                        VALID_OWNER);
         Property property = jsonAdaptedProperty.toModelType();
         assertEquals(Optional.empty(), property.getDescription());
+    }
+
+    @Test
+    public void toModelType_invalidOwner_throwsIllegalValueException() {
+        JsonAdaptedProperty jsonAdaptedProperty =
+                new JsonAdaptedProperty(VALID_PROPERTY_NAME, VALID_ADDRESS, VALID_PRICE, VALID_SIZE,
+                        VALID_DESCRIPTION, INVALID_OWNER);
+        String expectedMessage = ClientName.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, jsonAdaptedProperty::toModelType);
     }
 }

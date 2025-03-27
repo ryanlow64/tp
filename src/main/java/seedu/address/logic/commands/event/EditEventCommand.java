@@ -7,7 +7,7 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
@@ -15,8 +15,8 @@ import seedu.address.model.event.Event;
 /**
  * Deletes an event identified using its index from the address book.
  */
-public class DeleteEventCommand extends DeleteCommand<Event> {
-    public static final String COMMAND_WORD = "delete_event";
+public class EditEventCommand extends EditCommand<Event> {
+    public static final String COMMAND_WORD = "edit_event";
 
     public static final String MESSAGE_USAGE = new StringBuilder(COMMAND_WORD)
             .append(" INDEX")
@@ -24,6 +24,7 @@ public class DeleteEventCommand extends DeleteCommand<Event> {
             .append("Example: ")
             .append(COMMAND_WORD)
             .append(" 42")
+            .append()
             .toString();
 
     public static final String MESSAGE_SUCCESS = "Deleted event: %s";
@@ -50,18 +51,5 @@ public class DeleteEventCommand extends DeleteCommand<Event> {
         Event eventToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deleteEvent(eventToDelete);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatEvent(eventToDelete)));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        if (!(other instanceof DeleteEventCommand otherDeleteCommand)) {
-            return false;
-        }
-
-        return this.targetIndex.equals(otherDeleteCommand.targetIndex);
     }
 }

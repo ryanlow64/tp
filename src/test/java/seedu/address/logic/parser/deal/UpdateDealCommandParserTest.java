@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.deal.UpdateDealCommand;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.DealStatus;
 import seedu.address.model.property.PropertyName;
@@ -48,7 +49,7 @@ public class UpdateDealCommandParserTest {
         // non-numeric deal ID
         assertParseFailure(parser,
                 " " + PREFIX_DEAL_ID + "abc",
-                String.format("Invalid deal ID: %s", "Index is not a non-zero unsigned integer."));
+                "Invalid deal ID: " + ParserUtil.MESSAGE_INVALID_INDEX);
     }
 
     @Test

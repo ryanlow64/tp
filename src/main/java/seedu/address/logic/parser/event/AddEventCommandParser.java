@@ -36,6 +36,9 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT_TYPE, PREFIX_PROPERTY_ID, PREFIX_CLIENT_ID,
+                PREFIX_EVENT_START, PREFIX_EVENT_NOTE);
+
         // Parse property ID
         Index propertyId;
         try {

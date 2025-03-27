@@ -11,8 +11,8 @@ import static seedu.address.testutil.TypicalDeals.DEAL1;
 import static seedu.address.testutil.TypicalDeals.DEAL4;
 import static seedu.address.testutil.TypicalEvents.EVENT1;
 import static seedu.address.testutil.TypicalEvents.EVENT4;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLIENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_CLIENT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalProperties.MAPLE;
 
 import org.junit.jupiter.api.Test;
@@ -35,8 +35,8 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST_CLIENT.getZeroBased());
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST_CLIENT);
+        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST.getZeroBased());
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
             Messages.formatClient(clientToDelete));
@@ -57,8 +57,8 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST_CLIENT.getZeroBased());
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST_CLIENT);
+        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST.getZeroBased());
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
             Messages.formatClient(clientToDelete));
@@ -71,9 +71,9 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showClientAtIndex(model, INDEX_FIRST_CLIENT);
+        showClientAtIndex(model, INDEX_FIRST);
 
-        Index outOfBoundIndex = INDEX_SECOND_CLIENT;
+        Index outOfBoundIndex = INDEX_SECOND;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getClientList().size());
 
@@ -85,8 +85,8 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
     @Test
     public void execute_clientInClosedDeal_success() {
         model.addDeal(DEAL4);
-        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST_CLIENT.getZeroBased());
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST_CLIENT);
+        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST.getZeroBased());
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
             Messages.formatClient(clientToDelete));
@@ -111,8 +111,8 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
     @Test
     public void execute_clientInPastEvent_success() {
         model.addEvent(EVENT4);
-        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST_CLIENT.getZeroBased());
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST_CLIENT);
+        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST.getZeroBased());
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
             Messages.formatClient(clientToDelete));
@@ -126,7 +126,7 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
     @Test
     public void execute_clientInFutureEvent_failure() {
         model.addEvent(EVENT1);
-        DeleteClientCommand command = new DeleteClientCommand(INDEX_FIRST_CLIENT);
+        DeleteClientCommand command = new DeleteClientCommand(INDEX_FIRST);
 
         assertCommandFailure(command, model, DeleteClientCommand.MESSAGE_DELETE_CLIENT_ERROR);
     }
@@ -144,14 +144,14 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
 
     @Test
     public void equals() {
-        DeleteClientCommand deleteFirstCommand = new DeleteClientCommand(INDEX_FIRST_CLIENT);
-        DeleteClientCommand deleteSecondCommand = new DeleteClientCommand(INDEX_SECOND_CLIENT);
+        DeleteClientCommand deleteFirstCommand = new DeleteClientCommand(INDEX_FIRST);
+        DeleteClientCommand deleteSecondCommand = new DeleteClientCommand(INDEX_SECOND);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteClientCommand deleteFirstCommandCopy = new DeleteClientCommand(INDEX_FIRST_CLIENT);
+        DeleteClientCommand deleteFirstCommandCopy = new DeleteClientCommand(INDEX_FIRST);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false

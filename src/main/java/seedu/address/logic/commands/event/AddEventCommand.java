@@ -26,6 +26,10 @@ import seedu.address.model.property.PropertyName;
 
 /**
  * Adds an event to the address book.
+ * Guarantees:
+ * - the event is not too far in the past.
+ * - there are no conflicts with existing events.
+ * - IDs reference valid existing property and client.
  */
 public class AddEventCommand extends Command {
     public static final String COMMAND_WORD = "add_event";
@@ -57,6 +61,12 @@ public class AddEventCommand extends Command {
 
     /**
      * Creates an AddCommand to add the specified {@code Event}.
+     *
+     * @param eventType The type of the event.
+     * @param propertyId The {@code Index} of the associated property in the filtered list.
+     * @param clientId The {@code Index} of the associated client in the filtered list.
+     * @param dateTime The date and time of the event.
+     * @param note Additional notes about the event.
      */
     public AddEventCommand(EventType eventType, Index propertyId, Index clientId, LocalDateTime dateTime, Note note) {
         requireNonNull(eventType);
@@ -71,6 +81,11 @@ public class AddEventCommand extends Command {
         this.note = note;
     }
 
+    /**
+     * Executes the {@code AddEventCommand} and adds the new event to the model if it is valid.
+     *
+     * @throws CommandException if the constraints for adding events are not satisfied.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);

@@ -16,7 +16,6 @@ import seedu.address.model.client.Client;
 
 /**
  * Adds a client to the address book.
- * TODO: Update the usage of this command to fit REconnect
  */
 public class AddClientCommand extends AddCommand<Client> {
 

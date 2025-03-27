@@ -73,15 +73,11 @@ public class FindDealCommandParser implements Parser<FindDealCommand> {
         if (!argMultimap.getValue(PREFIX_STATUS).orElse(BLANK).equals(BLANK)) {
             try {
                 String statusString = argMultimap.getValue(PREFIX_STATUS).get().toUpperCase();
-                // Handle "IN NEGOTIATION" special case
-                if (statusString.equals("IN NEGOTIATION")) {
-                    statusString = "IN_NEGOTIATION";
-                }
                 status = DealStatus.valueOf(statusString);
                 logger.fine("Status specified: " + status);
             } catch (IllegalArgumentException e) {
                 logger.warning("Invalid status value provided: " + argMultimap.getValue(PREFIX_STATUS).get());
-                throw new ParseException("Invalid status: Must be one of 'PENDING', 'CLOSED', 'IN_NEGOTIATION'.");
+                throw new ParseException("Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED'.");
             }
         }
 

@@ -39,6 +39,8 @@ public class ClientCard extends UiPart<Region> {
 
     /**
      * Creates a {@code ClientCode} with the given {@code Client} and index to display.
+     * Thanks to samuelneo for the idea of using emojis to represent phone and email.
+     * See here: <a href="https://github.com/AY2425S2-CS2103T-T10-1/tp" />
      */
     public ClientCard(Client client, int displayedIndex) {
         super(FXML);
@@ -47,8 +49,8 @@ public class ClientCard extends UiPart<Region> {
         this.client = client;
         id.setText(displayedIndex + ". ");
         name.setText(client.getClientName().fullName);
-        phone.setText(client.getPhone().value);
-        address.setText(client.getAddress().value);
-        email.setText(client.getEmail().value);
+        phone.setText("\uD83D\uDCDE " + client.getPhone().value);
+        address.setText("\uD83C\uDFE0 " + client.getAddress().value);
+        email.setText("\uD83D\uDCE7 " + client.getEmail().value);
     }
 }

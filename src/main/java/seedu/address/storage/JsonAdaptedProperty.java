@@ -53,7 +53,7 @@ public class JsonAdaptedProperty {
         address = source.getAddress().value;
         price = source.getPrice().value;
         size = source.getSize().map(s -> s.value).orElse(null);
-        description = source.getDescription().map(d -> d.description.get()).orElse(null);
+        description = source.getDescription().map(d -> d.description).orElse(null);
         owner = source.getOwner().fullName;
     }
 

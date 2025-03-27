@@ -35,7 +35,7 @@ public class TypicalDeals {
             new ClientName("Charlie Davis"),
             new ClientName("Diana Evans"),
             new Price(1000000L),
-            DealStatus.IN_NEGOTIATION);
+            DealStatus.PENDING);
 
     public static final Deal DEAL4 = new Deal(
             new PropertyName("Marina Bay"),

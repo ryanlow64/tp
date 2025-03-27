@@ -2,6 +2,7 @@ package seedu.address.ui.cards;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.property.Property;
@@ -39,7 +40,7 @@ public class PropertyCard extends UiPart<Region> {
     @FXML
     private Label description;
     @FXML
-    private Label owner;
+    private FlowPane owner;
 
     /**
      * Creates a {@code PropertyCode} with the given {@code Property} and index to display.
@@ -54,9 +55,8 @@ public class PropertyCard extends UiPart<Region> {
         address.setText(property.getAddress().value);
         price.setText(String.format("Price: $%sk", property.getPrice().value.toString()));
         String sizeValue = property.getSize().map(s -> s.value).orElse("N/A");
-        size.setText(sizeValue.equals("N/A") ? "Size: N/A" : String.format("Size: %s square feet", sizeValue));
-        description.setText(property.getDescription().map(d -> d.getDescription().orElse("N/A"))
-                .orElse("N/A"));
-        owner.setText(property.getOwner().fullName);
+        size.setText(sizeValue.equals("-") ? "Size: -" : String.format("Size: %s square feet", sizeValue));
+        description.setText("Desc: " + property.getDescription().map(d -> d.getDescription()).orElse("-"));
+        owner.getChildren().add(new Label("Owner: " + property.getOwner().fullName));
     }
 }

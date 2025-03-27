@@ -37,6 +37,13 @@ public class TypicalDeals {
             new Price(1000000L),
             DealStatus.IN_NEGOTIATION);
 
+    public static final Deal DEAL4 = new Deal(
+            new PropertyName("Marina Bay"),
+            new ClientName("Alice Pauline"),
+            new ClientName("Benson Meier"),
+            new Price(750000L),
+            DealStatus.CLOSED);
+
     private TypicalDeals() {} // prevents instantiation
 
     /**

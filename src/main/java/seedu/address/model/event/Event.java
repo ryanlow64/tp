@@ -22,6 +22,12 @@ public class Event implements Comparable<Event> {
 
     /**
      * Creates a new {@code Event} object.
+     *
+     * @param eventType The type of the event.
+     * @param propertyName The associated property's name.
+     * @param clientName The associated client's name.
+     * @param dateTime The date and time of the event.
+     * @param note Additional notes about the event.
      */
     public Event(EventType eventType, PropertyName propertyName,
                  ClientName clientName, LocalDateTime dateTime, Note note) {
@@ -92,6 +98,13 @@ public class Event implements Comparable<Event> {
                 .toString();
     }
 
+    /**
+     * Compares this event with another event based on their dateTime.
+     *
+     * @param other The other event.
+     * @return A negative integer, zero, or a positive integer
+     *     based on whether this event is before, simultaneous with, or after the other event respectively.
+     */
     @Override
     public int compareTo(Event other) {
         return this.dateTime.compareTo(other.dateTime);

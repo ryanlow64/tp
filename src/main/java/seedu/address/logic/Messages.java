@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.client.Client;
+import seedu.address.model.deal.Deal;
 import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
 
@@ -22,6 +23,7 @@ public class Messages {
     public static final String MESSAGE_CLIENTS_LISTED_OVERVIEW = "%1$d clients listed!";
     public static final String MESSAGE_PROPERTIES_LISTED_OVERVIEW = "%1$d properties are found and listed here!";
     public static final String MESSAGE_EVENTS_LISTED_OVERVIEW = "%1$d events listed!";
+    public static final String MESSAGE_DEALS_LISTED_OVERVIEW = "%1$d deals listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
 
@@ -84,6 +86,23 @@ public class Messages {
                 .append(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT))
                 .append("; Notes: ")
                 .append(event.getNote().toString())
+                .toString();
+    }
+
+    /**
+     * Formats the {@code deal} for display to the user.
+     */
+    public static String formatDeal(Deal deal) {
+        return new StringBuilder("Property: ")
+                .append(deal.getPropertyName())
+                .append("; Buyer: ")
+                .append(deal.getBuyer())
+                .append("; Seller: ")
+                .append(deal.getSeller())
+                .append("; Price: S$")
+                .append(deal.getPrice().value).append(" thousand")
+                .append("; Status: ")
+                .append(deal.getStatus())
                 .toString();
     }
 }

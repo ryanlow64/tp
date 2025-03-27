@@ -29,6 +29,11 @@ public class DeleteEventCommand extends DeleteCommand<Event> {
     public static final String MESSAGE_SUCCESS = "Deleted event: %s";
     public static final String MESSAGE_INVALID_EVENT = "This event index provided is invalid.";
 
+    /**
+     * Constructs a {@code DeleteEventCommand} with the target index.
+     *
+     * @param targetIndex {@code Index} of the event in the filtered list to delete.
+     */
     public DeleteEventCommand(Index targetIndex) {
         super(targetIndex);
     }

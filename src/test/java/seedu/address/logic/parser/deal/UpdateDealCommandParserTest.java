@@ -2,7 +2,6 @@ package seedu.address.logic.parser.deal;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEAL_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
@@ -16,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.deal.UpdateDealCommand;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.DealStatus;
 import seedu.address.model.property.PropertyName;
@@ -48,15 +46,15 @@ public class UpdateDealCommandParserTest {
     public void parse_invalidDealId_failure() {
         // non-numeric deal ID
         assertParseFailure(parser,
-                " " + PREFIX_DEAL_ID + "abc",
-                "Invalid deal ID: " + ParserUtil.MESSAGE_INVALID_INDEX);
+            " abc",
+                MESSAGE_INVALID_FORMAT);
     }
 
     @Test
     public void parse_emptyFields_failure() {
         // Just a deal ID but no fields to update
         assertParseFailure(parser,
-                " " + PREFIX_DEAL_ID + "1",
+                " " + "1",
                 UpdateDealCommand.MESSAGE_NO_CHANGES);
     }
 
@@ -64,12 +62,12 @@ public class UpdateDealCommandParserTest {
     public void parse_invalidValue_failure() {
         // Invalid price
         assertParseFailure(parser,
-                " " + PREFIX_DEAL_ID + "1 " + PREFIX_PRICE + INVALID_PRICE,
+                " 1 " + PREFIX_PRICE + INVALID_PRICE,
                 Price.MESSAGE_CONSTRAINTS);
 
         // Invalid status
         assertParseFailure(parser,
-                " " + PREFIX_DEAL_ID + "1 " + PREFIX_STATUS + INVALID_STATUS,
+                " 1 " + PREFIX_STATUS + INVALID_STATUS,
                 "Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED'.");
     }
 
@@ -77,7 +75,7 @@ public class UpdateDealCommandParserTest {
     public void parse_validStatusOnly_success() {
         // Only status is specified
         Index dealIndex = INDEX_FIRST;
-        String userInput = " " + PREFIX_DEAL_ID + "1 " + PREFIX_STATUS + VALID_STATUS;
+        String userInput = " 1 " + PREFIX_STATUS + VALID_STATUS;
 
         UpdateDealCommand expectedCommand = new UpdateDealCommand(dealIndex,
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
@@ -90,7 +88,7 @@ public class UpdateDealCommandParserTest {
     public void parse_validPropertyNameOnly_success() {
         // Only property name is specified
         Index dealIndex = INDEX_FIRST;
-        String userInput = " " + PREFIX_DEAL_ID + "1 " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME;
+        String userInput = " 1 " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME;
         UpdateDealCommand expectedCommand = new UpdateDealCommand(dealIndex,
                 Optional.of(new PropertyName(VALID_PROPERTY_NAME)),
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
@@ -102,7 +100,7 @@ public class UpdateDealCommandParserTest {
     public void parse_validPriceOnly_success() {
         // Only price is specified
         Index dealIndex = INDEX_FIRST;
-        String userInput = " " + PREFIX_DEAL_ID + "1 " + PREFIX_PRICE + VALID_PRICE;
+        String userInput = " 1 " + PREFIX_PRICE + VALID_PRICE;
 
         UpdateDealCommand expectedCommand = new UpdateDealCommand(dealIndex,
                 Optional.empty(), Optional.empty(), Optional.empty(),
@@ -118,7 +116,7 @@ public class UpdateDealCommandParserTest {
         Index buyerIndex = INDEX_FIRST;
         Index sellerIndex = INDEX_SECOND;
 
-        String userInput = " " + PREFIX_DEAL_ID + "1 " + PREFIX_BUYER + "1 " + PREFIX_SELLER + "2";
+        String userInput = " 1 " + PREFIX_BUYER + "1 " + PREFIX_SELLER + "2";
 
         UpdateDealCommand expectedCommand = new UpdateDealCommand(dealIndex,
                 Optional.empty(), Optional.of(buyerIndex), Optional.of(sellerIndex),
@@ -133,7 +131,7 @@ public class UpdateDealCommandParserTest {
         Index dealIndex = INDEX_FIRST;
         Index buyerIndex = INDEX_FIRST;
 
-        String userInput = " " + PREFIX_DEAL_ID + "1 " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME + " "
+        String userInput = " 1 " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME + " "
                 + PREFIX_BUYER + "1 " + PREFIX_PRICE + VALID_PRICE + " " + PREFIX_STATUS + VALID_STATUS;
 
         UpdateDealCommand expectedCommand = new UpdateDealCommand(dealIndex,

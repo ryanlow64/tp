@@ -2,7 +2,6 @@ package seedu.address.logic.parser.deal;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEAL_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
@@ -33,20 +32,17 @@ public class UpdateDealCommandParser implements Parser<UpdateDealCommand> {
      */
     public UpdateDealCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_DEAL_ID, PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER,
+                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER,
                         PREFIX_PRICE, PREFIX_STATUS);
 
-        // Deal ID is required
-        if (!argMultimap.getValue(PREFIX_DEAL_ID).isPresent() || argMultimap.getPreamble().length() > 0) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateDealCommand.MESSAGE_USAGE));
-        }
-
         // Parse deal index
-        Index dealIndex;
+        Index index;
+
         try {
-            dealIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_DEAL_ID).get());
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format("Invalid deal ID: %s", pe.getMessage()));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateDealCommand.MESSAGE_USAGE),
+                pe);
         }
 
         // Verify at least one field to update is provided
@@ -67,7 +63,7 @@ public class UpdateDealCommandParser implements Parser<UpdateDealCommand> {
         Optional<Price> price = parsePrice(argMultimap);
         Optional<DealStatus> status = parseStatus(argMultimap);
 
-        return new UpdateDealCommand(dealIndex, propertyName, buyerId, sellerId, price, status);
+        return new UpdateDealCommand(index, propertyName, buyerId, sellerId, price, status);
     }
 
     /**

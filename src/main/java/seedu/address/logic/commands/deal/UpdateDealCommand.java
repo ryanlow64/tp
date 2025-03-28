@@ -2,7 +2,6 @@ package seedu.address.logic.commands.deal;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEAL_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
@@ -30,16 +29,16 @@ public class UpdateDealCommand extends Command {
 
     public static final String COMMAND_WORD = "update_deal";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates a property deal in the address book. "
-            + "Parameters: "
-            + PREFIX_DEAL_ID + "DEAL_ID "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates a property deal identified "
+            + "by the index number used in the displayed deal list. "
+            + "Existing values will be overwritten by the input values.\n"
+            + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_PROPERTY_NAME + "PROPERTY_NAME] "
             + "[" + PREFIX_BUYER + "BUYER_ID] "
             + "[" + PREFIX_SELLER + "SELLER_ID] "
             + "[" + PREFIX_PRICE + "PRICE] "
             + "[" + PREFIX_STATUS + "STATUS]\n"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_DEAL_ID + "3 "
+            + "Example: " + COMMAND_WORD + " 3 "
             + PREFIX_STATUS + "CLOSED";
 
     public static final String MESSAGE_SUCCESS = "Deal updated successfully";

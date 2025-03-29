@@ -34,7 +34,7 @@ public class DeletePropertyCommand extends DeleteCommand<Property> {
     /**
      * Adds a command word and its associated prefixes to the command word map.
      */
-    public void addCommandWord() {
+    public static void addCommandWord() {
         initialiseCommandWord(COMMAND_WORD);
     }
 

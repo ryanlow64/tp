@@ -13,16 +13,17 @@ import seedu.address.logic.commands.deal.UpdateDealCommand;
 import seedu.address.logic.commands.deal.UpdateDealCommand.UpdateDealDescriptor;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
-import seedu.address.logic.parser.Parser;
+import seedu.address.logic.parser.EditCommandParser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.commons.Price;
+import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
 
 /**
  * Parses input arguments and creates a new UpdateDealCommand object
  */
-public class UpdateDealCommandParser implements Parser<UpdateDealCommand> {
+public class UpdateDealCommandParser extends EditCommandParser<Deal> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the UpdateDealCommand
@@ -53,18 +54,10 @@ public class UpdateDealCommandParser implements Parser<UpdateDealCommand> {
                 .getValue(PREFIX_PROPERTY_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_BUYER).isPresent()) {
-            try {
-                updateDealDescriptor.setBuyer(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_BUYER).get()));
-            } catch (ParseException pe) {
-                throw new ParseException(String.format("Invalid buyer ID: %s", pe.getMessage()));
-            }
+            updateDealDescriptor.setBuyer(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_BUYER).get()));
         }
         if (argMultimap.getValue(PREFIX_SELLER).isPresent()) {
-            try {
-                updateDealDescriptor.setSeller(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_SELLER).get()));
-            } catch (ParseException pe) {
-                throw new ParseException(String.format("Invalid seller ID: %s", pe.getMessage()));
-            }
+            updateDealDescriptor.setSeller(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_SELLER).get()));
         }
         if (argMultimap.getValue(PREFIX_PRICE).isPresent()) {
             String priceArg = argMultimap.getValue(PREFIX_PRICE).get();

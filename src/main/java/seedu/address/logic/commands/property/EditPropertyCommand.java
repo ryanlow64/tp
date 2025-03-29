@@ -21,6 +21,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Address;
@@ -64,6 +65,21 @@ public class EditPropertyCommand extends EditCommand<Property> {
     public EditPropertyCommand(Index index, EditPropertyDescriptor editPropertyDescriptor) {
         super(index, editPropertyDescriptor);
         this.editPropertyDescriptor = new EditPropertyDescriptor(editPropertyDescriptor);
+    }
+
+    /**
+     * Adds a command word and its associated prefixes to the command word map.
+     */
+    public static void addCommandWord() {
+        Prefix[] prefixes = {
+            PREFIX_PROPERTY_NAME,
+            PREFIX_OWNER,
+            PREFIX_ADDRESS,
+            PREFIX_PRICE,
+            PREFIX_SIZE,
+            PREFIX_DESCRIPTION
+        };
+        initialiseCommandWord(COMMAND_WORD, prefixes);
     }
 
     @Override

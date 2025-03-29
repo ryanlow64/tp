@@ -27,6 +27,13 @@ public class FindClientCommand extends FindCommand<Client> {
         super(predicate);
     }
 
+    /**
+     * Adds the command word to the command word list.
+     */
+    public static void addCommandWord() {
+        initialiseCommandWord(COMMAND_WORD);
+    }
+
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);

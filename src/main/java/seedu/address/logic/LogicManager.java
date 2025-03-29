@@ -1,9 +1,14 @@
 package seedu.address.logic;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.Set;
 import java.util.logging.Logger;
+
+import org.reflections.Reflections;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
@@ -45,6 +50,32 @@ public class LogicManager implements Logic {
         this.model = model;
         this.storage = storage;
         addressBookParser = new AddressBookParser();
+        initialiseCommandWords();
+    }
+
+    /**
+     * Initialises the command words for all commands in the package at runtime.
+     * This method uses reflection to find all subclasses of Command and register their command words.
+     */
+    private void initialiseCommandWords() {
+        Reflections reflections = new Reflections("seedu.address.logic.commands");
+        Set<Class<? extends Command>> commandClasses = reflections.getSubTypesOf(Command.class);
+        for (Class<? extends Command> commandClass : commandClasses) {
+            boolean isAbstract = Modifier.isAbstract(commandClass.getModifiers());
+            if (!isAbstract) {
+                try {
+                    Method staticMethod = commandClass.getDeclaredMethod("addCommandWord");
+                    if (Modifier.isStatic(staticMethod.getModifiers())) {
+                        staticMethod.invoke(null);
+                    }
+                } catch (NoSuchMethodException e) {
+                    logger.warning("No such method addCommandWord in " + commandClass.getSimpleName());
+                } catch (Exception e) {
+                    logger.warning("Failed to initialise command word for " + commandClass.getSimpleName()
+                        + ": " + e);
+                }
+            }
+        }
     }
 
     @Override

@@ -6,11 +6,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
+import java.util.Set;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
 
@@ -41,6 +44,19 @@ public class AddClientCommand extends AddCommand<Client> {
      */
     public AddClientCommand(Client client) {
         super(client);
+    }
+
+    /**
+     * Adds a command word and its associated prefixes to the command word map.
+     */
+    public static void addCommandWord() {
+        Prefix[] parameterPrefixes = {
+            PREFIX_CLIENT_NAME,
+            PREFIX_PHONE,
+            PREFIX_EMAIL,
+            PREFIX_ADDRESS
+        };
+        initialiseCommandWord(COMMAND_WORD, parameterPrefixes);
     }
 
     @Override

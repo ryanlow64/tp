@@ -11,11 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.Command;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.client.Client;
 import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.Deal;
@@ -23,159 +25,100 @@ import seedu.address.model.deal.DealStatus;
 import seedu.address.model.property.PropertyName;
 
 /**
- * Updates the details of a property deal in the address book.
+ * Updates the details of an existing deal in the address book.
  */
-public class UpdateDealCommand extends Command {
+public class UpdateDealCommand extends EditCommand<Deal> {
 
     public static final String COMMAND_WORD = "update_deal";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates a property deal identified "
             + "by the index number used in the displayed deal list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_PROPERTY_NAME + "PROPERTY_NAME] "
-            + "[" + PREFIX_BUYER + "BUYER_ID] "
-            + "[" + PREFIX_SELLER + "SELLER_ID] "
+            + "[" + PREFIX_BUYER + "BUYER] "
+            + "[" + PREFIX_SELLER + "SELLER] "
             + "[" + PREFIX_PRICE + "PRICE] "
             + "[" + PREFIX_STATUS + "STATUS]\n"
             + "Example: " + COMMAND_WORD + " 3 "
             + PREFIX_STATUS + "CLOSED";
 
-    public static final String MESSAGE_SUCCESS = "Deal updated successfully";
-    public static final String MESSAGE_STATUS_SUCCESS = "Deal status updated to '%1$s' successfully";
+    public static final String MESSAGE_UPDATE_DEAL_SUCCESS = "Deal updated successfully";
     public static final String MESSAGE_NO_CHANGES = "At least one field to update must be provided";
     public static final String MESSAGE_INVALID_DEAL_ID = "Invalid deal ID";
-    public static final String MESSAGE_INVALID_PROPERTY = "Invalid property name";
-    public static final String MESSAGE_INVALID_BUYER_ID = "Invalid buyer ID";
-    public static final String MESSAGE_INVALID_SELLER_ID = "Invalid seller ID";
-    public static final String MESSAGE_DUPLICATE_DEAL = "This deal already exists in the address book";
     public static final String MESSAGE_SAME_BUYER_SELLER = "Buyer and seller cannot be the same person";
-    public static final String MESSAGE_PROPERTY_ALREADY_IN_DEAL = "This property is already involved in another deal";
-    public static final String MESSAGE_PRICE_EXCEEDS_LIMIT = "Price exceeds the limit of 999.99";
+    public static final String MESSAGE_DUPLICATE_DEAL = "This deal already exists in the address book";
 
-    private final Index dealIndex;
-    private final Optional<PropertyName> propertyName;
-    private final Optional<Index> buyerId;
-    private final Optional<Index> sellerId;
-    private final Optional<Price> price;
-    private final Optional<DealStatus> status;
+    private final UpdateDealDescriptor updateDealDescriptor;
 
     /**
-     * Creates an UpdateDealCommand to update the specified property deal with the provided fields.
-     * At least one field must be present.
+     * Creates an UpdateDealCommand to update the specified {@code Deal}
+     *
+     * @param index of the deal in the filtered deal list to edit
+     * @param updateDealDescriptor details to update the deal with
      */
-    public UpdateDealCommand(Index dealIndex, Optional<PropertyName> propertyName, Optional<Index> buyerId,
-                           Optional<Index> sellerId, Optional<Price> price, Optional<DealStatus> status) {
-        requireNonNull(dealIndex);
-        this.dealIndex = dealIndex;
-        this.propertyName = propertyName;
-        this.buyerId = buyerId;
-        this.sellerId = sellerId;
-        this.price = price;
-        this.status = status;
+    public UpdateDealCommand(Index index, UpdateDealDescriptor updateDealDescriptor) {
+        super(index, updateDealDescriptor);
+        this.updateDealDescriptor = new UpdateDealDescriptor(updateDealDescriptor);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        // Check if at least one field is provided for update
-        if (!propertyName.isPresent() && !buyerId.isPresent() && !sellerId.isPresent()
-                && !price.isPresent() && !status.isPresent()) {
-            throw new CommandException(MESSAGE_NO_CHANGES);
-        }
-
         List<Deal> lastShownList = model.getFilteredDealList();
 
-        // Check if deal index is valid
-        if (dealIndex.getZeroBased() >= lastShownList.size()) {
+        if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(MESSAGE_INVALID_DEAL_ID);
         }
 
-        Deal dealToUpdate = lastShownList.get(dealIndex.getZeroBased());
-        // Prepare updated values
+        Deal dealToUpdate = lastShownList.get(index.getZeroBased());
 
-        PropertyName updatedPropertyName = propertyName.orElse(dealToUpdate.getPropertyName());
-        ClientName updatedBuyerName = dealToUpdate.getBuyer();
-        ClientName updatedSellerName = dealToUpdate.getSeller();
-        Price updatedPrice = price.orElse(dealToUpdate.getPrice());
-        DealStatus updatedStatus = status.orElse(dealToUpdate.getStatus());
-
-        // Process buyer and seller if they need to be updated
-        List<Client> clientList = model.getFilteredClientList();
-
-        // Update buyer if requested
-        if (buyerId.isPresent()) {
-            if (buyerId.get().getZeroBased() >= clientList.size()) {
-                throw new CommandException(MESSAGE_INVALID_BUYER_ID);
-            }
-            Client buyer = clientList.get(buyerId.get().getZeroBased());
-            updatedBuyerName = buyer.getClientName();
-
-            // Check if buyer and seller are the same (if seller id is not changing)
-            if (!sellerId.isPresent() && buyer.getClientName().equals(dealToUpdate.getSeller())) {
-                throw new CommandException(MESSAGE_SAME_BUYER_SELLER);
-            }
+        // If no fields are edited, throw an exception
+        if (!updateDealDescriptor.isAnyFieldEdited()) {
+            throw new CommandException(MESSAGE_NO_CHANGES);
         }
 
-        // Update seller if requested
-        if (sellerId.isPresent()) {
-            if (sellerId.get().getZeroBased() >= clientList.size()) {
-                throw new CommandException(MESSAGE_INVALID_SELLER_ID);
-            }
-            Client seller = clientList.get(sellerId.get().getZeroBased());
-            updatedSellerName = seller.getClientName();
+        Deal updatedDeal = createUpdatedDeal(dealToUpdate, model, updateDealDescriptor);
 
-            // Check if buyer and seller are the same (if buyer id was not changed)
-            if (!buyerId.isPresent() && seller.getClientName().equals(dealToUpdate.getBuyer())) {
-                throw new CommandException(MESSAGE_SAME_BUYER_SELLER);
-            }
-        }
-
-        // Check if buyer and seller are the same (if both are being updated)
-        if (buyerId.isPresent() && sellerId.isPresent() && buyerId.equals(sellerId)) {
-            throw new CommandException(MESSAGE_SAME_BUYER_SELLER);
-        }
-
-        // Validate property name if it's being updated
-        if (propertyName.isPresent() && !PropertyName.isValidPropertyName(updatedPropertyName.toString())) {
-            throw new CommandException(MESSAGE_INVALID_PROPERTY);
-        }
-
-        // Check if price exceeds limit
-        if (price.isPresent() && updatedPrice.value > 999_990_000) {
-            throw new CommandException(MESSAGE_PRICE_EXCEEDS_LIMIT);
-        }
-
-        // Create the updated deal
-        Deal updatedDeal = new Deal(updatedPropertyName, updatedBuyerName, updatedSellerName,
-                updatedPrice, updatedStatus);
-
-        // Check for duplicates (but exclude the deal being updated)
         if (!dealToUpdate.isSameDeal(updatedDeal) && model.hasDeal(updatedDeal)) {
             throw new CommandException(MESSAGE_DUPLICATE_DEAL);
         }
 
-        // Check if the property is already involved in another deal when the property name is changing
-        if (propertyName.isPresent() && !updatedPropertyName.equals(dealToUpdate.getPropertyName())) {
-            boolean propertyAlreadyInDeal = model.getFilteredDealList().stream()
-                    .filter(d -> !d.equals(dealToUpdate))
-                    .anyMatch(d -> d.getPropertyName().equals(updatedPropertyName));
-            if (propertyAlreadyInDeal) {
-                throw new CommandException(MESSAGE_PROPERTY_ALREADY_IN_DEAL);
-            }
-        }
-
         model.setDeal(dealToUpdate, updatedDeal);
         model.updateFilteredDealList(Model.PREDICATE_SHOW_ALL_DEALS);
+        return new CommandResult(String.format(MESSAGE_UPDATE_DEAL_SUCCESS, updatedDeal));
+    }
 
-        // Customize the message if only the status was updated
-        if (status.isPresent() && !propertyName.isPresent() && !buyerId.isPresent()
-                && !sellerId.isPresent() && !price.isPresent()) {
-            return new CommandResult(String.format(MESSAGE_STATUS_SUCCESS, updatedStatus));
-        } else {
-            return new CommandResult(MESSAGE_SUCCESS);
+    /**
+     * Creates and returns a {@code Deal} with the details of {@code dealToUpdate}
+     * updated with {@code updateDealDescriptor}. Fields not provided in the descriptor
+     * will retain their original values.
+     */
+    private static Deal createUpdatedDeal(Deal dealToUpdate, Model model, UpdateDealDescriptor updateDealDescriptor)
+            throws CommandException {
+        assert dealToUpdate != null;
+        PropertyName updatedPropertyName = updateDealDescriptor.getPropertyName()
+                .orElse(dealToUpdate.getPropertyName());
+        ClientName updatedBuyer = updateDealDescriptor.getBuyer()
+                .map(index -> model.getFilteredClientList().get(index.getZeroBased()).getClientName())
+                .orElse(dealToUpdate.getBuyer());
+        ClientName updatedSeller = updateDealDescriptor.getSeller()
+                .map(index -> model.getFilteredClientList().get(index.getZeroBased()).getClientName())
+                .orElse(dealToUpdate.getSeller());
+
+        // Validate that buyer and seller are not the same person
+        if (updatedBuyer.equals(updatedSeller)) {
+            throw new CommandException(MESSAGE_SAME_BUYER_SELLER);
         }
+
+        Price updatedPrice = updateDealDescriptor.getPrice().orElse(dealToUpdate.getPrice());
+
+        // Check if price exceeds limit
+        if (!Price.isValidPrice(updatedPrice.value)) {
+            throw new CommandException(Price.MESSAGE_CONSTRAINTS);
+        }
+
+        DealStatus updatedStatus = updateDealDescriptor.getStatus().orElse(dealToUpdate.getStatus());
+        return new Deal(updatedPropertyName, updatedBuyer, updatedSeller, updatedPrice, updatedStatus);
     }
 
     @Override
@@ -184,16 +127,107 @@ public class UpdateDealCommand extends Command {
             return true;
         }
 
+        // instanceof handles nulls
         if (!(other instanceof UpdateDealCommand)) {
             return false;
         }
 
-        UpdateDealCommand otherUpdateDealCommand = (UpdateDealCommand) other;
-        return dealIndex.equals(otherUpdateDealCommand.dealIndex)
-                && propertyName.equals(otherUpdateDealCommand.propertyName)
-                && buyerId.equals(otherUpdateDealCommand.buyerId)
-                && sellerId.equals(otherUpdateDealCommand.sellerId)
-                && price.equals(otherUpdateDealCommand.price)
-                && status.equals(otherUpdateDealCommand.status);
+        UpdateDealCommand otherUpdateCommand = (UpdateDealCommand) other;
+        return index.equals(otherUpdateCommand.index)
+            && updateDealDescriptor.equals(otherUpdateCommand.updateDealDescriptor);
+    }
+
+    /**
+     * Stores the details to edit the deal with. Each non-empty field value will replace the corresponding field.
+     */
+    public static class UpdateDealDescriptor extends EditDescriptor<Deal> {
+        private PropertyName propertyName;
+        private Index buyer;
+        private Index seller;
+        private Price price;
+        private DealStatus status;
+
+        public UpdateDealDescriptor() {}
+
+        /**
+         * Copy constructor.
+         *
+         */
+        public UpdateDealDescriptor(UpdateDealDescriptor toCopy) {
+            setPropertyName(toCopy.propertyName);
+            setBuyer(toCopy.buyer);
+            setSeller(toCopy.seller);
+            setPrice(toCopy.price);
+            setStatus(toCopy.status);
+        }
+
+        @Override
+        public boolean isAnyFieldEdited() {
+            return CollectionUtil.isAnyNonNull(propertyName, buyer, seller, price, status);
+        }
+
+        public void setPropertyName(PropertyName propertyName) {
+            this.propertyName = propertyName;
+        }
+        public Optional<PropertyName> getPropertyName() {
+            return Optional.ofNullable(propertyName);
+        }
+
+        public void setBuyer(Index buyer) {
+            this.buyer = buyer;
+        }
+        public Optional<Index> getBuyer() {
+            return Optional.ofNullable(buyer);
+        }
+
+        public void setSeller(Index seller) {
+            this.seller = seller;
+        }
+        public Optional<Index> getSeller() {
+            return Optional.ofNullable(seller);
+        }
+
+        public void setPrice(Price price) {
+            this.price = price;
+        }
+        public Optional<Price> getPrice() {
+            return Optional.ofNullable(price);
+        }
+
+        public void setStatus(DealStatus status) {
+            this.status = status;
+        }
+        public Optional<DealStatus> getStatus() {
+            return Optional.ofNullable(status);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (other == this) {
+                return true;
+            }
+
+            if (!(other instanceof UpdateDealDescriptor otherUpdateDealDescriptor)) {
+                return false;
+            }
+
+            return getPropertyName().equals(otherUpdateDealDescriptor.getPropertyName())
+                    && getBuyer().equals(otherUpdateDealDescriptor.getBuyer())
+                    && getSeller().equals(otherUpdateDealDescriptor.getSeller())
+                    && getPrice().equals(otherUpdateDealDescriptor.getPrice())
+                    && getStatus().equals(otherUpdateDealDescriptor.getStatus());
+        }
+
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this)
+                    .add("propertyName", propertyName)
+                    .add("buyer", buyer)
+                    .add("seller", seller)
+                    .add("price", price)
+                    .add("status", status)
+                    .toString();
+        }
     }
 }
+

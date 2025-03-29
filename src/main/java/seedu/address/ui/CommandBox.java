@@ -99,10 +99,10 @@ public class CommandBox extends UiPart<Region> {
         String userCommand = words[0];
         String lastWord = words[words.length - 1];
 
-        boolean isCommandFullCommandPresent = AVAILABLE_COMMANDS.keySet().stream()
+        boolean isFullCommandPresent = AVAILABLE_COMMANDS.keySet().stream()
                 .anyMatch(userCommand::startsWith);
 
-        List<MenuItem> suggestions = !isCommandFullCommandPresent
+        List<MenuItem> suggestions = !isFullCommandPresent
             ? getCommandSuggestions(userInput)
             : getPrefixSuggestions(userInput, userCommand, lastWord);
 

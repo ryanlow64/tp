@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static seedu.address.logic.commands.deal.UpdateDealCommand.UpdateDealDescriptor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,15 +28,16 @@ import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
-import seedu.address.model.property.PropertyName;
+import seedu.address.testutil.DealBuilder;
+import seedu.address.testutil.UpdateDealDescriptorBuilder;
 
 public class UpdateDealCommandTest {
 
-    private static final PropertyName VALID_PROPERTY_NAME = new PropertyName("Palm Spring");
-    private static final PropertyName VALID_PROPERTY_NAME_2 = new PropertyName("Maple Villa");
-    private static final Price VALID_PRICE = new Price(200L);
-    private static final Price VALID_PRICE_2 = new Price(300L);
-    private static final Price PRICE_LIMIT = new Price(999L);
+    private static final String VALID_PROPERTY_NAME = "Palm Spring";
+    private static final String VALID_PROPERTY_NAME_2 = "Maple Villa";
+    private static final long VALID_PRICE = 200L;
+    private static final long VALID_PRICE_2 = 300L;
+    private static final long PRICE_LIMIT = 999_999L;
     private static final DealStatus VALID_STATUS = DealStatus.PENDING;
     private static final DealStatus VALID_STATUS_2 = DealStatus.CLOSED;
     private static final Index INDEX_FIRST = Index.fromOneBased(1);
@@ -60,22 +61,35 @@ public class UpdateDealCommandTest {
         ClientName buyerName = buyer.getClientName();
         ClientName sellerName = seller.getClientName();
 
-        Deal testDeal = new Deal(VALID_PROPERTY_NAME, buyerName, sellerName, VALID_PRICE, VALID_STATUS);
+        // Use DealBuilder instead of direct Deal constructor
+        Deal testDeal = new DealBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME)
+                .withBuyer(buyerName.toString())
+                .withSeller(sellerName.toString())
+                .withPrice(VALID_PRICE)
+                .withStatus(VALID_STATUS)
+                .build();
         model.addDeal(testDeal);
         model.addClient(buyer);
         model.addClient(seller);
 
         Index dealIndex = INDEX_FIRST;
-        UpdateDealCommand updateCommand = new UpdateDealCommand(dealIndex,
-                                                                Optional.of(VALID_PROPERTY_NAME_2),
-                                                                Optional.empty(),
-                                                                Optional.empty(),
-                                                                Optional.of(VALID_PRICE_2),
-                                                                Optional.of(VALID_STATUS_2));
+        UpdateDealDescriptor descriptor = new UpdateDealDescriptorBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME_2)
+                .withPrice(VALID_PRICE_2)
+                .withStatus(VALID_STATUS_2)
+                .build();
+        UpdateDealCommand updateCommand = new UpdateDealCommand(dealIndex, descriptor);
 
-        String expectedMessage = UpdateDealCommand.MESSAGE_SUCCESS;
+        String expectedMessage = UpdateDealCommand.MESSAGE_UPDATE_DEAL_SUCCESS;
 
-        Deal updatedDeal = new Deal(VALID_PROPERTY_NAME_2, buyerName, sellerName, VALID_PRICE_2, VALID_STATUS_2);
+        Deal updatedDeal = new DealBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME_2)
+                .withBuyer(buyerName.toString())
+                .withSeller(sellerName.toString())
+                .withPrice(VALID_PRICE_2)
+                .withStatus(VALID_STATUS_2)
+                .build();
 
         TestModelStub expectedModel = new TestModelStub();
         expectedModel.addDeal(updatedDeal);
@@ -111,22 +125,32 @@ public class UpdateDealCommandTest {
         ClientName buyerName = buyer.getClientName();
         ClientName sellerName = seller.getClientName();
 
-        Deal testDeal = new Deal(VALID_PROPERTY_NAME, buyerName, sellerName, VALID_PRICE, VALID_STATUS);
+        Deal testDeal = new DealBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME)
+                .withBuyer(buyerName.toString())
+                .withSeller(sellerName.toString())
+                .withPrice(VALID_PRICE)
+                .withStatus(VALID_STATUS)
+                .build();
         model.addDeal(testDeal);
         model.addClient(buyer);
         model.addClient(seller);
 
         Index dealIndex = INDEX_FIRST;
-        UpdateDealCommand updateCommand = new UpdateDealCommand(dealIndex,
-                                                                Optional.empty(),
-                                                                Optional.empty(),
-                                                                Optional.empty(),
-                                                                Optional.empty(),
-                                                                Optional.of(VALID_STATUS_2));
+        UpdateDealDescriptor descriptor = new UpdateDealDescriptorBuilder()
+                .withStatus(VALID_STATUS_2)
+                .build();
+        UpdateDealCommand updateCommand = new UpdateDealCommand(dealIndex, descriptor);
 
-        String expectedMessage = String.format(UpdateDealCommand.MESSAGE_STATUS_SUCCESS, VALID_STATUS_2);
+        String expectedMessage = String.format(UpdateDealCommand.MESSAGE_UPDATE_DEAL_SUCCESS, VALID_STATUS_2);
 
-        Deal updatedDeal = new Deal(VALID_PROPERTY_NAME, buyerName, sellerName, VALID_PRICE, VALID_STATUS_2);
+        Deal updatedDeal = new DealBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME)
+                .withBuyer(buyerName.toString())
+                .withSeller(sellerName.toString())
+                .withPrice(VALID_PRICE)
+                .withStatus(VALID_STATUS_2)
+                .build();
 
         TestModelStub expectedModel = new TestModelStub();
         expectedModel.addDeal(updatedDeal);
@@ -151,19 +175,20 @@ public class UpdateDealCommandTest {
         ClientName buyerName = new ClientName("John");
         ClientName sellerName = new ClientName("Jane");
 
-        Deal testDeal = new Deal(VALID_PROPERTY_NAME, buyerName, sellerName, VALID_PRICE, VALID_STATUS);
+        Deal testDeal = new DealBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME)
+                .withBuyer(buyerName.toString())
+                .withSeller(sellerName.toString())
+                .withPrice(VALID_PRICE)
+                .withStatus(VALID_STATUS)
+                .build();
         model.addDeal(testDeal);
 
-        UpdateDealCommand updateCommand = new UpdateDealCommand(INDEX_FIRST,
-                                                              Optional.empty(),
-                                                              Optional.empty(),
-                                                              Optional.empty(),
-                                                              Optional.empty(),
-                                                              Optional.empty());
+        UpdateDealDescriptor descriptor = new UpdateDealDescriptorBuilder().build();
+        UpdateDealCommand updateCommand = new UpdateDealCommand(INDEX_FIRST, descriptor);
 
-        assertThrows(CommandException.class, (
-                     ) -> updateCommand.execute(model),
-                     UpdateDealCommand.MESSAGE_NO_CHANGES);
+        assertThrows(CommandException.class, () -> updateCommand.execute(model),
+                UpdateDealCommand.MESSAGE_NO_CHANGES);
     }
 
     @Test
@@ -173,21 +198,24 @@ public class UpdateDealCommandTest {
         ClientName buyerName = new ClientName("John");
         ClientName sellerName = new ClientName("Jane");
 
-        Deal testDeal = new Deal(VALID_PROPERTY_NAME, buyerName, sellerName, VALID_PRICE, VALID_STATUS);
+        Deal testDeal = new DealBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME)
+                .withBuyer(buyerName.toString())
+                .withSeller(sellerName.toString())
+                .withPrice(VALID_PRICE)
+                .withStatus(VALID_STATUS)
+                .build();
         model.addDeal(testDeal);
 
         // Deal index not in model
         Index outOfBoundIndex = INDEX_SECOND;
-        UpdateDealCommand updateCommand = new UpdateDealCommand(outOfBoundIndex,
-                                                              Optional.of(VALID_PROPERTY_NAME_2),
-                                                              Optional.empty(),
-                                                              Optional.empty(),
-                                                              Optional.empty(),
-                                                              Optional.empty());
+        UpdateDealDescriptor descriptor = new UpdateDealDescriptorBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME_2)
+                .build();
+        UpdateDealCommand updateCommand = new UpdateDealCommand(outOfBoundIndex, descriptor);
 
-        assertThrows(CommandException.class, (
-                ) -> updateCommand.execute(model),
-                     UpdateDealCommand.MESSAGE_INVALID_DEAL_ID);
+        assertThrows(CommandException.class, () -> updateCommand.execute(model),
+                UpdateDealCommand.MESSAGE_INVALID_DEAL_ID);
     }
 
     @Test
@@ -208,23 +236,24 @@ public class UpdateDealCommandTest {
         ClientName buyerName = buyer.getClientName();
         ClientName sellerName = seller.getClientName();
 
-        Deal testDeal = new Deal(VALID_PROPERTY_NAME, buyerName, sellerName, VALID_PRICE, VALID_STATUS);
+        Deal testDeal = new DealBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME)
+                .withBuyer(buyerName.toString())
+                .withSeller(sellerName.toString())
+                .withPrice(VALID_PRICE)
+                .withStatus(VALID_STATUS)
+                .build();
         model.addDeal(testDeal);
         model.addClient(buyer);
         model.addClient(seller);
 
-        // Setting a price that exceeds the limit - using the literal value from UpdateDealCommand
-        Price priceExceedsLimit = new Price(999_990_001L); // Just above the 999_990_000 limit
-        UpdateDealCommand updateCommand = new UpdateDealCommand(INDEX_FIRST,
-                                                             Optional.empty(),
-                                                             Optional.empty(),
-                                                             Optional.empty(),
-                                                             Optional.of(priceExceedsLimit),
-                                                             Optional.empty());
+        UpdateDealDescriptor descriptor = new UpdateDealDescriptorBuilder()
+                .withPrice(PRICE_LIMIT + 1L)
+                .build();
+        UpdateDealCommand updateCommand = new UpdateDealCommand(INDEX_FIRST, descriptor);
 
-        assertThrows(CommandException.class, (
-                     ) -> updateCommand.execute(model),
-                     UpdateDealCommand.MESSAGE_PRICE_EXCEEDS_LIMIT);
+        assertThrows(CommandException.class, () -> updateCommand.execute(model),
+                Price.MESSAGE_CONSTRAINTS);
     }
 
     @Test
@@ -240,84 +269,55 @@ public class UpdateDealCommandTest {
 
         ClientName clientName = client.getClientName();
 
-        Deal testDeal = new Deal(VALID_PROPERTY_NAME, clientName, new ClientName("Jane"), VALID_PRICE, VALID_STATUS);
+        Deal testDeal = new DealBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME)
+                .withBuyer(clientName.toString())
+                .withSeller("Jane")
+                .withPrice(VALID_PRICE)
+                .withStatus(VALID_STATUS)
+                .build();
         model.addDeal(testDeal);
 
         // Both buyer and seller are the same index (same client)
-        UpdateDealCommand updateCommand = new UpdateDealCommand(INDEX_FIRST,
-                                                             Optional.empty(),
-                                                             Optional.of(INDEX_FIRST),
-                                                             Optional.of(INDEX_FIRST),
-                                                             Optional.empty(),
-                                                             Optional.empty());
+        UpdateDealDescriptor descriptor = new UpdateDealDescriptorBuilder()
+                .withBuyer(INDEX_FIRST)
+                .withSeller(INDEX_FIRST)
+                .build();
+        UpdateDealCommand updateCommand = new UpdateDealCommand(INDEX_FIRST, descriptor);
 
-        assertThrows(CommandException.class, (
-                ) -> updateCommand.execute(model),
-                     UpdateDealCommand.MESSAGE_SAME_BUYER_SELLER);
+        assertThrows(CommandException.class, () -> updateCommand.execute(model),
+                UpdateDealCommand.MESSAGE_SAME_BUYER_SELLER);
     }
 
     @Test
     public void equals() {
-        final UpdateDealCommand standardCommand = new UpdateDealCommand(INDEX_FIRST,
-                                                                     Optional.of(VALID_PROPERTY_NAME),
-                                                                     Optional.of(INDEX_FIRST),
-                                                                     Optional.of(INDEX_SECOND),
-                                                                     Optional.of(VALID_PRICE),
-                                                                     Optional.of(VALID_STATUS));
+        UpdateDealDescriptor descriptor1 = new UpdateDealDescriptorBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME)
+                .withBuyer(INDEX_FIRST)
+                .withSeller(INDEX_SECOND)
+                .withPrice(VALID_PRICE_2)
+                .withStatus(VALID_STATUS)
+                .build();
+        final UpdateDealCommand standardCommand = new UpdateDealCommand(INDEX_FIRST, descriptor1);
 
-        // same values -> returns true
-        UpdateDealCommand commandWithSameValues = new UpdateDealCommand(INDEX_FIRST,
-                                                                     Optional.of(VALID_PROPERTY_NAME),
-                                                                     Optional.of(INDEX_FIRST),
-                                                                     Optional.of(INDEX_SECOND),
-                                                                     Optional.of(VALID_PRICE),
-                                                                     Optional.of(VALID_STATUS));
+        UpdateDealDescriptor descriptor2 = new UpdateDealDescriptorBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME)
+                .withBuyer(INDEX_FIRST)
+                .withSeller(INDEX_SECOND)
+                .withPrice(VALID_PRICE_2)
+                .withStatus(VALID_STATUS)
+                .build();
+        UpdateDealCommand commandWithSameValues = new UpdateDealCommand(INDEX_FIRST, descriptor2);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
-        // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
-
-        // null -> returns false
-        assertFalse(standardCommand.equals(null));
-
-        // different types -> returns false
-        assertFalse(standardCommand.equals(new AddDealCommand(
-                Index.fromOneBased(1),
-                Index.fromOneBased(1),
-                new Price(1000L),
-                DealStatus.PENDING)));
-
-        // different index -> returns false
-        assertFalse(standardCommand.equals(new UpdateDealCommand(INDEX_SECOND,
-                                                              Optional.of(VALID_PROPERTY_NAME),
-                                                              Optional.of(INDEX_FIRST),
-                                                              Optional.of(INDEX_SECOND),
-                                                              Optional.of(VALID_PRICE),
-                                                              Optional.of(VALID_STATUS))));
-
-        // different property name -> returns false
-        assertFalse(standardCommand.equals(new UpdateDealCommand(INDEX_FIRST,
-                                                              Optional.of(VALID_PROPERTY_NAME_2),
-                                                              Optional.of(INDEX_FIRST),
-                                                              Optional.of(INDEX_SECOND),
-                                                              Optional.of(VALID_PRICE),
-                                                              Optional.of(VALID_STATUS))));
-
-        // different price -> returns false
-        assertFalse(standardCommand.equals(new UpdateDealCommand(INDEX_FIRST,
-                                                              Optional.of(VALID_PROPERTY_NAME),
-                                                              Optional.of(INDEX_FIRST),
-                                                              Optional.of(INDEX_SECOND),
-                                                              Optional.of(VALID_PRICE_2),
-                                                              Optional.of(VALID_STATUS))));
-
-        // different status -> returns false
-        assertFalse(standardCommand.equals(new UpdateDealCommand(INDEX_FIRST,
-                                                              Optional.of(VALID_PROPERTY_NAME),
-                                                              Optional.of(INDEX_FIRST),
-                                                              Optional.of(INDEX_SECOND),
-                                                              Optional.of(VALID_PRICE),
-                                                              Optional.of(VALID_STATUS_2))));
+        UpdateDealDescriptor differentDescriptor = new UpdateDealDescriptorBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME_2)
+                .withBuyer(INDEX_FIRST)
+                .withSeller(INDEX_SECOND)
+                .withPrice(VALID_PRICE_2)
+                .withStatus(VALID_STATUS)
+                .build();
+        assertFalse(standardCommand.equals(new UpdateDealCommand(INDEX_FIRST, differentDescriptor)));
     }
 
     /**

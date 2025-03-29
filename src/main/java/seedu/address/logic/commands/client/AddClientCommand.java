@@ -6,8 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
-import java.util.Set;
-
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddCommand;

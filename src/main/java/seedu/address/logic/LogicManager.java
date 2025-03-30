@@ -1,9 +1,14 @@
 package seedu.address.logic;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.Set;
 import java.util.logging.Logger;
+
+import org.reflections.Reflections;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
@@ -45,6 +50,40 @@ public class LogicManager implements Logic {
         this.model = model;
         this.storage = storage;
         addressBookParser = new AddressBookParser();
+        initialiseCommandWords();
+    }
+
+    /**
+     * Initialises the command words for all commands in the package at runtime.
+     * This method uses reflection to find all subclasses of Command and register their command words.
+     */
+    private void initialiseCommandWords() {
+        Reflections reflections = new Reflections("seedu.address.logic.commands");
+        Set<Class<? extends Command>> commandClasses = reflections.getSubTypesOf(Command.class);
+        for (Class<? extends Command> commandClass : commandClasses) {
+            boolean isAbstract = Modifier.isAbstract(commandClass.getModifiers());
+            if (!isAbstract) {
+                try {
+                    Method addCommandWord = commandClass.getDeclaredMethod("addCommandWord");
+                    boolean isStatic = Modifier.isStatic(addCommandWord.getModifiers());
+                    boolean isPublic = Modifier.isPublic(addCommandWord.getModifiers());
+                    if (isStatic && isPublic) {
+                        addCommandWord.invoke(null);
+                    } else {
+                        throw new RuntimeException(commandClass.getSimpleName()
+                            + " does not have a public static addCommandWord method");
+                    }
+                } catch (NoSuchMethodException e) {
+                    throw new RuntimeException(commandClass.getSimpleName()
+                        + " does not have a public static addCommandWord method", e);
+                } catch (Exception e) {
+                    if (e instanceof RuntimeException) {
+                        throw (RuntimeException) e;
+                    }
+                    logger.warning("Error invoking addCommandWord in " + commandClass.getSimpleName() + ": " + e);
+                }
+            }
+        }
     }
 
     @Override

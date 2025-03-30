@@ -17,6 +17,10 @@ public class ListClientCommand extends ListCommand<Client> {
 
     public static final String MESSAGE_SUCCESS = "Listed all clients";
 
+    public static void addCommandWord() {
+        initialiseCommandWord(COMMAND_WORD);
+    }
+
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);

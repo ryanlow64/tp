@@ -14,6 +14,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.deal.Deal;
 
@@ -46,6 +47,19 @@ public class FindDealCommand extends FindCommand<Deal> {
     public FindDealCommand(Predicate<Deal> predicate) {
         super(predicate);
         logger.info("FindDealCommand initialized with predicate: " + predicate);
+    }
+
+    /**
+     * Adds the command word to the command word list.
+     */
+    public static void addCommandWord() {
+        Prefix[] prefixes = {
+            PREFIX_PROPERTY_NAME,
+            PREFIX_BUYER,
+            PREFIX_SELLER,
+            PREFIX_STATUS
+        };
+        initialiseCommandWord(COMMAND_WORD, prefixes);
     }
 
     @Override

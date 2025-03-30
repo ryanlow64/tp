@@ -13,6 +13,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.property.Property;
 
@@ -25,7 +26,7 @@ public class AddPropertyCommand extends AddCommand<Property> {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a property to the address book. "
             + "Parameters: "
-            + PREFIX_PROPERTY_NAME + "PROPERTY "
+            + PREFIX_PROPERTY_NAME + "PROPERTY_NAME "
             + PREFIX_OWNER + "OWNER "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_PRICE + "PRICE (in S$ thousands) "
@@ -47,6 +48,21 @@ public class AddPropertyCommand extends AddCommand<Property> {
      */
     public AddPropertyCommand(Property property) {
         super(property);
+    }
+
+    /**
+     * Adds a command word and its associated prefixes to the command word map.
+     */
+    public static void addCommandWord() {
+        Prefix[] parameterPrefixes = {
+            PREFIX_PROPERTY_NAME,
+            PREFIX_OWNER,
+            PREFIX_ADDRESS,
+            PREFIX_PRICE,
+            PREFIX_SIZE,
+            PREFIX_DESCRIPTION
+        };
+        initialiseCommandWord(COMMAND_WORD, parameterPrefixes);
     }
 
     @Override

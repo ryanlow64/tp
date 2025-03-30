@@ -41,6 +41,13 @@ public class DeleteEventCommand extends DeleteCommand<Event> {
         logger.info("DeleteEventCommand initialized with index: " + targetIndex.getZeroBased());
     }
 
+    /**
+     * Adds a command word and its associated prefixes to the command word map.
+     */
+    public static void addCommandWord() {
+        initialiseCommandWord(COMMAND_WORD);
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);

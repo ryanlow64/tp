@@ -17,6 +17,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.ClientName;
@@ -86,6 +87,20 @@ public class AddEventCommand extends Command {
         this.note = note;
         logger.info(String.format("AddEventCommand initialized with: %s, %d, %d, %s, %s",
                 eventType, propertyId.getZeroBased(), clientId.getZeroBased(), dateTime, note));
+    }
+
+    /**
+     * Adds the command word to the command word list.
+     */
+    public static void addCommandWord() {
+        Prefix[] prefixes = {
+            PREFIX_EVENT_TYPE,
+            PREFIX_PROPERTY_ID,
+            PREFIX_CLIENT_ID,
+            PREFIX_EVENT_START,
+            PREFIX_EVENT_NOTE
+        };
+        initialiseCommandWord(COMMAND_WORD, prefixes);
     }
 
     /**

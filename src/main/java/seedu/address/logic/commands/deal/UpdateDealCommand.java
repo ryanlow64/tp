@@ -17,6 +17,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Price;
@@ -59,6 +60,20 @@ public class UpdateDealCommand extends EditCommand<Deal> {
     public UpdateDealCommand(Index index, UpdateDealDescriptor updateDealDescriptor) {
         super(index, updateDealDescriptor);
         this.updateDealDescriptor = new UpdateDealDescriptor(updateDealDescriptor);
+    }
+
+    /**
+     * Adds a command word and its associated prefixes to the command word map.
+     */
+    public static void addCommandWord() {
+        Prefix[] prefixes = {
+            PREFIX_PROPERTY_NAME,
+            PREFIX_BUYER,
+            PREFIX_SELLER,
+            PREFIX_PRICE,
+            PREFIX_STATUS
+        };
+        initialiseCommandWord(COMMAND_WORD, prefixes);
     }
 
     @Override

@@ -16,6 +16,10 @@ public class ListAllCommand extends ListCommand<Object> {
 
     public static final String MESSAGE_SUCCESS = "Listed everything";
 
+    public static void addCommandWord() {
+        initialiseCommandWord(COMMAND_WORD);
+    }
+
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);

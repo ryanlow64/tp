@@ -26,7 +26,7 @@ public class AddPropertyCommand extends AddCommand<Property> {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a property to the address book. "
             + "Parameters: "
-            + PREFIX_PROPERTY_NAME + "PROPERTY "
+            + PREFIX_PROPERTY_NAME + "PROPERTY_NAME "
             + PREFIX_OWNER + "OWNER "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_PRICE + "PRICE (in S$ thousands) "

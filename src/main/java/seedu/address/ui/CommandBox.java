@@ -110,7 +110,8 @@ public class CommandBox extends UiPart<Region> {
         if (!suggestions.isEmpty()) {
             suggestionsPopup.getItems().setAll(suggestions);
             if (!suggestionsPopup.isShowing()) {
-                suggestionsPopup.show(commandTextField, Side.BOTTOM, 0, 0);
+                suggestionsPopup.show(commandTextField, Side.BOTTOM,
+                    commandTextField.getText().length() * 6.5, 0);
             }
         } else {
             suggestionsPopup.hide();
@@ -154,7 +155,7 @@ public class CommandBox extends UiPart<Region> {
         return prefixes.stream()
             .filter(prefix -> prefix.startsWith(lastWord) && !userInput.contains(prefix))
             .map(prefix -> {
-                MenuItem item = new MenuItem(prefix);
+                MenuItem item = new MenuItem(prefix.replace("_", "\u2017"));
                 item.setOnAction(event -> {
                     commandTextField.setText(userInput.substring(0, userInput.length() - lastWord.length())
                         + prefix);

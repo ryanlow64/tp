@@ -64,15 +64,23 @@ public class LogicManager implements Logic {
             boolean isAbstract = Modifier.isAbstract(commandClass.getModifiers());
             if (!isAbstract) {
                 try {
-                    Method staticMethod = commandClass.getDeclaredMethod("addCommandWord");
-                    if (Modifier.isStatic(staticMethod.getModifiers())) {
-                        staticMethod.invoke(null);
+                    Method addCommandWord = commandClass.getDeclaredMethod("addCommandWord");
+                    boolean isStatic = Modifier.isStatic(addCommandWord.getModifiers());
+                    boolean isPublic = Modifier.isPublic(addCommandWord.getModifiers());
+                    if (isStatic && isPublic) {
+                        addCommandWord.invoke(null);
+                    } else {
+                        throw new RuntimeException(commandClass.getSimpleName()
+                            + " does not have a public static addCommandWord method");
                     }
                 } catch (NoSuchMethodException e) {
-                    logger.warning("No such method addCommandWord in " + commandClass.getSimpleName());
+                    throw new RuntimeException(commandClass.getSimpleName()
+                        + " does not have a public static addCommandWord method", e);
                 } catch (Exception e) {
-                    logger.warning("Failed to initialise command word for " + commandClass.getSimpleName()
-                        + ": " + e);
+                    if (e instanceof RuntimeException) {
+                        throw (RuntimeException) e;
+                    }
+                    logger.warning("Error invoking addCommandWord in " + commandClass.getSimpleName() + ": " + e);
                 }
             }
         }

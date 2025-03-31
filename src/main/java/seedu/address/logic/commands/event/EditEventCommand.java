@@ -59,6 +59,7 @@ public class EditEventCommand extends EditCommand<Event> {
     public static final String MESSAGE_INVALID_PROPERTY_ID = "Invalid property ID.";
     public static final String MESSAGE_INVALID_CLIENT_ID = "Invalid client ID.";
     public static final String MESSAGE_EVENT_IN_PAST = "Event cannot be before 01-01-2025 0000.";
+    public static final String MESSAGE_INVALID_DATE_TIME_FORMAT = "Invalid DateTime format.";
 
     private static final Logger logger = LogsCenter.getLogger(EditEventCommand.class);
 
@@ -93,7 +94,7 @@ public class EditEventCommand extends EditCommand<Event> {
         List<Event> lastShownList = model.getFilteredEventList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
 
         Event eventToEdit = lastShownList.get(index.getZeroBased());

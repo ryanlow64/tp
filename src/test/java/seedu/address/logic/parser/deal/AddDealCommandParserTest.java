@@ -81,6 +81,6 @@ public class AddDealCommandParserTest {
         // Invalid status
         assertParseFailure(parser, VALID_PROPERTY_ID_DESC + VALID_BUYER_ID_DESC
                 + VALID_PRICE_DESC + INVALID_STATUS_DESC,
-                "Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED'.");
+                "Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED' (case insensitive).");
     }
 }

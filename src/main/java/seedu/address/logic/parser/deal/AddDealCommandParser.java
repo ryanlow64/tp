@@ -62,9 +62,6 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
             if (!Price.isValidPrice(priceValue)) {
                 throw new ParseException(Price.MESSAGE_CONSTRAINTS);
             }
-            if (priceValue > 999_990_000) {
-                throw new ParseException("Price exceeds the limit of 999.99");
-            }
             Price price = new Price(priceValue);
 
             // Parse status (optional)
@@ -74,7 +71,8 @@ public class AddDealCommandParser implements Parser<AddDealCommand> {
                 try {
                     status = DealStatus.valueOf(statusString);
                 } catch (IllegalArgumentException e) {
-                    throw new ParseException("Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED'.");
+                    throw new ParseException("Invalid status: Must be one of"
+                            + " 'OPEN', 'PENDING', 'CLOSED' (case insensitive).");
                 }
             }
 

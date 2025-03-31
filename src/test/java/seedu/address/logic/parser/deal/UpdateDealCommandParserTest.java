@@ -3,7 +3,7 @@ package seedu.address.logic.parser.deal;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -18,7 +18,8 @@ import seedu.address.model.deal.DealStatus;
 import seedu.address.testutil.UpdateDealDescriptorBuilder;
 
 public class UpdateDealCommandParserTest {
-    private static final String VALID_PROPERTY_NAME = "Maple Villa";
+    private static final String VALID_PROPERTY_ID = "1";
+    private static final String INVALID_PROPERTY_ID = "0"; // Index cannot be 0
     private static final String VALID_PRICE = "200"; // Valid price in millions
     private static final String INVALID_PRICE = "abc";
     private static final String VALID_STATUS = "CLOSED";
@@ -36,7 +37,7 @@ public class UpdateDealCommandParserTest {
     public void parse_missingDealId_failure() {
         // No deal ID specified
         assertParseFailure(parser,
-                " " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME,
+                " " + PREFIX_PROPERTY_ID + VALID_PROPERTY_ID,
                 MESSAGE_INVALID_FORMAT);
     }
 
@@ -66,7 +67,12 @@ public class UpdateDealCommandParserTest {
         // Invalid status
         assertParseFailure(parser,
                 " 1 " + PREFIX_STATUS + INVALID_STATUS,
-                "Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED'.");
+                "Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED' (case insensitive).");
+
+        // Invalid property ID (0)
+        assertParseFailure(parser,
+                " 1 " + PREFIX_PROPERTY_ID + INVALID_PROPERTY_ID,
+                "Index is not a positive integer.");
     }
 
     @Test
@@ -79,11 +85,12 @@ public class UpdateDealCommandParserTest {
     }
 
     @Test
-    public void parse_validPropertyNameOnly_success() {
+    public void parse_validPropertyIdOnly_success() {
         Index dealIndex = INDEX_FIRST;
-        String userInput = " 1 " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME;
+        Index propertyIndex = INDEX_FIRST;
+        String userInput = " 1 " + PREFIX_PROPERTY_ID + VALID_PROPERTY_ID;
         UpdateDealCommand expectedCommand = new UpdateDealCommand(dealIndex,
-                new UpdateDealDescriptorBuilder().withPropertyName(VALID_PROPERTY_NAME).build());
+                new UpdateDealDescriptorBuilder().withPropertyId(propertyIndex).build());
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
@@ -111,11 +118,12 @@ public class UpdateDealCommandParserTest {
     public void parse_validMultipleFields_success() {
         Index dealIndex = INDEX_FIRST;
         Index buyerIndex = INDEX_FIRST;
-        String userInput = " 1 " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME + " "
+        Index propertyIndex = INDEX_FIRST;
+        String userInput = " 1 " + PREFIX_PROPERTY_ID + VALID_PROPERTY_ID + " "
                 + PREFIX_BUYER + "1 " + PREFIX_PRICE + VALID_PRICE + " " + PREFIX_STATUS + VALID_STATUS;
         UpdateDealCommand expectedCommand = new UpdateDealCommand(dealIndex,
                 new UpdateDealDescriptorBuilder()
-                        .withPropertyName(VALID_PROPERTY_NAME)
+                        .withPropertyId(propertyIndex)
                         .withBuyer(buyerIndex)
                         .withPrice(Long.parseLong(VALID_PRICE))
                         .withStatus(DealStatus.CLOSED)

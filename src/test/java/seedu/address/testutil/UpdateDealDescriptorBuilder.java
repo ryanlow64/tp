@@ -7,7 +7,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.deal.UpdateDealCommand.UpdateDealDescriptor;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.DealStatus;
-import seedu.address.model.property.PropertyName;
 
 /**
  * A utility class to help with building {@link UpdateDealDescriptor} objects.
@@ -23,12 +22,12 @@ public class UpdateDealDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code PropertyName} of the descriptor.
-     * @param propertyName the property name.
+     * Sets the property ID of the descriptor.
+     * @param propertyId the property ID.
      * @return this builder.
      */
-    public UpdateDealDescriptorBuilder withPropertyName(String propertyName) {
-        descriptor.setPropertyName(new PropertyName(propertyName));
+    public UpdateDealDescriptorBuilder withPropertyId(Index propertyId) {
+        descriptor.setPropertyId(propertyId);
         return this;
     }
 

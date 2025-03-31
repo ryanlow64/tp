@@ -59,7 +59,7 @@ public class FindDealCommand extends FindCommand<Deal> {
             PREFIX_SELLER,
             PREFIX_STATUS
         };
-        initialiseCommandWord(COMMAND_WORD, prefixes);
+        addCommandWord(COMMAND_WORD, prefixes);
     }
 
     @Override

@@ -52,7 +52,7 @@ public class FindEventCommand extends FindCommand<Event> {
             PREFIX_EVENT_TYPE,
             PREFIX_EVENT_WITH
         };
-        initialiseCommandWord(COMMAND_WORD, prefixes);
+        addCommandWord(COMMAND_WORD, prefixes);
     }
 
     @Override

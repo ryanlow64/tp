@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
@@ -33,7 +33,7 @@ public class UpdateDealCommandParser extends EditCommandParser<Deal> {
     public UpdateDealCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
-                PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE, PREFIX_STATUS);
+                PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE, PREFIX_STATUS);
 
         Index index;
         try {
@@ -44,14 +44,14 @@ public class UpdateDealCommandParser extends EditCommandParser<Deal> {
         }
 
         // Verify no duplicate prefixes
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE,
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE,
                 PREFIX_STATUS);
 
         UpdateDealDescriptor updateDealDescriptor = new UpdateDealDescriptor();
 
-        if (argMultimap.getValue(PREFIX_PROPERTY_NAME).isPresent()) {
-            updateDealDescriptor.setPropertyName(ParserUtil.parsePropertyName(argMultimap
-                .getValue(PREFIX_PROPERTY_NAME).get()));
+        if (argMultimap.getValue(PREFIX_PROPERTY_ID).isPresent()) {
+            updateDealDescriptor.setPropertyId(ParserUtil.parseIndex(argMultimap
+                .getValue(PREFIX_PROPERTY_ID).get()));
         }
         if (argMultimap.getValue(PREFIX_BUYER).isPresent()) {
             updateDealDescriptor.setBuyer(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_BUYER).get()));
@@ -75,7 +75,8 @@ public class UpdateDealCommandParser extends EditCommandParser<Deal> {
             try {
                 updateDealDescriptor.setStatus(DealStatus.valueOf(statusString));
             } catch (IllegalArgumentException e) {
-                throw new ParseException("Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED'.");
+                throw new ParseException("Invalid status: Must be one of"
+                        + " 'OPEN', 'PENDING', 'CLOSED' (case insensitive).");
             }
         }
 

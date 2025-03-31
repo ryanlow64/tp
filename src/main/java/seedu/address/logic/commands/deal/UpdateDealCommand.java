@@ -3,7 +3,7 @@ package seedu.address.logic.commands.deal;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
@@ -35,9 +35,9 @@ public class UpdateDealCommand extends EditCommand<Deal> {
             + "by the index number used in the displayed deal list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_PROPERTY_NAME + "PROPERTY_NAME] "
-            + "[" + PREFIX_BUYER + "BUYER] "
-            + "[" + PREFIX_SELLER + "SELLER] "
+            + "[" + PREFIX_PROPERTY_ID + "PROPERTY_ID] "
+            + "[" + PREFIX_BUYER + "BUYER_ID] "
+            + "[" + PREFIX_SELLER + "SELLER_ID] "
             + "[" + PREFIX_PRICE + "PRICE] "
             + "[" + PREFIX_STATUS + "STATUS]\n"
             + "Example: " + COMMAND_WORD + " 3 "
@@ -67,7 +67,7 @@ public class UpdateDealCommand extends EditCommand<Deal> {
      */
     public static void addCommandWord() {
         Prefix[] prefixes = {
-            PREFIX_PROPERTY_NAME,
+            PREFIX_PROPERTY_ID,
             PREFIX_BUYER,
             PREFIX_SELLER,
             PREFIX_PRICE,
@@ -111,14 +111,42 @@ public class UpdateDealCommand extends EditCommand<Deal> {
     private static Deal createUpdatedDeal(Deal dealToUpdate, Model model, UpdateDealDescriptor updateDealDescriptor)
             throws CommandException {
         assert dealToUpdate != null;
-        PropertyName updatedPropertyName = updateDealDescriptor.getPropertyName()
-                .orElse(dealToUpdate.getPropertyName());
-        ClientName updatedBuyer = updateDealDescriptor.getBuyer()
-                .map(index -> model.getFilteredClientList().get(index.getZeroBased()).getClientName())
-                .orElse(dealToUpdate.getBuyer());
-        ClientName updatedSeller = updateDealDescriptor.getSeller()
-                .map(index -> model.getFilteredClientList().get(index.getZeroBased()).getClientName())
-                .orElse(dealToUpdate.getSeller());
+
+        // Extract and validate property
+        PropertyName updatedPropertyName;
+        if (updateDealDescriptor.getPropertyId().isPresent()) {
+            Index propertyIndex = updateDealDescriptor.getPropertyId().get();
+            if (propertyIndex.getZeroBased() >= model.getFilteredPropertyList().size()) {
+                throw new CommandException("Invalid property ID: Index out of bounds");
+            }
+            updatedPropertyName = model.getFilteredPropertyList().get(propertyIndex.getZeroBased()).getPropertyName();
+        } else {
+            updatedPropertyName = dealToUpdate.getPropertyName();
+        }
+
+        // Extract and validate buyer
+        ClientName updatedBuyer;
+        if (updateDealDescriptor.getBuyer().isPresent()) {
+            Index buyerIndex = updateDealDescriptor.getBuyer().get();
+            if (buyerIndex.getZeroBased() >= model.getFilteredClientList().size()) {
+                throw new CommandException("Invalid buyer ID: Index out of bounds");
+            }
+            updatedBuyer = model.getFilteredClientList().get(buyerIndex.getZeroBased()).getClientName();
+        } else {
+            updatedBuyer = dealToUpdate.getBuyer();
+        }
+
+        // Extract and validate seller
+        ClientName updatedSeller;
+        if (updateDealDescriptor.getSeller().isPresent()) {
+            Index sellerIndex = updateDealDescriptor.getSeller().get();
+            if (sellerIndex.getZeroBased() >= model.getFilteredClientList().size()) {
+                throw new CommandException("Invalid seller ID: Index out of bounds");
+            }
+            updatedSeller = model.getFilteredClientList().get(sellerIndex.getZeroBased()).getClientName();
+        } else {
+            updatedSeller = dealToUpdate.getSeller();
+        }
 
         // Validate that buyer and seller are not the same person
         if (updatedBuyer.equals(updatedSeller)) {
@@ -156,7 +184,7 @@ public class UpdateDealCommand extends EditCommand<Deal> {
      * Stores the details to edit the deal with. Each non-empty field value will replace the corresponding field.
      */
     public static class UpdateDealDescriptor extends EditDescriptor<Deal> {
-        private PropertyName propertyName;
+        private Index propertyId;
         private Index buyer;
         private Index seller;
         private Price price;
@@ -169,7 +197,7 @@ public class UpdateDealCommand extends EditCommand<Deal> {
          *
          */
         public UpdateDealDescriptor(UpdateDealDescriptor toCopy) {
-            setPropertyName(toCopy.propertyName);
+            setPropertyId(toCopy.propertyId);
             setBuyer(toCopy.buyer);
             setSeller(toCopy.seller);
             setPrice(toCopy.price);
@@ -178,14 +206,14 @@ public class UpdateDealCommand extends EditCommand<Deal> {
 
         @Override
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(propertyName, buyer, seller, price, status);
+            return CollectionUtil.isAnyNonNull(propertyId, buyer, seller, price, status);
         }
 
-        public void setPropertyName(PropertyName propertyName) {
-            this.propertyName = propertyName;
+        public void setPropertyId(Index propertyId) {
+            this.propertyId = propertyId;
         }
-        public Optional<PropertyName> getPropertyName() {
-            return Optional.ofNullable(propertyName);
+        public Optional<Index> getPropertyId() {
+            return Optional.ofNullable(propertyId);
         }
 
         public void setBuyer(Index buyer) {
@@ -226,7 +254,7 @@ public class UpdateDealCommand extends EditCommand<Deal> {
                 return false;
             }
 
-            return getPropertyName().equals(otherUpdateDealDescriptor.getPropertyName())
+            return getPropertyId().equals(otherUpdateDealDescriptor.getPropertyId())
                     && getBuyer().equals(otherUpdateDealDescriptor.getBuyer())
                     && getSeller().equals(otherUpdateDealDescriptor.getSeller())
                     && getPrice().equals(otherUpdateDealDescriptor.getPrice())
@@ -236,7 +264,7 @@ public class UpdateDealCommand extends EditCommand<Deal> {
         @Override
         public String toString() {
             return new ToStringBuilder(this)
-                    .add("propertyName", propertyName)
+                    .add("propertyId", propertyId)
                     .add("buyer", buyer)
                     .add("seller", seller)
                     .add("price", price)

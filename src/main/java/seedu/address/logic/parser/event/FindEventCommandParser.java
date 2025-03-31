@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_ABOUT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_WITH;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Predicate;
@@ -61,22 +60,18 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
         checkPrefixesUsedAreValid(prefixesUsed);
 
         ClientName clientName = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_EVENT_WITH).orElse(BLANK));
-        logger.fine("Client name: " + clientName);
 
         PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_EVENT_ABOUT)
             .orElse(BLANK));
-        logger.fine("Property name: " + propertyName);
 
         EventType eventType;
         try {
             eventType = ParserUtil.parseEventType(argMultimap.getValue(PREFIX_EVENT_TYPE).orElse(BLANK));
-            logger.fine("Event type: " + eventType);
         } catch (ParseException e) {
             eventType = null;
-            logger.warning("Event type: " + eventType);
         }
 
-        HashMap<Prefix, Predicate<Event>> prefixPredicateMap = new LinkedHashMap<>();
+        LinkedHashMap<Prefix, Predicate<Event>> prefixPredicateMap = new LinkedHashMap<>();
         for (Prefix prefix : prefixesUsed) {
             if (prefix.equals(PREFIX_EVENT_WITH)) {
                 prefixPredicateMap.put(prefix, new EventWithClientPredicate(clientName));
@@ -87,10 +82,7 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
             }
         }
 
-        Predicate<Event> combinedPredicate = null;
-        for (Prefix prefix : prefixPredicateMap.keySet()) {
-            combinedPredicate = getCombinedPredicate(combinedPredicate, prefix, prefixPredicateMap.get(prefix));
-        }
+        Predicate<Event> combinedPredicate = getCombinedPredicate(prefixPredicateMap);
         return new FindEventCommand(combinedPredicate);
     }
 }

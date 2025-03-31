@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -18,6 +19,12 @@ public abstract class FindCommandParser<T> implements Parser<FindCommand<T>> {
      */
     public abstract FindCommand<T> parse(String args) throws ParseException;
 
+    /**
+     * Checks if the prefixes used are valid.
+     *
+     * @param prefixesUsed The list of prefixes used in the command.
+     * @throws ParseException If the prefixes used are invalid.
+     */
     protected static void checkPrefixesUsedAreValid(List<Prefix> prefixesUsed) throws ParseException {
         List<Prefix> validPrefixes = prefixesUsed.stream()
             .filter(prefix -> !prefix.getPrefix().isEmpty())
@@ -47,7 +54,28 @@ public abstract class FindCommandParser<T> implements Parser<FindCommand<T>> {
         }
     }
 
-    protected static <T> Predicate<T> getCombinedPredicate(Predicate<T> currentPredicate, Prefix prefix,
+    /**
+     * Combines the predicates based on the prefixes used.
+     *
+     * @param prefixPredicateMap A map of prefixes to predicates.
+     */
+    protected static <T> Predicate<T> getCombinedPredicate(LinkedHashMap<Prefix, Predicate<T>> prefixPredicateMap) {
+        Predicate<T> combinedPredicate = null;
+        for (Prefix prefix : prefixPredicateMap.keySet()) {
+            combinedPredicate = combinePredicates(combinedPredicate, prefix, prefixPredicateMap.get(prefix));
+        }
+        return combinedPredicate;
+    }
+
+    /**
+     * Combines the current predicate with the next predicate based on the prefix.
+     *
+     * @param currentPredicate The current predicate.
+     * @param prefix The prefix indicating the type of combination (AND/OR).
+     * @param nextPredicate The next predicate to combine with.
+     * @return The combined predicate.
+     */
+    private static <T> Predicate<T> combinePredicates(Predicate<T> currentPredicate, Prefix prefix,
                                                         Predicate<T> nextPredicate) {
         if (currentPredicate == null && !prefix.isConditional()) {
             return nextPredicate;

@@ -110,6 +110,8 @@ public interface Model {
 
     void deleteEvent(Event event);
 
+    void setEvent(Event target, Event editedEvent);
+
     void updateFilteredEventList(Predicate<Event> predicate);
 
     /**

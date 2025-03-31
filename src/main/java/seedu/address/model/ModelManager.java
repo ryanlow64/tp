@@ -139,6 +139,12 @@ public class ModelManager implements Model {
         return addressBook.getEventList().contains(event);
     }
 
+    @Override
+    public void setEvent(Event target, Event editedEvent) {
+        this.deleteEvent(target);
+        this.addEvent(editedEvent);
+    }
+
     // === Property Methods ===
     @Override
     public boolean hasProperty(Property property) {

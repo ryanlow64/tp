@@ -24,6 +24,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_BUYER = new Prefix("buyer/", true);
     public static final Prefix PREFIX_SELLER = new Prefix("seller/", true);
     public static final Prefix PREFIX_STATUS = new Prefix("status/", true);
+    public static final Prefix PREFIX_PRICE_BELOW = new Prefix("price_</", true);
+    public static final Prefix PREFIX_PRICE_ABOVE = new Prefix("price_>/", true);
     public static final Prefix PREFIX_EVENT_ABOUT = new Prefix("about/", true);
     public static final Prefix PREFIX_EVENT_WITH = new Prefix("with/", true);
     public static final Prefix PREFIX_EVENT_TYPE = new Prefix("etype/", true);

@@ -2,6 +2,8 @@ package seedu.address.logic.parser.deal;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE_ABOVE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE_BELOW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
@@ -22,9 +24,12 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.client.ClientName;
+import seedu.address.model.commons.Price;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
 import seedu.address.model.deal.predicates.DealBuyerNameContainsPredicate;
+import seedu.address.model.deal.predicates.DealPriceAbovePredicate;
+import seedu.address.model.deal.predicates.DealPriceBelowPredicate;
 import seedu.address.model.deal.predicates.DealPropertyNameContainsPredicate;
 import seedu.address.model.deal.predicates.DealSellerNameContainsPredicate;
 import seedu.address.model.deal.predicates.DealStatusPredicate;
@@ -69,6 +74,26 @@ public class FindDealCommandParser extends FindCommandParser<Deal> {
         PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_PROPERTY_NAME)
             .orElse(BLANK));
 
+        Price priceBelow = null;
+        try {
+            priceBelow = ParserUtil.parsePrice(Long.parseLong(argMultimap.getValue(PREFIX_PRICE_BELOW).orElse("0")));
+        } catch (ParseException e) {
+            if (prefixesUsed.contains(PREFIX_PRICE_BELOW)) {
+                logger.warning("Invalid price below provided");
+                throw new ParseException(e.getMessage());
+            }
+        }
+
+        Price priceAbove = null;
+        try {
+            priceAbove = ParserUtil.parsePrice(Long.parseLong(argMultimap.getValue(PREFIX_PRICE_ABOVE).orElse("0")));
+        } catch (ParseException e) {
+            if (prefixesUsed.contains(PREFIX_PRICE_ABOVE)) {
+                logger.warning("Invalid price above provided");
+                throw new ParseException(e.getMessage());
+            }
+        }
+
         DealStatus status = null;
         try {
             status = ParserUtil.parseDealStatus(argMultimap.getValue(PREFIX_STATUS).orElse(BLANK));
@@ -89,6 +114,10 @@ public class FindDealCommandParser extends FindCommandParser<Deal> {
                 prefixPredicateMap.put(prefix, new DealStatusPredicate(status));
             } else if (prefix.equals(PREFIX_PROPERTY_NAME)) {
                 prefixPredicateMap.put(prefix, new DealPropertyNameContainsPredicate(propertyName));
+            } else if (prefix.equals(PREFIX_PRICE_BELOW)) {
+                prefixPredicateMap.put(prefix, new DealPriceBelowPredicate(priceBelow));
+            } else if (prefix.equals(PREFIX_PRICE_ABOVE)) {
+                prefixPredicateMap.put(prefix, new DealPriceAbovePredicate(priceAbove));
             }
         }
 

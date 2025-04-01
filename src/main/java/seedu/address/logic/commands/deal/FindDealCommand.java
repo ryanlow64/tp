@@ -2,6 +2,8 @@ package seedu.address.logic.commands.deal;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE_ABOVE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE_BELOW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
@@ -25,12 +27,6 @@ import seedu.address.model.deal.Deal;
 public class FindDealCommand extends FindCommand<Deal> {
 
     public static final String COMMAND_WORD = "find_deal";
-    public static final Prefix[] PREFIXES = {
-        PREFIX_PROPERTY_NAME,
-        PREFIX_BUYER,
-        PREFIX_SELLER,
-        PREFIX_STATUS
-    };
 
     private static final Logger logger = LogsCenter.getLogger(FindDealCommand.class);
 
@@ -59,7 +55,15 @@ public class FindDealCommand extends FindCommand<Deal> {
      * Adds the command word to the command word list.
      */
     public static void addCommandWord() {
-        addCommandWord(COMMAND_WORD, PREFIXES);
+        Prefix[] prefixes = {
+            PREFIX_PROPERTY_NAME,
+            PREFIX_BUYER,
+            PREFIX_SELLER,
+            PREFIX_STATUS,
+            PREFIX_PRICE_BELOW,
+            PREFIX_PRICE_ABOVE
+        };
+        addCommandWord(COMMAND_WORD, prefixes);
     }
 
     @Override

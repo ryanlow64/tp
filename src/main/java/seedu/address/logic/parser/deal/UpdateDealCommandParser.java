@@ -67,11 +67,8 @@ public class UpdateDealCommandParser extends EditCommandParser<Deal> {
             updateDealDescriptor.setBuyer(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_BUYER).get()));
         }
         if (argMultimap.getValue(PREFIX_SELLER).isPresent()) {
-            if (!isInternalUpdate) {
-                throw new ParseException("Seller cannot be manually updated."
-                        + " It is automatically set based on the property owner.");
-            }
-            updateDealDescriptor.setSeller(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_SELLER).get()));
+            throw new ParseException("Seller cannot be manually updated."
+                    + " It is automatically set based on the property owner.");
         }
         if (argMultimap.getValue(PREFIX_PRICE).isPresent()) {
             String priceArg = argMultimap.getValue(PREFIX_PRICE).get();

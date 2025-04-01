@@ -7,8 +7,8 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.Model;
+import seedu.address.model.commons.PropertyNameContainsKeywordsPredicate;
 import seedu.address.model.property.Property;
-import seedu.address.model.property.PropertyNameContainsKeywordsPredicate;
 
 
 /**

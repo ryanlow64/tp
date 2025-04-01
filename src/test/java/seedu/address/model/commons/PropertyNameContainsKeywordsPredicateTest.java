@@ -1,4 +1,4 @@
-package seedu.address.model.property;
+package seedu.address.model.commons;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.property.Property;
 import seedu.address.testutil.PropertyBuilder;
 
 public class PropertyNameContainsKeywordsPredicateTest {
@@ -83,7 +84,8 @@ public class PropertyNameContainsKeywordsPredicateTest {
         List<String> keywords = Arrays.asList("Maple", "Villa");
         PropertyNameContainsKeywordsPredicate predicate = new PropertyNameContainsKeywordsPredicate(keywords);
 
-        String expected = "seedu.address.model.property.PropertyNameContainsKeywordsPredicate{keywords=[Maple, Villa]}";
+        String expected = "seedu.address.model.commons.PropertyNameContainsKeywordsPredicate"
+            + "{keywords=[Maple, Villa]}";
         assertEquals(expected, predicate.toString());
     }
 }

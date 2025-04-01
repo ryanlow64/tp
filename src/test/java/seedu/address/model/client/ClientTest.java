@@ -80,7 +80,7 @@ public class ClientTest {
 
     @Test
     public void toStringMethod() {
-        String expected = Client.class.getCanonicalName() + "{clientName=" + ALICE.getClientName() + ", phone="
+        String expected = Client.class.getCanonicalName() + "{clientName=" + ALICE.getFullName() + ", phone="
                 + ALICE.getPhone() + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + "}";
         assertEquals(expected, ALICE.toString());
     }

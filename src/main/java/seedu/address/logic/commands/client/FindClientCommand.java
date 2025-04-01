@@ -2,13 +2,14 @@ package seedu.address.logic.commands.client;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.function.Predicate;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
-import seedu.address.model.client.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all clients in address book whose name contains any of the argument keywords.
@@ -23,7 +24,7 @@ public class FindClientCommand extends FindCommand<Client> {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
-    public FindClientCommand(NameContainsKeywordsPredicate predicate) {
+    public FindClientCommand(Predicate<Client> predicate) {
         super(predicate);
     }
 

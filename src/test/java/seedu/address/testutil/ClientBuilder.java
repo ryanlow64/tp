@@ -35,7 +35,7 @@ public class ClientBuilder {
      * Initializes the ClientBuilder with the data of {@code clientToCopy}.
      */
     public ClientBuilder(Client clientToCopy) {
-        clientName = clientToCopy.getClientName();
+        clientName = clientToCopy.getFullName();
         phone = clientToCopy.getPhone();
         email = clientToCopy.getEmail();
         address = clientToCopy.getAddress();

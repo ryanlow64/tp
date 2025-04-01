@@ -72,8 +72,8 @@ public class UpdateDealCommandTest {
         model.addClient(seller);
         model.addProperty(property);
 
-        ClientName buyerName = buyer.getClientName();
-        ClientName sellerName = seller.getClientName();
+        ClientName buyerName = buyer.getFullName();
+        ClientName sellerName = seller.getFullName();
 
         Deal testDeal = new DealBuilder()
                 .withPropertyName(VALID_PROPERTY_NAME)
@@ -101,7 +101,7 @@ public class UpdateDealCommandTest {
         String expectedMessage = String.format(UpdateDealCommand.MESSAGE_UPDATE_DEAL_SUCCESS, testDeal);
 
         // Create a copy of expected deal after update
-        Deal expectedDeal = new Deal(property.getPropertyName(), buyerName, sellerName,
+        Deal expectedDeal = new Deal(property.getFullName(), buyerName, sellerName,
                 new Price(VALID_PRICE_2), VALID_STATUS_2);
 
         // Execute command
@@ -140,8 +140,8 @@ public class UpdateDealCommandTest {
                 new Email("jane@example.com"),
                 new Address("Blk 456"));
 
-        ClientName buyerName = buyer.getClientName();
-        ClientName sellerName = seller.getClientName();
+        ClientName buyerName = buyer.getFullName();
+        ClientName sellerName = seller.getFullName();
 
         Deal testDeal = new DealBuilder()
                 .withPropertyName(VALID_PROPERTY_NAME)
@@ -262,8 +262,8 @@ public class UpdateDealCommandTest {
         model.addClient(seller);
         model.addProperty(property);
 
-        ClientName buyerName = buyer.getClientName();
-        ClientName sellerName = seller.getClientName();
+        ClientName buyerName = buyer.getFullName();
+        ClientName sellerName = seller.getFullName();
 
         Deal testDeal = new DealBuilder()
                 .withPropertyName(VALID_PROPERTY_NAME)
@@ -298,7 +298,7 @@ public class UpdateDealCommandTest {
                 new Address("Blk 123"));
         model.addClient(client);
 
-        ClientName clientName = client.getClientName();
+        ClientName clientName = client.getFullName();
 
         Deal testDeal = new DealBuilder()
                 .withPropertyName(VALID_PROPERTY_NAME)

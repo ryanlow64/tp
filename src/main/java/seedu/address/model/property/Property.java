@@ -8,13 +8,14 @@ import java.util.Optional;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Address;
+import seedu.address.model.commons.Nameable;
 import seedu.address.model.commons.Price;
 
 /**
  * Represents a Property in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Property {
+public class Property implements Nameable<Property> {
     private final PropertyName propertyName;
     private final Address address;
     private final Price price;
@@ -36,7 +37,8 @@ public class Property {
         this.owner = owner;
     }
 
-    public PropertyName getPropertyName() {
+    @Override
+    public PropertyName getFullName() {
         return propertyName;
     }
 
@@ -69,7 +71,7 @@ public class Property {
         }
 
         return otherProperty != null
-                && otherProperty.getPropertyName().equals(getPropertyName())
+                && otherProperty.getFullName().equals(getFullName())
                 && otherProperty.getAddress().equals(getAddress());
     }
 

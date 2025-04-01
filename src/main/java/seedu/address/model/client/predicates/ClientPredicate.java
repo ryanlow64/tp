@@ -1,17 +1,16 @@
-package seedu.address.model.event.predicates;
+package seedu.address.model.client.predicates;
 
 import java.util.function.Predicate;
 
-import seedu.address.model.event.Event;
+import seedu.address.model.client.Client;
 
 /**
- * Generic class for predicates that are used to filter events.
+ * Generic class for predicates that are used to filter clients.
  */
-public abstract class EventPredicate<T> implements Predicate<Event> {
-
+public abstract class ClientPredicate<T> implements Predicate<Client> {
     protected final T value;
 
-    public EventPredicate(T value) {
+    public ClientPredicate(T value) {
         this.value = value;
     }
 
@@ -21,7 +20,7 @@ public abstract class EventPredicate<T> implements Predicate<Event> {
             return true;
         }
 
-        if (!(other instanceof EventPredicate otherPredicate)) {
+        if (!(other instanceof ClientPredicate otherPredicate)) {
             return false;
         }
 

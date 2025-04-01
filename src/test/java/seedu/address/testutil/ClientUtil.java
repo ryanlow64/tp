@@ -26,7 +26,7 @@ public class ClientUtil {
      */
     public static String getClientDetails(Client client) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_CLIENT_NAME + client.getClientName().fullName + " ");
+        sb.append(PREFIX_CLIENT_NAME + client.getFullName().fullName + " ");
         sb.append(PREFIX_PHONE + client.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + client.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + client.getAddress().value + " ");
@@ -38,7 +38,7 @@ public class ClientUtil {
      */
     public static String getEditClientDescriptorDetails(EditClientDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
-        descriptor.getClientName().ifPresent(name -> sb.append(PREFIX_CLIENT_NAME).append(name.fullName)
+        descriptor.getFullName().ifPresent(name -> sb.append(PREFIX_CLIENT_NAME).append(name.fullName)
             .append(" "));
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
         descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));

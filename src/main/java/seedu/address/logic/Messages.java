@@ -45,7 +45,6 @@ public class Messages {
      */
     public static String formatClient(Client client) {
         return new StringBuilder(String.valueOf(client.getClientName()))
-                .append(client.getClientName())
                 .append("; Phone: ")
                 .append(client.getPhone())
                 .append("; Email: ")

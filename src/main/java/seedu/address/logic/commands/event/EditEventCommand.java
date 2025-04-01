@@ -47,8 +47,8 @@ public class EditEventCommand extends EditCommand<Event> {
             + "[" + PREFIX_EVENT_TYPE + "EVENT_TYPE] "
             + "[" + PREFIX_PROPERTY_ID + "PROPERTY_ID] "
             + "[" + PREFIX_CLIENT_ID + "CLIENT_ID] "
-            + "[" + PREFIX_EVENT_START + "EVENT_DATE_TIME "
-            + "[" + PREFIX_EVENT_NOTE + "NOTE\n"
+            + "[" + PREFIX_EVENT_START + "EVENT_DATE_TIME] "
+            + "[" + PREFIX_EVENT_NOTE + "NOTE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_EVENT_TYPE + "Meeting "
             + PREFIX_EVENT_START + "28-02-2025 1800";

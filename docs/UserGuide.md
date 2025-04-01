@@ -46,10 +46,10 @@ REconneect is a **desktop application for Real Estate agents to manage their wor
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+  e.g. in `add_client name/NAME`, `NAME` is a parameter which can be used as `add_client name/John Doe`.
 
 * Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+  e.g. if the command specifies `name/NAME phone/PHONE_NUMBER`, `phone/PHONE_NUMBER name/NAME` is also acceptable.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
@@ -90,6 +90,7 @@ Format: `edit_client INDEX [name/NAME] [phone/PHONE] [email/EMAIL] [addr/ADDRESS
 * Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed client list. The index **must be a positive integer** 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* Editing a client's name will result in an update to his/her name if it exists in deals, listings, or events
 
 Examples:
 * `edit_client 1 phone/91234567 email/johndoe@example.com` Edits the phone number and email address of the 1st client to be `91234567` and `johndoe@example.com` respectively.
@@ -290,6 +291,17 @@ Examples:
 * `add_event pid/1 cid/1 etype/viewing at/2024-01-15 14:30 note/Property viewing at 123 Main St`
 * `add_event pid/3 cid/2 etype/meeting at/2024-01-20 10:00`
 
+### Editing an event : `edit_event`
+
+Edits an existing event in REConnect
+
+Format: `edit_event INDEX [etype/EVENT_TYPE] [pid/PROPERTY_ID] [cid/CLIENT_ID] [at/EVENT_DATE_TIME] [note/NOTE]`
+
+* Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed client list. The index **must be a positive integer** 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* If the start time is updated, the event list will be automatically re-sorted in the order they happen
+
 ### Listing all events : `list_event`
 
 Shows a list of all events in REconnect.
@@ -323,6 +335,11 @@ Examples:
 * `list_event` followed by `delete_event 2` deletes the 2nd event in REconnect
 * `find_event etype/viewing` followed by `delete_event 1` deletes the 1st event in the filtered list
 
+### Listing all clients, listings, deals and events : `list_all`
+
+Shows a list of all everything in REConnect
+
+Format: `list_all`
 
 ### Exiting the program : `exit`
 
@@ -372,6 +389,7 @@ Action     | Format, Examples
 **Delete Property** | `delete_property INDEX`<br> e.g., `delete_property 1`
 **Edit Client**   | `edit_client INDEX [name/NAME] [phone/PHONE_NUMBER] [email/EMAIL] [addr/ADDRESS]`<br> e.g.,`edit_client 2 name/James Lee email/jameslee@example.com`
 **Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1200000 desc/Newly renovated`
+**Edit Event** | `edit_event INDEX [etype/EVENT_TYPE] [pid/PROPERTY_ID] [cid/CLIENT_ID] [at/EVENT_DATE_TIME] [note/NOTE]`
 **Find Client**   | `find_client KEYWORD [MORE_KEYWORDS]`<br> e.g., `find_client James Jake`
 **Find Deal**     | `find_deal [prop/PROPERTY_NAME] [buyer/BUYER_NAME] [seller/SELLER_NAME] [status/STATUS]`<br> e.g., `find_deal prop/Villa status/PENDING`
 **Find Event**    | `find_event etype/EVENT_TYPE`<br> e.g., `find_event etype/viewing`
@@ -380,6 +398,7 @@ Action     | Format, Examples
 **List Deals**    | `list_deal`
 **List Events**   | `list_event`
 **List Properties** | `list_property`
+**List All** | `list_all`
 **Update Deal**   | `update_deal dealId/DEAL_ID [prop/PROPERTY_NAME] [buyer/BUYER_ID] [seller/SELLER_ID] [price/PRICE] [status/STATUS]`<br> e.g., `update_deal dealId/3 status/CLOSED`
 **Help**          | `help`
 **Exit**          | `exit`

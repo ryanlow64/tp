@@ -101,7 +101,7 @@ public class UpdateDealCommandTest {
         String expectedMessage = String.format(UpdateDealCommand.MESSAGE_UPDATE_DEAL_SUCCESS, testDeal);
 
         // Create a copy of expected deal after update
-        Deal expectedDeal = new Deal(property.getPropertyName(), buyerName, sellerName,
+        Deal expectedDeal = new Deal(property.getPropertyName(), buyerName, property.getOwner(),
                 new Price(VALID_PRICE_2), VALID_STATUS_2);
 
         // Execute command

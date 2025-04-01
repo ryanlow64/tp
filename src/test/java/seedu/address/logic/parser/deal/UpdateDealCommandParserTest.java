@@ -107,10 +107,9 @@ public class UpdateDealCommandParserTest {
     public void parse_validBuyerSellerIdOnly_success() {
         Index dealIndex = INDEX_FIRST;
         Index buyerIndex = INDEX_FIRST;
-        Index sellerIndex = INDEX_SECOND;
-        String userInput = " 1 " + PREFIX_BUYER + "1 " + PREFIX_SELLER + "2";
+        String userInput = " 1 " + PREFIX_BUYER + "1";
         UpdateDealCommand expectedCommand = new UpdateDealCommand(dealIndex,
-                new UpdateDealDescriptorBuilder().withBuyer(buyerIndex).withSeller(sellerIndex).build());
+                new UpdateDealDescriptorBuilder().withBuyer(buyerIndex).build());
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
@@ -129,6 +128,13 @@ public class UpdateDealCommandParserTest {
                         .withStatus(DealStatus.CLOSED)
                         .build());
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_sellerUpdate_failure() {
+        assertParseFailure(parser,
+                " 1 " + PREFIX_SELLER + "2",
+                "Seller cannot be manually updated. It is automatically set based on the property owner.");
     }
 }
 

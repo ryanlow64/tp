@@ -16,7 +16,6 @@ public abstract class Command {
     public static final Map<String, List<Prefix>> COMMAND_WORDS = new HashMap<>();
 
     protected static void initialiseCommandWord(String commandWord, Prefix... prefixes) {
-        assert !COMMAND_WORDS.containsKey(commandWord) : "Command word should not exist in the map";
         COMMAND_WORDS.put(commandWord, List.of(prefixes));
     }
 

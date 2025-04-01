@@ -181,9 +181,7 @@ public class CommandTestUtil {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredDealList().size());
 
         Deal deal = model.getFilteredDealList().get(targetIndex.getZeroBased());
-        final String[] splitDealName = deal.getPropertyName().fullName.split("\\s+");
-        model.updateFilteredDealList(new DealPropertyNameContainsPredicate(Arrays
-                .asList(splitDealName[0])));
+        model.updateFilteredDealList(new DealPropertyNameContainsPredicate(deal.getPropertyName()));
 
         assertEquals(1, model.getFilteredDealList().size());
     }

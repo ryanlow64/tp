@@ -17,6 +17,7 @@ import seedu.address.model.client.Email;
 import seedu.address.model.client.Phone;
 import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
+import seedu.address.model.deal.DealStatus;
 import seedu.address.model.event.EventType;
 import seedu.address.model.event.Note;
 import seedu.address.model.property.Description;
@@ -256,6 +257,22 @@ public class ParserUtil {
             return EventType.valueOf(trimmedEventType.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new ParseException(EventType.MESSAGE_CONSTRAINTS);
+        }
+    }
+
+    /**
+     * Parses a {@code String dealStatus} into an {@code DealStatus}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code eventType} is invalid.
+     */
+    public static DealStatus parseDealStatus(String dealStatus) throws ParseException {
+        requireNonNull(dealStatus);
+        String trimmedDealStatus = dealStatus.trim();
+        try {
+            return DealStatus.valueOf(dealStatus.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(DealStatus.MESSAGE_CONSTRAINTS);
         }
     }
 

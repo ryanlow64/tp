@@ -64,11 +64,14 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
         PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_EVENT_ABOUT)
             .orElse(BLANK));
 
-        EventType eventType;
+        EventType eventType = null;
         try {
             eventType = ParserUtil.parseEventType(argMultimap.getValue(PREFIX_EVENT_TYPE).orElse(BLANK));
         } catch (ParseException e) {
-            eventType = null;
+            if (prefixesUsed.contains(PREFIX_EVENT_TYPE)) {
+                logger.warning("Invalid event type");
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+            }
         }
 
         LinkedHashMap<Prefix, Predicate<Event>> prefixPredicateMap = new LinkedHashMap<>();

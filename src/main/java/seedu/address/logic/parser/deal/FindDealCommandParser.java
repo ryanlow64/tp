@@ -7,22 +7,28 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.deal.FindDealCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.FindCommandParser;
+import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
 import seedu.address.model.deal.predicates.DealBuyerNameContainsPredicate;
 import seedu.address.model.deal.predicates.DealPropertyNameContainsPredicate;
 import seedu.address.model.deal.predicates.DealSellerNameContainsPredicate;
 import seedu.address.model.deal.predicates.DealStatusPredicate;
+import seedu.address.model.property.PropertyName;
 
 /**
  * Parses input arguments and creates a new FindDealCommand object
@@ -40,11 +46,12 @@ public class FindDealCommandParser extends FindCommandParser<Deal> {
     public FindDealCommand parse(String args) throws ParseException {
         logger.info("Parsing arguments for FindDealCommand: " + args);
 
-        ArgumentMultimap argMultimap =
-            ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER, PREFIX_STATUS);
+        Prefix[] prefixes = Command.COMMAND_WORDS.get(FindDealCommand.COMMAND_WORD).toArray(Prefix[]::new);
+
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixes);
+        List<Prefix> prefixesUsed = argMultimap.getPrefixes();
 
         String trimmedArgs = args.trim();
-
         if (trimmedArgs.isEmpty()) {
             logger.warning("Missing arguments");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindDealCommand.MESSAGE_USAGE));
@@ -54,62 +61,38 @@ public class FindDealCommandParser extends FindCommandParser<Deal> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER, PREFIX_STATUS);
         logger.fine("No repeated arguments supplied");
 
-        // Parse property name
-        List<String> propertyNameKeywords = parseKeywords(
-                argMultimap.getValue(PREFIX_PROPERTY_NAME).orElse(BLANK));
-        logger.fine("Property name keywords: " + propertyNameKeywords);
+        // Check if prefixes used are valid
+        checkPrefixesUsedAreValid(prefixesUsed);
 
-        // Parse buyer name
-        List<String> buyerNameKeywords = parseKeywords(
-                argMultimap.getValue(PREFIX_BUYER).orElse(BLANK));
-        logger.fine("Buyer name keywords: " + buyerNameKeywords);
+        ClientName buyerName = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_BUYER).orElse(BLANK));
+        ClientName sellerName = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_SELLER).orElse(BLANK));
+        PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_PROPERTY_NAME)
+            .orElse(BLANK));
 
-        // Parse seller name
-        List<String> sellerNameKeywords = parseKeywords(
-                argMultimap.getValue(PREFIX_SELLER).orElse(BLANK));
-        logger.fine("Seller name keywords: " + sellerNameKeywords);
-
-        // Parse status
         DealStatus status = null;
-        if (!argMultimap.getValue(PREFIX_STATUS).orElse(BLANK).equals(BLANK)) {
-            try {
-                String statusString = argMultimap.getValue(PREFIX_STATUS).get().toUpperCase();
-                logger.fine("Attempting to parse status: " + statusString);
-                status = DealStatus.valueOf(statusString);
-                logger.fine("Status specified: " + status);
-            } catch (IllegalArgumentException e) {
-                logger.warning("Invalid status value provided: " + argMultimap.getValue(PREFIX_STATUS).get());
-                throw new ParseException("Invalid status: Must be one of"
-                        + " 'OPEN', 'PENDING', 'CLOSED' (case insensitive).");
+        try {
+            status = ParserUtil.parseDealStatus(argMultimap.getValue(PREFIX_STATUS).orElse(BLANK));
+        } catch (ParseException e) {
+            if (prefixesUsed.contains(PREFIX_STATUS)) {
+                logger.warning("Invalid deal status provided");
+                throw new ParseException(e.getMessage());
             }
         }
 
-        // Create predicates
-        Predicate<Deal> propertyNamePredicate = propertyNameKeywords.isEmpty()
-            ? deal -> true
-            : new DealPropertyNameContainsPredicate(propertyNameKeywords);
-
-        Predicate<Deal> buyerNamePredicate = buyerNameKeywords.isEmpty()
-            ? deal -> true
-            : new DealBuyerNameContainsPredicate(buyerNameKeywords);
-
-        Predicate<Deal> sellerNamePredicate = sellerNameKeywords.isEmpty()
-            ? deal -> true
-            : new DealSellerNameContainsPredicate(sellerNameKeywords);
-
-        // Start with a combined predicate of all conditions using AND logic
-        // This ensures deals match ALL provided criteria, not just any one criterion
-        Predicate<Deal> combinedPredicate = propertyNamePredicate
-                .and(buyerNamePredicate)
-                .and(sellerNamePredicate);
-
-        // Add status predicate if provided
-        if (status != null) {
-            DealStatusPredicate statusPredicate = new DealStatusPredicate(status);
-            combinedPredicate = combinedPredicate.and(statusPredicate);
+        LinkedHashMap<Prefix, Predicate<Deal>> prefixPredicateMap = new LinkedHashMap<>();
+        for (Prefix prefix : prefixesUsed) {
+            if (prefix.equals(PREFIX_BUYER)) {
+                prefixPredicateMap.put(prefix, new DealBuyerNameContainsPredicate(buyerName));
+            } else if (prefix.equals(PREFIX_SELLER)) {
+                prefixPredicateMap.put(prefix, new DealSellerNameContainsPredicate(sellerName));
+            } else if (prefix.equals(PREFIX_STATUS)) {
+                prefixPredicateMap.put(prefix, new DealStatusPredicate(status));
+            } else if (prefix.equals(PREFIX_PROPERTY_NAME)) {
+                prefixPredicateMap.put(prefix, new DealPropertyNameContainsPredicate(propertyName));
+            }
         }
 
-        logger.info("FindDealCommand created with combined predicates");
+        Predicate<Deal> combinedPredicate = getCombinedPredicate(prefixPredicateMap);
         return new FindDealCommand(combinedPredicate);
     }
 

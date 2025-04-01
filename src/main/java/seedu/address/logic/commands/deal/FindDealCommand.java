@@ -25,6 +25,12 @@ import seedu.address.model.deal.Deal;
 public class FindDealCommand extends FindCommand<Deal> {
 
     public static final String COMMAND_WORD = "find_deal";
+    public static final Prefix[] PREFIXES = {
+        PREFIX_PROPERTY_NAME,
+        PREFIX_BUYER,
+        PREFIX_SELLER,
+        PREFIX_STATUS
+    };
 
     private static final Logger logger = LogsCenter.getLogger(FindDealCommand.class);
 
@@ -53,13 +59,7 @@ public class FindDealCommand extends FindCommand<Deal> {
      * Adds the command word to the command word list.
      */
     public static void addCommandWord() {
-        Prefix[] prefixes = {
-            PREFIX_PROPERTY_NAME,
-            PREFIX_BUYER,
-            PREFIX_SELLER,
-            PREFIX_STATUS
-        };
-        addCommandWord(COMMAND_WORD, prefixes);
+        addCommandWord(COMMAND_WORD, PREFIXES);
     }
 
     @Override

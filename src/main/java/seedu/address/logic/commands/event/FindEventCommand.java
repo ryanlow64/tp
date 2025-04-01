@@ -2,6 +2,8 @@ package seedu.address.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_ABOUT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_AFTER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_BEFORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_WITH;
 
@@ -50,7 +52,9 @@ public class FindEventCommand extends FindCommand<Event> {
         Prefix[] prefixes = {
             PREFIX_EVENT_ABOUT,
             PREFIX_EVENT_TYPE,
-            PREFIX_EVENT_WITH
+            PREFIX_EVENT_WITH,
+            PREFIX_EVENT_BEFORE,
+            PREFIX_EVENT_AFTER
         };
         addCommandWord(COMMAND_WORD, prefixes);
     }

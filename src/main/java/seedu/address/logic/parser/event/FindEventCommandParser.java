@@ -2,9 +2,12 @@ package seedu.address.logic.parser.event;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_ABOUT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_AFTER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_BEFORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_WITH;
 
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Predicate;
@@ -23,6 +26,8 @@ import seedu.address.model.client.ClientName;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventType;
 import seedu.address.model.event.predicates.EventAboutPropertyPredicate;
+import seedu.address.model.event.predicates.EventAfterDateTimePredicate;
+import seedu.address.model.event.predicates.EventBeforeDateTimePredicate;
 import seedu.address.model.event.predicates.EventOfTypePredicate;
 import seedu.address.model.event.predicates.EventWithClientPredicate;
 import seedu.address.model.property.PropertyName;
@@ -60,9 +65,28 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
         checkPrefixesUsedAreValid(prefixesUsed);
 
         ClientName clientName = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_EVENT_WITH).orElse(BLANK));
-
         PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_EVENT_ABOUT)
             .orElse(BLANK));
+
+        LocalDateTime beforeDateTime = null;
+        try {
+            beforeDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_BEFORE).orElse(BLANK));
+        } catch (ParseException e) {
+            if (prefixesUsed.contains(PREFIX_EVENT_BEFORE)) {
+                logger.warning("Invalid date format for before date");
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+            }
+        }
+
+        LocalDateTime afterDateTime = null;
+        try {
+            afterDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_AFTER).orElse(BLANK));
+        } catch (ParseException e) {
+            if (prefixesUsed.contains(PREFIX_EVENT_AFTER)) {
+                logger.warning("Invalid date format for after date");
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+            }
+        }
 
         EventType eventType = null;
         try {
@@ -82,6 +106,10 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
                 prefixPredicateMap.put(prefix, new EventAboutPropertyPredicate(propertyName));
             } else if (prefix.equals(PREFIX_EVENT_TYPE)) {
                 prefixPredicateMap.put(prefix, new EventOfTypePredicate(eventType));
+            } else if (prefix.equals(PREFIX_EVENT_BEFORE)) {
+                prefixPredicateMap.put(prefix, new EventBeforeDateTimePredicate(beforeDateTime));
+            } else if (prefix.equals(PREFIX_EVENT_AFTER)) {
+                prefixPredicateMap.put(prefix, new EventAfterDateTimePredicate(afterDateTime));
             }
         }
 

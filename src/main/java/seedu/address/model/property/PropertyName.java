@@ -9,7 +9,7 @@ import seedu.address.model.commons.Name;
  * Represents a Property's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPropertyName(String)}
  */
-public class PropertyName implements Name {
+public class PropertyName implements Name<Property> {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Names should only contain alphanumeric characters and spaces, and it should not be blank";
@@ -38,13 +38,6 @@ public class PropertyName implements Name {
      */
     public static boolean isValidPropertyName(String test) {
         return test.matches(VALIDATION_REGEX);
-    }
-
-    /**
-     * Returns the full name if present, o
-     */
-    public String getFullName() {
-        return fullName;
     }
 
     @Override

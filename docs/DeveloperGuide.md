@@ -284,10 +284,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​                                    | I want to …​                                                                | So that I can…​                                                               |
 |----------|--------------------------------------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| `* * *`  | real estate agent                          | add property details                                                        | offer more property listings to attract potential buyers                      |
-| `* * *`  | real estate agent                          | remove property details                                                     | keep my available listings relevant                                           |
+| `* * *`  | real estate agent                          | add property listings                                                       | offer more property listings to attract potential buyers                      |
+| `* * *`  | real estate agent                          | remove property listings                                                    | keep my available listings relevant                                           |
 | `* * `   | real estate agent                          | edit property details                                                       | update incorrect or outdated information                                      |
-| `* * *`  | real estate agent                          | store all the property details in one place                                 | showcase the list of properties that I have to potential buyers               |
+| `* * *`  | real estate agent                          | store all the property listings in one place                                | showcase the list of properties that I have to potential buyers               |
 | `* * *`  | real estate agent                          | add client contact details                                                  | easily follow up on leads and maintain relationships                          |
 | `* * *`  | real estate agent                          | remove outdated client contact details                                      | keep my records relevant and clutter-free                                     |
 | `* * `   | real estate agent                          | edit client contact details                                                 | ensure that phone numbers, emails and other details remain accurate           |

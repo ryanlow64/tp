@@ -12,6 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 
@@ -40,6 +41,18 @@ public class FindEventCommand extends FindCommand<Event> {
     public FindEventCommand(Predicate<Event> predicate) {
         super(predicate);
         logger.info("FindEventCommand initialized with predicate: " + predicate);
+    }
+
+    /**
+     * Adds the command word to the command word list.
+     */
+    public static void addCommandWord() {
+        Prefix[] prefixes = {
+            PREFIX_EVENT_ABOUT,
+            PREFIX_EVENT_TYPE,
+            PREFIX_EVENT_WITH
+        };
+        initialiseCommandWord(COMMAND_WORD, prefixes);
     }
 
     @Override

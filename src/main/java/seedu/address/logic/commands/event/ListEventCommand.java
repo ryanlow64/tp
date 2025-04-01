@@ -19,6 +19,11 @@ public class ListEventCommand extends ListCommand<Event> {
     public static final String MESSAGE_SUCCESS = "Listed all events";
 
     private static final Logger logger = LogsCenter.getLogger(ListEventCommand.class);
+
+    public static void addCommandWord() {
+        initialiseCommandWord(COMMAND_WORD);
+    }
+
     /**
      * Executes the {@code ListEventCommand} and shows all events in the list, removing the find filter (if any).
      */

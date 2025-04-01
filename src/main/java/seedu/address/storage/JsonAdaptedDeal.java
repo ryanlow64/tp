@@ -17,7 +17,7 @@ public class JsonAdaptedDeal {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Deal's %s field is missing!";
     public static final String INVALID_PRICE_MESSAGE = "Price must be a positive number and be under 9 quintillion.";
-    public static final String INVALID_STATUS_MESSAGE = "Status must be one of 'PENDING', 'CLOSED', 'IN_NEGOTIATION'.";
+    public static final String INVALID_STATUS_MESSAGE = "Status must be one of 'OPEN', 'PENDING', 'CLOSED'.";
     public static final String INVALID_NAME_MESSAGE = "Name must be a valid string.";
 
     private final String propertyName;

@@ -17,6 +17,10 @@ public class ListPropertyCommand extends ListCommand<Property> {
 
     public static final String MESSAGE_SUCCESS = "Listed all properties";
 
+    public static void addCommandWord() {
+        initialiseCommandWord(COMMAND_WORD);
+    }
+
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);

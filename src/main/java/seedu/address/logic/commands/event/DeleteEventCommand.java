@@ -18,15 +18,13 @@ import seedu.address.model.event.Event;
  * Deletes an event identified using its index from the address book.
  */
 public class DeleteEventCommand extends DeleteCommand<Event> {
+
     public static final String COMMAND_WORD = "delete_event";
 
-    public static final String MESSAGE_USAGE = new StringBuilder(COMMAND_WORD)
-            .append(" INDEX")
-            .append(System.lineSeparator())
-            .append("Example: ")
-            .append(COMMAND_WORD)
-            .append(" 42")
-            .toString();
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+        + ": Deletes the event identified by the index number used in the displayed event list.\n"
+        + "Parameters: INDEX (must be a positive integer)\n"
+        + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Deleted event: %s";
     public static final String MESSAGE_INVALID_EVENT = "This event index provided is invalid.";
@@ -41,6 +39,13 @@ public class DeleteEventCommand extends DeleteCommand<Event> {
     public DeleteEventCommand(Index targetIndex) {
         super(targetIndex);
         logger.info("DeleteEventCommand initialized with index: " + targetIndex.getZeroBased());
+    }
+
+    /**
+     * Adds a command word and its associated prefixes to the command word map.
+     */
+    public static void addCommandWord() {
+        initialiseCommandWord(COMMAND_WORD);
     }
 
     @Override

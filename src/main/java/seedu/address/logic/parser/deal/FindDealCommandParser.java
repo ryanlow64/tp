@@ -74,28 +74,39 @@ public class FindDealCommandParser extends FindCommandParser<Deal> {
         if (!argMultimap.getValue(PREFIX_STATUS).orElse(BLANK).equals(BLANK)) {
             try {
                 String statusString = argMultimap.getValue(PREFIX_STATUS).get().toUpperCase();
+                logger.fine("Attempting to parse status: " + statusString);
                 status = DealStatus.valueOf(statusString);
                 logger.fine("Status specified: " + status);
             } catch (IllegalArgumentException e) {
                 logger.warning("Invalid status value provided: " + argMultimap.getValue(PREFIX_STATUS).get());
-                throw new ParseException("Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED'.");
+                throw new ParseException("Invalid status: Must be one of"
+                        + " 'OPEN', 'PENDING', 'CLOSED' (case insensitive).");
             }
         }
 
         // Create predicates
-        Predicate<Deal> propertyNamePredicate = new DealPropertyNameContainsPredicate(propertyNameKeywords);
-        Predicate<Deal> buyerNamePredicate = new DealBuyerNameContainsPredicate(buyerNameKeywords);
-        Predicate<Deal> sellerNamePredicate = new DealSellerNameContainsPredicate(sellerNameKeywords);
+        Predicate<Deal> propertyNamePredicate = propertyNameKeywords.isEmpty()
+            ? deal -> true
+            : new DealPropertyNameContainsPredicate(propertyNameKeywords);
 
-        // Start with a combined predicate of name-based searches
+        Predicate<Deal> buyerNamePredicate = buyerNameKeywords.isEmpty()
+            ? deal -> true
+            : new DealBuyerNameContainsPredicate(buyerNameKeywords);
+
+        Predicate<Deal> sellerNamePredicate = sellerNameKeywords.isEmpty()
+            ? deal -> true
+            : new DealSellerNameContainsPredicate(sellerNameKeywords);
+
+        // Start with a combined predicate of all conditions using AND logic
+        // This ensures deals match ALL provided criteria, not just any one criterion
         Predicate<Deal> combinedPredicate = propertyNamePredicate
-                .or(buyerNamePredicate)
-                .or(sellerNamePredicate);
+                .and(buyerNamePredicate)
+                .and(sellerNamePredicate);
 
         // Add status predicate if provided
         if (status != null) {
             DealStatusPredicate statusPredicate = new DealStatusPredicate(status);
-            combinedPredicate = combinedPredicate.or(statusPredicate);
+            combinedPredicate = combinedPredicate.and(statusPredicate);
         }
 
         logger.info("FindDealCommand created with combined predicates");

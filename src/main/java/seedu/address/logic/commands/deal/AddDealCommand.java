@@ -7,11 +7,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.ClientName;
@@ -47,7 +50,10 @@ public class AddDealCommand extends Command {
     public static final String MESSAGE_INVALID_BUYER_ID = "Invalid buyer ID.";
     public static final String MESSAGE_SAME_BUYER_SELLER = "Buyer and seller cannot be the same person.";
     public static final String MESSAGE_PROPERTY_ALREADY_IN_DEAL = "This property is already involved in another deal.";
-    public static final String MESSAGE_PRICE_EXCEEDS_LIMIT = "Price exceeds the limit of 999.99";
+    public static final String MESSAGE_PRICE_EXCEEDS_LIMIT = "Price should only contain positive numbers"
+                                                            + " (in S$ thousands) between 3 to 6 digits";
+
+    private static final Logger logger = LogsCenter.getLogger(AddDealCommand.class);
 
     private final Index propertyId;
     private final Index buyerId;
@@ -66,45 +72,75 @@ public class AddDealCommand extends Command {
         this.buyerId = buyerId;
         this.price = price;
         this.status = status;
+        logger.fine("Created AddDealCommand with propertyId: " + propertyId.getOneBased()
+                + ", buyerId: " + buyerId.getOneBased()
+                + ", price: " + price.value
+                + ", status: " + status);
+    }
+
+    /**
+     * Adds the command word to the command word list.
+     */
+    public static void addCommandWord() {
+        Prefix[] prefixes = {
+            PREFIX_PROPERTY_ID,
+            PREFIX_BUYER,
+            PREFIX_PRICE,
+            PREFIX_STATUS
+        };
+        initialiseCommandWord(COMMAND_WORD, prefixes);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        logger.info("Executing AddDealCommand");
 
         // Get the property by ID
         List<Property> propertyList = model.getFilteredPropertyList();
+        logger.fine("PropertyList size: " + propertyList.size() + ", requested propertyId: "
+                + propertyId.getOneBased());
         if (propertyId.getZeroBased() >= propertyList.size()) {
+            logger.warning("Invalid property ID: " + propertyId.getOneBased());
             throw new CommandException(MESSAGE_INVALID_PROPERTY_ID);
         }
         Property property = propertyList.get(propertyId.getZeroBased());
         PropertyName propertyName = property.getPropertyName();
+        logger.fine("Found property: " + propertyName);
 
         // Get the seller from the property's owner
         ClientName sellerName = property.getOwner();
+        logger.fine("Seller name: " + sellerName);
 
         // Fetch buyer by index
         List<Client> clientList = model.getFilteredClientList();
+        logger.fine("ClientList size: " + clientList.size() + ", requested buyerId: " + buyerId.getOneBased());
         // Check if buyer ID is valid
         if (buyerId.getZeroBased() >= clientList.size()) {
+            logger.warning("Invalid buyer ID: " + buyerId.getOneBased());
             throw new CommandException(MESSAGE_INVALID_BUYER_ID);
         }
         Client buyer = clientList.get(buyerId.getZeroBased());
         ClientName buyerName = buyer.getClientName();
+        logger.fine("Found buyer: " + buyerName);
 
         // Validate that buyer and seller are not the same person
         if (buyerName.equals(sellerName)) {
+            logger.warning("Attempted to create deal where buyer and seller are the same: " + buyerName);
             throw new CommandException(MESSAGE_SAME_BUYER_SELLER);
         }
 
         // Check if price exceeds limit
-        if (price.value > 999_990_000) {
+        if (!Price.isValidPrice(price.value)) {
+            logger.warning("Price format is invalid: " + price.value);
             throw new CommandException(MESSAGE_PRICE_EXCEEDS_LIMIT);
         }
 
         Deal toAdd = new Deal(propertyName, buyerName, sellerName, price, status);
+        logger.fine("Created deal: " + toAdd);
 
         if (model.hasDeal(toAdd)) {
+            logger.warning("Duplicate deal detected: " + toAdd);
             throw new CommandException(MESSAGE_DUPLICATE_DEAL);
         }
 
@@ -112,10 +148,13 @@ public class AddDealCommand extends Command {
         boolean propertyAlreadyInDeal = model.getFilteredDealList().stream()
                 .anyMatch(existingDeal -> existingDeal.getPropertyName().equals(propertyName));
         if (propertyAlreadyInDeal) {
+            logger.warning("Property already in another deal: " + propertyName);
             throw new CommandException(MESSAGE_PROPERTY_ALREADY_IN_DEAL);
         }
 
         model.addDeal(toAdd);
+        logger.info("Added deal successfully: " + toAdd);
+
         return new CommandResult(String.format(MESSAGE_SUCCESS,
                 propertyName.toString(),
                 buyerName.toString(),

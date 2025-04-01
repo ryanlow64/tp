@@ -370,6 +370,61 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
+**Use case: Edit Client Contact Details**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to edit an existing contact and provides contact details.
+2. System validates input.
+3. System updates contact.
+4. System informs user the outcome of the edition.
+
+**Use case ends.**
+
+**Extensions**
+
+2a. System detects missing or incorrect fields.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a1. System prompts the user to complete them.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a2. User enters new data.\
+&nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
+
+3a. System fails to update the contact details.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
+
+**Use case: Find Client Contact**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to find an existing contact and provides name of contact.
+2. System validates input.
+3. System returns a list of relevant contact.
+
+**Use case ends.**
+
+**Extensions**
+
+2a. System detects missing or incorrect fields.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a1. System prompts the user to complete them.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a2. User enters new data.\
+&nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
+
+3a. System fails to find the clients with the input name.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an empty list.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
+
 **Use case: Add Property Listing Details**
 
 **Actor:** User (Real Estate Agent)\
@@ -452,8 +507,42 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &nbsp;&nbsp;&nbsp;&nbsp;3a2. User enters new data.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 2.**
 
-4a. System fails to store the meeting details.\
+4a. System fails to store the event details.\
 &nbsp;&nbsp;&nbsp;&nbsp;4a1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
+
+**Use case: Edit Event Details**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to edit an event and provides event details.
+2. System validates input.
+3. System checks for clashes in schedule.
+4. System adds the event to the schedule.
+5. System informs user the outcome of the edition.
+
+**Use case ends.**
+
+**Extensions**
+
+2a. System detects missing or incorrect fields.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a1. System prompts the user to complete them.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a2. User enters new data.\
+&nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
+
+3a. Meeting clashes with the existing schedule.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System prompts the user to choose a different date or time.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a2. User enters new data.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 2.**
+
+4a. System fails to update the event details.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an error message.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
 ---

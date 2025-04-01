@@ -10,7 +10,9 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -18,13 +20,23 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditDescriptor;
+import seedu.address.logic.commands.deal.UpdateDealCommand;
+import seedu.address.logic.commands.deal.UpdateDealCommand.UpdateDealDescriptor;
+import seedu.address.logic.commands.event.EditEventCommand;
+import seedu.address.logic.commands.event.EditEventCommand.EditEventDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.property.EditPropertyCommand;
+import seedu.address.logic.commands.property.EditPropertyCommand.EditPropertyDescriptor;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.ClientName;
 import seedu.address.model.client.Email;
 import seedu.address.model.client.Phone;
 import seedu.address.model.commons.Address;
+import seedu.address.model.deal.Deal;
+import seedu.address.model.event.Event;
+import seedu.address.model.property.Property;
 
 /**
  * Edits the details of an existing client in the address book.
@@ -49,6 +61,8 @@ public class EditClientCommand extends EditCommand<Client> {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_CLIENT = "This client already exists in the address book.";
 
+    private static final Logger logger = LogsCenter.getLogger(EditClientCommand.class);
+
     private final EditClientDescriptor editClientDescriptor;
 
     /**
@@ -60,16 +74,33 @@ public class EditClientCommand extends EditCommand<Client> {
         this.editClientDescriptor = new EditClientDescriptor(editClientDescriptor);
     }
 
+    /**
+     * Adds a command word and its associated prefixes to the command word map.
+     */
+    public static void addCommandWord() {
+        Prefix[] prefixes = {
+            PREFIX_CLIENT_NAME,
+            PREFIX_PHONE,
+            PREFIX_EMAIL,
+            PREFIX_ADDRESS
+        };
+        initialiseCommandWord(COMMAND_WORD, prefixes);
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Client> lastShownList = model.getFilteredClientList();
+        List<Client> lastShownClientList = model.getFilteredClientList();
+        List<Deal> lastShownDealList = model.getFilteredDealList();
+        List<Event> lastShownEventList = model.getFilteredEventList();
+        List<Property> lastShownPropertyList = model.getFilteredPropertyList();
+        Optional<ClientName> optionalClientName = editClientDescriptor.getClientName();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
+        if (index.getZeroBased() >= lastShownClientList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
         }
 
-        Client clientToEdit = lastShownList.get(index.getZeroBased());
+        Client clientToEdit = lastShownClientList.get(index.getZeroBased());
         Client editedClient = createEditedClient(clientToEdit, editClientDescriptor);
 
         if (!clientToEdit.isSameClient(editedClient) && model.hasClient(editedClient)) {
@@ -78,7 +109,77 @@ public class EditClientCommand extends EditCommand<Client> {
 
         model.setClient(clientToEdit, editedClient);
         model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
+
+        if (optionalClientName.isPresent()) {
+            ClientName oldClientName = clientToEdit.getClientName();
+            ClientName newClientName = optionalClientName.get();
+
+            updateClientNameInDeals(oldClientName, index, lastShownDealList, model);
+            updateClientNameInEvents(oldClientName, index, lastShownEventList, model);
+            updateClientNameInListings(oldClientName, newClientName, lastShownPropertyList, model);
+        }
+
         return new CommandResult(String.format(MESSAGE_EDIT_CLIENT_SUCCESS, Messages.formatClient(editedClient)));
+    }
+
+    private void updateClientNameInEvents(ClientName oldClientName, Index index,
+            List<Event> eventList, Model model) {
+        int eventPosition = 0;
+        for (; eventPosition < eventList.size(); eventPosition++) {
+            Event event = eventList.get(eventPosition);
+            EditEventDescriptor descriptor = new EditEventDescriptor();
+            if (oldClientName.equals(event.getClientName())) {
+                descriptor.setClientId(index);
+            }
+            if (descriptor.isAnyFieldEdited()) {
+                try {
+                    new EditEventCommand(Index.fromZeroBased(eventPosition), descriptor).execute(model);
+                } catch (CommandException e) {
+                    logger.info("An error occurred while executing command to update client");
+                }
+            }
+        }
+    }
+
+    private void updateClientNameInListings(ClientName oldClientName,
+            ClientName newClientName, List<Property> propertyList, Model model) {
+        int listingPosition = 0;
+        for (; listingPosition < propertyList.size(); listingPosition++) {
+            Property property = propertyList.get(listingPosition);
+            EditPropertyDescriptor descriptor = new EditPropertyDescriptor();
+            if (oldClientName.equals(property.getOwner())) {
+                descriptor.setOwner(newClientName);
+            }
+            if (descriptor.isAnyFieldEdited()) {
+                try {
+                    new EditPropertyCommand(Index.fromZeroBased(listingPosition), descriptor).execute(model);
+                } catch (CommandException e) {
+                    logger.info("An error occurred while executing command to update client");
+                }
+            }
+        }
+    }
+
+    private void updateClientNameInDeals(ClientName oldClientName, Index index,
+            List<Deal> dealList, Model model) {
+        int dealPosition = 0;
+        for (; dealPosition < dealList.size(); dealPosition++) {
+            Deal deal = dealList.get(dealPosition);
+            UpdateDealDescriptor descriptor = new UpdateDealDescriptor();
+            if (oldClientName.equals(deal.getBuyer())) {
+                descriptor.setBuyer(index);
+            }
+            if (oldClientName.equals(deal.getSeller())) {
+                descriptor.setSeller(index);
+            }
+            if (descriptor.isAnyFieldEdited()) {
+                try {
+                    new UpdateDealCommand(Index.fromZeroBased(dealPosition), descriptor).execute(model);
+                } catch (CommandException e) {
+                    logger.info("An error occurred while executing command to update client");
+                }
+            }
+        }
     }
 
     /**

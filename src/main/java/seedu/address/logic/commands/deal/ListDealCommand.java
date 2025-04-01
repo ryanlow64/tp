@@ -20,6 +20,10 @@ public class ListDealCommand extends ListCommand<Deal> {
 
     private static final Logger logger = LogsCenter.getLogger(ListDealCommand.class);
 
+    public static void addCommandWord() {
+        initialiseCommandWord(COMMAND_WORD);
+    }
+
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);

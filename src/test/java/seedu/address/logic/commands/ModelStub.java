@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
@@ -64,6 +65,11 @@ public class ModelStub implements Model {
 
     @Override
     public boolean hasClient(Client client) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public boolean hasClient(Client client, Index index) {
         throw new AssertionError("This method should not be called.");
     }
 

@@ -29,18 +29,18 @@ public class ClientTest {
                 .withAddress(VALID_ADDRESS_BOB).build();
         assertTrue(ALICE.isSameClient(editedAlice));
 
-        // different name, all other attributes same -> returns false
+        // different name, all other attributes same -> returns true
         editedAlice = new ClientBuilder(ALICE).withClientName(VALID_CLIENT_NAME_BOB).build();
-        assertFalse(ALICE.isSameClient(editedAlice));
+        assertTrue(ALICE.isSameClient(editedAlice));
 
-        // name differs in case, all other attributes same -> returns false
+        // name differs in case, all other attributes same -> returns true
         Client editedBob = new ClientBuilder(BOB).withClientName(VALID_CLIENT_NAME_BOB.toLowerCase()).build();
-        assertFalse(BOB.isSameClient(editedBob));
+        assertTrue(BOB.isSameClient(editedBob));
 
-        // name has trailing spaces, all other attributes same -> returns false
+        // name has trailing spaces, all other attributes same -> returns true
         String nameWithTrailingSpaces = VALID_CLIENT_NAME_BOB + " ";
         editedBob = new ClientBuilder(BOB).withClientName(nameWithTrailingSpaces).build();
-        assertFalse(BOB.isSameClient(editedBob));
+        assertTrue(BOB.isSameClient(editedBob));
     }
 
     @Test

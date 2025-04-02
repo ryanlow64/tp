@@ -47,6 +47,16 @@ public class UpdateDealCommandParser extends EditCommandParser<Deal> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_ID, PREFIX_BUYER, PREFIX_SELLER, PREFIX_PRICE,
                 PREFIX_STATUS);
 
+        // Check if this is an internal update (from EditClientCommand)
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        boolean isInternalUpdate = false;
+        for (StackTraceElement element : stackTrace) {
+            if (element.getClassName().contains("EditClientCommand")) {
+                isInternalUpdate = true;
+                break;
+            }
+        }
+
         UpdateDealDescriptor updateDealDescriptor = new UpdateDealDescriptor();
 
         if (argMultimap.getValue(PREFIX_PROPERTY_ID).isPresent()) {
@@ -57,7 +67,8 @@ public class UpdateDealCommandParser extends EditCommandParser<Deal> {
             updateDealDescriptor.setBuyer(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_BUYER).get()));
         }
         if (argMultimap.getValue(PREFIX_SELLER).isPresent()) {
-            updateDealDescriptor.setSeller(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_SELLER).get()));
+            throw new ParseException("Seller cannot be manually updated."
+                    + " It is automatically set based on the property owner.");
         }
         if (argMultimap.getValue(PREFIX_PRICE).isPresent()) {
             String priceArg = argMultimap.getValue(PREFIX_PRICE).get();

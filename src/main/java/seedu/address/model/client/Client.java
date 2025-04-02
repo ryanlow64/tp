@@ -51,7 +51,7 @@ public class Client implements Nameable<Client> {
     }
 
     /**
-     * Returns true if both persons have the same clientName.
+     * Returns true if both persons have the same clientName or phone.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSameClient(Client otherClient) {
@@ -60,7 +60,8 @@ public class Client implements Nameable<Client> {
         }
 
         return otherClient != null
-                && otherClient.getFullName().equals(getFullName());
+                && (otherClient.getFullName().equals(getFullName())
+                || otherClient.getPhone().equals(getPhone()));
     }
 
     /**

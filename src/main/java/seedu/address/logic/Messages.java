@@ -19,6 +19,7 @@ public class Messages {
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     public static final String MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX = "The client index provided is invalid";
+    public static final String MESSAGE_INVALID_EVENT_DISPLAYED_INDEX = "The event index provided is invalid";
     public static final String MESSAGE_INVALID_PROPERTY_DISPLAYED_INDEX = "The property index provided is invalid";
     public static final String MESSAGE_CLIENTS_LISTED_OVERVIEW = "%1$d clients listed!";
     public static final String MESSAGE_PROPERTIES_LISTED_OVERVIEW = "%1$d properties are found and listed here!";
@@ -44,7 +45,6 @@ public class Messages {
      */
     public static String formatClient(Client client) {
         return new StringBuilder(String.valueOf(client.getFullName()))
-                .append(client.getFullName())
                 .append("; Phone: ")
                 .append(client.getPhone())
                 .append("; Email: ")

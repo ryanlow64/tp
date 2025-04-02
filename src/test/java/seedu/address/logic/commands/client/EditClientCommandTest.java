@@ -13,6 +13,10 @@ import static seedu.address.logic.commands.CommandTestUtil.showClientAtIndex;
 import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
+import static seedu.address.testutil.TypicalProperties.MAPLE;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +30,17 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.client.Client;
+import seedu.address.model.commons.Address;
+import seedu.address.model.commons.Price;
+import seedu.address.model.deal.Deal;
+import seedu.address.model.deal.DealStatus;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventType;
+import seedu.address.model.event.Note;
+import seedu.address.model.property.Description;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.PropertyName;
+import seedu.address.model.property.Size;
 import seedu.address.testutil.ClientBuilder;
 import seedu.address.testutil.EditClientDescriptorBuilder;
 
@@ -150,6 +165,92 @@ public class EditClientCommandTest extends EditCommandTest<Client> {
             new EditClientDescriptorBuilder().withClientName(VALID_CLIENT_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_clientNameUpdated_updatesInDeals() {
+        Client originalClient = model.getFilteredClientList().get(INDEX_FIRST.getZeroBased());
+        Client editedClient = new ClientBuilder(originalClient).withClientName("New Name").build();
+        Model methodModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        methodModel.addProperty(MAPLE);
+        Property firstProperty = methodModel.getFilteredPropertyList().get(INDEX_FIRST.getZeroBased());
+
+        // Add a deal with this client as buyer
+        Deal mockDeal = new Deal(firstProperty.getPropertyName(), originalClient.getClientName(),
+                firstProperty.getOwner(), new Price((long) 222), DealStatus.CLOSED);
+        methodModel.addDeal(mockDeal);
+
+        EditClientDescriptor descriptor = new EditClientDescriptorBuilder()
+                .withClientName("New Name").build();
+        EditClientCommand editCommand = new EditClientCommand(INDEX_FIRST, descriptor);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setClient(originalClient, editedClient);
+        Deal newMockDeal = new Deal(firstProperty.getPropertyName(), editedClient.getClientName(),
+                firstProperty.getOwner(), new Price((long) 222), DealStatus.CLOSED);
+        expectedModel.addDeal(newMockDeal);
+        expectedModel.addProperty(MAPLE);
+
+        assertCommandSuccess(editCommand, methodModel,
+                String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS, Messages.formatClient(editedClient)),
+                expectedModel);
+    }
+
+    @Test
+    public void execute_clientNameUpdated_updatesInEvents() {
+        Client originalClient = model.getFilteredClientList().get(INDEX_FIRST.getZeroBased());
+        Client editedClient = new ClientBuilder(originalClient).withClientName("New Name").build();
+        Model methodModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        methodModel.addProperty(MAPLE);
+        Property firstProperty = methodModel.getFilteredPropertyList().get(INDEX_FIRST.getZeroBased());
+
+        // Add an event with this client name
+        Event mockEvent = new Event(EventType.valueOf("MEETING"), firstProperty.getPropertyName(),
+                originalClient.getClientName(), LocalDateTime.of(2025, 6, 6, 13, 0), new Note("Lunch"));
+        methodModel.addEvent(mockEvent);
+
+        EditClientDescriptor descriptor = new EditClientDescriptorBuilder()
+                .withClientName("New Name").build();
+        EditClientCommand editCommand = new EditClientCommand(INDEX_FIRST, descriptor);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setClient(originalClient, editedClient);
+        Event newMockEvent = new Event(EventType.valueOf("MEETING"), firstProperty.getPropertyName(),
+                editedClient.getClientName(), LocalDateTime.of(2025, 6, 6, 13, 0), new Note("Lunch"));
+        expectedModel.addProperty(MAPLE);
+        expectedModel.addEvent(newMockEvent);
+
+        assertCommandSuccess(editCommand, methodModel,
+                String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS, Messages.formatClient(editedClient)),
+                expectedModel);
+    }
+
+    @Test
+    public void execute_clientNameUpdated_updatesInListings() {
+        Client originalClient = model.getFilteredClientList().get(INDEX_FIRST.getZeroBased());
+        Client editedClient = new ClientBuilder(originalClient).withClientName("New Name").build();
+
+        // Add a property listing with this client as the owner
+        Property mockProperty = new Property(new PropertyName("Maple Villa"),
+                new Address("ABC Address"), new Price((long) 222), Optional.of(new Size("100")),
+                Optional.of(new Description("Good flat")), originalClient.getClientName());
+        Model methodModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        methodModel.addProperty(mockProperty);
+
+        EditClientDescriptor descriptor = new EditClientDescriptorBuilder()
+                .withClientName("New Name").build();
+        EditClientCommand editCommand = new EditClientCommand(INDEX_FIRST, descriptor);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setClient(originalClient, editedClient);
+        Property newMockProperty = new Property(new PropertyName("Maple Villa"),
+                new Address("ABC Address"), new Price((long) 222), Optional.of(new Size("100")),
+                Optional.of(new Description("Good flat")), editedClient.getClientName());
+        expectedModel.addProperty(newMockProperty);
+
+        assertCommandSuccess(editCommand, methodModel,
+                String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS, Messages.formatClient(editedClient)),
+                expectedModel);
     }
 
     @Test

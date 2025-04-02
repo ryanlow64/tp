@@ -24,7 +24,7 @@ public class JsonAdaptedPropertyTest {
     private static final String INVALID_SIZE = "5000a";
     private static final String INVALID_OWNER = "$#@!%";
 
-    private static final String VALID_PROPERTY_NAME = MAPLE.getPropertyName().toString();
+    private static final String VALID_PROPERTY_NAME = MAPLE.getFullName().toString();
     private static final String VALID_ADDRESS = MAPLE.getAddress().toString();
     private static final Long VALID_PRICE = MAPLE.getPrice().value;
     private static final String VALID_SIZE = MAPLE.getSize().map(s -> s.value).orElse("");

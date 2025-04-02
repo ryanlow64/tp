@@ -27,7 +27,7 @@ public class EditClientDescriptorBuilder {
      */
     public EditClientDescriptorBuilder(Client client) {
         descriptor = new EditClientDescriptor();
-        descriptor.setClientName(client.getClientName());
+        descriptor.setClientName(client.getFullName());
         descriptor.setPhone(client.getPhone());
         descriptor.setEmail(client.getEmail());
         descriptor.setAddress(client.getAddress());

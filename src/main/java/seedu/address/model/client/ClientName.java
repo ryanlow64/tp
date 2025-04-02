@@ -40,7 +40,6 @@ public class ClientName implements Name<Client> {
         return test.matches(VALIDATION_REGEX);
     }
 
-
     @Override
     public String toString() {
         return fullName;

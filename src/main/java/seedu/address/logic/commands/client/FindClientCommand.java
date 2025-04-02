@@ -1,14 +1,20 @@
 package seedu.address.logic.commands.client;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_KEYWORDS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+
+import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
-import seedu.address.model.client.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all clients in address book whose name contains any of the argument keywords.
@@ -18,12 +24,20 @@ public class FindClientCommand extends FindCommand<Client> {
 
     public static final String COMMAND_WORD = "find_client";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients with the specified name, phone, "
+            + "email or address.\n"
+            + "Parameters: "
+            + "[" + PREFIX_KEYWORDS + "KEYWORDS] "
+            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_ADDRESS + "ADDRESS]\n"
+            + "Note: At least one parameter must be provided. The first parameter is applied unconditionally, "
+            + "and if more parameters are provided, all must be combined with the same conditional operator either"
+            + "'AND' or 'OR'.\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_KEYWORDS + "Alice " + PREFIX_PHONE.getOrPrefix()
+            + "12345678";
 
-    public FindClientCommand(NameContainsKeywordsPredicate predicate) {
+    public FindClientCommand(Predicate<Client> predicate) {
         super(predicate);
     }
 
@@ -31,7 +45,13 @@ public class FindClientCommand extends FindCommand<Client> {
      * Adds the command word to the command word list.
      */
     public static void addCommandWord() {
-        initialiseCommandWord(COMMAND_WORD);
+        Prefix[] prefixes = {
+            PREFIX_KEYWORDS,
+            PREFIX_PHONE,
+            PREFIX_EMAIL,
+            PREFIX_ADDRESS
+        };
+        addCommandWord(COMMAND_WORD, prefixes);
     }
 
     @Override

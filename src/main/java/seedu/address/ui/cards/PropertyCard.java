@@ -51,7 +51,7 @@ public class PropertyCard extends UiPart<Region> {
         assert displayedIndex > 0 : "Index should be greater than 0";
         this.property = property;
         id.setText(displayedIndex + ". ");
-        name.setText(property.getPropertyName().fullName);
+        name.setText(property.getFullName().fullName);
         address.setText(property.getAddress().value);
         price.setText(String.format("Price: $%sk", property.getPrice().value.toString()));
         String sizeValue = property.getSize().map(s -> s.value).orElse("N/A");

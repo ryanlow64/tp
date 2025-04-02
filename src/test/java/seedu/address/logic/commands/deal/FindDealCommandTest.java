@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_DEALS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalDeals.DEAL1;
 import static seedu.address.testutil.TypicalDeals.DEAL3;
 import static seedu.address.testutil.TypicalDeals.getTypicalAddressBook;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -18,12 +18,14 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
 import seedu.address.model.deal.predicates.DealBuyerNameContainsPredicate;
 import seedu.address.model.deal.predicates.DealPropertyNameContainsPredicate;
 import seedu.address.model.deal.predicates.DealSellerNameContainsPredicate;
 import seedu.address.model.deal.predicates.DealStatusPredicate;
+import seedu.address.model.property.PropertyName;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindDealCommand}.
@@ -36,9 +38,9 @@ public class FindDealCommandTest {
     @Test
     public void equals() {
         DealPropertyNameContainsPredicate firstPredicate =
-                new DealPropertyNameContainsPredicate(Collections.singletonList("Villa"));
+                new DealPropertyNameContainsPredicate(new PropertyName("Villa"));
         DealPropertyNameContainsPredicate secondPredicate =
-                new DealPropertyNameContainsPredicate(Collections.singletonList("Condo"));
+                new DealPropertyNameContainsPredicate(new PropertyName("Condo"));
 
         FindDealCommand findFirstCommand = new FindDealCommand(firstPredicate);
         FindDealCommand findSecondCommand = new FindDealCommand(secondPredicate);
@@ -63,11 +65,7 @@ public class FindDealCommandTest {
     @Test
     public void execute_zeroKeywords_noDealsFound() {
         String expectedMessage = String.format(MESSAGE_DEALS_LISTED_OVERVIEW, 0);
-        DealPropertyNameContainsPredicate predicate = preparePropertyNamePredicate(" ");
-        FindDealCommand command = new FindDealCommand(predicate);
-        expectedModel.updateFilteredDealList(predicate);
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredDealList());
+        assertThrows(IllegalArgumentException.class, () -> new FindDealCommand(preparePropertyNamePredicate(" ")));
     }
 
     @Test
@@ -167,23 +165,20 @@ public class FindDealCommandTest {
      * Parses {@code userInput} into a {@code DealPropertyNameContainsPredicate}.
      */
     private DealPropertyNameContainsPredicate preparePropertyNamePredicate(String userInput) {
-        return new DealPropertyNameContainsPredicate(
-                Arrays.asList(userInput.split("\\s+")));
+        return new DealPropertyNameContainsPredicate(new PropertyName(userInput));
     }
 
     /**
      * Parses {@code userInput} into a {@code DealBuyerNameContainsPredicate}.
      */
     private DealBuyerNameContainsPredicate prepareBuyerNamePredicate(String userInput) {
-        return new DealBuyerNameContainsPredicate(
-                Arrays.asList(userInput.split("\\s+")));
+        return new DealBuyerNameContainsPredicate(new ClientName(userInput));
     }
 
     /**
      * Parses {@code userInput} into a {@code DealSellerNameContainsPredicate}.
      */
     private DealSellerNameContainsPredicate prepareSellerNamePredicate(String userInput) {
-        return new DealSellerNameContainsPredicate(
-                Arrays.asList(userInput.split("\\s+")));
+        return new DealSellerNameContainsPredicate(new ClientName(userInput));
     }
 }

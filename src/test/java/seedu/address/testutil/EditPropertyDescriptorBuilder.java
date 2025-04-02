@@ -31,7 +31,7 @@ public class EditPropertyDescriptorBuilder {
      */
     public EditPropertyDescriptorBuilder(Property property) {
         descriptor = new EditPropertyDescriptor();
-        descriptor.setPropertyName(property.getPropertyName());
+        descriptor.setPropertyName(property.getFullName());
         descriptor.setAddress(property.getAddress());
         descriptor.setPrice(property.getPrice());
         descriptor.setSize(property.getSize());

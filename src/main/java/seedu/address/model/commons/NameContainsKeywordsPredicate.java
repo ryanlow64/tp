@@ -1,4 +1,4 @@
-package seedu.address.model.property;
+package seedu.address.model.commons;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -7,19 +7,19 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Property}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Client}'s {@code Name} matches any of the keywords given.
  */
-public class PropertyNameContainsKeywordsPredicate implements Predicate<Property> {
-    private final List<String> keywords;
+public class NameContainsKeywordsPredicate<T extends Nameable<T>> implements Predicate<T> {
+    protected final List<String> keywords;
 
-    public PropertyNameContainsKeywordsPredicate(List<String> keywords) {
+    public NameContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
-    public boolean test(Property property) {
+    public boolean test(T nameable) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(property.getPropertyName().fullName, keyword));
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(nameable.getFullName().toString(), keyword));
     }
 
     @Override
@@ -29,7 +29,7 @@ public class PropertyNameContainsKeywordsPredicate implements Predicate<Property
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PropertyNameContainsKeywordsPredicate otherNameContainsKeywordsPredicate)) {
+        if (!(other instanceof NameContainsKeywordsPredicate otherNameContainsKeywordsPredicate)) {
             return false;
         }
 

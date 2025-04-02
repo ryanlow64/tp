@@ -46,7 +46,7 @@ class AddEventCommandTest extends AddCommandTest<Event> {
         modelStub.addProperty(MAPLE);
 
         Event validEvent = new Event(
-                EventType.MEETING, MAPLE.getPropertyName(), ALICE.getClientName(), LOCAL_DATE_TIME, NIL_NOTE);
+                EventType.MEETING, MAPLE.getFullName(), ALICE.getFullName(), LOCAL_DATE_TIME, NIL_NOTE);
 
         CommandResult commandResult = new AddEventCommand(
                 EventType.MEETING, INDEX_FIRST, INDEX_FIRST, LOCAL_DATE_TIME, NIL_NOTE)

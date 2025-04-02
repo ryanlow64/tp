@@ -6,12 +6,13 @@ import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.commons.Address;
+import seedu.address.model.commons.Nameable;
 
 /**
  * Represents a Client in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Client {
+public class Client implements Nameable<Client> {
 
     // Identity fields
     private final ClientName clientName;
@@ -32,7 +33,8 @@ public class Client {
         this.address = address;
     }
 
-    public ClientName getClientName() {
+    @Override
+    public ClientName getFullName() {
         return clientName;
     }
 
@@ -58,7 +60,7 @@ public class Client {
         }
 
         return otherClient != null
-                && (otherClient.getClientName().equals(getClientName())
+                && (otherClient.getFullName().equals(getFullName())
                 || otherClient.getPhone().equals(getPhone()));
     }
 

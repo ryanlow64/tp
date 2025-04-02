@@ -73,7 +73,7 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
     }
 
     private boolean existInDeals(Client clientToDelete, List<Deal> dealList) {
-        ClientName clientNameToDelete = clientToDelete.getClientName();
+        ClientName clientNameToDelete = clientToDelete.getFullName();
         for (Deal deal : dealList) {
             if ((clientNameToDelete.equals(deal.getBuyer())
                 || clientNameToDelete.equals(deal.getSeller()))
@@ -85,7 +85,7 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
     }
 
     private boolean existInEvents(Client clientToDelete, List<Event> eventList) {
-        ClientName clientNameToDelete = clientToDelete.getClientName();
+        ClientName clientNameToDelete = clientToDelete.getFullName();
         for (Event event : eventList) {
             if (clientNameToDelete.equals(event.getClientName())
                 && LocalDateTime.now().isBefore(event.getDateTime())) {
@@ -96,7 +96,7 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
     }
 
     private boolean existInProperties(Client clientToDelete, List<Property> propertyList) {
-        ClientName clientNameToDelete = clientToDelete.getClientName();
+        ClientName clientNameToDelete = clientToDelete.getFullName();
         for (Property property : propertyList) {
             if (clientNameToDelete.equals(property.getOwner())) {
                 return true;

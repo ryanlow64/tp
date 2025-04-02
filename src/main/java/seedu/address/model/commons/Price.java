@@ -23,6 +23,20 @@ public class Price {
     }
 
     /**
+     * Returns true if the given price is more than this price.
+     */
+    public boolean isMoreThan(Price other) {
+        return this.value > other.value;
+    }
+
+    /**
+     * Returns true if the given price is less than this price.
+     */
+    public boolean isLessThan(Price other) {
+        return this.value < other.value;
+    }
+
+    /**
      * Returns true if a given string is a valid price.
      */
     public static boolean isValidPrice(Long test) {

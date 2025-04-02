@@ -119,7 +119,7 @@ public class UpdateDealCommand extends EditCommand<Deal> {
                 throw new CommandException("Invalid property ID: Index out of bounds");
             }
             Property newProperty = model.getFilteredPropertyList().get(propertyIndex.getZeroBased());
-            updatedPropertyName = newProperty.getPropertyName();
+            updatedPropertyName = newProperty.getFullName();
             // Automatically update seller to match new property's owner
             updatedSeller = newProperty.getOwner();
         } else {
@@ -143,7 +143,7 @@ public class UpdateDealCommand extends EditCommand<Deal> {
                 if (sellerIndex.getZeroBased() >= model.getFilteredClientList().size()) {
                     throw new CommandException("Invalid seller ID: Index out of bounds");
                 }
-                updatedSeller = model.getFilteredClientList().get(sellerIndex.getZeroBased()).getClientName();
+                updatedSeller = model.getFilteredClientList().get(sellerIndex.getZeroBased()).getFullName();
             } else {
                 updatedSeller = dealToUpdate.getSeller();
             }
@@ -156,7 +156,7 @@ public class UpdateDealCommand extends EditCommand<Deal> {
             if (buyerIndex.getZeroBased() >= model.getFilteredClientList().size()) {
                 throw new CommandException("Invalid buyer ID: Index out of bounds");
             }
-            updatedBuyer = model.getFilteredClientList().get(buyerIndex.getZeroBased()).getClientName();
+            updatedBuyer = model.getFilteredClientList().get(buyerIndex.getZeroBased()).getFullName();
         } else {
             updatedBuyer = dealToUpdate.getBuyer();
         }

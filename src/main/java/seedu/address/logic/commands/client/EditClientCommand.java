@@ -94,7 +94,7 @@ public class EditClientCommand extends EditCommand<Client> {
         List<Deal> lastShownDealList = model.getFilteredDealList();
         List<Event> lastShownEventList = model.getFilteredEventList();
         List<Property> lastShownPropertyList = model.getFilteredPropertyList();
-        Optional<ClientName> optionalClientName = editClientDescriptor.getClientName();
+        Optional<ClientName> optionalClientName = editClientDescriptor.getFullName();
 
         if (index.getZeroBased() >= lastShownClientList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
@@ -111,7 +111,7 @@ public class EditClientCommand extends EditCommand<Client> {
         model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
 
         if (optionalClientName.isPresent()) {
-            ClientName oldClientName = clientToEdit.getClientName();
+            ClientName oldClientName = clientToEdit.getFullName();
             ClientName newClientName = optionalClientName.get();
 
             updateClientNameInDeals(oldClientName, index, lastShownDealList, model);
@@ -189,7 +189,7 @@ public class EditClientCommand extends EditCommand<Client> {
     private static Client createEditedClient(Client clientToEdit, EditClientDescriptor editClientDescriptor) {
         assert clientToEdit != null;
 
-        ClientName updatedClientName = editClientDescriptor.getClientName().orElse(clientToEdit.getClientName());
+        ClientName updatedClientName = editClientDescriptor.getFullName().orElse(clientToEdit.getFullName());
         Phone updatedPhone = editClientDescriptor.getPhone().orElse(clientToEdit.getPhone());
         Email updatedEmail = editClientDescriptor.getEmail().orElse(clientToEdit.getEmail());
         Address updatedAddress = editClientDescriptor.getAddress().orElse(clientToEdit.getAddress());
@@ -256,7 +256,7 @@ public class EditClientCommand extends EditCommand<Client> {
             this.clientName = clientName;
         }
 
-        public Optional<ClientName> getClientName() {
+        public Optional<ClientName> getFullName() {
             return Optional.ofNullable(clientName);
         }
 

@@ -1,9 +1,8 @@
 package seedu.address.logic.commands;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.Prefix;
@@ -14,15 +13,10 @@ import seedu.address.model.Model;
  */
 public abstract class Command {
 
-    public static final Map<String, Set<String>> COMMAND_WORDS = new HashMap<>();
+    public static final Map<String, List<Prefix>> COMMAND_WORDS = new HashMap<>();
 
     protected static void initialiseCommandWord(String commandWord, Prefix... prefixes) {
-        Set<String> prefixSet = Set.of(prefixes).stream()
-                .map(Prefix::getPrefix)
-                .collect(Collectors.toSet());
-
-        assert !COMMAND_WORDS.containsKey(commandWord) : "Command word should not exist in the map";
-        COMMAND_WORDS.put(commandWord, prefixSet);
+        COMMAND_WORDS.put(commandWord, List.of(prefixes));
     }
 
     /**

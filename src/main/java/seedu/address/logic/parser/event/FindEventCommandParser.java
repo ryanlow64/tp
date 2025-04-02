@@ -40,6 +40,12 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
     private static final Logger logger = LogsCenter.getLogger(FindEventCommandParser.class);
     private static final String BLANK = "BLANK";
 
+    private ClientName clientName;
+    private PropertyName propertyName;
+    private LocalDateTime beforeDateTime;
+    private LocalDateTime afterDateTime;
+    private EventType eventType;
+
     /**
      * Parses the given {@code String} of arguments in the context of the FindEventCommand
      * and returns a FindEventCommand object for execution.
@@ -64,40 +70,17 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
 
         checkPrefixesUsedAreValid(prefixesUsed);
 
-        ClientName clientName = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_EVENT_WITH).orElse(BLANK));
-        PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_EVENT_ABOUT)
-            .orElse(BLANK));
+        handleNames(argMultimap);
+        handleDateTimes(argMultimap, prefixesUsed);
+        handleEventType(argMultimap, prefixesUsed);
 
-        LocalDateTime beforeDateTime = null;
-        try {
-            beforeDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_BEFORE).orElse(BLANK));
-        } catch (ParseException e) {
-            if (prefixesUsed.contains(PREFIX_EVENT_BEFORE)) {
-                logger.warning("Invalid date format for before date");
-                throw new ParseException(e.getMessage());
-            }
-        }
+        LinkedHashMap<Prefix, Predicate<Event>> prefixPredicateMap = getPrefixPredicateMap(prefixesUsed);
+        Predicate<Event> combinedPredicate = getCombinedPredicate(prefixPredicateMap);
+        return new FindEventCommand(combinedPredicate);
+    }
 
-        LocalDateTime afterDateTime = null;
-        try {
-            afterDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_AFTER).orElse(BLANK));
-        } catch (ParseException e) {
-            if (prefixesUsed.contains(PREFIX_EVENT_AFTER)) {
-                logger.warning("Invalid date format for after date");
-                throw new ParseException(e.getMessage());
-            }
-        }
-
-        EventType eventType = null;
-        try {
-            eventType = ParserUtil.parseEventType(argMultimap.getValue(PREFIX_EVENT_TYPE).orElse(BLANK));
-        } catch (ParseException e) {
-            if (prefixesUsed.contains(PREFIX_EVENT_TYPE)) {
-                logger.warning("Invalid event type");
-                throw new ParseException(e.getMessage());
-            }
-        }
-
+    @Override
+    protected LinkedHashMap<Prefix, Predicate<Event>> getPrefixPredicateMap(List<Prefix> prefixesUsed) {
         LinkedHashMap<Prefix, Predicate<Event>> prefixPredicateMap = new LinkedHashMap<>();
         for (Prefix prefix : prefixesUsed) {
             if (prefix.equals(PREFIX_EVENT_WITH)) {
@@ -112,8 +95,43 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
                 prefixPredicateMap.put(prefix, new EventAfterDateTimePredicate(afterDateTime));
             }
         }
+        return prefixPredicateMap;
+    }
 
-        Predicate<Event> combinedPredicate = getCombinedPredicate(prefixPredicateMap);
-        return new FindEventCommand(combinedPredicate);
+    private void handleNames(ArgumentMultimap argMultimap) throws ParseException {
+        clientName = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_EVENT_WITH).orElse(BLANK));
+        propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_EVENT_ABOUT)
+            .orElse(BLANK));
+    }
+
+    private void handleEventType(ArgumentMultimap argMultimap, List<Prefix> prefixesUsed) throws ParseException {
+        try {
+            eventType = ParserUtil.parseEventType(argMultimap.getValue(PREFIX_EVENT_TYPE).orElse(BLANK));
+        } catch (ParseException e) {
+            if (prefixesUsed.contains(PREFIX_EVENT_TYPE)) {
+                logger.warning("Invalid event type");
+                throw new ParseException(e.getMessage());
+            }
+        }
+    }
+
+    private void handleDateTimes(ArgumentMultimap argMultimap, List<Prefix> prefixesUsed) throws ParseException {
+        try {
+            beforeDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_BEFORE).orElse(BLANK));
+        } catch (ParseException e) {
+            if (prefixesUsed.contains(PREFIX_EVENT_BEFORE)) {
+                logger.warning("Invalid date format for before date");
+                throw new ParseException(e.getMessage());
+            }
+        }
+
+        try {
+            afterDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_AFTER).orElse(BLANK));
+        } catch (ParseException e) {
+            if (prefixesUsed.contains(PREFIX_EVENT_AFTER)) {
+                logger.warning("Invalid date format for after date");
+                throw new ParseException(e.getMessage());
+            }
+        }
     }
 }

@@ -35,6 +35,11 @@ public class FindClientCommandParser extends FindCommandParser<Client> {
     private static final Logger logger = LogsCenter.getLogger(FindEventCommandParser.class);
     private static final String BLANK = "(blank)";
 
+    private List<String> nameKeywords;
+    private String addressContains;
+    private String emailContains;
+    private String phoneContains;
+
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns a FindCommand object for execution.
@@ -59,33 +64,16 @@ public class FindClientCommandParser extends FindCommandParser<Client> {
 
         checkPrefixesUsedAreValid(prefixesUsed);
 
-        String nameContains = argMultimap.getValue(PREFIX_KEYWORDS).orElse(BLANK).trim();
-        List<String> nameKeywords = Arrays.stream(nameContains.split("\\s+"))
-                .filter(keyword -> !keyword.isBlank())
-                .toList();
-        if (prefixesUsed.contains(PREFIX_KEYWORDS) && nameKeywords.isEmpty()) {
-            throw new ParseException("No keywords provided");
-        }
-        logger.fine("Name: " + nameContains);
+        handleName(argMultimap, prefixesUsed);
+        handleStrings(argMultimap, prefixesUsed);
 
-        String addressContains = argMultimap.getValue(PREFIX_ADDRESS).orElse(BLANK).trim();
-        if (prefixesUsed.contains(PREFIX_ADDRESS) && addressContains.isEmpty()) {
-            throw new ParseException("No address provided");
-        }
-        logger.fine("Address: " + addressContains);
+        LinkedHashMap<Prefix, Predicate<Client>> prefixPredicateMap = getPrefixPredicateMap(prefixesUsed);
+        Predicate<Client> combinedPredicate = getCombinedPredicate(prefixPredicateMap);
+        return new FindClientCommand(combinedPredicate);
+    }
 
-        String emailContains = argMultimap.getValue(PREFIX_EMAIL).orElse(BLANK).trim();
-        if (prefixesUsed.contains(PREFIX_EMAIL) && emailContains.isEmpty()) {
-            throw new ParseException("No email provided");
-        }
-        logger.fine("Email: " + emailContains);
-
-        String phoneContains = argMultimap.getValue(PREFIX_PHONE).orElse(BLANK).trim();
-        if (prefixesUsed.contains(PREFIX_PHONE) && phoneContains.isEmpty()) {
-            throw new ParseException("No phone number provided");
-        }
-        logger.fine("Phone: " + phoneContains);
-
+    @Override
+    protected LinkedHashMap<Prefix, Predicate<Client>> getPrefixPredicateMap(List<Prefix> prefixesUsed) {
         LinkedHashMap<Prefix, Predicate<Client>> prefixPredicateMap = new LinkedHashMap<>();
         for (Prefix prefix : prefixesUsed) {
             if (prefix.equals(PREFIX_KEYWORDS)) {
@@ -98,8 +86,37 @@ public class FindClientCommandParser extends FindCommandParser<Client> {
                 prefixPredicateMap.put(prefix, new ClientPhoneContainsPredicate(phoneContains));
             }
         }
+        return prefixPredicateMap;
+    }
 
-        Predicate<Client> combinedPredicate = getCombinedPredicate(prefixPredicateMap);
-        return new FindClientCommand(combinedPredicate);
+    private void handleStrings(ArgumentMultimap argMultimap, List<Prefix> prefixesUsed) throws ParseException {
+        addressContains = argMultimap.getValue(PREFIX_ADDRESS).orElse(BLANK).trim();
+        if (prefixesUsed.contains(PREFIX_ADDRESS) && addressContains.isEmpty()) {
+            throw new ParseException("No address provided");
+        }
+        logger.fine("Address: " + addressContains);
+
+        emailContains = argMultimap.getValue(PREFIX_EMAIL).orElse(BLANK).trim();
+        if (prefixesUsed.contains(PREFIX_EMAIL) && emailContains.isEmpty()) {
+            throw new ParseException("No email provided");
+        }
+        logger.fine("Email: " + emailContains);
+
+        phoneContains = argMultimap.getValue(PREFIX_PHONE).orElse(BLANK).trim();
+        if (prefixesUsed.contains(PREFIX_PHONE) && phoneContains.isEmpty()) {
+            throw new ParseException("No phone number provided");
+        }
+        logger.fine("Phone: " + phoneContains);
+    }
+
+    private void handleName(ArgumentMultimap argMultimap, List<Prefix> prefixesUsed) throws ParseException {
+        String nameContains = argMultimap.getValue(PREFIX_KEYWORDS).orElse(BLANK).trim();
+        nameKeywords = Arrays.stream(nameContains.split("\\s+"))
+                .filter(keyword -> !keyword.isBlank())
+                .toList();
+        if (prefixesUsed.contains(PREFIX_KEYWORDS) && nameKeywords.isEmpty()) {
+            throw new ParseException("No keywords provided");
+        }
+        logger.fine("Name: " + nameContains);
     }
 }

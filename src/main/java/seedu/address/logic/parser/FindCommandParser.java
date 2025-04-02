@@ -20,6 +20,17 @@ public abstract class FindCommandParser<T> implements Parser<FindCommand<T>> {
     public abstract FindCommand<T> parse(String args) throws ParseException;
 
     /**
+     * Returns a mapping of prefixes to their corresponding predicates for filtering results
+     * based on the parsed input arguments.
+     *
+     * @param prefixesUsed The list of prefixes used in the command.
+     * @return a linked hash map that maps each prefix to a predicate evaluating objects of type T
+     * @throws ParseException if an error occurs while parsing the arguments
+     */
+    protected abstract LinkedHashMap<Prefix, Predicate<T>> getPrefixPredicateMap(List<Prefix> prefixesUsed)
+            throws ParseException;
+
+    /**
      * Checks if the prefixes used are valid.
      *
      * @param prefixesUsed The list of prefixes used in the command.

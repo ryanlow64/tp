@@ -30,6 +30,10 @@ public abstract class FindCommandParser<T> implements Parser<FindCommand<T>> {
             .filter(prefix -> !prefix.getPrefix().isEmpty())
             .toList();
 
+        if (validPrefixes.isEmpty()) {
+            throw new ParseException("No valid prefixes used");
+        }
+
         Prefix firstPrefix = validPrefixes.get(0);
         if (firstPrefix.isConditional()) {
             throw new ParseException("First prefix used cannot be conditional");

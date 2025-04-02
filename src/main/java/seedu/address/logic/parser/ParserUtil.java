@@ -57,34 +57,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a string representation of date and time into an {@code LocalDateTime}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @param defaultTime The time to be used if the user does not provide a time.
-     * @throws ParseException if the given {@code dateTime} is invalid.
-     */
-    public static LocalDateTime parseDateTime(String dateTime, String defaultTime) throws ParseException {
-        try {
-            LocalDateTime localDateTime = LocalDateTime.parse(dateTime, DATE_FORMAT_TEXT);
-            if (!DATE_FORMAT_TEXT.format(localDateTime).equals(dateTime)) {
-                throw new ParseException(String.format(MESSAGE_INVALID_DATETIME, dateTime));
-            }
-            return localDateTime;
-        } catch (DateTimeParseException e1) {
-            try {
-                String combinedDateTime = dateTime + " " + defaultTime;
-                LocalDateTime localDateTime = LocalDateTime.parse(combinedDateTime, DATE_FORMAT_TEXT);
-                if (!DATE_FORMAT_TEXT.format(localDateTime).equals(combinedDateTime)) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_DATETIME, dateTime));
-                }
-                return localDateTime;
-            } catch (DateTimeParseException e2) {
-                throw new ParseException(String.format(MESSAGE_INVALID_DATETIME, dateTime));
-            }
-        }
-    }
-
-    /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
@@ -270,7 +242,7 @@ public class ParserUtil {
         requireNonNull(dealStatus);
         String trimmedDealStatus = dealStatus.trim();
         try {
-            return DealStatus.valueOf(dealStatus.toUpperCase());
+            return DealStatus.valueOf(trimmedDealStatus.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new ParseException(DealStatus.MESSAGE_CONSTRAINTS);
         }

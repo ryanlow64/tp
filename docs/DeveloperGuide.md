@@ -479,6 +479,61 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
+**Use case: Edit Property Listing Details**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to edit an existing property and provides property listing details.
+2. System validates input.
+3. System updates property listing.
+4. System informs user the outcome of the edition.
+
+**Use case ends.**
+
+**Extensions**
+
+2a. System detects missing or incorrect fields.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a1. System prompts the user to complete them.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a2. User enters new data.\
+&nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
+
+3a. System fails to update the property details.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
+
+**Use case: Find Property Listing**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to find an existing property listing and provides name of property.
+2. System validates input.
+3. System returns a list of relevant property listing.
+
+**Use case ends.**
+
+**Extensions**
+
+2a. System detects missing or incorrect fields.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a1. System prompts the user to complete them.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a2. User enters new data.\
+&nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
+
+3a. System fails to find the property listings with the input name.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an empty list.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
+
 **Use case: Add Deal**
 
 **Actor:** User (Real Estate Agent)\

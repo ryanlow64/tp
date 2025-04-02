@@ -43,7 +43,7 @@ public class FindClientCommandParser extends FindCommandParser<Client> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns a FindCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform to the expected format
      */
     public FindClientCommand parse(String args) throws ParseException {
         logger.info("Parsing arguments for FindClientCommand: " + args);

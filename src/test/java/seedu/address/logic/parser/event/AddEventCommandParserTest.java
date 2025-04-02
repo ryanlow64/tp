@@ -159,7 +159,7 @@ class AddEventCommandParserTest extends AddCommandParserTest<Event> {
     }
 
     @Test
-    public void parse_additionalGarbageFields_failure() {
+    public void parse_additionalPreamble_failure() {
         assertParseFailure(parser,
                 "some garbage " + VALID_EVENT_TYPE_DESC + VALID_PROPERTY_ID_DESC
                         + VALID_CLIENT_ID_DESC + VALID_EVENT_START_DESC + VALID_EVENT_NOTE_DESC,

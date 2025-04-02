@@ -9,9 +9,11 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.client.FindClientCommand;
+import seedu.address.logic.parser.FindCommandParserTest;
+import seedu.address.model.client.Client;
 import seedu.address.model.client.NameContainsKeywordsPredicate;
 
-public class FindClientCommandParserTest {
+public class FindClientCommandParserTest extends FindCommandParserTest<Client> {
 
     private FindClientCommandParser parser = new FindClientCommandParser();
 

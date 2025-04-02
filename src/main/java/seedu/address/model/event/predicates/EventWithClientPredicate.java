@@ -22,6 +22,6 @@ public class EventWithClientPredicate extends EventPredicate<ClientName> {
 
     @Override
     public boolean test(Event event) {
-        return event.getClientName().equals(value);
+        return event.getClientName().toString().toLowerCase().contains(value.fullName.toLowerCase());
     }
 }

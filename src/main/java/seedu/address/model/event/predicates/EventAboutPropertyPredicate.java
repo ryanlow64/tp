@@ -22,6 +22,6 @@ public class EventAboutPropertyPredicate extends EventPredicate<PropertyName> {
 
     @Override
     public boolean test(Event event) {
-        return event.getPropertyName().equals(value);
+        return event.getPropertyName().toString().toLowerCase().contains(value.fullName.toLowerCase());
     }
 }

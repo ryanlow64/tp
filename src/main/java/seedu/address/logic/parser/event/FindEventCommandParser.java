@@ -34,7 +34,7 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindEventCommand
      * and returns a FindEventCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform to the expected format
      */
     public FindEventCommand parse(String args) throws ParseException {
         logger.info("Parsing arguments for FindEventCommand: " + args);
@@ -42,6 +42,11 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
             ArgumentTokenizer.tokenize(args, PREFIX_EVENT_ABOUT, PREFIX_EVENT_WITH, PREFIX_EVENT_TYPE);
 
         String trimmedArgs = args.trim();
+
+        if (!argMultimap.getPreamble().isEmpty()) {
+            logger.warning("Additional preamble");
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+        }
 
         if (trimmedArgs.isEmpty()) {
             logger.warning("Missing arguments");
@@ -58,13 +63,15 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
             .orElse(BLANK));
         logger.fine("Property name: " + propertyName);
 
-        EventType eventType;
-        try {
-            eventType = ParserUtil.parseEventType(argMultimap.getValue(PREFIX_EVENT_TYPE).orElse(BLANK));
-            logger.fine("Event type: " + eventType);
-        } catch (ParseException e) {
-            eventType = null;
-            logger.warning("Event type: " + eventType);
+        EventType eventType = null;
+        if (!argMultimap.getValue(PREFIX_EVENT_TYPE).orElse(BLANK).equals(BLANK)) {
+            try {
+                eventType = ParserUtil.parseEventType(argMultimap.getValue(PREFIX_EVENT_TYPE).get());
+                logger.fine("Event type: " + eventType);
+            } catch (ParseException e) {
+                logger.warning("Event type: " + eventType);
+                throw e;
+            }
         }
 
         EventWithClientPredicate eventWithClientPredicate = new EventWithClientPredicate(clientName);

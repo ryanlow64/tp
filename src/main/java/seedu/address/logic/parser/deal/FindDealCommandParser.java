@@ -35,7 +35,7 @@ public class FindDealCommandParser extends FindCommandParser<Deal> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindDealCommand
      * and returns a FindDealCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform to the expected format
      */
     public FindDealCommand parse(String args) throws ParseException {
         logger.info("Parsing arguments for FindDealCommand: " + args);

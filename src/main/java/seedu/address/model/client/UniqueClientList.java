@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.client.exceptions.ClientNotFoundException;
 import seedu.address.model.client.exceptions.DuplicateClientException;
 
@@ -33,7 +34,18 @@ public class UniqueClientList implements Iterable<Client> {
      */
     public boolean contains(Client toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSameClient);
+        return internalList.stream().anyMatch(client -> toCheck.isSameClient(client));
+    }
+
+    /**
+     * Returns true if the list contains an equivalent client as the given argument.
+     */
+    public boolean contains(Client toCheck, Index index) {
+        requireNonNull(toCheck);
+        int excludeIndex = index.getZeroBased(); // skip this index
+        return internalList.stream()
+                .filter(client -> internalList.indexOf(client) != excludeIndex)
+                .anyMatch(client -> toCheck.isSameClient(client));
     }
 
     /**
@@ -61,7 +73,9 @@ public class UniqueClientList implements Iterable<Client> {
             throw new ClientNotFoundException();
         }
 
-        if (!target.isSameClient(editedClient) && contains(editedClient)) {
+        if (internalList.stream()
+                .filter(client -> internalList.indexOf(client) != index)
+                .anyMatch(client -> editedClient.isSameClient(client))) {
             throw new DuplicateClientException();
         }
 

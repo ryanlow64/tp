@@ -49,7 +49,7 @@ public class Client {
     }
 
     /**
-     * Returns true if both persons have the same clientName.
+     * Returns true if both persons have the same clientName or phone.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSameClient(Client otherClient) {
@@ -58,7 +58,8 @@ public class Client {
         }
 
         return otherClient != null
-                && otherClient.getClientName().equals(getClientName());
+                && (otherClient.getClientName().equals(getClientName())
+                || otherClient.getPhone().equals(getPhone()));
     }
 
     /**

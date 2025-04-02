@@ -8,7 +8,7 @@ import seedu.address.logic.commands.client.FindClientCommand;
 import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.client.Client;
-import seedu.address.model.commons.ClientNameContainsKeywordsPredicate;
+import seedu.address.model.client.predicates.ClientNameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object

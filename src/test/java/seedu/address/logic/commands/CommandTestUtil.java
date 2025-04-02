@@ -22,14 +22,14 @@ import seedu.address.logic.commands.property.EditPropertyCommand.EditPropertyDes
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
-import seedu.address.model.commons.ClientNameContainsKeywordsPredicate;
-import seedu.address.model.commons.PropertyNameContainsKeywordsPredicate;
+import seedu.address.model.client.predicates.ClientNameContainsKeywordsPredicate;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.predicates.DealPropertyNameContainsPredicate;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.predicates.EventAboutPropertyPredicate;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
+import seedu.address.model.property.predicates.PropertyNameContainsKeywordsPredicate;
 import seedu.address.testutil.EditClientDescriptorBuilder;
 import seedu.address.testutil.EditPropertyDescriptorBuilder;
 

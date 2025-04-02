@@ -1,4 +1,4 @@
-package seedu.address.model.commons;
+package seedu.address.model.client.predicates;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

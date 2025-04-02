@@ -1,8 +1,9 @@
-package seedu.address.model.commons;
+package seedu.address.model.client.predicates;
 
 import java.util.List;
 
 import seedu.address.model.client.Client;
+import seedu.address.model.commons.NameContainsKeywordsPredicate;
 
 /**
  * Tests that a {@code Client}'s {@code Name} matches any of the keywords given.

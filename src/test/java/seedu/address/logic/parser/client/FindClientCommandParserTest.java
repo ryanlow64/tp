@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.client.FindClientCommand;
-import seedu.address.model.commons.ClientNameContainsKeywordsPredicate;
+import seedu.address.model.client.predicates.ClientNameContainsKeywordsPredicate;
 
 public class FindClientCommandParserTest {
 

@@ -1,7 +1,8 @@
-package seedu.address.model.commons;
+package seedu.address.model.property.predicates;
 
 import java.util.List;
 
+import seedu.address.model.commons.NameContainsKeywordsPredicate;
 import seedu.address.model.property.Property;
 
 /**

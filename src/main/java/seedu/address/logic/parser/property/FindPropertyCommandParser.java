@@ -7,8 +7,8 @@ import java.util.Arrays;
 import seedu.address.logic.commands.property.FindPropertyCommand;
 import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.commons.PropertyNameContainsKeywordsPredicate;
 import seedu.address.model.property.Property;
+import seedu.address.model.property.predicates.PropertyNameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindPropertyCommand object.

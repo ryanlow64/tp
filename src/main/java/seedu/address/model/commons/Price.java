@@ -7,6 +7,7 @@ package seedu.address.model.commons;
 public class Price {
 
     public static final String MESSAGE_CONSTRAINTS =
+            // Upper and lower limits prevents adding of unrealistic price values
             "Price should only contain positive numbers (in S$ thousands) between 3 to 6 digits";
 
     public static final String VALIDATION_REGEX = "^[1-9]\\d{2,5}$";

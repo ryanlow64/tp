@@ -140,13 +140,13 @@ Examples:
 
 Adds a new property to REconnect.
 
-Format: `add_property prop/PROPERTY_NAME addr/ADDRESS price/PRICE size/SIZE [desc/DESCRIPTION]`
+Format: `add_property prop/PROPERTY_NAME addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]`
 
 * Adds a property with the specified details
 * The property name must be provided
 * The address must be provided
 * The price must be provided
-* PRICE must be a positive integer and is in thousands
+* PRICE must be a positive integer and is in thousands of S$
 * Both size and description are optional fields
 * SIZE must be a positive integer and is in square feet
 
@@ -161,17 +161,17 @@ Edits an existing property in REconnect.
 Format: `edit_property INDEX [prop/PROPERTY_NAME] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`
 
 * Edits the property at the specified `INDEX`. The index refers to the index number shown in the displayed property list.
-* The index **must be a positive integer** 1, 2, 3, ...
+* The index **must be a positive integer** that does not exceed the property list size
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 
 Examples:
-* `edit_property 1 price/1600000 desc/Newly renovated` Edits the price and description of the 1st property
-* `edit_property 2 prop/Sunrise Villa addr/789 Morning Street` Edits the name and address of the 2nd property
+* `edit_property 1 price/1600000 desc/Newly renovated` Edits the price and description of the 1st property in the list
+* `edit_property 2 prop/Sunrise Villa addr/789 Morning Street` Edits the name and address of the 2nd property in the list
 
 ### Listing all properties : `list_property`
 
-Shows a list of all properties in REconnect.
+Shows a list of all the properties in REconnect.
 
 Format: `list_property`
 
@@ -199,7 +199,7 @@ Format: `delete_property INDEX`
 
 * Deletes the property at the specified `INDEX`
 * The index refers to the index number shown in the displayed property list
-* The index **must be a positive integer** 1, 2, 3, ...
+* The index **must be a positive integer** that does not exceed the property list size
 
 Examples:
 * `list_property` followed by `delete_property 2` deletes the 2nd property in REconnect

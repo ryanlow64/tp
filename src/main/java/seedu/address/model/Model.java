@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.event.Event;
@@ -66,6 +67,12 @@ public interface Model {
      * Returns true if a client with the same identity as {@code client} exists in the address book.
      */
     boolean hasClient(Client client);
+
+    /**
+     * Returns true if a client with the same identity as {@code client} exists in the address book,
+     * excluding at that index.
+     */
+    boolean hasClient(Client client, Index index);
 
     /**
      * Deletes the given client.

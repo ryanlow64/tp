@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.client.Client;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.event.Event;
@@ -101,6 +102,12 @@ public class ModelManager implements Model {
     public boolean hasClient(Client client) {
         requireNonNull(client);
         return addressBook.hasClient(client);
+    }
+
+    @Override
+    public boolean hasClient(Client client, Index index) {
+        requireNonNull(client);
+        return addressBook.hasClient(client, index);
     }
 
     @Override

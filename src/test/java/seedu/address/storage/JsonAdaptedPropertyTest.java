@@ -18,12 +18,6 @@ import seedu.address.model.property.PropertyName;
 import seedu.address.model.property.Size;
 
 public class JsonAdaptedPropertyTest {
-    private static final String INVALID_PROPERTY_NAME = " ";
-    private static final String INVALID_ADDRESS = " ";
-    private static final Long INVALID_PRICE = 0L;
-    private static final String INVALID_SIZE = "5000a";
-    private static final String INVALID_OWNER = "$#@!%";
-
     private static final String VALID_PROPERTY_NAME = MAPLE.getFullName().toString();
     private static final String VALID_ADDRESS = MAPLE.getAddress().toString();
     private static final Long VALID_PRICE = MAPLE.getPrice().value;
@@ -31,6 +25,12 @@ public class JsonAdaptedPropertyTest {
     private static final String VALID_DESCRIPTION =
             MAPLE.getDescription().map(d -> d.description).orElse("");
     private static final String VALID_OWNER = MAPLE.getOwner().fullName;
+
+    private static final String INVALID_PROPERTY_NAME = " ";
+    private static final String INVALID_ADDRESS = " ";
+    private static final Long INVALID_PRICE = 0L;
+    private static final String INVALID_SIZE = "5000a";
+    private static final String INVALID_OWNER = "$#@!%";
 
     @Test
     public void toModelType_validPropertyDetails_returnsProperty() throws Exception {

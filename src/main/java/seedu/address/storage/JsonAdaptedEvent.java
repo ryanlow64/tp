@@ -79,12 +79,18 @@ public class JsonAdaptedEvent {
         if (clientName == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Client Name"));
         }
+        if (!ClientName.isValidClientName(clientName)) {
+            throw new IllegalValueException(ClientName.MESSAGE_CONSTRAINTS);
+        }
         ClientName modelClientName = new ClientName(clientName);
         if (propertyName == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Property Name"));
         }
+        if (!PropertyName.isValidPropertyName(propertyName)) {
+            throw new IllegalValueException(PropertyName.MESSAGE_CONSTRAINTS);
+        }
         PropertyName modelPropertyName = new PropertyName(propertyName);
-        if (note == null) {
+        if (note == null || note.isEmpty()) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Note"));
         }
         Note modelNote = new Note(note);

@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.client.FindClientCommand;
+import seedu.address.logic.parser.FindCommandParserTest;
+import seedu.address.model.client.Client;
 import seedu.address.model.client.predicates.ClientNameContainsKeywordsPredicate;
 
 public class FindClientCommandParserTest extends FindCommandParserTest<Client> {

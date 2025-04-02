@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_WITH;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.event.FindEventCommand;
@@ -22,6 +23,11 @@ import seedu.address.model.event.EventType;
 public class FindEventCommandParserTest extends FindCommandParserTest<Event> {
 
     private FindEventCommandParser parser = new FindEventCommandParser();
+
+    @BeforeAll
+    public static void setUp() {
+        FindEventCommand.addCommandWord();
+    }
 
     /**
      * Helper method to verify that the {@code FindEventCommand} instance created is correct.
@@ -58,17 +64,17 @@ public class FindEventCommandParserTest extends FindCommandParserTest<Event> {
     @Test
     public void parse_multipleArgs_returnsFindEventCommand() {
         assertFindCommandSuccess(" " + PREFIX_EVENT_ABOUT + "Villa "
-                + PREFIX_EVENT_WITH + "John "
-                + PREFIX_EVENT_TYPE + "meeting");
+                + PREFIX_EVENT_WITH.getAndPrefix() + "John "
+                + PREFIX_EVENT_TYPE.getAndPrefix() + "meeting");
     }
 
     @Test
     public void parse_repeatedArgs_throwsParseException() {
         assertParseFailure(parser, " " + PREFIX_EVENT_ABOUT + "Alice " + PREFIX_EVENT_ABOUT + "Bob",
                 MESSAGE_DUPLICATE_FIELDS + PREFIX_EVENT_ABOUT);
-        assertParseFailure(parser, " " + PREFIX_EVENT_WITH + "Alice " + PREFIX_EVENT_WITH + "Bob",
+        assertParseFailure(parser, " " + PREFIX_EVENT_WITH + "Alice " + PREFIX_EVENT_WITH.getAndPrefix() + "Bob",
                 MESSAGE_DUPLICATE_FIELDS + PREFIX_EVENT_WITH);
-        assertParseFailure(parser, " " + PREFIX_EVENT_TYPE + "meeting " + PREFIX_EVENT_TYPE + "others",
+        assertParseFailure(parser, " " + PREFIX_EVENT_TYPE + "meeting " + PREFIX_EVENT_TYPE.getOrPrefix() + "others",
                 MESSAGE_DUPLICATE_FIELDS + PREFIX_EVENT_TYPE);
     }
 

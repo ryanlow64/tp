@@ -59,12 +59,12 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixes);
         List<Prefix> prefixesUsed = argMultimap.getPrefixes();
 
-        String trimmedArgs = args.trim();
-
         if (!argMultimap.getPreamble().isEmpty()) {
             logger.warning("Additional preamble");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
         }
+
+        String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
             logger.warning("Missing arguments");

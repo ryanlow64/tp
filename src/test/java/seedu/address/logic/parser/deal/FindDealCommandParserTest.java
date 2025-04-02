@@ -3,9 +3,10 @@ package seedu.address.logic.parser.deal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
-import static seedu.address.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE_ABOVE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE_BELOW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
@@ -15,14 +16,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.deal.FindDealCommand;
-import seedu.address.logic.parser.FindCommandParserTest;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.deal.Deal;
+import seedu.address.model.commons.Price; // new import
 import seedu.address.model.deal.DealStatus;
 
-public class FindDealCommandParserTest extends FindCommandParserTest<Deal> {
+public class FindDealCommandParserTest {
 
-    private FindDealCommandParser parser = new FindDealCommandParser();
+    private final FindDealCommandParser parser = new FindDealCommandParser();
 
     @BeforeAll
     public static void setUp() {
@@ -30,7 +30,7 @@ public class FindDealCommandParserTest extends FindCommandParserTest<Deal> {
     }
 
     /**
-     * Helper method to verify that the {@code FindDealCommand} instance created is correct.
+     * Helper method to verify that a FindDealCommand is correctly created from parsing user input.
      */
     private void assertFindCommandSuccess(String userInput) {
         try {
@@ -46,7 +46,7 @@ public class FindDealCommandParserTest extends FindCommandParserTest<Deal> {
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindDealCommand.MESSAGE_USAGE));
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindDealCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -94,21 +94,44 @@ public class FindDealCommandParserTest extends FindCommandParserTest<Deal> {
         // Repeated property name
         assertParseFailure(parser, " " + PREFIX_PROPERTY_NAME + "Villa "
                 + PREFIX_PROPERTY_NAME + "Condo",
-                MESSAGE_DUPLICATE_FIELDS + PREFIX_PROPERTY_NAME);
+                "Multiple values specified for the following single-valued field(s): prop/");
 
         // Repeated buyer name
         assertParseFailure(parser, " " + PREFIX_BUYER + "John "
                 + PREFIX_BUYER + "Alice",
-                MESSAGE_DUPLICATE_FIELDS + PREFIX_BUYER);
+                "Multiple values specified for the following single-valued field(s): buyer/");
 
         // Repeated seller name
         assertParseFailure(parser, " " + PREFIX_SELLER + "Jane "
                 + PREFIX_SELLER + "Bob",
-                MESSAGE_DUPLICATE_FIELDS + PREFIX_SELLER);
+                "Multiple values specified for the following single-valued field(s): seller/");
 
         // Repeated status
         assertParseFailure(parser, " " + PREFIX_STATUS + "PENDING "
                 + PREFIX_STATUS + "CLOSED",
-                MESSAGE_DUPLICATE_FIELDS + PREFIX_STATUS);
+                "Multiple values specified for the following single-valued field(s): status/");
+    }
+
+    @Test
+    public void parse_validPriceArgs_returnsFindDealCommand() {
+        // Valid price below and price above
+        assertFindCommandSuccess(" " + PREFIX_PRICE_BELOW + "100 " + PREFIX_PRICE_ABOVE.getAndPrefix() + "200");
+    }
+
+    @Test
+    public void parse_invalidPriceBelowArg_throwsParseException() {
+        assertParseFailure(parser, " " + PREFIX_PRICE_BELOW + "abc", Price.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_invalidPriceAboveArg_throwsParseException() {
+        assertParseFailure(parser, " " + PREFIX_PRICE_ABOVE + "xyz", Price.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_mixedPricesAndOtherArgs_returnsFindDealCommand() {
+        // Test combination of property name, buyer, and valid price fields
+        assertFindCommandSuccess(" " + PREFIX_PROPERTY_NAME + "Villa " + PREFIX_BUYER.getOrPrefix() + "John "
+                                + PREFIX_PRICE_BELOW.getOrPrefix() + "150 " + PREFIX_PRICE_ABOVE.getOrPrefix() + "300");
     }
 }

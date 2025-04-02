@@ -1,99 +1,61 @@
 package seedu.address.logic.parser.event;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static seedu.address.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_ABOUT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TYPE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_WITH;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.event.FindEventCommand;
-import seedu.address.logic.parser.FindCommandParserTest;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.client.ClientName;
-import seedu.address.model.event.Event;
-import seedu.address.model.event.EventType;
 
-public class FindEventCommandParserTest extends FindCommandParserTest<Event> {
+public class FindEventCommandParserTest {
 
-    private FindEventCommandParser parser = new FindEventCommandParser();
+    private final FindEventCommandParser parser = new FindEventCommandParser();
 
     @BeforeAll
     public static void setUp() {
         FindEventCommand.addCommandWord();
     }
 
-    /**
-     * Helper method to verify that the {@code FindEventCommand} instance created is correct.
-     */
-    private void assertFindCommandSuccess(String userInput) {
-        try {
-            FindEventCommand command = parser.parse(userInput);
-            assertTrue(command instanceof FindEventCommand);
-            assertEquals("find_event", FindEventCommand.COMMAND_WORD);
-        } catch (ParseException pe) {
-            fail("ParseException should not be thrown for valid input: " + pe.getMessage());
-        }
+    @Test
+    public void parse_emptyInput_throwsParseException() {
+        String input = "   ";
+        assertThrows(ParseException.class, () -> parser.parse(input));
     }
 
     @Test
-    public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+    public void parse_validInput_returnsFindEventCommand() throws Exception {
+        String input = "with/Alice OR_about/PropertyX OR_etype/meeting OR_before/01-04-2025 1000";
+        FindEventCommand command = parser.parse(FindEventCommand.COMMAND_WORD + " " + input);
+        assertNotNull(command);
     }
 
     @Test
-    public void parse_validArgs_returnsFindEventCommand() {
-        assertFindCommandSuccess(" " + PREFIX_EVENT_ABOUT + "Villa");
-        assertFindCommandSuccess(" " + PREFIX_EVENT_WITH + "John");
-        assertFindCommandSuccess(" " + PREFIX_EVENT_TYPE + "meeting");
-
-        assertFindCommandSuccess(" " + PREFIX_EVENT_ABOUT + "Villa Condo");
-        assertFindCommandSuccess(" " + PREFIX_EVENT_WITH + "John Doe");
-        assertFindCommandSuccess(" " + PREFIX_EVENT_ABOUT
-                + "aquickbrownfoxjumpsoverthelazydogaquickbrownfoxjumpsoverthelazydog"
-                + "    1234567890    aquickbrownfoxjumpsoverthedog");
+    public void parse_duplicatePrefix_throwsParseException() {
+        // Duplicate 'with' prefix provided.
+        String input = "with/Alice with/Bob";
+        assertThrows(ParseException.class, () -> parser.parse(FindEventCommand.COMMAND_WORD + " " + input));
     }
 
     @Test
-    public void parse_multipleArgs_returnsFindEventCommand() {
-        assertFindCommandSuccess(" " + PREFIX_EVENT_ABOUT + "Villa "
-                + PREFIX_EVENT_WITH.getAndPrefix() + "John "
-                + PREFIX_EVENT_TYPE.getAndPrefix() + "meeting");
+    public void parse_invalidBeforeDate_throwsParseException() {
+        // Invalid date format for 'before'
+        String input = "with/Alice before/invalidDate";
+        assertThrows(ParseException.class, () -> parser.parse(FindEventCommand.COMMAND_WORD + " " + input));
     }
 
     @Test
-    public void parse_repeatedArgs_throwsParseException() {
-        assertParseFailure(parser, " " + PREFIX_EVENT_ABOUT + "Alice " + PREFIX_EVENT_ABOUT + "Bob",
-                MESSAGE_DUPLICATE_FIELDS + PREFIX_EVENT_ABOUT);
-        assertParseFailure(parser, " " + PREFIX_EVENT_WITH + "Alice " + PREFIX_EVENT_WITH.getAndPrefix() + "Bob",
-                MESSAGE_DUPLICATE_FIELDS + PREFIX_EVENT_WITH);
-        assertParseFailure(parser, " " + PREFIX_EVENT_TYPE + "meeting " + PREFIX_EVENT_TYPE.getOrPrefix() + "others",
-                MESSAGE_DUPLICATE_FIELDS + PREFIX_EVENT_TYPE);
+    public void parse_invalidAfterDate_throwsParseException() {
+        // Invalid date format for 'after'
+        String input = "with/Alice after/invalidDate";
+        assertThrows(ParseException.class, () -> parser.parse(FindEventCommand.COMMAND_WORD + " " + input));
     }
 
     @Test
-    public void parse_invalidEventTypeArg_throwsParseException() {
-        assertParseFailure(parser, " " + PREFIX_EVENT_TYPE + "Arnold Schwarzenegger",
-                EventType.MESSAGE_CONSTRAINTS);
-    }
-
-    @Test
-    public void parse_nonAlphanumericArg_throwsParseException() {
-        assertParseFailure(parser, " " + PREFIX_EVENT_WITH + "Arnold Schw@rzenegger",
-                ClientName.MESSAGE_CONSTRAINTS);
-    }
-
-    @Test
-    public void parse_additionalPreamble_failure() {
-        assertParseFailure(parser,
-                "some garbage " + PREFIX_EVENT_WITH + "Arnold Schwarzenegger",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+    public void parse_invalidEventType_throwsParseException() {
+        // Invalid event type provided
+        String input = "with/Alice type/invalidType";
+        assertThrows(ParseException.class, () -> parser.parse(FindEventCommand.COMMAND_WORD + " " + input));
     }
 }

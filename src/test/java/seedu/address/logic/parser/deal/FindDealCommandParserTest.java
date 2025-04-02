@@ -3,6 +3,7 @@ package seedu.address.logic.parser.deal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
+import static seedu.address.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
@@ -14,10 +15,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.deal.FindDealCommand;
+import seedu.address.logic.parser.FindCommandParserTest;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
 
-public class FindDealCommandParserTest {
+public class FindDealCommandParserTest extends FindCommandParserTest<Deal> {
 
     private FindDealCommandParser parser = new FindDealCommandParser();
 
@@ -27,7 +30,7 @@ public class FindDealCommandParserTest {
     }
 
     /**
-     * Helper method to verify that a FindDealCommand is correctly created from parsing user input.
+     * Helper method to verify that the {@code FindDealCommand} instance created is correct.
      */
     private void assertFindCommandSuccess(String userInput) {
         try {
@@ -43,7 +46,7 @@ public class FindDealCommandParserTest {
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ",
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindDealCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindDealCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -91,21 +94,21 @@ public class FindDealCommandParserTest {
         // Repeated property name
         assertParseFailure(parser, " " + PREFIX_PROPERTY_NAME + "Villa "
                 + PREFIX_PROPERTY_NAME + "Condo",
-                "Multiple values specified for the following single-valued field(s): prop/");
+                MESSAGE_DUPLICATE_FIELDS + PREFIX_PROPERTY_NAME);
 
         // Repeated buyer name
         assertParseFailure(parser, " " + PREFIX_BUYER + "John "
                 + PREFIX_BUYER + "Alice",
-                "Multiple values specified for the following single-valued field(s): buyer/");
+                MESSAGE_DUPLICATE_FIELDS + PREFIX_BUYER);
 
         // Repeated seller name
         assertParseFailure(parser, " " + PREFIX_SELLER + "Jane "
                 + PREFIX_SELLER + "Bob",
-                "Multiple values specified for the following single-valued field(s): seller/");
+                MESSAGE_DUPLICATE_FIELDS + PREFIX_SELLER);
 
         // Repeated status
         assertParseFailure(parser, " " + PREFIX_STATUS + "PENDING "
                 + PREFIX_STATUS + "CLOSED",
-                "Multiple values specified for the following single-valued field(s): status/");
+                MESSAGE_DUPLICATE_FIELDS + PREFIX_STATUS);
     }
 }

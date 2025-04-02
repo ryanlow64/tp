@@ -49,7 +49,7 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindEventCommand
      * and returns a FindEventCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform to the expected format
      */
     public FindEventCommand parse(String args) throws ParseException {
         logger.info("Parsing arguments for FindEventCommand: " + args);
@@ -59,7 +59,13 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixes);
         List<Prefix> prefixesUsed = argMultimap.getPrefixes();
 
+        if (!argMultimap.getPreamble().isEmpty()) {
+            logger.warning("Additional preamble");
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+        }
+
         String trimmedArgs = args.trim();
+
         if (trimmedArgs.isEmpty()) {
             logger.warning("Missing arguments");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));

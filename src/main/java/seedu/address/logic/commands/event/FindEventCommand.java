@@ -11,6 +11,7 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.FindCommand;
@@ -74,5 +75,26 @@ public class FindEventCommand extends FindCommand<Event> {
         int eventsFound = model.getFilteredEventList().size();
         logger.info("Found " + eventsFound + " events satisfying the predicate");
         return new CommandResult(String.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, eventsFound));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof FindEventCommand otherFindCommand)) {
+            return false;
+        }
+
+        return predicate.equals(otherFindCommand.predicate);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("predicate", predicate)
+                .toString();
     }
 }

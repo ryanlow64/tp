@@ -11,9 +11,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.property.FindPropertyCommand;
+import seedu.address.logic.parser.FindCommandParserTest;
+import seedu.address.model.property.Property;
 import seedu.address.model.property.predicates.PropertyNameContainsKeywordsPredicate;
 
-public class FindPropertyCommandParserTest {
+public class FindPropertyCommandParserTest extends FindCommandParserTest<Property> {
 
     private FindPropertyCommandParser parser = new FindPropertyCommandParser();
 

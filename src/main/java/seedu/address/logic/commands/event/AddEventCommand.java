@@ -37,18 +37,19 @@ import seedu.address.model.property.PropertyName;
 public class AddEventCommand extends Command {
     public static final String COMMAND_WORD = "add_event";
     public static final String MESSAGE_USAGE = new StringBuilder(COMMAND_WORD).append(" ")
-            .append(PREFIX_EVENT_TYPE).append("EVENT_TYPE ")
-            .append(PREFIX_PROPERTY_ID).append("PROPERTY_ID ")
-            .append(PREFIX_CLIENT_ID).append("CLIENT_ID ")
+            // New ordering: date, type, client, property, note
             .append(PREFIX_EVENT_START).append("EVENT_DATE_TIME ")
+            .append(PREFIX_EVENT_TYPE).append("EVENT_TYPE ")
+            .append(PREFIX_CLIENT_ID).append("CLIENT_ID ")
+            .append(PREFIX_PROPERTY_ID).append("PROPERTY_ID ")
             .append(PREFIX_EVENT_NOTE).append("NOTE")
             .append(System.lineSeparator())
             .append("Example: ").append(COMMAND_WORD).append(" ")
-            .append(PREFIX_EVENT_TYPE).append("meeting ")
-            .append(PREFIX_PROPERTY_ID).append("1 ")
-            .append(PREFIX_CLIENT_ID).append("2 ")
             .append(PREFIX_EVENT_START).append("30-03-2025 1730 ")
-            .append(PREFIX_EVENT_NOTE).append("N/A")
+            .append(PREFIX_EVENT_TYPE).append("meeting ")
+            .append(PREFIX_CLIENT_ID).append("2 ")
+            .append(PREFIX_PROPERTY_ID).append("1 ")
+            .append(PREFIX_EVENT_NOTE).append("NA")
             .toString();
 
     public static final String MESSAGE_SUCCESS = "New event added: %s";
@@ -59,34 +60,34 @@ public class AddEventCommand extends Command {
 
     private static final Logger logger = LogsCenter.getLogger(AddEventCommand.class);
 
-    private final EventType eventType;
-    private final Index propertyId;
-    private final Index clientId;
     private final LocalDateTime dateTime;
+    private final EventType eventType;
+    private final Index clientId;
+    private final Index propertyId;
     private final Note note;
 
     /**
      * Creates an AddCommand to add the specified {@code Event}.
      *
-     * @param eventType The type of the event.
-     * @param propertyId The {@code Index} of the associated property in the filtered list.
-     * @param clientId The {@code Index} of the associated client in the filtered list.
      * @param dateTime The date and time of the event.
+     * @param eventType The type of the event.
+     * @param clientId The {@code Index} of the associated client in the filtered list.
+     * @param propertyId The {@code Index} of the associated property in the filtered list.
      * @param note Additional notes about the event.
      */
-    public AddEventCommand(EventType eventType, Index propertyId, Index clientId, LocalDateTime dateTime, Note note) {
+    public AddEventCommand(LocalDateTime dateTime, EventType eventType, Index clientId, Index propertyId, Note note) {
+        requireNonNull(dateTime);
         requireNonNull(eventType);
         requireNonNull(propertyId);
         requireNonNull(clientId);
-        requireNonNull(dateTime);
         requireNonNull(note);
-        this.eventType = eventType;
-        this.propertyId = propertyId;
-        this.clientId = clientId;
         this.dateTime = dateTime;
+        this.eventType = eventType;
+        this.clientId = clientId;
+        this.propertyId = propertyId;
         this.note = note;
-        logger.info(String.format("AddEventCommand initialized with: %s, %d, %d, %s, %s",
-                eventType, propertyId.getZeroBased(), clientId.getZeroBased(), dateTime, note));
+        logger.info(String.format("AddEventCommand initialized with: %s, %s, %d, %d, %s",
+                dateTime, eventType, clientId.getZeroBased(), propertyId.getZeroBased(), note));
     }
 
     /**
@@ -94,10 +95,10 @@ public class AddEventCommand extends Command {
      */
     public static void addCommandWord() {
         Prefix[] prefixes = {
-            PREFIX_EVENT_TYPE,
-            PREFIX_PROPERTY_ID,
-            PREFIX_CLIENT_ID,
             PREFIX_EVENT_START,
+            PREFIX_EVENT_TYPE,
+            PREFIX_CLIENT_ID,
+            PREFIX_PROPERTY_ID,
             PREFIX_EVENT_NOTE
         };
         initialiseCommandWord(COMMAND_WORD, prefixes);
@@ -112,29 +113,6 @@ public class AddEventCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         logger.info("Executing AddEventCommand");
-
-        // Get the property by ID
-        List<Property> propertyList = model.getFilteredPropertyList();
-        int propertyIdZeroBased = propertyId.getZeroBased();
-        if (propertyIdZeroBased >= propertyList.size()) {
-            logger.warning("Invalid property ID: " + propertyIdZeroBased);
-            throw new CommandException(MESSAGE_INVALID_PROPERTY_ID);
-        }
-        Property property = propertyList.get(propertyIdZeroBased);
-        PropertyName propertyName = property.getFullName();
-        logger.fine("Property ID: " + propertyIdZeroBased);
-
-        // Fetch clients by index
-        List<Client> clientList = model.getFilteredClientList();
-        // Check if client ID is valid
-        int clientIdZeroBased = clientId.getZeroBased();
-        if (clientIdZeroBased >= clientList.size()) {
-            logger.warning("Invalid client ID: " + clientIdZeroBased);
-            throw new CommandException(MESSAGE_INVALID_CLIENT_ID);
-        }
-        Client client = clientList.get(clientIdZeroBased);
-        ClientName clientName = client.getFullName();
-        logger.fine("Client ID: " + clientIdZeroBased);
 
         // check if event is way too far back
         if (dateTime.isBefore(LocalDateTime.of(2025, 1, 1, 0, 0))) {
@@ -151,7 +129,29 @@ public class AddEventCommand extends Command {
             }
         }
 
-        Event toAdd = new Event(eventType, propertyName, clientName, dateTime, note);
+        // Fetch clients by index
+        List<Client> clientList = model.getFilteredClientList();
+        int clientIdZeroBased = clientId.getZeroBased();
+        if (clientIdZeroBased >= clientList.size()) {
+            logger.warning("Invalid client ID: " + clientIdZeroBased);
+            throw new CommandException(MESSAGE_INVALID_CLIENT_ID);
+        }
+        Client client = clientList.get(clientIdZeroBased);
+        ClientName clientName = client.getFullName();
+        logger.fine("Client ID: " + clientIdZeroBased);
+
+        // Get the property by ID
+        List<Property> propertyList = model.getFilteredPropertyList();
+        int propertyIdZeroBased = propertyId.getZeroBased();
+        if (propertyIdZeroBased >= propertyList.size()) {
+            logger.warning("Invalid property ID: " + propertyIdZeroBased);
+            throw new CommandException(MESSAGE_INVALID_PROPERTY_ID);
+        }
+        Property property = propertyList.get(propertyIdZeroBased);
+        PropertyName propertyName = property.getFullName();
+        logger.fine("Property ID: " + propertyIdZeroBased);
+
+        Event toAdd = new Event(dateTime, eventType, clientName, propertyName, note);
         model.addEvent(toAdd);
         String eventDescription = Messages.formatEvent(toAdd);
         logger.info("Added event: " + eventDescription);
@@ -169,10 +169,10 @@ public class AddEventCommand extends Command {
             return false;
         }
 
-        return this.eventType.equals(otherAddCommand.eventType)
-                && this.propertyId.equals(otherAddCommand.propertyId)
+        return this.dateTime.equals(otherAddCommand.dateTime)
+                && this.eventType.equals(otherAddCommand.eventType)
                 && this.clientId.equals(otherAddCommand.clientId)
-                && this.dateTime.equals(otherAddCommand.dateTime)
+                && this.propertyId.equals(otherAddCommand.propertyId)
                 && this.note.equals(otherAddCommand.note);
     }
 }

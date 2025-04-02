@@ -78,9 +78,9 @@ public class AddDealCommandTest {
                 .execute(modelStub);
 
         assertEquals(String.format(AddDealCommand.MESSAGE_SUCCESS,
-                propertyName.toString(),
-                buyerName.toString(),
-                ownerName.toString(),
+                propertyName,
+                buyerName,
+                ownerName,
                 price.value,
                 status),
                 commandResult.getFeedbackToUser());
@@ -242,7 +242,7 @@ public class AddDealCommandTest {
     /**
      * A Model stub that contains a single deal.
      */
-    private class ModelStubWithDeal extends ModelStub {
+    private static class ModelStubWithDeal extends ModelStub {
         private final Deal deal;
         private final ArrayList<Client> clients = new ArrayList<>();
         private final ArrayList<Property> properties = new ArrayList<>();
@@ -287,7 +287,7 @@ public class AddDealCommandTest {
     /**
      * A Model stub that contains clients but no deals
      */
-    private class ModelStubWithClients extends ModelStub {
+    private static class ModelStubWithClients extends ModelStub {
         private final ArrayList<Client> clients = new ArrayList<>();
         private final ArrayList<Property> properties = new ArrayList<>();
 
@@ -318,7 +318,7 @@ public class AddDealCommandTest {
     /**
      * A Model stub that contains a deal and clients
      */
-    private class ModelStubWithDealAndClients extends ModelStub {
+    private static class ModelStubWithDealAndClients extends ModelStub {
         private final Deal deal;
         private final ArrayList<Client> clients = new ArrayList<>();
         private final ArrayList<Property> properties = new ArrayList<>();
@@ -363,7 +363,7 @@ public class AddDealCommandTest {
     /**
      * A Model stub that always accept the deal being added.
      */
-    private class ModelStubAcceptingDealAdded extends ModelStub {
+    private static class ModelStubAcceptingDealAdded extends ModelStub {
         final ArrayList<Deal> dealsAdded = new ArrayList<>();
         final ArrayList<Client> clients = new ArrayList<>();
         final ArrayList<Property> properties = new ArrayList<>();

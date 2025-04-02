@@ -29,11 +29,11 @@ public class FindEventCommand extends FindCommand<Event> {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all events with the specified event type, "
             + "given time period or client or property name(s)\n"
             + "Parameters: "
-            + "[" + PREFIX_EVENT_ABOUT + "ABOUT] "
-            + "[" + PREFIX_EVENT_WITH + "WITH] "
-            + "[" + PREFIX_EVENT_TYPE + "EVENT_TYPE] "
             + "[" + PREFIX_EVENT_BEFORE + "BEFORE] "
-            + "[" + PREFIX_EVENT_AFTER + "AFTER]\n"
+            + "[" + PREFIX_EVENT_AFTER + "AFTER] "
+            + "[" + PREFIX_EVENT_TYPE + "EVENT_TYPE] "
+            + "[" + PREFIX_EVENT_WITH + "WITH] "
+            + "[" + PREFIX_EVENT_ABOUT + "ABOUT]\n"
             + "Note: At least one parameter must be provided. The first parameter is applied unconditionally, "
             + "and if more parameters are provided, all must be "
             + "combined with the same conditional operator either 'AND' or 'OR'.\n"
@@ -57,11 +57,11 @@ public class FindEventCommand extends FindCommand<Event> {
      */
     public static void addCommandWord() {
         Prefix[] prefixes = {
-            PREFIX_EVENT_ABOUT,
+            PREFIX_EVENT_BEFORE,
+            PREFIX_EVENT_AFTER,
             PREFIX_EVENT_TYPE,
             PREFIX_EVENT_WITH,
-            PREFIX_EVENT_BEFORE,
-            PREFIX_EVENT_AFTER
+            PREFIX_EVENT_ABOUT,
         };
         addCommandWord(COMMAND_WORD, prefixes);
     }

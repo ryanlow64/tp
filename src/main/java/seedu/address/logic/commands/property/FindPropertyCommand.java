@@ -27,10 +27,20 @@ public class FindPropertyCommand extends FindCommand<Property> {
 
     public static final String COMMAND_WORD = "find_property";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all properties whose property name contains "
-            + "any of the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " villa condominium estate";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all properties with the specified name keywords,"
+                    + " address, price range, size range or owner.\nParameters: "
+                    + "[" + PREFIX_KEYWORDS + "KEYWORDS] "
+                    + "[" + PREFIX_ADDRESS + "ADDRESS] "
+                    + "[" + PREFIX_PRICE_BELOW + "PRICE_BELOW] "
+                    + "[" + PREFIX_PRICE_ABOVE + "PRICE_ABOVE] "
+                    + "[" + PREFIX_SIZE_BELOW + "SIZE_BELOW] "
+                    + "[" + PREFIX_SIZE_ABOVE + "SIZE_ABOVE] "
+                    + "[" + PREFIX_OWNER + "OWNER]\n"
+                    + "Note: At least one parameter must be provided. The first parameter is applied unconditionally, "
+                    + "and if more parameters are provided, all must be combined with the same conditional operator "
+                    + "either 'AND' or 'OR'.\n"
+                    + "Example: " + COMMAND_WORD + " " + PREFIX_OWNER + "John Doe " + PREFIX_PRICE_ABOVE.getAndPrefix()
+                    + "500";
 
     private final Predicate<Property> predicate;
 

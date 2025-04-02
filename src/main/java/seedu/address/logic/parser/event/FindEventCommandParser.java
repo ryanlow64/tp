@@ -74,7 +74,7 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
         } catch (ParseException e) {
             if (prefixesUsed.contains(PREFIX_EVENT_BEFORE)) {
                 logger.warning("Invalid date format for before date");
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+                throw new ParseException(e.getMessage());
             }
         }
 
@@ -84,7 +84,7 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
         } catch (ParseException e) {
             if (prefixesUsed.contains(PREFIX_EVENT_AFTER)) {
                 logger.warning("Invalid date format for after date");
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+                throw new ParseException(e.getMessage());
             }
         }
 
@@ -94,7 +94,7 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
         } catch (ParseException e) {
             if (prefixesUsed.contains(PREFIX_EVENT_TYPE)) {
                 logger.warning("Invalid event type");
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
+                throw new ParseException(e.getMessage());
             }
         }
 

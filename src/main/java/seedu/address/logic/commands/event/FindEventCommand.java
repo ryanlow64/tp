@@ -25,13 +25,19 @@ import seedu.address.model.event.Event;
 public class FindEventCommand extends FindCommand<Event> {
     public static final String COMMAND_WORD = "find_event";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all events with the specified event type or "
-            + "client or property fullname(s) and displays them as a list with index numbers.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all events with the specified event type, "
+            + "given time period or client or property name(s)\n"
             + "Parameters: "
-            + PREFIX_EVENT_ABOUT + "ABOUT "
-            + PREFIX_EVENT_TYPE + "EVENT_TYPE "
-            + PREFIX_EVENT_WITH + "WITH \n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_EVENT_WITH + "Alice Yeo";
+            + "[" + PREFIX_EVENT_ABOUT + "ABOUT] "
+            + "[" + PREFIX_EVENT_WITH + "WITH] "
+            + "[" + PREFIX_EVENT_TYPE + "EVENT_TYPE] "
+            + "[" + PREFIX_EVENT_BEFORE + "BEFORE] "
+            + "[" + PREFIX_EVENT_AFTER + "AFTER]\n"
+            + "Note: At least one parameter must be provided. The first parameter is applied unconditionally, "
+            + "and if more parameters are provided, all must be "
+            + "combined with the same conditional operator either 'AND' or 'OR'.\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_EVENT_WITH + "Alice Yeo " + PREFIX_EVENT_TYPE.getAndPrefix()
+            + "meeting";
 
     private static final Logger logger = LogsCenter.getLogger(FindEventCommand.class);
 

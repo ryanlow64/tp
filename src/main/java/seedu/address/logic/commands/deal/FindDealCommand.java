@@ -30,16 +30,20 @@ public class FindDealCommand extends FindCommand<Deal> {
 
     private static final Logger logger = LogsCenter.getLogger(FindDealCommand.class);
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all deals that match the specified criteria "
-            + "and displays them as a list with index numbers.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all deals with the specified buyer, seller, "
+            + "property name, deal status and price range\n"
             + "Parameters: "
             + "[" + PREFIX_PROPERTY_NAME + "PROPERTY_NAME] "
             + "[" + PREFIX_BUYER + "BUYER_NAME] "
             + "[" + PREFIX_SELLER + "SELLER_NAME] "
-            + "[" + PREFIX_STATUS + "STATUS]\n"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_PROPERTY_NAME + "Villa "
-            + PREFIX_STATUS + "PENDING";
+            + "[" + PREFIX_STATUS + "STATUS] "
+            + "[" + PREFIX_PRICE_ABOVE + "PRICE_ABOVE] "
+            + "[" + PREFIX_PRICE_BELOW + "PRICE_BELOW]\n"
+            + "Note: At least one parameter must be provided. The first parameter is applied unconditionally, "
+            + "and if more parameters are provided, all must be "
+            + "combined with the same conditional operator either 'AND' or 'OR'.\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_PROPERTY_NAME + "Villa " + PREFIX_STATUS.getAndPrefix()
+            + "PENDING";
 
     /**
      * Creates a new FindDealCommand with the given predicate.

@@ -71,6 +71,10 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
         logger.fine("Event type: " + eventType);
 
         LocalDateTime dateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_START).get());
+        if (dateTime.isBefore(LocalDateTime.of(2025, 1, 1, 0, 0))) {
+            logger.warning("Event date is in the past");
+            throw new ParseException(AddEventCommand.MESSAGE_EVENT_IN_PAST);
+        }
         logger.fine("Date & time: " + dateTime);
 
         Note note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_EVENT_NOTE).get());

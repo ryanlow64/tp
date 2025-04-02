@@ -1,26 +1,33 @@
 package seedu.address.logic.parser.deal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
-import static seedu.address.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.deal.FindDealCommand;
 import seedu.address.logic.parser.FindCommandParserTest;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.deal.Deal;
+import seedu.address.model.deal.DealStatus;
 
 public class FindDealCommandParserTest extends FindCommandParserTest<Deal> {
 
     private FindDealCommandParser parser = new FindDealCommandParser();
+
+    @BeforeAll
+    public static void setUp() {
+        FindDealCommand.addCommandWord();
+    }
 
     /**
      * Helper method to verify that the {@code FindDealCommand} instance created is correct.
@@ -29,7 +36,7 @@ public class FindDealCommandParserTest extends FindCommandParserTest<Deal> {
         try {
             FindDealCommand command = parser.parse(userInput);
             // Verify the command is correctly created
-            assertTrue(command instanceof FindDealCommand);
+            assertNotNull(command);
             assertEquals("find_deal", FindDealCommand.COMMAND_WORD);
         } catch (ParseException pe) {
             fail("ParseException should not be thrown for valid input: " + pe.getMessage());
@@ -69,17 +76,17 @@ public class FindDealCommandParserTest extends FindCommandParserTest<Deal> {
     @Test
     public void parse_multipleArgs_returnsFindDealCommand() {
         // Property name and status
-        assertFindCommandSuccess(" " + PREFIX_PROPERTY_NAME + "Villa " + PREFIX_STATUS + "PENDING");
+        assertFindCommandSuccess(" " + PREFIX_PROPERTY_NAME + "Villa " + PREFIX_STATUS.getAndPrefix() + "PENDING");
 
         // Property name, buyer name, and seller name
-        assertFindCommandSuccess(" " + PREFIX_PROPERTY_NAME + "Villa " + PREFIX_BUYER
-                + "John " + PREFIX_SELLER + "Jane");
+        assertFindCommandSuccess(" " + PREFIX_PROPERTY_NAME + "Villa " + PREFIX_BUYER.getAndPrefix()
+                + "John " + PREFIX_SELLER.getAndPrefix() + "Jane");
     }
 
     @Test
     public void parse_invalidStatusArg_throwsParseException() {
         assertParseFailure(parser, " " + PREFIX_STATUS + "INVALID",
-                "Invalid status: Must be one of 'OPEN', 'PENDING', 'CLOSED' (case insensitive).");
+                DealStatus.MESSAGE_CONSTRAINTS);
     }
 
     @Test

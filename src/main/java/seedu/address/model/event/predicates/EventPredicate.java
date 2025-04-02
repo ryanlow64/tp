@@ -21,7 +21,7 @@ public abstract class EventPredicate<T> implements Predicate<Event> {
             return true;
         }
 
-        if (!(other instanceof EventOfTypePredicate otherPredicate)) {
+        if (!(other instanceof EventPredicate<?> otherPredicate)) {
             return false;
         }
 

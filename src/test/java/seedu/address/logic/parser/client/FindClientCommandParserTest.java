@@ -1,21 +1,26 @@
 package seedu.address.logic.parser.client;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_KEYWORDS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.client.FindClientCommand;
-import seedu.address.logic.parser.FindCommandParserTest;
-import seedu.address.model.client.Client;
-import seedu.address.model.client.NameContainsKeywordsPredicate;
+import seedu.address.model.client.predicates.ClientNameContainsKeywordsPredicate;
 
 public class FindClientCommandParserTest extends FindCommandParserTest<Client> {
 
     private FindClientCommandParser parser = new FindClientCommandParser();
+
+    @BeforeAll
+    public static void setUp() {
+        FindClientCommand.addCommandWord();
+    }
 
     @Test
     public void parse_emptyArg_throwsParseException() {
@@ -27,11 +32,12 @@ public class FindClientCommandParserTest extends FindCommandParserTest<Client> {
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         FindClientCommand expectedFindCommand =
-                new FindClientCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
-        assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
+                new FindClientCommand(new ClientNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        System.out.println(expectedFindCommand);
+        assertParseSuccess(parser, " " + PREFIX_KEYWORDS + "Alice Bob", expectedFindCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+        assertParseSuccess(parser, " " + PREFIX_KEYWORDS + "\n Alice \n \t Bob  \t", expectedFindCommand);
     }
 
 }

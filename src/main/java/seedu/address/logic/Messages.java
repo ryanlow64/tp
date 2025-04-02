@@ -44,7 +44,7 @@ public class Messages {
      * Formats the {@code client} for display to the user.
      */
     public static String formatClient(Client client) {
-        return new StringBuilder(String.valueOf(client.getClientName()))
+        return new StringBuilder(String.valueOf(client.getFullName()))
                 .append("; Phone: ")
                 .append(client.getPhone())
                 .append("; Email: ")
@@ -58,7 +58,7 @@ public class Messages {
      * Formats the {@code property} for display to the user.
      */
     public static String formatProperty(Property property) {
-        return new StringBuilder(String.valueOf(property.getPropertyName()))
+        return new StringBuilder(String.valueOf(property.getFullName()))
                 .append("; Address: ")
                 .append(property.getAddress())
                 .append("; Price: S$")

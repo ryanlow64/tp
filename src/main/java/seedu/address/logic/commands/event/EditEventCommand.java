@@ -58,8 +58,6 @@ public class EditEventCommand extends EditCommand<Event> {
     public static final String MESSAGE_EVENT_CONFLICT = "Event conflicts with existing event.";
     public static final String MESSAGE_INVALID_PROPERTY_ID = "Invalid property ID.";
     public static final String MESSAGE_INVALID_CLIENT_ID = "Invalid client ID.";
-    public static final String MESSAGE_EVENT_IN_PAST = "Event cannot be before 01-01-2025 0000.";
-    public static final String MESSAGE_INVALID_DATE_TIME_FORMAT = "Invalid DateTime format.";
 
     private static final Logger logger = LogsCenter.getLogger(EditEventCommand.class);
 
@@ -67,7 +65,7 @@ public class EditEventCommand extends EditCommand<Event> {
 
     /**
      * @param index of the client in the filtered client list to edit
-     * @param editClientDescriptor details to edit the client with
+     * @param editEventDescriptor details to edit the client with
      */
     public EditEventCommand(Index index, EditEventDescriptor editEventDescriptor) {
         super(index, editEventDescriptor);
@@ -131,7 +129,7 @@ public class EditEventCommand extends EditCommand<Event> {
                 throw new CommandException(MESSAGE_INVALID_CLIENT_ID);
             }
             Client client = clientList.get(clientIdZeroBased);
-            updatedClientName = client.getClientName();
+            updatedClientName = client.getFullName();
             logger.fine("Client ID: " + clientIdZeroBased);
         } else {
             updatedClientName = eventToEdit.getClientName();
@@ -146,7 +144,7 @@ public class EditEventCommand extends EditCommand<Event> {
                 throw new CommandException(MESSAGE_INVALID_PROPERTY_ID);
             }
             Property property = propertyList.get(propertyIdZeroBased);
-            updatedPropertyName = property.getPropertyName();
+            updatedPropertyName = property.getFullName();
             logger.fine("Property ID: " + propertyIdZeroBased);
         } else {
             updatedPropertyName = eventToEdit.getPropertyName();

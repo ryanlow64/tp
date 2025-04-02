@@ -46,7 +46,7 @@ public class PropertyBuilder {
      * Initializes the PropertyBuilder with the data of {@code propertyToCopy}.
      */
     public PropertyBuilder(Property propertyToCopy) {
-        propertyName = propertyToCopy.getPropertyName();
+        propertyName = propertyToCopy.getFullName();
         address = propertyToCopy.getAddress();
         price = propertyToCopy.getPrice();
         size = propertyToCopy.getSize();

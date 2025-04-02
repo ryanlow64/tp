@@ -2,9 +2,12 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 
 /**
@@ -23,6 +26,20 @@ public abstract class FindCommand<T> extends Command {
     public FindCommand(Predicate<T> predicate) {
         requireNonNull(predicate);
         this.predicate = predicate;
+    }
+
+    /**
+     * Adds the command word to the command word list.
+     */
+    public static void addCommandWord(String commandWord, Prefix... prefixes) {
+        List<Prefix> prefixList = Stream.concat(
+            Stream.of(prefixes),
+            Stream.concat(
+                Stream.of(prefixes).filter(Prefix::canBeConditional).map(Prefix::getAndPrefix),
+                Stream.of(prefixes).filter(Prefix::canBeConditional).map(Prefix::getOrPrefix))
+        ).toList();
+
+        initialiseCommandWord(commandWord, prefixList.toArray(Prefix[]::new));
     }
 
     public abstract CommandResult execute(Model model) throws CommandException;

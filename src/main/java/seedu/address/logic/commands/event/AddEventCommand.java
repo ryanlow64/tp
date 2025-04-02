@@ -121,7 +121,7 @@ public class AddEventCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_PROPERTY_ID);
         }
         Property property = propertyList.get(propertyIdZeroBased);
-        PropertyName propertyName = property.getPropertyName();
+        PropertyName propertyName = property.getFullName();
         logger.fine("Property ID: " + propertyIdZeroBased);
 
         // Fetch clients by index
@@ -133,7 +133,7 @@ public class AddEventCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_CLIENT_ID);
         }
         Client client = clientList.get(clientIdZeroBased);
-        ClientName clientName = client.getClientName();
+        ClientName clientName = client.getFullName();
         logger.fine("Client ID: " + clientIdZeroBased);
 
         // check if event is way too far back

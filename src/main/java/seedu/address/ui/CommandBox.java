@@ -1,7 +1,6 @@
 package seedu.address.ui;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
@@ -14,6 +13,7 @@ import javafx.scene.layout.Region;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -24,7 +24,7 @@ public class CommandBox extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
 
-    private static final Map<String, Set<String>> AVAILABLE_COMMANDS = Command.COMMAND_WORDS;
+    private static final Map<String, List<Prefix>> AVAILABLE_COMMANDS = Command.COMMAND_WORDS;
     private final CommandExecutor commandExecutor;
 
     // Sample list of available commands for suggestions.
@@ -148,11 +148,12 @@ public class CommandBox extends UiPart<Region> {
      * @return A list of prefix suggestions.
      */
     private List<MenuItem> getPrefixSuggestions(String userInput, String userCommand, String lastWord) {
-        Set<String> prefixes = AVAILABLE_COMMANDS.get(userCommand);
+        List<Prefix> prefixes = AVAILABLE_COMMANDS.get(userCommand);
         if (prefixes == null || prefixes.isEmpty()) {
             return List.of();
         }
         return prefixes.stream()
+            .map(Prefix::getPrefix)
             .filter(prefix -> prefix.startsWith(lastWord) && !userInput.contains(prefix))
             .map(prefix -> {
                 MenuItem item = new MenuItem(prefix.replace("_", "\u2017"));

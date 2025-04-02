@@ -28,7 +28,7 @@ public class PropertyUtil {
      */
     public static String getPropertyDetails(Property property) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_PROPERTY_NAME + property.getPropertyName().fullName + " ");
+        sb.append(PREFIX_PROPERTY_NAME + property.getFullName().fullName + " ");
         sb.append(PREFIX_ADDRESS + property.getAddress().value + " ");
         sb.append(PREFIX_PRICE + String.valueOf(property.getPrice().value + " "));
         property.getSize().ifPresent(size -> sb.append(PREFIX_SIZE + size.value + " "));

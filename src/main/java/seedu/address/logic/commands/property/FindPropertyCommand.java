@@ -1,15 +1,23 @@
 package seedu.address.logic.commands.property;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_KEYWORDS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE_ABOVE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE_BELOW;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE_ABOVE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE_BELOW;
+
+import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.property.Property;
-import seedu.address.model.property.PropertyNameContainsKeywordsPredicate;
-
 
 /**
  * Finds and lists all properties in address book whose property name contains any of the argument keywords.
@@ -19,17 +27,27 @@ public class FindPropertyCommand extends FindCommand<Property> {
 
     public static final String COMMAND_WORD = "find_property";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all properties whose property name contains "
-            + "any of the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " villa condominium estate";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all properties with the specified name keywords,"
+                    + " address, price range, size range or owner.\nParameters: "
+                    + "[" + PREFIX_KEYWORDS + "KEYWORDS] "
+                    + "[" + PREFIX_ADDRESS + "ADDRESS] "
+                    + "[" + PREFIX_PRICE_BELOW + "PRICE_BELOW] "
+                    + "[" + PREFIX_PRICE_ABOVE + "PRICE_ABOVE] "
+                    + "[" + PREFIX_SIZE_BELOW + "SIZE_BELOW] "
+                    + "[" + PREFIX_SIZE_ABOVE + "SIZE_ABOVE] "
+                    + "[" + PREFIX_OWNER + "OWNER]\n"
+                    + "Note: At least one parameter must be provided. The first parameter is applied unconditionally, "
+                    + "and if more parameters are provided, all must be combined with the same conditional operator "
+                    + "either 'AND' or 'OR'.\n"
+                    + "Example: " + COMMAND_WORD + " " + PREFIX_OWNER + "John Doe " + PREFIX_PRICE_ABOVE.getAndPrefix()
+                    + "500";
 
-    private final PropertyNameContainsKeywordsPredicate predicate;
+    private final Predicate<Property> predicate;
 
     /**
      * Creates an FindPropertyCommand to find the specified property.
      */
-    public FindPropertyCommand(PropertyNameContainsKeywordsPredicate predicate) {
+    public FindPropertyCommand(Predicate<Property> predicate) {
         super(predicate);
         this.predicate = predicate;
     }
@@ -38,7 +56,16 @@ public class FindPropertyCommand extends FindCommand<Property> {
      * Adds the command word to the command word list.
      */
     public static void addCommandWord() {
-        initialiseCommandWord(COMMAND_WORD);
+        Prefix[] prefixes = {
+            PREFIX_KEYWORDS,
+            PREFIX_ADDRESS,
+            PREFIX_PRICE_BELOW,
+            PREFIX_PRICE_ABOVE,
+            PREFIX_SIZE_BELOW,
+            PREFIX_SIZE_ABOVE,
+            PREFIX_OWNER
+        };
+        addCommandWord(COMMAND_WORD, prefixes);
     }
 
     @Override

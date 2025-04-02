@@ -72,8 +72,8 @@ public class UpdateDealCommandTest {
         model.addClient(seller);
         model.addProperty(property);
 
-        ClientName buyerName = buyer.getClientName();
-        ClientName sellerName = seller.getClientName();
+        ClientName buyerName = buyer.getFullName();
+        ClientName sellerName = seller.getFullName();
 
         Deal testDeal = new DealBuilder()
                 .withPropertyName(VALID_PROPERTY_NAME)
@@ -101,7 +101,7 @@ public class UpdateDealCommandTest {
         String expectedMessage = String.format(UpdateDealCommand.MESSAGE_UPDATE_DEAL_SUCCESS, testDeal);
 
         // Create a copy of expected deal after update
-        Deal expectedDeal = new Deal(property.getPropertyName(), buyerName, sellerName,
+        Deal expectedDeal = new Deal(property.getFullName(), buyerName, property.getOwner(),
                 new Price(VALID_PRICE_2), VALID_STATUS_2);
 
         // Execute command
@@ -140,8 +140,8 @@ public class UpdateDealCommandTest {
                 new Email("jane@example.com"),
                 new Address("Blk 456"));
 
-        ClientName buyerName = buyer.getClientName();
-        ClientName sellerName = seller.getClientName();
+        ClientName buyerName = buyer.getFullName();
+        ClientName sellerName = seller.getFullName();
 
         Deal testDeal = new DealBuilder()
                 .withPropertyName(VALID_PROPERTY_NAME)
@@ -262,8 +262,8 @@ public class UpdateDealCommandTest {
         model.addClient(seller);
         model.addProperty(property);
 
-        ClientName buyerName = buyer.getClientName();
-        ClientName sellerName = seller.getClientName();
+        ClientName buyerName = buyer.getFullName();
+        ClientName sellerName = seller.getFullName();
 
         Deal testDeal = new DealBuilder()
                 .withPropertyName(VALID_PROPERTY_NAME)
@@ -298,7 +298,7 @@ public class UpdateDealCommandTest {
                 new Address("Blk 123"));
         model.addClient(client);
 
-        ClientName clientName = client.getClientName();
+        ClientName clientName = client.getFullName();
 
         Deal testDeal = new DealBuilder()
                 .withPropertyName(VALID_PROPERTY_NAME)
@@ -318,6 +318,157 @@ public class UpdateDealCommandTest {
 
         assertThrows(CommandException.class, () -> updateCommand.execute(model),
                 UpdateDealCommand.MESSAGE_SAME_BUYER_SELLER);
+    }
+
+    @Test
+    public void execute_propertyIdOnlySpecified_success() {
+        TestModelStub model = new TestModelStub();
+
+        Client buyer = new Client(
+                new ClientName("John"),
+                new Phone("12345678"),
+                new Email("john@example.com"),
+                new Address("Blk 123"));
+        Client seller = new Client(
+                new ClientName("Jane"),
+                new Phone("87654321"),
+                new Email("jane@example.com"),
+                new Address("Blk 456"));
+        Property property = new Property(
+                new PropertyName(VALID_PROPERTY_NAME),
+                new Address("Blk 789"),
+                new Price(VALID_PRICE),
+                Optional.empty(),
+                Optional.empty(),
+                new ClientName("Owner"));
+
+        model.addClient(buyer);
+        model.addClient(seller);
+        model.addProperty(property);
+
+        ClientName buyerName = buyer.getFullName();
+        ClientName sellerName = seller.getFullName();
+
+        Deal testDeal = new DealBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME_2)
+                .withBuyer(buyerName.toString())
+                .withSeller(sellerName.toString())
+                .withPrice(VALID_PRICE)
+                .withStatus(VALID_STATUS)
+                .build();
+        model.addDeal(testDeal);
+
+        // Get client & property index
+        Index buyerIndex = INDEX_FIRST;
+        Index propertyIndex = INDEX_FIRST;
+
+        UpdateDealDescriptor descriptor = new UpdateDealDescriptorBuilder()
+                .withPropertyId(propertyIndex)
+                .build();
+        UpdateDealCommand updateCommand = new UpdateDealCommand(INDEX_FIRST, descriptor);
+
+        String expectedMessage = String.format(UpdateDealCommand.MESSAGE_UPDATE_DEAL_SUCCESS, testDeal);
+
+        // Create a copy of expected deal after update
+        Deal expectedDeal = new Deal(property.getFullName(), buyerName, property.getOwner(),
+                new Price(VALID_PRICE), VALID_STATUS);
+
+        // Execute command
+        try {
+            CommandResult result = updateCommand.execute(model);
+
+            // Check success message
+            assertTrue(expectedMessage.equals(result.getFeedbackToUser()));
+
+            // Check the deal was updated correctly
+            Deal updatedDeal = model.getFilteredDealList().get(INDEX_FIRST.getZeroBased());
+
+            // Compare expected deal with actual updated deal
+            assertTrue(expectedDeal.getPropertyName().equals(updatedDeal.getPropertyName()));
+            assertTrue(expectedDeal.getBuyer().equals(updatedDeal.getBuyer()));
+            assertTrue(expectedDeal.getSeller().equals(updatedDeal.getSeller()));
+            assertTrue(expectedDeal.getPrice().equals(updatedDeal.getPrice()));
+            assertTrue(expectedDeal.getStatus().equals(updatedDeal.getStatus()));
+        } catch (CommandException e) {
+            throw new AssertionError("Command should not fail: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void execute_multipleFieldsSpecified_success() {
+        TestModelStub model = new TestModelStub();
+
+        Client buyer = new Client(
+                new ClientName("John"),
+                new Phone("12345678"),
+                new Email("john@example.com"),
+                new Address("Blk 123"));
+        Client seller = new Client(
+                new ClientName("Jane"),
+                new Phone("87654321"),
+                new Email("jane@example.com"),
+                new Address("Blk 456"));
+        Property property = new Property(
+                new PropertyName(VALID_PROPERTY_NAME),
+                new Address("Blk 789"),
+                new Price(VALID_PRICE),
+                Optional.empty(),
+                Optional.empty(),
+                new ClientName("Owner"));
+
+        model.addClient(buyer);
+        model.addClient(seller);
+        model.addProperty(property);
+
+        ClientName buyerName = buyer.getFullName();
+        ClientName sellerName = seller.getFullName();
+
+        Deal testDeal = new DealBuilder()
+                .withPropertyName(VALID_PROPERTY_NAME_2)
+                .withBuyer(buyerName.toString())
+                .withSeller(sellerName.toString())
+                .withPrice(VALID_PRICE)
+                .withStatus(VALID_STATUS)
+                .build();
+        model.addDeal(testDeal);
+
+        // Get client & property index
+        Index buyerIndex = INDEX_FIRST;
+        Index propertyIndex = INDEX_FIRST;
+
+        UpdateDealDescriptor descriptor = new UpdateDealDescriptorBuilder()
+                .withPropertyId(propertyIndex)
+                .withBuyer(buyerIndex)
+                .withPrice(VALID_PRICE_2)
+                .withStatus(VALID_STATUS_2)
+                .build();
+        UpdateDealCommand updateCommand = new UpdateDealCommand(INDEX_FIRST, descriptor);
+
+        String expectedMessage = String.format(UpdateDealCommand.MESSAGE_UPDATE_DEAL_SUCCESS, testDeal);
+
+        // Create a copy of expected deal after update
+        Deal expectedDeal = new Deal(property.getFullName(), buyerName, property.getOwner(),
+                new Price(VALID_PRICE_2), VALID_STATUS_2);
+
+        // Execute command
+        try {
+            CommandResult result = updateCommand.execute(model);
+
+            // Check success message
+            assertTrue(expectedMessage.equals(result.getFeedbackToUser()));
+
+            // Check the deal was updated correctly
+            Deal updatedDeal = model.getFilteredDealList().get(INDEX_FIRST.getZeroBased());
+
+            // Compare expected deal with actual updated deal
+            assertTrue(expectedDeal.getPropertyName().equals(updatedDeal.getPropertyName()));
+            assertTrue(expectedDeal.getBuyer().equals(updatedDeal.getBuyer()));
+            assertTrue(expectedDeal.getSeller().equals(updatedDeal.getSeller()));
+            assertTrue(expectedDeal.getPrice().equals(updatedDeal.getPrice()));
+            assertTrue(expectedDeal.getStatus().equals(updatedDeal.getStatus()));
+        } catch (CommandException e) {
+            throw new AssertionError("Command should not fail: " + e.getMessage());
+        }
     }
 
     @Test

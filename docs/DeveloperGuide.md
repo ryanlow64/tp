@@ -479,6 +479,105 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
+**Use case: Add Deal**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running and has at least one property and one client.
+
+**MSS**
+
+1. User requests to add a new deal by providing property ID, buyer ID, price, and optional status.
+2. System validates the input and checks if the property is available for a deal.
+3. System automatically sets the seller based on the property owner.
+4. System creates and stores the new deal.
+5. System informs user the outcome of the addition.
+
+**Use case ends.**
+
+**Extensions**
+
+2a. System detects invalid property ID or buyer ID.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+2b. Property is already involved in another deal.\
+&nbsp;&nbsp;&nbsp;&nbsp;2b1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+2c. Buyer and seller are the same person.\
+&nbsp;&nbsp;&nbsp;&nbsp;2c1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+2d. Price format is invalid.\
+&nbsp;&nbsp;&nbsp;&nbsp;2d1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
+
+**Use case: Update Deal**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running and has at least one deal.
+
+**MSS**
+
+1. User requests to update an existing deal by providing the deal index and the fields to update.
+2. System validates the input.
+3. System updates the deal with the new information.
+4. System informs user the outcome of the update.
+
+**Use case ends.**
+
+**Extensions**
+
+2a. System detects invalid deal index.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+2b. User attempts to manually update the seller.\
+&nbsp;&nbsp;&nbsp;&nbsp;2b1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+2c. Updated deal would violate data constraints.\
+&nbsp;&nbsp;&nbsp;&nbsp;2c1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
+
+**Use case: List Deals**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to list all deals.
+2. System displays all deals in the address book.
+
+**Use case ends.**
+
+---
+
+**Use case: Find Deal**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to find deals by providing search criteria (property name, buyer name, seller name, or status).
+2. System displays a list of deals matching the criteria.
+
+**Use case ends.**
+
+**Extensions**
+
+1a. No deals match the search criteria.\
+&nbsp;&nbsp;&nbsp;&nbsp;1a1. System displays an empty list.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
+
 **Use case: Add Event to Schedule**
 
 **Actor:** User (Real Estate Agent)\
@@ -545,8 +644,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an error message.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
----
-
 *(More to be added)*
 
 ### Non-Functional Requirements
@@ -572,7 +669,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Command-Line Interface (CLI)**: A text-based user interface that allows users to interact with the system by typing commands.
 
-**Deal Status**: The current status of a property transaction which falls into three categories: Pending, Closed or In Negotiation.
+**Deal**: A property transaction record that tracks the relationship between a property, its seller (property owner), a buyer, the agreed price, and the current status of the transaction.
+
+**Deal Status**: The current status of a property transaction which falls into three categories: Pending, Closed, or Open.
 
 **Property Listing**: A collection of information about a property available for sale.
 

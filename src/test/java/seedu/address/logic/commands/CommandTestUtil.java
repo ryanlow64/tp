@@ -22,14 +22,14 @@ import seedu.address.logic.commands.property.EditPropertyCommand.EditPropertyDes
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
-import seedu.address.model.client.NameContainsKeywordsPredicate;
+import seedu.address.model.client.predicates.ClientNameContainsKeywordsPredicate;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.predicates.DealPropertyNameContainsPredicate;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.predicates.EventAboutPropertyPredicate;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
-import seedu.address.model.property.PropertyNameContainsKeywordsPredicate;
+import seedu.address.model.property.predicates.PropertyNameContainsKeywordsPredicate;
 import seedu.address.testutil.EditClientDescriptorBuilder;
 import seedu.address.testutil.EditPropertyDescriptorBuilder;
 
@@ -152,8 +152,8 @@ public class CommandTestUtil {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredClientList().size());
 
         Client client = model.getFilteredClientList().get(targetIndex.getZeroBased());
-        final String[] splitClientName = client.getClientName().fullName.split("\\s+");
-        model.updateFilteredClientList(new NameContainsKeywordsPredicate(Arrays.asList(splitClientName[0])));
+        final String[] splitClientName = client.getFullName().fullName.split("\\s+");
+        model.updateFilteredClientList(new ClientNameContainsKeywordsPredicate(Arrays.asList(splitClientName[0])));
 
         assertEquals(1, model.getFilteredClientList().size());
     }
@@ -166,7 +166,7 @@ public class CommandTestUtil {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredPropertyList().size());
 
         Property property = model.getFilteredPropertyList().get(targetIndex.getZeroBased());
-        final String[] splitPropertyName = property.getPropertyName().fullName.split("\\s+");
+        final String[] splitPropertyName = property.getFullName().fullName.split("\\s+");
         model.updateFilteredPropertyList(new PropertyNameContainsKeywordsPredicate(Arrays
                 .asList(splitPropertyName[0])));
 
@@ -181,9 +181,7 @@ public class CommandTestUtil {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredDealList().size());
 
         Deal deal = model.getFilteredDealList().get(targetIndex.getZeroBased());
-        final String[] splitDealName = deal.getPropertyName().fullName.split("\\s+");
-        model.updateFilteredDealList(new DealPropertyNameContainsPredicate(Arrays
-                .asList(splitDealName[0])));
+        model.updateFilteredDealList(new DealPropertyNameContainsPredicate(deal.getPropertyName()));
 
         assertEquals(1, model.getFilteredDealList().size());
     }

@@ -2,6 +2,9 @@ package seedu.address.model.event.predicates;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.stream.Stream;
+
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.client.ClientName;
 import seedu.address.model.event.Event;
 
@@ -22,6 +25,8 @@ public class EventWithClientPredicate extends EventPredicate<ClientName> {
 
     @Override
     public boolean test(Event event) {
-        return event.getClientName().toString().toLowerCase().contains(value.fullName.toLowerCase());
+        String[] keywords = value.fullName.split("\\s+");
+        return Stream.of(keywords)
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(event.getClientName().fullName, keyword));
     }
 }

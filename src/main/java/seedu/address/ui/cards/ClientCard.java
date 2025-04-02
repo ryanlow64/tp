@@ -48,7 +48,7 @@ public class ClientCard extends UiPart<Region> {
         assert displayedIndex > 0 : "Index should be greater than 0";
         this.client = client;
         id.setText(displayedIndex + ". ");
-        name.setText(client.getClientName().fullName);
+        name.setText(client.getFullName().fullName);
         phone.setText("\uD83D\uDCDE " + client.getPhone().value);
         address.setText("\uD83C\uDFE0 " + client.getAddress().value);
         email.setText("\uD83D\uDCE7 " + client.getEmail().value);

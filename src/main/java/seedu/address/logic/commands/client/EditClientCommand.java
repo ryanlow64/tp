@@ -94,7 +94,7 @@ public class EditClientCommand extends EditCommand<Client> {
         List<Deal> lastShownDealList = model.getFilteredDealList();
         List<Event> lastShownEventList = model.getFilteredEventList();
         List<Property> lastShownPropertyList = model.getFilteredPropertyList();
-        Optional<ClientName> optionalClientName = editClientDescriptor.getClientName();
+        Optional<ClientName> optionalClientName = editClientDescriptor.getFullName();
 
         if (index.getZeroBased() >= lastShownClientList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
@@ -111,7 +111,7 @@ public class EditClientCommand extends EditCommand<Client> {
         model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
 
         if (optionalClientName.isPresent()) {
-            ClientName oldClientName = clientToEdit.getClientName();
+            ClientName oldClientName = clientToEdit.getFullName();
             ClientName newClientName = optionalClientName.get();
 
             updateClientNameInDeals(oldClientName, index, lastShownDealList, model);

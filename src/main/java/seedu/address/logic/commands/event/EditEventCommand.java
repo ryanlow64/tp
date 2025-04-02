@@ -131,7 +131,7 @@ public class EditEventCommand extends EditCommand<Event> {
                 throw new CommandException(MESSAGE_INVALID_CLIENT_ID);
             }
             Client client = clientList.get(clientIdZeroBased);
-            updatedClientName = client.getClientName();
+            updatedClientName = client.getFullName();
             logger.fine("Client ID: " + clientIdZeroBased);
         } else {
             updatedClientName = eventToEdit.getClientName();
@@ -146,7 +146,7 @@ public class EditEventCommand extends EditCommand<Event> {
                 throw new CommandException(MESSAGE_INVALID_PROPERTY_ID);
             }
             Property property = propertyList.get(propertyIdZeroBased);
-            updatedPropertyName = property.getPropertyName();
+            updatedPropertyName = property.getFullName();
             logger.fine("Property ID: " + propertyIdZeroBased);
         } else {
             updatedPropertyName = eventToEdit.getPropertyName();

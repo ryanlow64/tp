@@ -3,8 +3,6 @@ package seedu.address.logic.commands.deal;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalDeals.getTypicalAddressBook;
 
-import java.util.Collections;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +12,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.predicates.DealPropertyNameContainsPredicate;
+import seedu.address.model.property.PropertyName;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code ListDealCommand}.
@@ -35,7 +34,7 @@ public class ListDealCommandTest extends ListCommandTest<Deal> {
     public void execute_listIsFiltered_showsEverything() {
         // Filter the list first
         DealPropertyNameContainsPredicate predicate =
-                new DealPropertyNameContainsPredicate(Collections.singletonList("Villa"));
+                new DealPropertyNameContainsPredicate(new PropertyName("Villa"));
         model.updateFilteredDealList(predicate);
 
         // Execute list command - should show all deals again

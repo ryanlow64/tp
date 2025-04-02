@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.UniqueClientList;
@@ -97,6 +98,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean hasClient(Client client) {
         requireNonNull(client);
         return clients.contains(client);
+    }
+
+    /**
+     * Returns true if a client with the same identity as {@code client} exists in the address book.
+     */
+    public boolean hasClient(Client client, Index index) {
+        requireNonNull(client);
+        return clients.contains(client, index);
     }
 
     /**

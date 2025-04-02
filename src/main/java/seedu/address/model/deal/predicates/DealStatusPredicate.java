@@ -1,7 +1,5 @@
 package seedu.address.model.deal.predicates;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.logging.Logger;
 
 import seedu.address.model.deal.Deal;
@@ -21,7 +19,6 @@ public class DealStatusPredicate extends DealPredicate<DealStatus> {
      */
     public DealStatusPredicate(DealStatus status) {
         super(status);
-        requireNonNull(status);
     }
 
     @Override

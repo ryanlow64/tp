@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,7 +20,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class ArgumentMultimap {
 
     /** Prefixes mapped to their respective arguments**/
-    private final Map<Prefix, List<String>> argMultimap = new HashMap<>();
+    private final Map<Prefix, List<String>> argMultimap = new LinkedHashMap<>();
 
     /**
      * Associates the specified argument value with {@code prefix} key in this map.
@@ -33,6 +33,13 @@ public class ArgumentMultimap {
         List<String> argValues = getAllValues(prefix);
         argValues.add(argValue);
         argMultimap.put(prefix, argValues);
+    }
+
+    /**
+     * Returns the set of prefixes in this map.
+     */
+    public List<Prefix> getPrefixes() {
+        return new ArrayList<>(argMultimap.keySet());
     }
 
     /**

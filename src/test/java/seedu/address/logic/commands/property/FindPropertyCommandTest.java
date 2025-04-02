@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.property.PropertyNameContainsKeywordsPredicate;
+import seedu.address.model.property.predicates.PropertyNameContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindPropertyCommand}.

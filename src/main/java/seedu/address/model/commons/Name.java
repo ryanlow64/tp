@@ -1,6 +1,7 @@
 package seedu.address.model.commons;
 
 /**
- * Interface for names.
+ * A generic interface for all name classes.
+ * @param <T> The type of the name.
  */
 public interface Name<T> { }

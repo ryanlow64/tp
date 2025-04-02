@@ -38,7 +38,7 @@ public class JsonAdaptedClient {
      * Converts a given {@code Client} into this class for Jackson use.
      */
     public JsonAdaptedClient(Client source) {
-        clientName = source.getClientName().fullName;
+        clientName = source.getFullName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;

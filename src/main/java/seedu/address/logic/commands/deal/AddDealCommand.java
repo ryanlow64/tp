@@ -105,7 +105,7 @@ public class AddDealCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_PROPERTY_ID);
         }
         Property property = propertyList.get(propertyId.getZeroBased());
-        PropertyName propertyName = property.getPropertyName();
+        PropertyName propertyName = property.getFullName();
         logger.fine("Found property: " + propertyName);
 
         // Get the seller from the property's owner
@@ -121,7 +121,7 @@ public class AddDealCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_BUYER_ID);
         }
         Client buyer = clientList.get(buyerId.getZeroBased());
-        ClientName buyerName = buyer.getClientName();
+        ClientName buyerName = buyer.getFullName();
         logger.fine("Found buyer: " + buyerName);
 
         // Validate that buyer and seller are not the same person

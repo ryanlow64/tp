@@ -112,7 +112,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
         assert propertyToEdit != null;
 
         PropertyName updatedPropertyName = editPropertyDescriptor.getPropertyName()
-                .orElse(propertyToEdit.getPropertyName());
+                .orElse(propertyToEdit.getFullName());
         Address updatedAddress = editPropertyDescriptor.getAddress().orElse(propertyToEdit.getAddress());
         Price updatedPrice = editPropertyDescriptor.getPrice().orElse(propertyToEdit.getPrice());
         Optional<Size> updatedSize = editPropertyDescriptor.getSize().orElse(propertyToEdit.getSize());

@@ -6,7 +6,7 @@
 
 # REconnect User Guide
 
-REconneect is a **desktop application for Real Estate agents to manage their work via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+REconnect is a **desktop application for Real Estate agents to manage their work via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, REconnect can get your real estate management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -59,7 +59,7 @@ REconneect is a **desktop application for Real Estate agents to manage their wor
 
 ### Viewing help : `help`
 
-Shows a message explaning how to access the help page.
+Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
@@ -219,8 +219,8 @@ Format: `add_deal pid/PROPERTY_ID buyer/BUYER_ID price/PRICE [status/STATUS]`
 * The property and buyer must exist in REconnect
 * The property owner will automatically be set as the seller
 * The property must not be involved in another existing deal
-* The price must be less than 999.99 (in thousands)
-* Status is optional and indicates the deal progress (PENDING, CLOSED, IN_NEGOTIATION)
+* The price must be a positive integer between 3 to 6 digits (in thousands)
+* Status is optional and indicates the deal progress (OPEN, PENDING, CLOSED)
 * If status is not specified, it defaults to PENDING
 
 Examples:
@@ -231,14 +231,15 @@ Examples:
 
 Updates the details of an existing deal in REconnect.
 
-Format: `update_deal dealId/DEAL_ID [prop/PROPERTY_NAME] [buyer/BUYER_ID] [seller/SELLER_ID] [price/PRICE] [status/STATUS]`
+Format: `update_deal dealId/DEAL_ID [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`
 
 * Updates the deal with the specified `DEAL_ID`
 * At least one of the optional fields must be provided
 * The deal ID must be valid
-* For property name, buyer ID, and seller ID - the specified values must refer to existing entities in REconnect
-* Price must be within valid range (less than 999.99)
-* Status can be updated to indicate deal progress
+* For property ID and buyer ID - the specified values must refer to existing entities in REconnect
+* Price must be within valid range (3 to 6 digits in thousands)
+* Status can be updated to indicate deal progress (OPEN, PENDING, CLOSED)
+* Seller cannot be manually updated as it is automatically set based on the property owner
 
 Examples:
 * `update_deal dealId/3 status/CLOSED` changes the status of deal #3 to CLOSED
@@ -250,6 +251,9 @@ Shows a list of all deals in REconnect.
 
 Format: `list_deal`
 
+* Displays all deals in the system with their details
+* No parameters required
+
 ### Finding deals : `find_deal`
 
 Shows a list of deals that match the given criteria.
@@ -259,7 +263,7 @@ Format: `find_deal [prop/PROPERTY_NAME] [buyer/BUYER_NAME] [seller/SELLER_NAME] 
 * At least one search criterion must be provided
 * The search for names is case-insensitive (e.g., "villa" will match "Villa")
 * Partial name matches are supported (e.g., "John" will match "Johnny")
-* For status, the match must be exact (PENDING, CLOSED, or IN_NEGOTIATION)
+* For status, the match must be exact (OPEN, PENDING, or CLOSED)
 * If multiple criteria are provided, deals matching ANY of the criteria will be shown (OR logic)
 
 Examples:
@@ -399,6 +403,6 @@ Action     | Format, Examples
 **List Events**   | `list_event`
 **List Properties** | `list_property`
 **List All** | `list_all`
-**Update Deal**   | `update_deal dealId/DEAL_ID [prop/PROPERTY_NAME] [buyer/BUYER_ID] [seller/SELLER_ID] [price/PRICE] [status/STATUS]`<br> e.g., `update_deal dealId/3 status/CLOSED`
+**Update Deal**   | `update_deal dealId/DEAL_ID [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`<br> e.g., `update_deal dealId/3 status/CLOSED`
 **Help**          | `help`
 **Exit**          | `exit`

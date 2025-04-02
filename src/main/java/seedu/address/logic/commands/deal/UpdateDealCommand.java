@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BUYER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_ID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.List;
@@ -23,6 +22,7 @@ import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
+import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 
 /**
@@ -37,7 +37,6 @@ public class UpdateDealCommand extends EditCommand<Deal> {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_PROPERTY_ID + "PROPERTY_ID] "
             + "[" + PREFIX_BUYER + "BUYER_ID] "
-            + "[" + PREFIX_SELLER + "SELLER_ID] "
             + "[" + PREFIX_PRICE + "PRICE] "
             + "[" + PREFIX_STATUS + "STATUS]\n"
             + "Example: " + COMMAND_WORD + " 3 "
@@ -69,7 +68,6 @@ public class UpdateDealCommand extends EditCommand<Deal> {
         Prefix[] prefixes = {
             PREFIX_PROPERTY_ID,
             PREFIX_BUYER,
-            PREFIX_SELLER,
             PREFIX_PRICE,
             PREFIX_STATUS
         };
@@ -114,14 +112,41 @@ public class UpdateDealCommand extends EditCommand<Deal> {
 
         // Extract and validate property
         PropertyName updatedPropertyName;
+        ClientName updatedSeller;
         if (updateDealDescriptor.getPropertyId().isPresent()) {
             Index propertyIndex = updateDealDescriptor.getPropertyId().get();
             if (propertyIndex.getZeroBased() >= model.getFilteredPropertyList().size()) {
                 throw new CommandException("Invalid property ID: Index out of bounds");
             }
-            updatedPropertyName = model.getFilteredPropertyList().get(propertyIndex.getZeroBased()).getPropertyName();
+            Property newProperty = model.getFilteredPropertyList().get(propertyIndex.getZeroBased());
+            updatedPropertyName = newProperty.getFullName();
+            // Automatically update seller to match new property's owner
+            updatedSeller = newProperty.getOwner();
         } else {
             updatedPropertyName = dealToUpdate.getPropertyName();
+            // If property isn't being updated, handle seller update based on whether it's from EditClientCommand
+            if (updateDealDescriptor.getSeller().isPresent()) {
+                // Check if this is an internal update (from EditClientCommand)
+                StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+                boolean isInternalUpdate = false;
+                for (StackTraceElement element : stackTrace) {
+                    if (element.getClassName().contains("EditClientCommand")) {
+                        isInternalUpdate = true;
+                        break;
+                    }
+                }
+                if (!isInternalUpdate) {
+                    throw new CommandException("Seller cannot be manually updated."
+                            + " It is automatically set based on the property owner.");
+                }
+                Index sellerIndex = updateDealDescriptor.getSeller().get();
+                if (sellerIndex.getZeroBased() >= model.getFilteredClientList().size()) {
+                    throw new CommandException("Invalid seller ID: Index out of bounds");
+                }
+                updatedSeller = model.getFilteredClientList().get(sellerIndex.getZeroBased()).getFullName();
+            } else {
+                updatedSeller = dealToUpdate.getSeller();
+            }
         }
 
         // Extract and validate buyer
@@ -131,21 +156,9 @@ public class UpdateDealCommand extends EditCommand<Deal> {
             if (buyerIndex.getZeroBased() >= model.getFilteredClientList().size()) {
                 throw new CommandException("Invalid buyer ID: Index out of bounds");
             }
-            updatedBuyer = model.getFilteredClientList().get(buyerIndex.getZeroBased()).getClientName();
+            updatedBuyer = model.getFilteredClientList().get(buyerIndex.getZeroBased()).getFullName();
         } else {
             updatedBuyer = dealToUpdate.getBuyer();
-        }
-
-        // Extract and validate seller
-        ClientName updatedSeller;
-        if (updateDealDescriptor.getSeller().isPresent()) {
-            Index sellerIndex = updateDealDescriptor.getSeller().get();
-            if (sellerIndex.getZeroBased() >= model.getFilteredClientList().size()) {
-                throw new CommandException("Invalid seller ID: Index out of bounds");
-            }
-            updatedSeller = model.getFilteredClientList().get(sellerIndex.getZeroBased()).getClientName();
-        } else {
-            updatedSeller = dealToUpdate.getSeller();
         }
 
         // Validate that buyer and seller are not the same person

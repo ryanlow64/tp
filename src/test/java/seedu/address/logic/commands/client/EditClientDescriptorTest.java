@@ -57,7 +57,7 @@ public class EditClientDescriptorTest {
     public void toStringMethod() {
         EditClientDescriptor editClientDescriptor = new EditClientDescriptor();
         String expected = EditClientDescriptor.class.getCanonicalName() + "{clientName="
-                + editClientDescriptor.getClientName().orElse(null) + ", phone="
+                + editClientDescriptor.getFullName().orElse(null) + ", phone="
                 + editClientDescriptor.getPhone().orElse(null) + ", email="
                 + editClientDescriptor.getEmail().orElse(null) + ", address="
                 + editClientDescriptor.getAddress().orElse(null) + "}";

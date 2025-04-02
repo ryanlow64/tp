@@ -19,7 +19,7 @@ public class JsonAdaptedClientTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
 
-    private static final String VALID_CLIENTNAME = BENSON.getClientName().toString();
+    private static final String VALID_CLIENTNAME = BENSON.getFullName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
     private static final String VALID_ADDRESS = BENSON.getAddress().toString();

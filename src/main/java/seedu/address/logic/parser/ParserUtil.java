@@ -17,6 +17,7 @@ import seedu.address.model.client.Email;
 import seedu.address.model.client.Phone;
 import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
+import seedu.address.model.deal.DealStatus;
 import seedu.address.model.event.EventType;
 import seedu.address.model.event.Note;
 import seedu.address.model.property.Description;
@@ -52,34 +53,6 @@ public class ParserUtil {
             return localDateTime;
         } catch (DateTimeParseException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_DATETIME, dateTime));
-        }
-    }
-
-    /**
-     * Parses a string representation of date and time into an {@code LocalDateTime}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @param defaultTime The time to be used if the user does not provide a time.
-     * @throws ParseException if the given {@code dateTime} is invalid.
-     */
-    public static LocalDateTime parseDateTime(String dateTime, String defaultTime) throws ParseException {
-        try {
-            LocalDateTime localDateTime = LocalDateTime.parse(dateTime, DATE_FORMAT_TEXT);
-            if (!DATE_FORMAT_TEXT.format(localDateTime).equals(dateTime)) {
-                throw new ParseException(String.format(MESSAGE_INVALID_DATETIME, dateTime));
-            }
-            return localDateTime;
-        } catch (DateTimeParseException e1) {
-            try {
-                String combinedDateTime = dateTime + " " + defaultTime;
-                LocalDateTime localDateTime = LocalDateTime.parse(combinedDateTime, DATE_FORMAT_TEXT);
-                if (!DATE_FORMAT_TEXT.format(localDateTime).equals(combinedDateTime)) {
-                    throw new ParseException(String.format(MESSAGE_INVALID_DATETIME, dateTime));
-                }
-                return localDateTime;
-            } catch (DateTimeParseException e2) {
-                throw new ParseException(String.format(MESSAGE_INVALID_DATETIME, dateTime));
-            }
         }
     }
 
@@ -256,6 +229,22 @@ public class ParserUtil {
             return EventType.valueOf(trimmedEventType.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new ParseException(EventType.MESSAGE_CONSTRAINTS);
+        }
+    }
+
+    /**
+     * Parses a {@code String dealStatus} into an {@code DealStatus}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code eventType} is invalid.
+     */
+    public static DealStatus parseDealStatus(String dealStatus) throws ParseException {
+        requireNonNull(dealStatus);
+        String trimmedDealStatus = dealStatus.trim();
+        try {
+            return DealStatus.valueOf(trimmedDealStatus.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(DealStatus.MESSAGE_CONSTRAINTS);
         }
     }
 

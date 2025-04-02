@@ -14,12 +14,12 @@ public class CliSyntax {
     public static final Prefix PREFIX_PRICE = new Prefix("price/");
     public static final Prefix PREFIX_SIZE = new Prefix("size/");
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("desc/");
-    public static final Prefix PREFIX_OWNER = new Prefix("owner/");
 
     /* Conditional Prefixes */
     public static final Prefix PREFIX_ADDRESS = new Prefix("addr/", true);
     public static final Prefix PREFIX_EMAIL = new Prefix("email/", true);
     public static final Prefix PREFIX_PHONE = new Prefix("phone/", true);
+    public static final Prefix PREFIX_OWNER = new Prefix("owner/", true);
     public static final Prefix PREFIX_KEYWORDS = new Prefix("name_keywords/", true);
     public static final Prefix PREFIX_PROPERTY_NAME = new Prefix("prop/", true);
     public static final Prefix PREFIX_BUYER = new Prefix("buyer/", true);
@@ -27,6 +27,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_STATUS = new Prefix("status/", true);
     public static final Prefix PREFIX_PRICE_BELOW = new Prefix("price_</", true);
     public static final Prefix PREFIX_PRICE_ABOVE = new Prefix("price_>/", true);
+    public static final Prefix PREFIX_SIZE_BELOW = new Prefix("size_</", true);
+    public static final Prefix PREFIX_SIZE_ABOVE = new Prefix("size_>/", true);
     public static final Prefix PREFIX_EVENT_ABOUT = new Prefix("about/", true);
     public static final Prefix PREFIX_EVENT_WITH = new Prefix("with/", true);
     public static final Prefix PREFIX_EVENT_TYPE = new Prefix("etype/", true);

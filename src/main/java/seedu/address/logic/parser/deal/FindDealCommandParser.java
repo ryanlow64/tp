@@ -77,20 +77,20 @@ public class FindDealCommandParser extends FindCommandParser<Deal> {
         Price priceBelow = null;
         try {
             priceBelow = ParserUtil.parsePrice(Long.parseLong(argMultimap.getValue(PREFIX_PRICE_BELOW).orElse("0")));
-        } catch (ParseException e) {
+        } catch (ParseException | NumberFormatException e) {
             if (prefixesUsed.contains(PREFIX_PRICE_BELOW)) {
                 logger.warning("Invalid price below provided");
-                throw new ParseException(e.getMessage());
+                throw new ParseException(Price.MESSAGE_CONSTRAINTS);
             }
         }
 
         Price priceAbove = null;
         try {
             priceAbove = ParserUtil.parsePrice(Long.parseLong(argMultimap.getValue(PREFIX_PRICE_ABOVE).orElse("0")));
-        } catch (ParseException e) {
+        } catch (ParseException | NumberFormatException e) {
             if (prefixesUsed.contains(PREFIX_PRICE_ABOVE)) {
                 logger.warning("Invalid price above provided");
-                throw new ParseException(e.getMessage());
+                throw new ParseException(Price.MESSAGE_CONSTRAINTS);
             }
         }
 

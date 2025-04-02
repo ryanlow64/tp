@@ -139,8 +139,9 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_findProperty() throws Exception {
         List<String> keywords = Arrays.asList("Maple", "Orchid");
+        FindPropertyCommand.addCommandWord();
         FindPropertyCommand command = (FindPropertyCommand) parser.parseCommand(
-                FindPropertyCommand.COMMAND_WORD + " " + String.join(" ", keywords));
+                FindPropertyCommand.COMMAND_WORD + " " + PREFIX_KEYWORDS + String.join(" ", keywords));
         assertEquals(new FindPropertyCommand(new PropertyNameContainsKeywordsPredicate(keywords)), command);
     }
 

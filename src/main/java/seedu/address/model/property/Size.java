@@ -21,7 +21,7 @@ public class Size {
      * @param size A valid size or empty string.
      */
     public Size(String size) {
-        if (size == null || size.isBlank() || size.equals("N/A") || size.equals("-")) {
+        if (size == null || size.isEmpty() || size.equals("N/A") || size.equals("-")) {
             this.value = "-";
         } else {
             checkArgument(isValidSize(size), MESSAGE_CONSTRAINTS);
@@ -30,10 +30,30 @@ public class Size {
     }
 
     /**
+     * Returns true if the given size is more than this size.
+     */
+    public boolean isBiggerThan(Size other) {
+        if (this.value.equals("-") || other.value.equals("-")) {
+            return false;
+        }
+        return Integer.parseInt(this.value) > Integer.parseInt(other.value);
+    }
+
+    /**
+     * Returns true if the given size is less than this size.
+     */
+    public boolean isSmallerThan(Size other) {
+        if (this.value.equals("-") || other.value.equals("-")) {
+            return false;
+        }
+        return Integer.parseInt(this.value) < Integer.parseInt(other.value);
+    }
+
+    /**
      * Returns true if a given string is a valid size.
      */
     public static boolean isValidSize(String test) {
-        return test.isBlank() || test.equals("N/A") || test.matches(VALIDATION_REGEX);
+        return test.isEmpty() || test.equals("N/A") || test.matches(VALIDATION_REGEX);
     }
 
     /**

@@ -63,7 +63,7 @@ public class FindDealCommandParser extends FindCommandParser<Deal> {
         }
 
         // Verify no duplicate prefixes
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_NAME, PREFIX_BUYER, PREFIX_SELLER, PREFIX_STATUS);
+        argMultimap.verifyNoDuplicatePrefixesFor(prefixes);
         logger.fine("No repeated arguments supplied");
 
         // Check if prefixes used are valid

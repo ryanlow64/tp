@@ -59,7 +59,7 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT_ABOUT, PREFIX_EVENT_WITH, PREFIX_EVENT_TYPE);
+        argMultimap.verifyNoDuplicatePrefixesFor(prefixes);
         logger.fine("No repeated arguments supplied");
 
         checkPrefixesUsedAreValid(prefixesUsed);

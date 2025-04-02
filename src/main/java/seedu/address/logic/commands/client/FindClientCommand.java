@@ -1,6 +1,10 @@
 package seedu.address.logic.commands.client;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_KEYWORDS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import java.util.function.Predicate;
 
@@ -8,6 +12,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.client.Client;
 
@@ -32,7 +37,13 @@ public class FindClientCommand extends FindCommand<Client> {
      * Adds the command word to the command word list.
      */
     public static void addCommandWord() {
-        initialiseCommandWord(COMMAND_WORD);
+        Prefix[] prefixes = {
+            PREFIX_KEYWORDS,
+            PREFIX_PHONE,
+            PREFIX_EMAIL,
+            PREFIX_ADDRESS
+        };
+        addCommandWord(COMMAND_WORD, prefixes);
     }
 
     @Override

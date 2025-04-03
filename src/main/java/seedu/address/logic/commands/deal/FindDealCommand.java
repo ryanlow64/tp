@@ -30,8 +30,8 @@ public class FindDealCommand extends FindCommand<Deal> {
 
     private static final Logger logger = LogsCenter.getLogger(FindDealCommand.class);
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all deals with the specified buyer, seller, "
-            + "property name, deal status and price range\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all deals that match the specified criteria "
+            + "for buyer, seller, property name, deal status, and/or price\n"
             + "Parameters: "
             + "[" + PREFIX_PROPERTY_NAME + "PROPERTY_NAME] "
             + "[" + PREFIX_BUYER + "BUYER_NAME] "

@@ -51,7 +51,7 @@ REconnect is a **desktop application for Real Estate agents to manage their work
 * Parameters can be in any order.<br>
   e.g. if the command specifies `name/NAME phone/PHONE_NUMBER`, `phone/PHONE_NUMBER name/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -104,7 +104,7 @@ Format: `list_client`
 
 ### Locating clients by name: `find_client`
 
-Finds clients whose names contain any of the given keywords.
+Displays all clients that match the given criteria.
 
 Format: `find_client KEYWORD [MORE_KEYWORDS]`
 
@@ -177,7 +177,7 @@ Format: `list_property`
 
 ### Finding properties : `find_property`
 
-Finds properties whose names contain any of the given keywords.
+Displays all properties that match the given criteria.
 
 Format: `find_property KEYWORD [MORE_KEYWORDS]`
 
@@ -229,7 +229,7 @@ Examples:
 
 ### Updating a deal : `update_deal`
 
-Updates the details of an existing deal in REconnect.
+Updates an existing deal in REconnect.
 
 Format: `update_deal dealId/DEAL_ID [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`
 
@@ -256,7 +256,7 @@ Format: `list_deal`
 
 ### Finding deals : `find_deal`
 
-Shows a list of deals that match the given criteria.
+Displays all deals that match the given criteria.
 
 Format: `find_deal [prop/PROPERTY_NAME] [buyer/BUYER_NAME] [seller/SELLER_NAME] [status/STATUS]`
 
@@ -314,7 +314,7 @@ Format: `list_event`
 
 ### Finding events : `find_event`
 
-Shows a list of events that match the given criteria.
+Displays all events that match the given criteria.
 
 Format: `find_event [cid/CLIENT_ID] [etype/EVENT_TYPE]`
 

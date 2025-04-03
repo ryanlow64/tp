@@ -30,9 +30,8 @@ public class EditEventCommandParser extends EditCommandParser<Event> {
      */
     public EditEventCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-            ArgumentTokenizer.tokenize(args, PREFIX_CLIENT_ID, PREFIX_EVENT_NOTE, PREFIX_EVENT_START,
-                PREFIX_EVENT_TYPE, PREFIX_PROPERTY_ID);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
+                PREFIX_EVENT_START, PREFIX_EVENT_TYPE, PREFIX_CLIENT_ID, PREFIX_PROPERTY_ID, PREFIX_EVENT_NOTE);
 
         Index index;
 
@@ -40,29 +39,28 @@ public class EditEventCommandParser extends EditCommandParser<Event> {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditEventCommand.MESSAGE_USAGE),
-                pe);
+                    pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_ID, PREFIX_EVENT_NOTE, PREFIX_EVENT_START,
-            PREFIX_EVENT_TYPE, PREFIX_PROPERTY_ID);
+        argMultimap.verifyNoDuplicatePrefixesFor(
+                PREFIX_EVENT_START, PREFIX_EVENT_TYPE, PREFIX_CLIENT_ID, PREFIX_PROPERTY_ID, PREFIX_EVENT_NOTE);
 
         EditEventDescriptor editEventDescriptor = new EditEventDescriptor();
 
+        if (argMultimap.getValue(PREFIX_EVENT_START).isPresent()) {
+            editEventDescriptor.setDateTime(ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_START).get()));
+        }
+        if (argMultimap.getValue(PREFIX_EVENT_TYPE).isPresent()) {
+            editEventDescriptor.setEventType(ParserUtil.parseEventType(argMultimap.getValue(PREFIX_EVENT_TYPE).get()));
+        }
         if (argMultimap.getValue(PREFIX_CLIENT_ID).isPresent()) {
-            editEventDescriptor.setClientId(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CLIENT_ID)
-                .get()));
+            editEventDescriptor.setClientId(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CLIENT_ID).get()));
         }
         if (argMultimap.getValue(PREFIX_PROPERTY_ID).isPresent()) {
             editEventDescriptor.setPropertyId(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_PROPERTY_ID).get()));
         }
         if (argMultimap.getValue(PREFIX_EVENT_NOTE).isPresent()) {
             editEventDescriptor.setNote(ParserUtil.parseNote(argMultimap.getValue(PREFIX_EVENT_NOTE).get()));
-        }
-        if (argMultimap.getValue(PREFIX_EVENT_TYPE).isPresent()) {
-            editEventDescriptor.setEventType(ParserUtil.parseEventType(argMultimap.getValue(PREFIX_EVENT_TYPE).get()));
-        }
-        if (argMultimap.getValue(PREFIX_EVENT_START).isPresent()) {
-            editEventDescriptor.setDateTime(ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_START).get()));
         }
 
         if (!editEventDescriptor.isAnyFieldEdited()) {

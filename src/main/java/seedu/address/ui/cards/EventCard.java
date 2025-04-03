@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.logic.parser.ParserUtil;
@@ -33,13 +32,13 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label eventType;
+    private Label dateTime;
     @FXML
-    private Label property;
+    private Label eventType;
     @FXML
     private Label client;
     @FXML
-    private FlowPane dateTime;
+    private Label property;
     @FXML
     private Label note;
 
@@ -52,15 +51,14 @@ public class EventCard extends UiPart<Region> {
         assert displayedIndex > 0 : "Index should be greater than 0";
         this.event = event;
         id.setText(displayedIndex + ". ");
-        eventType.setText(event.getEventType().toFormattedString());
-        property.setText("About: " + event.getPropertyName().fullName);
+        dateTime.setText(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT));
+        if (event.getDateTime().isBefore(LocalDateTime.now())) {
+            dateTime.setStyle("-fx-text-fill: #ef1414;");
+        }
+        eventType.setText("Type: " + event.getEventType().toFormattedString());
         client.setText("With: " + event.getClientName().fullName);
+        property.setText("About: " + event.getPropertyName().fullName);
         String noteValue = event.getNote().toString();
         note.setText("Note: " + (noteValue.equals("N/A") ? "-" : noteValue));
-        Label dateTimeLabel = new Label("At: " + event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT));
-        if (event.getDateTime().isBefore(LocalDateTime.now())) {
-            dateTimeLabel.setStyle("-fx-background-color: #ef1818;");
-        }
-        dateTime.getChildren().add(dateTimeLabel);
     }
 }

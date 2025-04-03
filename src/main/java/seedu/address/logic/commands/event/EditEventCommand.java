@@ -44,14 +44,14 @@ public class EditEventCommand extends EditCommand<Event> {
             + "by the index number used in the displayed client list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_EVENT_TYPE + "EVENT_TYPE] "
-            + "[" + PREFIX_PROPERTY_ID + "PROPERTY_ID] "
-            + "[" + PREFIX_CLIENT_ID + "CLIENT_ID] "
             + "[" + PREFIX_EVENT_START + "EVENT_DATE_TIME] "
+            + "[" + PREFIX_EVENT_TYPE + "EVENT_TYPE] "
+            + "[" + PREFIX_CLIENT_ID + "CLIENT_ID] "
+            + "[" + PREFIX_PROPERTY_ID + "PROPERTY_ID] "
             + "[" + PREFIX_EVENT_NOTE + "NOTE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_EVENT_TYPE + "Meeting "
-            + PREFIX_EVENT_START + "28-02-2025 1800";
+            + PREFIX_EVENT_START + "28-02-2025 1800 "
+            + PREFIX_EVENT_TYPE + "Meeting";
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -77,11 +77,11 @@ public class EditEventCommand extends EditCommand<Event> {
      */
     public static void addCommandWord() {
         Prefix[] prefixes = {
-            PREFIX_CLIENT_ID,
-            PREFIX_EVENT_NOTE,
             PREFIX_EVENT_START,
             PREFIX_EVENT_TYPE,
-            PREFIX_PROPERTY_ID
+            PREFIX_CLIENT_ID,
+            PREFIX_PROPERTY_ID,
+            PREFIX_EVENT_NOTE
         };
         initialiseCommandWord(COMMAND_WORD, prefixes);
     }
@@ -154,7 +154,7 @@ public class EditEventCommand extends EditCommand<Event> {
         LocalDateTime updatedDateTime = editEventDescriptor.getDateTime().orElse(eventToEdit.getDateTime());
         Note updatedNote = editEventDescriptor.getNote().orElse(eventToEdit.getNote());
 
-        return new Event(updatedEventType, updatedPropertyName, updatedClientName, updatedDateTime, updatedNote);
+        return new Event(updatedDateTime, updatedEventType, updatedClientName, updatedPropertyName, updatedNote);
     }
 
     @Override
@@ -177,18 +177,18 @@ public class EditEventCommand extends EditCommand<Event> {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("index", index)
-                .add("editClientDescriptor", editEventDescriptor)
+                .add("editEventDescriptor", editEventDescriptor)
                 .toString();
     }
 
     /**
-     * Stores the details to edit the client with. Each non-empty field value will replace the
-     * corresponding field value of the client.
+     * Stores the details to edit the event with. Each non-empty field value will replace the
+     * corresponding field value of the event.
      */
     public static class EditEventDescriptor extends EditDescriptor<Event> {
         private EventType eventType;
-        private Index propertyId; // store property name instead of property index
-        private Index clientId; // store client name instead of client index
+        private Index propertyId;
+        private Index clientId;
         private LocalDateTime dateTime;
         private Note note;
 
@@ -196,13 +196,12 @@ public class EditEventCommand extends EditCommand<Event> {
 
         /**
          * Copy constructor.
-         *
          */
         public EditEventDescriptor(EditEventDescriptor toCopy) {
-            setEventType(toCopy.eventType);
-            setPropertyId(toCopy.propertyId);
-            setClientId(toCopy.clientId);
             setDateTime(toCopy.dateTime);
+            setEventType(toCopy.eventType);
+            setClientId(toCopy.clientId);
+            setPropertyId(toCopy.propertyId);
             setNote(toCopy.note);
         }
 
@@ -211,15 +210,15 @@ public class EditEventCommand extends EditCommand<Event> {
          */
         @Override
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(eventType, propertyId, clientId, dateTime, note);
+            return CollectionUtil.isAnyNonNull(dateTime, eventType, clientId, propertyId, note);
         }
 
-        public void setClientId(Index clientId) {
-            this.clientId = clientId;
+        public void setDateTime(LocalDateTime dateTime) {
+            this.dateTime = dateTime;
         }
 
-        public Optional<Index> getClientId() {
-            return Optional.ofNullable(clientId);
+        public Optional<LocalDateTime> getDateTime() {
+            return Optional.ofNullable(dateTime);
         }
 
         public void setEventType(EventType eventType) {
@@ -230,20 +229,20 @@ public class EditEventCommand extends EditCommand<Event> {
             return Optional.ofNullable(eventType);
         }
 
+        public void setClientId(Index clientId) {
+            this.clientId = clientId;
+        }
+
+        public Optional<Index> getClientId() {
+            return Optional.ofNullable(clientId);
+        }
+
         public void setPropertyId(Index propertyId) {
             this.propertyId = propertyId;
         }
 
         public Optional<Index> getPropertyId() {
             return Optional.ofNullable(propertyId);
-        }
-
-        public void setDateTime(LocalDateTime dateTime) {
-            this.dateTime = dateTime;
-        }
-
-        public Optional<LocalDateTime> getDateTime() {
-            return Optional.ofNullable(dateTime);
         }
 
         public void setNote(Note note) {
@@ -260,26 +259,25 @@ public class EditEventCommand extends EditCommand<Event> {
                 return true;
             }
 
-            // instanceof handles nulls
             if (!(other instanceof EditEventDescriptor)) {
                 return false;
             }
 
             EditEventDescriptor otherEditEventDescriptor = (EditEventDescriptor) other;
-            return Objects.equals(clientId, otherEditEventDescriptor.clientId)
-                    && Objects.equals(propertyId, otherEditEventDescriptor.propertyId)
+            return Objects.equals(dateTime, otherEditEventDescriptor.dateTime)
                     && Objects.equals(eventType, otherEditEventDescriptor.eventType)
-                    && Objects.equals(dateTime, otherEditEventDescriptor.dateTime)
+                    && Objects.equals(clientId, otherEditEventDescriptor.clientId)
+                    && Objects.equals(propertyId, otherEditEventDescriptor.propertyId)
                     && Objects.equals(note, otherEditEventDescriptor.note);
         }
 
         @Override
         public String toString() {
             return new ToStringBuilder(this)
+                    .add("dateTime", dateTime)
                     .add("eventType", eventType)
                     .add("clientId", clientId)
                     .add("propertyId", propertyId)
-                    .add("dateTime", dateTime)
                     .add("note", note)
                     .toString();
         }

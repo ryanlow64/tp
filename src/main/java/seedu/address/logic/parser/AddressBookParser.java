@@ -94,6 +94,10 @@ public class AddressBookParser {
             return new FindClientCommandParser().parse(arguments);
 
         case ListClientCommand.COMMAND_WORD:
+            if (!arguments.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ListClientCommand.MESSAGE_USAGE));
+            }
             return new ListClientCommand();
 
         case AddPropertyCommand.COMMAND_WORD:
@@ -109,6 +113,10 @@ public class AddressBookParser {
             return new FindPropertyCommandParser().parse(arguments);
 
         case ListPropertyCommand.COMMAND_WORD:
+            if (!arguments.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ListPropertyCommand.MESSAGE_USAGE));
+            }
             return new ListPropertyCommand();
 
         case AddEventCommand.COMMAND_WORD:
@@ -124,6 +132,10 @@ public class AddressBookParser {
             return new EditEventCommandParser().parse(arguments);
 
         case ListEventCommand.COMMAND_WORD:
+            if (!arguments.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ListEventCommand.MESSAGE_USAGE));
+            }
             return new ListEventCommand();
 
         case AddDealCommand.COMMAND_WORD:
@@ -132,14 +144,22 @@ public class AddressBookParser {
         case UpdateDealCommand.COMMAND_WORD:
             return new UpdateDealCommandParser().parse(arguments);
 
-        case ListAllCommand.COMMAND_WORD:
-            return new ListAllCommand();
-
         case FindDealCommand.COMMAND_WORD:
             return new FindDealCommandParser().parse(arguments);
 
         case ListDealCommand.COMMAND_WORD:
+            if (!arguments.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ListDealCommand.MESSAGE_USAGE));
+            }
             return new ListDealCommand();
+
+        case ListAllCommand.COMMAND_WORD:
+            if (!arguments.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ListAllCommand.MESSAGE_USAGE));
+            }
+            return new ListAllCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

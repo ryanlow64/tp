@@ -50,7 +50,7 @@ public class EditEventCommand extends EditCommand<Event> {
             + "[" + PREFIX_PROPERTY_ID + "PROPERTY_ID] "
             + "[" + PREFIX_EVENT_NOTE + "NOTE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_EVENT_START + "28-02-2025 1800 "
+            + PREFIX_EVENT_START + "30-04-2025 1700 "
             + PREFIX_EVENT_TYPE + "Meeting";
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";

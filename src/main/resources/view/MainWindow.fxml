@@ -48,7 +48,7 @@
         </SplitPane>
 
         <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" style="-fx-background-color: #EBF5FB;"
-                   minHeight="100" prefHeight="100" maxHeight="100">
+                   minHeight="126" prefHeight="126" maxHeight="126">
           <padding>
             <Insets top="2" right="4" bottom="2" left="4"/>
           </padding>

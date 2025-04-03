@@ -26,8 +26,8 @@ import seedu.address.model.event.Event;
 public class FindEventCommand extends FindCommand<Event> {
     public static final String COMMAND_WORD = "find_event";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all events with the specified event type, "
-            + "given time period or client or property name(s)\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all events that match "
+            + "the specified criteria for event type, date and time, client name, and/or property name\n"
             + "Parameters: "
             + "[" + PREFIX_EVENT_BEFORE + "BEFORE] "
             + "[" + PREFIX_EVENT_AFTER + "AFTER] "

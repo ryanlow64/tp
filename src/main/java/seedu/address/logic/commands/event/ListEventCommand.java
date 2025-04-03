@@ -18,6 +18,10 @@ public class ListEventCommand extends ListCommand<Event> {
     public static final String COMMAND_WORD = "list_event";
     public static final String MESSAGE_SUCCESS = "Listed all events";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all events in the address book. "
+            + "This command does not take additional parameters.\n"
+            + "Example: " + COMMAND_WORD;
+
     private static final Logger logger = LogsCenter.getLogger(ListEventCommand.class);
 
     public static void addCommandWord() {

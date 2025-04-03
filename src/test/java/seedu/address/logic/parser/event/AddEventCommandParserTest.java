@@ -49,10 +49,10 @@ class AddEventCommandParserTest extends AddCommandParserTest<Event> {
     @Test
     public void parse_allFieldsPresent_success() {
         AddEventCommand expectedCommand = new AddEventCommand(
+                LocalDateTime.of(2025, 4, 30, 17, 0),
                 EventType.MEETING,
                 Index.fromOneBased(42),
                 Index.fromOneBased(42),
-                LocalDateTime.of(2025, 4, 30, 17, 0),
                 new Note(VALID_NOTE)
         );
 

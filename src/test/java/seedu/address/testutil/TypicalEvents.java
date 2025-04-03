@@ -18,34 +18,34 @@ import seedu.address.model.property.PropertyName;
 public class TypicalEvents {
 
     public static final Event EVENT1 = new Event(
-            EventType.MEETING,
-            new PropertyName("Maple Villa Condominium"),
-            new ClientName("Alice Pauline"),
             LocalDateTime.of(2025, 4, 30, 17, 42),
+            EventType.MEETING,
+            new ClientName("Alice Pauline"),
+            new PropertyName("Maple Villa Condominium"),
             new Note("nil")
     );
 
     public static final Event EVENT2 = new Event(
-            EventType.MEETING,
-            new PropertyName("Jurong Lake Gardens HDB"),
-            new ClientName("Arnold Schwarzenegger"),
             LocalDateTime.of(2025, 11, 4, 5, 42),
+            EventType.MEETING,
+            new ClientName("Arnold Schwarzenegger"),
+            new PropertyName("Jurong Lake Gardens HDB"),
             new Note("take photos")
     );
 
     public static final Event EVENT3 = new Event(
-            EventType.OTHERS,
-            new PropertyName("Punggol Waterway Ridges HDB"),
-            new ClientName("Bob Choo"),
             LocalDateTime.MIN,
+            EventType.OTHERS,
+            new ClientName("Bob Choo"),
+            new PropertyName("Punggol Waterway Ridges HDB"),
             new Note("nil")
     );
 
     public static final Event EVENT4 = new Event(
-            EventType.OTHERS,
-            new PropertyName("Marina Bay"),
-            new ClientName("Alice Pauline"),
             LocalDateTime.of(2024, 12, 1, 6, 0),
+            EventType.OTHERS,
+            new ClientName("Alice Pauline"),
+            new PropertyName("Marina Bay"),
             new Note("nil")
     );
 

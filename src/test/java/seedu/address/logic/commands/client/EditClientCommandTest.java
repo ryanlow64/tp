@@ -205,8 +205,8 @@ public class EditClientCommandTest extends EditCommandTest<Client> {
         Property firstProperty = methodModel.getFilteredPropertyList().get(INDEX_FIRST.getZeroBased());
 
         // Add an event with this client name
-        Event mockEvent = new Event(EventType.valueOf("MEETING"), firstProperty.getFullName(),
-                originalClient.getFullName(), LocalDateTime.of(2025, 6, 6, 13, 0), new Note("Lunch"));
+        Event mockEvent = new Event(LocalDateTime.of(2025, 6, 6, 13, 0), EventType.valueOf("MEETING"),
+                originalClient.getFullName(), firstProperty.getFullName(), new Note("Lunch"));
         methodModel.addEvent(mockEvent);
 
         EditClientDescriptor descriptor = new EditClientDescriptorBuilder()
@@ -215,8 +215,8 @@ public class EditClientCommandTest extends EditCommandTest<Client> {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setClient(originalClient, editedClient);
-        Event newMockEvent = new Event(EventType.valueOf("MEETING"), firstProperty.getFullName(),
-                editedClient.getFullName(), LocalDateTime.of(2025, 6, 6, 13, 0), new Note("Lunch"));
+        Event newMockEvent = new Event(LocalDateTime.of(2025, 6, 6, 13, 0), EventType.valueOf("MEETING"),
+                editedClient.getFullName(), firstProperty.getFullName(), new Note("Lunch"));
         expectedModel.addProperty(MAPLE);
         expectedModel.addEvent(newMockEvent);
 

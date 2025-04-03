@@ -40,10 +40,10 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
     private static final Logger logger = LogsCenter.getLogger(FindEventCommandParser.class);
     private static final String BLANK = "BLANK";
 
-    private ClientName clientName;
-    private PropertyName propertyName;
     private LocalDateTime beforeDateTime;
     private LocalDateTime afterDateTime;
+    private ClientName clientName;
+    private PropertyName propertyName;
     private EventType eventType;
 
     /**
@@ -71,9 +71,9 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
 
         checkPrefixesUsedAreValid(prefixesUsed);
 
-        handleNames(argMultimap);
         handleDateTimes(argMultimap, prefixesUsed);
         handleEventType(argMultimap, prefixesUsed);
+        handleNames(argMultimap);
 
         LinkedHashMap<Prefix, Predicate<Event>> prefixPredicateMap = getPrefixPredicateMap(prefixesUsed);
         Predicate<Event> combinedPredicate = getCombinedPredicate(prefixPredicateMap);
@@ -84,16 +84,16 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
     protected LinkedHashMap<Prefix, Predicate<Event>> getPrefixPredicateMap(List<Prefix> prefixesUsed) {
         LinkedHashMap<Prefix, Predicate<Event>> prefixPredicateMap = new LinkedHashMap<>();
         for (Prefix prefix : prefixesUsed) {
-            if (prefix.equals(PREFIX_EVENT_WITH)) {
-                prefixPredicateMap.put(prefix, new EventWithClientPredicate(clientName));
-            } else if (prefix.equals(PREFIX_EVENT_ABOUT)) {
-                prefixPredicateMap.put(prefix, new EventAboutPropertyPredicate(propertyName));
-            } else if (prefix.equals(PREFIX_EVENT_TYPE)) {
-                prefixPredicateMap.put(prefix, new EventOfTypePredicate(eventType));
-            } else if (prefix.equals(PREFIX_EVENT_BEFORE)) {
+            if (prefix.equals(PREFIX_EVENT_BEFORE)) {
                 prefixPredicateMap.put(prefix, new EventBeforeDateTimePredicate(beforeDateTime));
             } else if (prefix.equals(PREFIX_EVENT_AFTER)) {
                 prefixPredicateMap.put(prefix, new EventAfterDateTimePredicate(afterDateTime));
+            } else if (prefix.equals(PREFIX_EVENT_TYPE)) {
+                prefixPredicateMap.put(prefix, new EventOfTypePredicate(eventType));
+            } else if (prefix.equals(PREFIX_EVENT_WITH)) {
+                prefixPredicateMap.put(prefix, new EventWithClientPredicate(clientName));
+            } else if (prefix.equals(PREFIX_EVENT_ABOUT)) {
+                prefixPredicateMap.put(prefix, new EventAboutPropertyPredicate(propertyName));
             }
         }
         return prefixPredicateMap;
@@ -101,8 +101,7 @@ public class FindEventCommandParser extends FindCommandParser<Event> {
 
     private void handleNames(ArgumentMultimap argMultimap) throws ParseException {
         clientName = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_EVENT_WITH).orElse(BLANK));
-        propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_EVENT_ABOUT)
-            .orElse(BLANK));
+        propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_EVENT_ABOUT).orElse(BLANK));
     }
 
     private void handleEventType(ArgumentMultimap argMultimap, List<Prefix> prefixesUsed) throws ParseException {

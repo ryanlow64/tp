@@ -42,14 +42,15 @@ public class EditEventCommandTest extends EditCommandTest<Event> {
         descriptor.setEventType(EventType.valueOf(EVENT_TYPE.toUpperCase()));
         descriptor.setClientId(Index.fromOneBased(1));
         descriptor.setPropertyId(Index.fromOneBased(1));
-        descriptor.setDateTime(LocalDateTime.of(2025, 06, 06, 13, 00));
+        descriptor.setDateTime(LocalDateTime.of(2025, 6, 6, 13, 0));
         descriptor.setNote(new Note(EVENT_NOTE));
 
         EditEventCommand editCommand = new EditEventCommand(INDEX_FIRST, descriptor);
-        Event editedEvent = new Event(EventType.valueOf(EVENT_TYPE.toUpperCase()),
-                new PropertyName("Maple Villa Condominium"),
+        Event editedEvent = new Event(LocalDateTime.of(2025, 6, 6, 13, 0),
+                EventType.valueOf(EVENT_TYPE.toUpperCase()),
                 new ClientName("Alice Pauline"),
-                LocalDateTime.of(2025, 6, 6, 13, 0), new Note(EVENT_NOTE));
+                new PropertyName("Maple Villa Condominium"),
+                new Note(EVENT_NOTE));
 
         String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS,
                 Messages.formatEvent(editedEvent));
@@ -64,8 +65,10 @@ public class EditEventCommandTest extends EditCommandTest<Event> {
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
         Event eventToEdit = model.getFilteredEventList().get(INDEX_FIRST.getZeroBased());
 
-        Event editedEvent = new Event(EventType.valueOf(EVENT_TYPE.toUpperCase()),
-                eventToEdit.getPropertyName(), eventToEdit.getClientName(), eventToEdit.getDateTime(),
+        Event editedEvent = new Event(eventToEdit.getDateTime(),
+                EventType.valueOf(EVENT_TYPE.toUpperCase()),
+                eventToEdit.getClientName(),
+                eventToEdit.getPropertyName(),
                 new Note(EVENT_NOTE));
 
         EditEventDescriptor descriptor = new EditEventDescriptor();
@@ -128,7 +131,7 @@ public class EditEventCommandTest extends EditCommandTest<Event> {
         Index index = Index.fromOneBased(1);
         EditEventDescriptor editEventDescriptor = new EditEventDescriptor();
         EditEventCommand editCommand = new EditEventCommand(index, editEventDescriptor);
-        String expected = EditEventCommand.class.getCanonicalName() + "{index=" + index + ", editClientDescriptor="
+        String expected = EditEventCommand.class.getCanonicalName() + "{index=" + index + ", editEventDescriptor="
                 + editEventDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }

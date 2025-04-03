@@ -46,10 +46,10 @@ class AddEventCommandTest extends AddCommandTest<Event> {
         modelStub.addProperty(MAPLE);
 
         Event validEvent = new Event(
-                EventType.MEETING, MAPLE.getFullName(), ALICE.getFullName(), LOCAL_DATE_TIME, NIL_NOTE);
+                LOCAL_DATE_TIME, EventType.MEETING, ALICE.getFullName(), MAPLE.getFullName(), NIL_NOTE);
 
         CommandResult commandResult = new AddEventCommand(
-                EventType.MEETING, INDEX_FIRST, INDEX_FIRST, LOCAL_DATE_TIME, NIL_NOTE)
+                LOCAL_DATE_TIME, EventType.MEETING, INDEX_FIRST, INDEX_FIRST, NIL_NOTE)
                 .execute(modelStub);
 
         assertEquals(1, modelStub.events.size());
@@ -64,7 +64,7 @@ class AddEventCommandTest extends AddCommandTest<Event> {
         modelStub.addClient(ALICE);
         modelStub.addProperty(MAPLE);
         AddEventCommand addEventCommand = new AddEventCommand(
-                EventType.MEETING, INDEX_FIRST, INDEX_FIRST, LOCAL_DATE_TIME, NIL_NOTE);
+                LOCAL_DATE_TIME, EventType.MEETING, INDEX_FIRST, INDEX_FIRST, NIL_NOTE);
 
         assertDoesNotThrow(() -> addEventCommand.execute(modelStub));
         assertEquals(1, modelStub.events.size());
@@ -79,9 +79,9 @@ class AddEventCommandTest extends AddCommandTest<Event> {
         modelStub.addClient(ALICE);
         modelStub.addProperty(MAPLE);
         AddEventCommand addEventCommand1 = new AddEventCommand(
-                EventType.MEETING, INDEX_SECOND, INDEX_FIRST, LOCAL_DATE_TIME, NIL_NOTE);
+                LOCAL_DATE_TIME, EventType.MEETING, INDEX_FIRST, INDEX_SECOND, NIL_NOTE);
         AddEventCommand addEventCommand2 = new AddEventCommand(
-                EventType.MEETING, INDEX_FIRST, INDEX_THIRD, LOCAL_DATE_TIME, NIL_NOTE);
+                LOCAL_DATE_TIME, EventType.MEETING, INDEX_THIRD, INDEX_FIRST, NIL_NOTE);
 
         assertThrows(CommandException.class, () -> addEventCommand1.execute(modelStub));
         CommandException exception = assertThrows(CommandException.class, () -> addEventCommand2.execute(modelStub));
@@ -95,7 +95,7 @@ class AddEventCommandTest extends AddCommandTest<Event> {
         modelStub.addClient(ALICE);
         modelStub.addProperty(MAPLE);
         AddEventCommand addEventCommand = new AddEventCommand(
-                EventType.MEETING, INDEX_FIRST, INDEX_FIRST, LocalDateTime.of(1889, 4, 20, 17, 42), NIL_NOTE);
+                LocalDateTime.of(1889, 4, 20, 17, 42), EventType.MEETING, INDEX_FIRST, INDEX_FIRST, NIL_NOTE);
 
         CommandException exception = assertThrows(CommandException.class, () -> addEventCommand.execute(modelStub));
         assertEquals(AddEventCommand.MESSAGE_EVENT_IN_PAST, exception.getMessage());
@@ -106,7 +106,7 @@ class AddEventCommandTest extends AddCommandTest<Event> {
      * A Model stub that accepts events.
      * Also contains clients and properties for event fields.
      */
-    private class ModelStubAcceptingEventAdded extends ModelStub {
+    private static class ModelStubAcceptingEventAdded extends ModelStub {
         final ArrayList<Event> events = new ArrayList<>();
         final ArrayList<Client> clients = new ArrayList<>();
         final ArrayList<Property> properties = new ArrayList<>();

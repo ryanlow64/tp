@@ -46,16 +46,16 @@ public abstract class FindCommandParser<T> implements Parser<FindCommand<T>> {
         }
 
         Prefix firstPrefix = validPrefixes.get(0);
-        if (firstPrefix.isConditional()) {
-            throw new ParseException("First prefix used cannot be conditional");
+        if (firstPrefix.isConnective()) {
+            throw new ParseException("First prefix used cannot be connective");
         }
 
         boolean allAnd = true;
         boolean allOr = true;
         for (int i = 1; i < validPrefixes.size(); i++) {
             Prefix currentPrefix = validPrefixes.get(i);
-            if (!currentPrefix.isConditional()) {
-                throw new ParseException("Subsequent prefixes used after the first must be conditional");
+            if (!currentPrefix.isConnective()) {
+                throw new ParseException("Subsequent prefixes used after the first must be connective");
             }
             if (currentPrefix.isAndPrefix()) {
                 allOr = false;
@@ -65,7 +65,7 @@ public abstract class FindCommandParser<T> implements Parser<FindCommand<T>> {
         }
 
         if (!allAnd && !allOr) {
-            throw new ParseException("Cannot mix AND and OR conditional prefixes");
+            throw new ParseException("Cannot mix AND and OR connective prefixes");
         }
     }
 
@@ -92,14 +92,14 @@ public abstract class FindCommandParser<T> implements Parser<FindCommand<T>> {
      */
     private static <T> Predicate<T> combinePredicates(Predicate<T> currentPredicate, Prefix prefix,
                                                         Predicate<T> nextPredicate) {
-        if (currentPredicate == null && !prefix.isConditional()) {
+        if (currentPredicate == null && !prefix.isConnective()) {
             return nextPredicate;
         } else if (currentPredicate != null && prefix.isAndPrefix()) {
             return currentPredicate.and(nextPredicate);
         } else if (currentPredicate != null && prefix.isOrPrefix()) {
             return currentPredicate.or(nextPredicate);
         } else {
-            throw new IllegalStateException("Invalid state: currentPredicate is null and prefix is conditional");
+            throw new IllegalStateException("Invalid state: currentPredicate is null and prefix is connective");
         }
     }
 }

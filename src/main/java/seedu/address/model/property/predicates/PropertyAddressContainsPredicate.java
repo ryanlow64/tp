@@ -1,5 +1,4 @@
 package seedu.address.model.property.predicates;
-import seedu.address.commons.util.StringUtil;
 import seedu.address.model.property.Property;
 
 /**

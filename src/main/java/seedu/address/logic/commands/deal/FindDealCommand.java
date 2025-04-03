@@ -39,9 +39,9 @@ public class FindDealCommand extends FindCommand<Deal> {
             + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_PRICE_ABOVE + "PRICE_ABOVE] "
             + "[" + PREFIX_PRICE_BELOW + "PRICE_BELOW]\n"
-            + "Note: At least one parameter must be provided. The first parameter is applied unconditionally, "
+            + "Note: At least one parameter must be provided. The first parameter is applied unconnectively, "
             + "and if more parameters are provided, all must be "
-            + "combined with the same conditional operator either 'AND' or 'OR'.\n"
+            + "combined with the same connective operator either 'AND' or 'OR'.\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PROPERTY_NAME + "Villa " + PREFIX_STATUS.getAndPrefix()
             + "PENDING";
 

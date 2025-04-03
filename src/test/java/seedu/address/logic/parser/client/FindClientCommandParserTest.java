@@ -90,10 +90,10 @@ public class FindClientCommandParserTest {
     }
 
     @Test
-    public void parse_mixedConditionalPrefixes_throwsParseException() {
+    public void parse_mixedConnectivePrefixes_throwsParseException() {
         // Mixing default prefix and its OR variant should throw an exception.
         String input = " " + PREFIX_KEYWORDS + "Alice" + " " + PREFIX_PHONE.getOrPrefix() + "123456780" + " "
             + PREFIX_ADDRESS.getAndPrefix() + "Blk 123";
-        assertParseFailure(parser, input, "Cannot mix AND and OR conditional prefixes");
+        assertParseFailure(parser, input, "Cannot mix AND and OR connective prefixes");
     }
 }

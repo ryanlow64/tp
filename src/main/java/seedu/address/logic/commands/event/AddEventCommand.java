@@ -48,7 +48,7 @@ public class AddEventCommand extends Command {
             + PREFIX_EVENT_TYPE + "meeting "
             + PREFIX_CLIENT_ID + "2 "
             + PREFIX_PROPERTY_ID + "1 "
-            + PREFIX_EVENT_NOTE + "NA";
+            + PREFIX_EVENT_NOTE + "N/A";
 
     public static final String MESSAGE_SUCCESS = "New event added: %s";
     public static final String MESSAGE_EVENT_CONFLICT = "Event conflicts with existing event.";

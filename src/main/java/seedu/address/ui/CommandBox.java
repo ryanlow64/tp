@@ -1,4 +1,6 @@
 package seedu.address.ui;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -6,10 +8,15 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import javafx.util.Pair;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -27,10 +34,12 @@ public class CommandBox extends UiPart<Region> {
     private static final Map<String, List<Prefix>> AVAILABLE_COMMANDS = Command.COMMAND_WORDS;
     private final CommandExecutor commandExecutor;
 
-    // Sample list of available commands for suggestions.
-
-    // ContextMenu to display suggestions.
+    // Context menus for suggestions and command history.
     private ContextMenu suggestionsPopup = new ContextMenu();
+    private ContextMenu historyPopup = new MaxSizedContextMenu();
+
+    // List to store command history.
+    private List<Pair<String, Boolean>> commandHistory = new ArrayList<>();
 
     @FXML
     private TextField commandTextField;
@@ -46,6 +55,15 @@ public class CommandBox extends UiPart<Region> {
             setStyleToDefault();
             showSuggestions(newText);
         });
+        // Add key event filter to display command history only on UP/DOWN key press when caret is at position 0.
+        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (commandTextField.getCaretPosition() == 0
+                && (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN)) {
+                showHistory();
+            } else {
+                historyPopup.hide();
+            }
+        });
     }
 
     /**
@@ -60,10 +78,14 @@ public class CommandBox extends UiPart<Region> {
 
         suggestionsPopup.hide();
         try {
+            // Add to command history.
+            commandHistory.add(new Pair<>(commandText, false));
             commandExecutor.execute(commandText);
             commandTextField.setText("");
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
+            Pair<String, Boolean> lastCommand = commandHistory.get(commandHistory.size() - 1);
+            commandHistory.set(commandHistory.size() - 1, new Pair<>(commandText, true));
         }
     }
 
@@ -89,6 +111,12 @@ public class CommandBox extends UiPart<Region> {
      * Filters available commands based on the given input and shows them as suggestions.
      */
     private void showSuggestions(String userInput) {
+        // Modified to not show suggestions when caret is at position 0.
+        if (commandTextField.getCaretPosition() == 0) {
+            suggestionsPopup.hide();
+            return;
+        }
+
         // Hide popup if the filter is empty.
         if (userInput.isEmpty()) {
             suggestionsPopup.hide();
@@ -169,6 +197,55 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
+     * Shows the command history if caret is at position 0.
+     */
+    private void showHistory() {
+        if (commandHistory.isEmpty()) {
+            historyPopup.hide();
+            return;
+        }
+        List<MenuItem> commandList = new ArrayList<>(commandHistory.stream().map(pair -> {
+            String command = pair.getKey();
+            boolean isError = pair.getValue();
+            MenuItem item = new MenuItem(command.replace("_", "\u2017"));
+            item.setStyle("-fx-background-color: #f0f0f0;");
+            if (isError) {
+                item.setStyle(item.getStyle() + "-fx-text-fill: red;");
+            }
+            item.setOnAction(event -> {
+                commandTextField.setText(command);
+                commandTextField.positionCaret(command.length());
+                historyPopup.hide();
+            });
+            return item;
+        }).toList());
+        Collections.reverse(commandList);
+        // Display at most 4 items at a time
+        historyPopup.setMaxHeight(Math.min(4, commandHistory.size()) * commandTextField.getHeight() * 1.2);
+        if (!historyPopup.isShowing()) {
+            historyPopup.getItems().clear();
+            historyPopup.getItems().add(commandList.get(0));
+            historyPopup.show(commandTextField, Side.BOTTOM, 0, 0);
+            historyPopup.getItems().addAll(commandList.stream().skip(1).toList());
+        }
+    }
+
+    /**
+     * Custom context menu that allows for a maximum height.
+     */
+    private static class MaxSizedContextMenu extends ContextMenu {
+        public MaxSizedContextMenu() {
+            addEventHandler(Menu.ON_SHOWING, e -> {
+                Node content = getSkin().getNode();
+                if (content instanceof Region) {
+                    Region region = (Region) content;
+                    region.setMaxHeight(getMaxHeight());
+                }
+            });
+        }
+    }
+
+    /**
      * Represents a function that can execute commands.
      */
     @FunctionalInterface
@@ -179,6 +256,6 @@ public class CommandBox extends UiPart<Region> {
          * @see seedu.address.logic.Logic#execute(String)
          */
         CommandResult execute(String commandText) throws CommandException, ParseException;
-    }
 
+    }
 }

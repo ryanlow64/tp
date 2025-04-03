@@ -22,8 +22,8 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.EditCommandTest;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.client.EditClientCommand.EditClientDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -269,7 +269,7 @@ public class EditClientCommandTest extends EditCommandTest<Client> {
         assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        assertFalse(standardCommand.equals(new HelpCommand()));
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new EditClientCommand(INDEX_SECOND, DESC_AMY)));

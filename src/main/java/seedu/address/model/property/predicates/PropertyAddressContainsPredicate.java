@@ -18,7 +18,7 @@ public class PropertyAddressContainsPredicate extends PropertyPredicate<String> 
 
     @Override
     public boolean test(Property property) {
-        return StringUtil.containsWordIgnoreCase(property.getAddress().toString(), value);
+        return property.getAddress().toString().toLowerCase().contains(value.toLowerCase());
     }
 }
 

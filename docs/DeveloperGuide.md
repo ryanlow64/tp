@@ -13,9 +13,30 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+We would like to humbly acknowledge the following for the success of our project:
+* The SE-EDU team for creating and maintaining the AddressBook-Level3 project.
+* Our course instructors and teaching assistants whose patient guidance and feedback were instrumental throughout the development journey.
+* Our peers and collaborators for their support, constructive code reviews, and insightful discussions.
+* The open-source Java and JavaFX communities for providing comprehensive documentation and development tools.
+* The developers and maintainers of essential libraries and frameworks used in this project, including Jackson for JSON processing and JUnit for testing.
 
-This project is based on AddressBook Level 3 by SE-EDU, available [here](https://github.com/se-edu/addressbook-level3).
+### **Java Dependencies**
+
+* **JavaFX** - for Graphical User Interface (GUI) rendering
+* **Jackson** - for JSON serialization and deserialization
+* **JUnit 5** - for JUnit testing
+* **Gradle Shadow Plugin** - for creating executable JAR files with dependencies
+* **Checkstyle** - for enforcing coding standards
+
+### **Documentation Tools**
+
+* **MarkBind** - for authoring and building the project website
+* **PlantUML** - for creating UML diagrams used in the Development Guide
+
+### **Badges**
+
+* **CodeCov** - for providing code coverage badge
+* **GitHub Actions** - for providing the Java CI badge
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -152,104 +173,6 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
-
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</box>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -282,39 +205,31 @@ Our product provides the user with easier real estate networking by having an or
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                                                                | So that I can…​                                                               |
-|----------|--------------------------------------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| `* * *`  | real estate agent                          | add property details                                                        | offer more property listings to attract potential buyers                      |
-| `* * *`  | real estate agent                          | remove property details                                                     | keep my available listings relevant                                           |
-| `* * `   | real estate agent                          | edit property details                                                       | update incorrect or outdated information                                      |
-| `* * *`  | real estate agent                          | store all the property details in one place                                 | showcase the list of properties that I have to potential buyers               |
-| `* * *`  | real estate agent                          | add client contact details                                                  | easily follow up on leads and maintain relationships                          |
-| `* * *`  | real estate agent                          | remove outdated client contact details                                      | keep my records relevant and clutter-free                                     |
-| `* * `   | real estate agent                          | edit client contact details                                                 | ensure that phone numbers, emails and other details remain accurate           |
-| `* * *`  | real estate agent                          | store all my client contacts in one place                                   | easily access and manage them                                                 |
-| `* * *`  | real estate agent                          | add scheduled meetings with clients                                         | efficiently manage my daily appointments                                      |
-| `* * *`  | real estate agent                          | delete scheduled meetings                                                   | free up time for other appointments                                           |
-| `* * `   | real estate agent                          | edit scheduled meetings                                                     | adjust timing when clients request changes                                    |
-| `* * *`  | real estate agent                          | be able to track my scheduled meetings                                      | plan my time effectively                                                      |
-| `* * `   | real estate agent                          | update the status of property deals (e.g., pending, closed, in negotiation) | stay updated on ongoing transactions and plan my next actions                 |
-| `*`      | real estate agent                          | filter properties based on location                                         | find properties that match location preferences of clients quickly            |
-| `*`      | real estate agent                          | filter properties based on price                                            | find properties that match clients' budgets quickly                           |
-| `* *`    | busy real estate agent                     | sort my client meetings in chronological order                              | prioritize the upcoming meetings first                                        |
-| `*`      | overbooked and forgetful real estate agent | receive reminders for upcoming meetings                                     | stay on track and be punctual for meetings                                    |
-| `* *`    | real estate agent with many clients        | search clients via tags                                                     | get a truncated list of people who are relevant to the tag                    |
-| `* * *`  | real estate agent                          | search clients by their names                                               | view their contact details easily                                             |
-| `* *`    | cautious real estate agent                 | receive a confirmation when deleting stuff                                  | ensure that the correct information is being deleted                          |
-| `* *`    | careless real estate agent                 | have an undo button for edits and deletes                                   | recover from mistakes and prevent the accidental loss of valuable information |
-| `*`      | real estate agent                          | compare between multiple property listings side by side                     | help clients make better informed decisions                                   |
-| `*`      | performance-driven real estate agent       | generate reports on closed deals                                            | analyze my sales performance and improve my strategies                        |
-| `*`      | real estate agent with many clients        | favourite some clients that I interact with and meet up regularly           | facilitate interaction with clients that I engage frequently                  |    
-| `*`      | organized real estate agent                | archive closed property deals                                               | free up the clutter in the list of deals                                      |
+| Priority | As a …​                                    | I want to …​                                                      | So that I can…​                                                               |
+|----------|--------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| `* * *`  | real estate agent                          | add property details                                              | offer more property listings to attract potential buyers                      |
+| `* * *`  | real estate agent                          | remove property details                                           | keep my available listings relevant                                           |
+| `* * `   | real estate agent                          | edit property details                                             | update incorrect or outdated information                                      |
+| `* * *`  | real estate agent                          | store all the property details in one place                       | showcase the list of properties that I have to potential buyers               |
+| `* * *`  | real estate agent                          | add client contact details                                        | easily follow up on leads and maintain relationships                          |
+| `* * *`  | real estate agent                          | remove outdated client contact details                            | keep my records relevant and clutter-free                                     |
+| `* * `   | real estate agent                          | edit client contact details                                       | ensure that phone numbers, emails and other details remain accurate           |
+| `* * *`  | real estate agent                          | store all my client contacts in one place                         | easily access and manage them                                                 |
+| `* * *`  | real estate agent                          | add scheduled meetings with clients                               | efficiently manage my daily appointments                                      |
+| `* * *`  | real estate agent                          | delete scheduled meetings                                         | free up time for other appointments                                           |
+| `* * `   | real estate agent                          | edit scheduled meetings                                           | adjust timing when clients request changes                                    |
+| `* * *`  | real estate agent                          | be able to track my scheduled meetings                            | plan my time effectively                                                      |
+| `* * `   | real estate agent                          | update the status of property deals (e.g., pending, closed, open) | stay updated on ongoing transactions and plan my next actions                 |
+| `*`      | real estate agent                          | filter properties based on location                               | find properties that match location preferences of clients quickly            |
+| `*`      | real estate agent                          | filter properties based on price                                  | find properties that match clients' budgets quickly                           |
+| `* *`    | busy real estate agent                     | sort my client meetings in chronological order                    | prioritize the upcoming meetings first                                        |
+| `* * *`  | real estate agent                          | search clients by their names                                     | view their contact details easily                                             ||
 
 *(More to be added)*
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `REconnect` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Add Client Contact Details**
 
@@ -353,19 +268,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User selects the contact to be removed.
 2. System requests user for confirmation.
-3. User confirms the deletion.
-4. System removes the contact.
-5. System informs user the outcome of the deletion.
+3. System removes the contact.
+4. System informs user the outcome of the deletion.
 
 **Use case ends.**
 
 **Extensions**
 
-3a. User cancels the deletion.\
-**Use case resumes at step 5.**
-
-4a. System fails to delete the contact.\
-&nbsp;&nbsp;&nbsp;&nbsp;4a1. System displays an error message.\
+3a. System fails to delete the contact.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an error message.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
 ---
@@ -405,9 +316,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to find an existing contact and provides name of contact.
+1. User requests to find an existing contact and provides criteria for name, phone, email, and/or address.
 2. System validates input.
-3. System returns a list of relevant contact.
+3. System returns a list of relevant contacts.
 
 **Use case ends.**
 
@@ -419,7 +330,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
 
-3a. System fails to find the clients with the input name.\
+3a. System fails to find the clients with the input criteria.\
 &nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an empty list.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
@@ -462,19 +373,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User selects the property listing to be removed.
 2. System requests user for confirmation.
-3. User confirms the deletion.
-4. System removes the listing.
-5. System informs user the outcome of the deletion.
+3. System removes the listing.
+4. System informs user the outcome of the deletion.
 
 **Use case ends.**
 
 **Extensions**
 
-3a. User cancels the deletion.\
-**Use case resumes at step 5.**
-
-4a. System fails to delete the property listing.\
-&nbsp;&nbsp;&nbsp;&nbsp;4a1. System displays an error message.\
+3a. System fails to delete the property listing.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an error message.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
 ---
@@ -514,9 +421,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to find an existing property listing and provides name of property.
+1. User requests to find an existing property listing and provides criteria for name keywords, address, price, size, and/or owner.
 2. System validates input.
-3. System returns a list of relevant property listing.
+3. System returns a list of relevant property listings.
 
 **Use case ends.**
 
@@ -528,7 +435,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
 
-3a. System fails to find the property listings with the input name.\
+3a. System fails to find the property listings with the input criteria.\
 &nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an empty list.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
@@ -620,7 +527,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to find deals by providing search criteria (property name, buyer name, seller name, or status).
+1. User requests to find deals by providing search criteria (property name, buyer name, seller name, status, price above, or price below).
 2. System displays a list of deals matching the criteria.
 
 **Use case ends.**
@@ -699,6 +606,55 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an error message.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
+---
+
+**Use case: Delete Event**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User selects the event to be deleted.
+2. System requests user for confirmation.
+3. System deletes the event.
+4. System informs user the outcome of the deletion.
+
+**Use case ends.**
+
+**Extensions**
+
+3a. System fails to delete the event.\
+&nbsp;&nbsp;&nbsp;&nbsp;4a1. System displays an error message.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
+
+**Use case: Find Event**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to find an existing event and provides criteria for event type, date and time, client name, and/or property name.
+2. System validates input.
+3. System returns a list of relevant events.
+
+**Use case ends.**
+
+**Extensions**
+
+2a. System detects missing or incorrect fields.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a1. System prompts the user to complete them.\
+&nbsp;&nbsp;&nbsp;&nbsp;2a2. User enters new data.\
+&nbsp;&nbsp;&nbsp;&nbsp;Steps 2a1-2a2 are repeated until the data entered is correct.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case resumes at step 3.**
+
+3a. System fails to find the events with the input criteria.\
+&nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an empty list.\
+&nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
 *(More to be added)*
 
 ### Non-Functional Requirements
@@ -724,9 +680,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Command-Line Interface (CLI)**: A text-based user interface that allows users to interact with the system by typing commands.
 
+**Connective Prefix**: A prefix that can be combined with logical connectives (AND, OR) to form compound arguments in commands.
+
 **Deal**: A property transaction record that tracks the relationship between a property, its seller (property owner), a buyer, the agreed price, and the current status of the transaction.
 
 **Deal Status**: The current status of a property transaction which falls into three categories: Pending, Closed, or Open.
+
+**Event**: A scheduled activity or appointment related to real estate transactions.
+
+**Event Type**: The category of an event, such as client meetings, workshops, conferences, or any other relevant activities.
 
 **Property Listing**: A collection of information about a property available for sale.
 
@@ -760,29 +722,3 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
-
-### Deleting a person
-
-1. Deleting a person while all persons are being shown
-
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
-
-### Saving data
-
-1. Dealing with missing/corrupted data files
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_

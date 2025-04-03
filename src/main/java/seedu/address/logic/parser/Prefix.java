@@ -6,7 +6,7 @@ package seedu.address.logic.parser;
  */
 public class Prefix {
     protected final String prefix;
-    private final boolean canBeConditional;
+    private final boolean canBeConnective;
 
     /**
      * Creates a prefix with the specified string.
@@ -18,60 +18,60 @@ public class Prefix {
     }
 
     /**
-     * Creates a conditional prefix with the specified string.
+     * Creates a connective prefix with the specified string.
      *
      * @param prefix The string to be used as the prefix.
-     * @param canBeConditional Whether this prefix is conditional.
+     * @param canBeConnective Whether this prefix is connective.
      */
-    public Prefix(String prefix, boolean canBeConditional) {
+    public Prefix(String prefix, boolean canBeConnective) {
         this.prefix = prefix;
-        this.canBeConditional = canBeConditional;
+        this.canBeConnective = canBeConnective;
     }
 
     public String getPrefix() {
         return prefix;
     }
 
-    public boolean canBeConditional() {
-        return canBeConditional;
+    public boolean canBeConnective() {
+        return canBeConnective;
     }
 
-    public boolean isConditional() {
-        return this instanceof ConditionalPrefix;
+    public boolean isConnective() {
+        return this instanceof ConnectivePrefix;
     }
 
     /**
-     * Returns the prefix with the AND conditional.
+     * Returns the prefix with the AND connective.
      */
     public Prefix getAndPrefix() {
-        if (!canBeConditional) {
-            throw new IllegalStateException("Prefix cannot be conditional");
+        if (!canBeConnective) {
+            throw new IllegalStateException("Prefix cannot be connective");
         }
-        return new ConditionalPrefix(prefix, Conditional.AND);
+        return new ConnectivePrefix(prefix, Connective.AND);
     }
 
     /**
-     * Returns the prefix with the OR conditional.
+     * Returns the prefix with the OR connective.
      */
     public Prefix getOrPrefix() {
-        if (!canBeConditional) {
-            throw new IllegalStateException("Prefix cannot be conditional");
+        if (!canBeConnective) {
+            throw new IllegalStateException("Prefix cannot be connective");
         }
-        return new ConditionalPrefix(prefix, Conditional.OR);
+        return new ConnectivePrefix(prefix, Connective.OR);
     }
 
     /**
-     * Returns whether this prefix is an AND conditional prefix.
+     * Returns whether this prefix is an AND connective prefix.
      */
     public boolean isAndPrefix() {
-        return this instanceof ConditionalPrefix && ((ConditionalPrefix) this).conditional == Conditional.AND;
+        return this instanceof ConnectivePrefix && ((ConnectivePrefix) this).connective == Connective.AND;
     }
 
     /**
-     * Returns whether this prefix is an OR conditional prefix.
+     * Returns whether this prefix is an OR connective prefix.
      */
     public boolean isOrPrefix() {
-        return this instanceof ConditionalPrefix && ((ConditionalPrefix) this).conditional == Conditional.OR;
+        return this instanceof ConnectivePrefix && ((ConnectivePrefix) this).connective == Connective.OR;
     }
 
     @Override
@@ -98,17 +98,17 @@ public class Prefix {
         return prefix.equals(otherPrefix.prefix);
     }
 
-    private static class ConditionalPrefix extends Prefix {
-        public final Conditional conditional;
+    private static class ConnectivePrefix extends Prefix {
+        public final Connective connective;
 
-        public ConditionalPrefix(String prefix, Conditional conditional) {
+        public ConnectivePrefix(String prefix, Connective connective) {
             super(prefix, true);
-            this.conditional = conditional;
+            this.connective = connective;
         }
 
         @Override
         public String getPrefix() {
-            return conditional + "_" + prefix;
+            return connective + "_" + prefix;
         }
 
         @Override

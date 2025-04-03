@@ -15,7 +15,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_SIZE = new Prefix("size/");
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("desc/");
 
-    /* Conditional Prefixes */
+    /* Connective Prefixes */
     public static final Prefix PREFIX_ADDRESS = new Prefix("addr/", true);
     public static final Prefix PREFIX_EMAIL = new Prefix("email/", true);
     public static final Prefix PREFIX_PHONE = new Prefix("phone/", true);

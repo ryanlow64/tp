@@ -7,12 +7,17 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.util.Pair;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListAllCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.client.AddClientCommand;
 import seedu.address.logic.commands.client.DeleteClientCommand;
 import seedu.address.logic.commands.client.EditClientCommand;
@@ -76,100 +81,81 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
 
-        case AddClientCommand.COMMAND_WORD:
-            return new AddClientCommandParser().parse(arguments);
-
-        case EditClientCommand.COMMAND_WORD:
-            return new EditClientCommandParser().parse(arguments);
-
-        case DeleteClientCommand.COMMAND_WORD:
-            return new DeleteClientCommandParser().parse(arguments);
-
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
-
-        case FindClientCommand.COMMAND_WORD:
-            return new FindClientCommandParser().parse(arguments);
-
-        case ListClientCommand.COMMAND_WORD:
+        if (commandWord.startsWith(AddCommand.COMMAND_WORD)) {
+            return getAddCommand(commandWord, arguments);
+        } else if (commandWord.startsWith(DeleteCommand.COMMAND_WORD)) {
+            return getDeleteCommand(commandWord, arguments);
+        } else if (commandWord.startsWith(EditCommand.COMMAND_WORD)
+            || commandWord.startsWith(UpdateDealCommand.COMMAND_WORD)
+        ) {
+            return getEditCommand(commandWord, arguments);
+        } else if (commandWord.startsWith(FindCommand.COMMAND_WORD)) {
+            return getFindCommand(commandWord, arguments);
+        } else if (commandWord.startsWith(ListCommand.COMMAND_WORD)) {
+            Pair<ListCommand<?>, String> listCommandPair = getListCommand(commandWord);
             if (!arguments.isEmpty()) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        ListClientCommand.MESSAGE_USAGE));
+                    listCommandPair.getValue()));
             }
-            return new ListClientCommand();
-
-        case AddPropertyCommand.COMMAND_WORD:
-            return new AddPropertyCommandParser().parse(arguments);
-
-        case EditPropertyCommand.COMMAND_WORD:
-            return new EditPropertyCommandParser().parse(arguments);
-
-        case DeletePropertyCommand.COMMAND_WORD:
-            return new DeletePropertyCommandParser().parse(arguments);
-
-        case FindPropertyCommand.COMMAND_WORD:
-            return new FindPropertyCommandParser().parse(arguments);
-
-        case ListPropertyCommand.COMMAND_WORD:
-            if (!arguments.isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        ListPropertyCommand.MESSAGE_USAGE));
-            }
-            return new ListPropertyCommand();
-
-        case AddEventCommand.COMMAND_WORD:
-            return new AddEventCommandParser().parse(arguments);
-
-        case DeleteEventCommand.COMMAND_WORD:
-            return new DeleteEventCommandParser().parse(arguments);
-
-        case FindEventCommand.COMMAND_WORD:
-            return new FindEventCommandParser().parse(arguments);
-
-        case EditEventCommand.COMMAND_WORD:
-            return new EditEventCommandParser().parse(arguments);
-
-        case ListEventCommand.COMMAND_WORD:
-            if (!arguments.isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        ListEventCommand.MESSAGE_USAGE));
-            }
-            return new ListEventCommand();
-
-        case AddDealCommand.COMMAND_WORD:
-            return new AddDealCommandParser().parse(arguments);
-
-        case UpdateDealCommand.COMMAND_WORD:
-            return new UpdateDealCommandParser().parse(arguments);
-
-        case FindDealCommand.COMMAND_WORD:
-            return new FindDealCommandParser().parse(arguments);
-
-        case ListDealCommand.COMMAND_WORD:
-            if (!arguments.isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        ListDealCommand.MESSAGE_USAGE));
-            }
-            return new ListDealCommand();
-
-        case ListAllCommand.COMMAND_WORD:
-            if (!arguments.isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        ListAllCommand.MESSAGE_USAGE));
-            }
-            return new ListAllCommand();
-
-        case ExitCommand.COMMAND_WORD:
+            return listCommandPair.getKey();
+        } else if (commandWord.startsWith(ExitCommand.COMMAND_WORD)) {
             return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
+        } else if (commandWord.startsWith(HelpCommand.COMMAND_WORD)) {
             return new HelpCommand();
-
-        default:
+        } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 
+    private Command getAddCommand(String commandWord, String arguments) throws ParseException {
+        return switch (commandWord) {
+        case AddClientCommand.COMMAND_WORD -> new AddClientCommandParser().parse(arguments);
+        case AddPropertyCommand.COMMAND_WORD -> new AddPropertyCommandParser().parse(arguments);
+        case AddEventCommand.COMMAND_WORD -> new AddEventCommandParser().parse(arguments);
+        case AddDealCommand.COMMAND_WORD -> new AddDealCommandParser().parse(arguments);
+        default -> throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        };
+    }
+
+    private DeleteCommand<?> getDeleteCommand(String commandWord, String arguments) throws ParseException {
+        return switch (commandWord) {
+        case DeleteClientCommand.COMMAND_WORD -> new DeleteClientCommandParser().parse(arguments);
+        case DeletePropertyCommand.COMMAND_WORD -> new DeletePropertyCommandParser().parse(arguments);
+        case DeleteEventCommand.COMMAND_WORD -> new DeleteEventCommandParser().parse(arguments);
+        default -> throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        };
+    }
+
+    private EditCommand<?> getEditCommand(String commandWord, String arguments) throws ParseException {
+        return switch (commandWord) {
+        case EditClientCommand.COMMAND_WORD -> new EditClientCommandParser().parse(arguments);
+        case EditPropertyCommand.COMMAND_WORD -> new EditPropertyCommandParser().parse(arguments);
+        case EditEventCommand.COMMAND_WORD -> new EditEventCommandParser().parse(arguments);
+        case UpdateDealCommand.COMMAND_WORD -> new UpdateDealCommandParser().parse(arguments);
+        default -> throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        };
+    }
+
+    private FindCommand<?> getFindCommand(String commandWord, String arguments) throws ParseException {
+        return switch (commandWord) {
+        case FindClientCommand.COMMAND_WORD -> new FindClientCommandParser().parse(arguments);
+        case FindPropertyCommand.COMMAND_WORD -> new FindPropertyCommandParser().parse(arguments);
+        case FindEventCommand.COMMAND_WORD -> new FindEventCommandParser().parse(arguments);
+        case FindDealCommand.COMMAND_WORD -> new FindDealCommandParser().parse(arguments);
+        default -> throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        };
+    }
+
+    private Pair<ListCommand<?>, String> getListCommand(String commandWord) throws ParseException {
+        return switch (commandWord) {
+        case ListClientCommand.COMMAND_WORD -> new Pair<>(new ListClientCommand(), ListClientCommand.MESSAGE_USAGE);
+        case ListPropertyCommand.COMMAND_WORD ->
+            new Pair<>(new ListPropertyCommand(), ListPropertyCommand.MESSAGE_USAGE);
+        case ListEventCommand.COMMAND_WORD -> new Pair<>(new ListEventCommand(), ListEventCommand.MESSAGE_USAGE);
+        case ListDealCommand.COMMAND_WORD -> new Pair<>(new ListDealCommand(), ListDealCommand.MESSAGE_USAGE);
+        case ListAllCommand.COMMAND_WORD -> new Pair<>(new ListAllCommand(), ListAllCommand.MESSAGE_USAGE);
+        default -> throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        };
+    }
 }

@@ -35,8 +35,8 @@ public abstract class FindCommand<T> extends Command {
         List<Prefix> prefixList = Stream.concat(
             Stream.of(prefixes),
             Stream.concat(
-                Stream.of(prefixes).filter(Prefix::canBeConditional).map(Prefix::getAndPrefix),
-                Stream.of(prefixes).filter(Prefix::canBeConditional).map(Prefix::getOrPrefix))
+                Stream.of(prefixes).filter(Prefix::canBeConnective).map(Prefix::getAndPrefix),
+                Stream.of(prefixes).filter(Prefix::canBeConnective).map(Prefix::getOrPrefix))
         ).toList();
 
         initialiseCommandWord(commandWord, prefixList.toArray(Prefix[]::new));

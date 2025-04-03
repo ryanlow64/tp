@@ -17,7 +17,7 @@ public class ClientAddressContainsPredicate extends ClientPredicate<String> {
 
     @Override
     public boolean test(Client client) {
-        return client.getAddress().toString().contains(value);
+        return client.getAddress().toString().toLowerCase().contains(value.toLowerCase());
     }
 }
 

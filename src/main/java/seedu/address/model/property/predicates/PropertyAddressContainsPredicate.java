@@ -1,5 +1,4 @@
 package seedu.address.model.property.predicates;
-import seedu.address.commons.util.StringUtil;
 import seedu.address.model.property.Property;
 
 /**
@@ -18,7 +17,7 @@ public class PropertyAddressContainsPredicate extends PropertyPredicate<String> 
 
     @Override
     public boolean test(Property property) {
-        return StringUtil.containsWordIgnoreCase(property.getAddress().toString(), value);
+        return property.getAddress().toString().toLowerCase().contains(value.toLowerCase());
     }
 }
 

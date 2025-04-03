@@ -34,9 +34,9 @@ public class FindEventCommand extends FindCommand<Event> {
             + "[" + PREFIX_EVENT_TYPE + "EVENT_TYPE] "
             + "[" + PREFIX_EVENT_WITH + "WITH] "
             + "[" + PREFIX_EVENT_ABOUT + "ABOUT]\n"
-            + "Note: At least one parameter must be provided. The first parameter is applied unconditionally, "
+            + "Note: At least one parameter must be provided. The first parameter is applied unconnectively, "
             + "and if more parameters are provided, all must be "
-            + "combined with the same conditional operator either 'AND' or 'OR'.\n"
+            + "combined with the same connective operator either 'AND' or 'OR'.\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_EVENT_WITH + "Alice Yeo " + PREFIX_EVENT_TYPE.getAndPrefix()
             + "meeting";
 

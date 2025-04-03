@@ -38,6 +38,8 @@ We would like to humbly acknowledge the following for the success of our project
 * **CodeCov** - for providing code coverage badge
 * **GitHub Actions** - for providing the Java CI badge
 
+<div style="page-break-before: always;"></div>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
@@ -71,6 +73,8 @@ The bulk of the app's work is done by the following four components:
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
 
+<div style="page-break-before: always;"></div>
+
 **How the architecture components interact with each other**
 
 The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
@@ -88,13 +92,15 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 
 The sections below give more details of each component.
 
+<div style="page-break-before: always;"></div>
+
 ### UI component
 
 The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `ClientListPanel`, `PropertyListPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -103,7 +109,9 @@ The `UI` component,
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays the `Client` object residing in the `Model`.
+
+<div style="page-break-before: always;"></div>
 
 ### Logic component
 
@@ -113,42 +121,42 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <puml src="diagrams/LogicClassDiagram.puml" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete_client 1")` API call as an example.
 
-<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
+<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete_client 1` Command" />
 
 <box type="info" seamless>
 
-**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+**Note:** The lifeline for `DeleteClientCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </box>
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
+1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteClientCommandParser`) and uses it to parse the command.
+2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeletClienteCommand`) which is executed by the `LogicManager`.
+3. The command can communicate with the `Model` when it is executed (e.g. to delete a client).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
-1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
-Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
+Here are the partial class diagrams in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
-<puml src="diagrams/ParserStructure.puml" width="600"/>
+<puml src="diagrams/ParserStructure.puml" width="600" height="500"/>
 <puml src="diagrams/CommandStructure.puml" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddClientCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+  * All `XYZCommandParser` classes (e.g., `AddClientCommandParser`, `DeleteClientCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="600" height="500"/>
 
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the data stored in REconnect i.e., all `Client` objects (which are contained in a `UniqueClientList` object).
+* stores the currently 'selected' `Client` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Client>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
@@ -168,11 +176,114 @@ The `Storage` component,
 
 Classes used by multiple components are in the `seedu.address.commons` package.
 
+<div style="page-break-before: always;"></div>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+### **Feature 1: Autocompletion of command names and prefixes**
+
+This is done in 2 parts mainly:
+- The `CommandBox` class is responsible for listening to changes to the user input and displaying the autocomplete suggestions based on that.
+- The `LogicManager` class is responsible for providing the list of possible commands and prefixes to the `CommandBox`.
+
+The `CommandBox` class listens to the user input and checks if the input matches any of the commands or prefixes. If it does, it displays the suggestions in a dropdown list. 
+The user can then select one of the suggestions to autocomplete their command.
+
+It has access to the command word to prefix mappings in the main `Command` class. However, since it's troublesome to main a hardcoded list of command words in the `Command` class, 
+each concrete subclass of `Command` is responsible for adding its own command word and prefixes. This is done by implementing the `public static void addCommandWord()` method in 
+each subclass.
+
+Notice that the method is declared as static and public. This is because it is the `LogicManager` class that calls this method for all concrete command classes. It uses the Reflection 
+API to find all concrete command classes and calls the `addCommandWord()` method on each of them during runtime before the Ui is loaded.
+
+This is the implementation for running the `addCommandWord()` method in the `LogicManager` class:
+
+```java
+private void initialiseCommandWords() {
+    Reflections reflections = new Reflections("seedu.address.logic.commands");
+    Set<Class<? extends Command>> commandClasses = reflections.getSubTypesOf(Command.class);
+    for (Class<? extends Command> commandClass : commandClasses) {
+        boolean isAbstract = Modifier.isAbstract(commandClass.getModifiers());
+        if (!isAbstract) {
+            try {
+                Method addCommandWord = commandClass.getDeclaredMethod("addCommandWord");
+                boolean isStatic = Modifier.isStatic(addCommandWord.getModifiers());
+                boolean isPublic = Modifier.isPublic(addCommandWord.getModifiers());
+                if (isStatic && isPublic) {
+                    addCommandWord.invoke(null);
+                } else {
+                    throw new RuntimeException(commandClass.getSimpleName()
+                        + " does not have a public static addCommandWord method");
+                }
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(commandClass.getSimpleName()
+                    + " does not have a public static addCommandWord method", e);
+            } catch (Exception e) {
+                if (e instanceof RuntimeException) {
+                    throw (RuntimeException) e;
+                }
+                logger.warning("Error invoking addCommandWord in " + commandClass.getSimpleName() + ": " + e);
+            }
+        }
+    }
+}
+```
+
+As you can see, its implemented in such a way that if any of the command classes do not implement the `addCommandWord()` method correctly, 
+the app will throw a runtime exception and crash. This is to ensure that the command words are always in sync with the command classes.
+
+### **Feature 2: Enabling the conjunction (AND) and disjunction (OR) of filtering parameters for find commands**
+
+The find commands in the app allow users to search for clients, properties, deals and events using multiple parameters.
+Instead of using either the conjunction or disjunction as the default for combining the parameters, we give the user the option to choose between the two.
+That is to say, the user can choose to use either the conjunction or disjunction to combine the parameters but they must use 
+the same type for all parameters except the first.
+
+To enable this feature, we use a special `ConnectivePrefix` class to add this functionality. Connective prefixes are special prefixes 
+that can be used to combine multiple parameters in a command. If a prefix can be connective (i.e. used in a find command), it can take 3 forms: 
+its regular form (e.g. `after/`), its connective AND form (e.g. `AND_after/`) and its connective OR form (e.g. `OR_after/`).
+
+The processing of the connective prefixes is done in the `abstract FindCommandParser` class.
+Here is one such method that checks if the prefixes used in any of the find commands are valid:
+
+```java
+protected static void checkPrefixesUsedAreValid(List<Prefix> prefixesUsed) throws ParseException {
+    List<Prefix> validPrefixes = prefixesUsed.stream()
+        .filter(prefix -> !prefix.getPrefix().isEmpty())
+        .toList();
+
+    if (validPrefixes.isEmpty()) {
+        throw new ParseException("No valid prefixes used");
+    }
+
+    Prefix firstPrefix = validPrefixes.get(0);
+    if (firstPrefix.isConnective()) {
+        throw new ParseException("First prefix used cannot be connective");
+    }
+
+    boolean allAnd = true;
+    boolean allOr = true;
+    for (int i = 1; i < validPrefixes.size(); i++) {
+        Prefix currentPrefix = validPrefixes.get(i);
+        if (!currentPrefix.isConnective()) {
+            throw new ParseException("Subsequent prefixes used after the first must be connective");
+        }
+        if (currentPrefix.isAndPrefix()) {
+            allOr = false;
+        } else if (currentPrefix.isOrPrefix()) {
+            allAnd = false;
+        }
+    }
+
+    if (!allAnd && !allOr) {
+        throw new ParseException("Cannot mix AND and OR connective prefixes");
+    }
+}
+ ```
 
 --------------------------------------------------------------------------------------------------------------------
 

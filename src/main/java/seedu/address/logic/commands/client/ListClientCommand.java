@@ -17,6 +17,10 @@ public class ListClientCommand extends ListCommand<Client> {
 
     public static final String MESSAGE_SUCCESS = "Listed all clients";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all clients in the address book. "
+            + "This command does not take additional parameters.\n"
+            + "Example: " + COMMAND_WORD;
+
     public static void addCommandWord() {
         initialiseCommandWord(COMMAND_WORD);
     }

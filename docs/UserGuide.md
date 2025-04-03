@@ -69,7 +69,7 @@ Format: `help`
 
 ### Adding a client: `add_client`
 
-Adds a client to REconnect.
+Creates a new client in REconnect.
 
 Format: `add_client name/NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]`
 
@@ -98,9 +98,9 @@ Examples:
 
 ### Listing all clients : `list_client`
 
-Shows a list of all clients in REconnect.
+Displays all clients in REconnect.
 
-format: `list_client`
+Format: `list_client`
 
 ### Locating clients by name: `find_client`
 
@@ -138,7 +138,7 @@ Examples:
 
 ### Adding a property : `add_property`
 
-Adds a new property to REconnect.
+Creates a new property in REconnect.
 
 Format: `add_property prop/PROPERTY_NAME addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]`
 
@@ -171,7 +171,7 @@ Examples:
 
 ### Listing all properties : `list_property`
 
-Shows a list of all the properties in REconnect.
+Displays all properties in REconnect.
 
 Format: `list_property`
 
@@ -247,7 +247,7 @@ Examples:
 
 ### Listing all deals : `list_deal`
 
-Shows a list of all deals in REconnect.
+Displays all deals in REconnect.
 
 Format: `list_deal`
 
@@ -308,7 +308,7 @@ Format: `edit_event INDEX [etype/EVENT_TYPE] [pid/PROPERTY_ID] [cid/CLIENT_ID] [
 
 ### Listing all events : `list_event`
 
-Shows a list of all events in REconnect.
+Displays all events in REconnect.
 
 Format: `list_event`
 
@@ -341,7 +341,7 @@ Examples:
 
 ### Listing all clients, listings, deals and events : `list_all`
 
-Shows a list of all everything in REConnect
+Displays all data in REconnect.
 
 Format: `list_all`
 

@@ -18,6 +18,10 @@ public class ListDealCommand extends ListCommand<Deal> {
     public static final String COMMAND_WORD = "list_deal";
     public static final String MESSAGE_SUCCESS = "Listed all deals";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all deals in the address book. "
+            + "This command does not take additional parameters.\n"
+            + "Example: " + COMMAND_WORD;
+
     private static final Logger logger = LogsCenter.getLogger(ListDealCommand.class);
 
     public static void addCommandWord() {

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.logic.parser.ParserUtil;
@@ -32,7 +33,7 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label dateTime;
+    private FlowPane dateTime;
     @FXML
     private Label eventType;
     @FXML
@@ -51,10 +52,11 @@ public class EventCard extends UiPart<Region> {
         assert displayedIndex > 0 : "Index should be greater than 0";
         this.event = event;
         id.setText(displayedIndex + ". ");
-        dateTime.setText(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT));
+        Label dateLabel = new Label(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT));
         if (event.getDateTime().isBefore(LocalDateTime.now())) {
-            dateTime.setStyle("-fx-text-fill: #ef1414;");
+            dateLabel.setStyle("-fx-background-color: #FF0000; -fx-text-fill: #FFFFFF;");
         }
+        dateTime.getChildren().add(dateLabel);
         eventType.setText("Type: " + event.getEventType().toFormattedString());
         client.setText("With: " + event.getClientName().fullName);
         property.setText("About: " + event.getPropertyName().fullName);

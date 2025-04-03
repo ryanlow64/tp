@@ -14,6 +14,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
+import javafx.util.Pair;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -36,7 +37,7 @@ public class CommandBox extends UiPart<Region> {
     private ContextMenu historyPopup = new MaxSizedContextMenu();
 
     // List to store command history.
-    private List<String> commandHistory = new ArrayList<>();
+    private List<Pair<String, Boolean>> commandHistory = new ArrayList<>();
 
     @FXML
     private TextField commandTextField;
@@ -75,11 +76,13 @@ public class CommandBox extends UiPart<Region> {
         suggestionsPopup.hide();
         try {
             // Add to command history.
-            commandHistory.add(commandText);
+            commandHistory.add(new Pair<>(commandText, false));
             commandExecutor.execute(commandText);
             commandTextField.setText("");
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
+            Pair<String, Boolean> lastCommand = commandHistory.get(commandHistory.size() - 1);
+            commandHistory.set(commandHistory.size() - 1, new Pair<>(commandText, true));
         }
     }
 
@@ -198,9 +201,14 @@ public class CommandBox extends UiPart<Region> {
             historyPopup.hide();
             return;
         }
-        List<MenuItem> commandList = new ArrayList<>(commandHistory.stream().map(command -> {
+        List<MenuItem> commandList = new ArrayList<>(commandHistory.stream().map(pair -> {
+            String command = pair.getKey();
+            boolean isError = pair.getValue();
             MenuItem item = new MenuItem(command.replace("_", "\u2017"));
             item.setStyle("-fx-background-color: #f0f0f0;");
+            if (isError) {
+                item.setStyle(item.getStyle() + "-fx-text-fill: red;");
+            }
             item.setOnAction(event -> {
                 commandTextField.setText(command);
                 commandTextField.positionCaret(command.length());

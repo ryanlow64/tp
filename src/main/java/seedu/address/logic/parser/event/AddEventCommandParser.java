@@ -1,5 +1,6 @@
 package seedu.address.logic.parser.event;
 
+import static seedu.address.logic.Messages.MESSAGE_EVENT_IN_PAST;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NOTE;
@@ -51,7 +52,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
         LocalDateTime dateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_START).get());
         if (dateTime.isBefore(LocalDateTime.of(2025, 1, 1, 0, 0))) {
             logger.warning("Event date is in the past");
-            throw new ParseException(AddEventCommand.MESSAGE_EVENT_IN_PAST);
+            throw new ParseException(MESSAGE_EVENT_IN_PAST);
         }
         logger.fine("Date & time: " + dateTime);
 

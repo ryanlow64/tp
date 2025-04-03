@@ -27,6 +27,7 @@ public class Messages {
     public static final String MESSAGE_DEALS_LISTED_OVERVIEW = "%1$d deals listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_EVENT_IN_PAST = "Event cannot be before 01-01-2025 0000.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -78,12 +79,12 @@ public class Messages {
      */
     public static String formatEvent(Event event) {
         return new StringBuilder(event.getEventType().toFormattedString())
-                .append(": Property: ")
-                .append(event.getPropertyName())
+                .append(" at ")
+                .append(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT))
                 .append("; Client: ")
                 .append(event.getClientName())
-                .append("; Date: ")
-                .append(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT))
+                .append("; Property: ")
+                .append(event.getPropertyName())
                 .append("; Notes: ")
                 .append(event.getNote().toString())
                 .toString();

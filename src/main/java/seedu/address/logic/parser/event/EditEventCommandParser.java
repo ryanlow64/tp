@@ -1,12 +1,15 @@
 package seedu.address.logic.parser.event;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_EVENT_IN_PAST;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_ID;
+
+import java.time.LocalDateTime;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.event.EditEventCommand;
@@ -17,6 +20,7 @@ import seedu.address.logic.parser.EditCommandParser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
+
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -48,7 +52,11 @@ public class EditEventCommandParser extends EditCommandParser<Event> {
         EditEventDescriptor editEventDescriptor = new EditEventDescriptor();
 
         if (argMultimap.getValue(PREFIX_EVENT_START).isPresent()) {
-            editEventDescriptor.setDateTime(ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_START).get()));
+            LocalDateTime dateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_EVENT_START).get());
+            if (dateTime.isBefore(LocalDateTime.of(2025, 1, 1, 0, 0))) {
+                throw new ParseException(MESSAGE_EVENT_IN_PAST);
+            }
+            editEventDescriptor.setDateTime(dateTime);
         }
         if (argMultimap.getValue(PREFIX_EVENT_TYPE).isPresent()) {
             editEventDescriptor.setEventType(ParserUtil.parseEventType(argMultimap.getValue(PREFIX_EVENT_TYPE).get()));

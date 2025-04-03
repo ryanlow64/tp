@@ -24,8 +24,8 @@ public class FindClientCommand extends FindCommand<Client> {
 
     public static final String COMMAND_WORD = "find_client";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients with the specified name, phone, "
-            + "email or address.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all clients that match the specified "
+            + "criteria for name, phone, email, and/or address.\n"
             + "Parameters: "
             + "[" + PREFIX_KEYWORDS + "KEYWORDS] "
             + "[" + PREFIX_PHONE + "PHONE] "

@@ -27,8 +27,8 @@ public class FindPropertyCommand extends FindCommand<Property> {
 
     public static final String COMMAND_WORD = "find_property";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all properties with the specified name keywords,"
-                    + " address, price range, size range or owner.\nParameters: "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all properties that match the "
+            + "specified criteria for name keywords, address, price, size, and/or owner.\nParameters: "
                     + "[" + PREFIX_KEYWORDS + "KEYWORDS] "
                     + "[" + PREFIX_ADDRESS + "ADDRESS] "
                     + "[" + PREFIX_PRICE_BELOW + "PRICE_BELOW] "

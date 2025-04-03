@@ -17,6 +17,10 @@ public class ListPropertyCommand extends ListCommand<Property> {
 
     public static final String MESSAGE_SUCCESS = "Listed all properties";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all properties in the address book. "
+            + "This command does not take additional parameters.\n"
+            + "Example: " + COMMAND_WORD;
+
     public static void addCommandWord() {
         initialiseCommandWord(COMMAND_WORD);
     }

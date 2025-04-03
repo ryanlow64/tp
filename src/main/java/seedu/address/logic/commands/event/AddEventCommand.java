@@ -36,21 +36,19 @@ import seedu.address.model.property.PropertyName;
  */
 public class AddEventCommand extends Command {
     public static final String COMMAND_WORD = "add_event";
-    public static final String MESSAGE_USAGE = new StringBuilder(COMMAND_WORD).append(" ")
-            // New ordering: date, type, client, property, note
-            .append(PREFIX_EVENT_START).append("EVENT_DATE_TIME ")
-            .append(PREFIX_EVENT_TYPE).append("EVENT_TYPE ")
-            .append(PREFIX_CLIENT_ID).append("CLIENT_ID ")
-            .append(PREFIX_PROPERTY_ID).append("PROPERTY_ID ")
-            .append(PREFIX_EVENT_NOTE).append("NOTE")
-            .append(System.lineSeparator())
-            .append("Example: ").append(COMMAND_WORD).append(" ")
-            .append(PREFIX_EVENT_START).append("30-03-2025 1730 ")
-            .append(PREFIX_EVENT_TYPE).append("meeting ")
-            .append(PREFIX_CLIENT_ID).append("2 ")
-            .append(PREFIX_PROPERTY_ID).append("1 ")
-            .append(PREFIX_EVENT_NOTE).append("NA")
-            .toString();
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the address book. "
+            + "Parameters: "
+            + PREFIX_EVENT_START + "EVENT_DATE_TIME "
+            + PREFIX_EVENT_TYPE + "EVENT_TYPE "
+            + PREFIX_CLIENT_ID + "CLIENT_ID "
+            + PREFIX_PROPERTY_ID + "PROPERTY_ID "
+            + PREFIX_EVENT_NOTE + "NOTE\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_EVENT_START + "30-04-2025 1700 "
+            + PREFIX_EVENT_TYPE + "meeting "
+            + PREFIX_CLIENT_ID + "2 "
+            + PREFIX_PROPERTY_ID + "1 "
+            + PREFIX_EVENT_NOTE + "NA";
 
     public static final String MESSAGE_SUCCESS = "New event added: %s";
     public static final String MESSAGE_EVENT_CONFLICT = "Event conflicts with existing event.";

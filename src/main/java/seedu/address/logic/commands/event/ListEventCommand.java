@@ -15,7 +15,7 @@ import seedu.address.model.event.Event;
  * Lists all events in the address book to the user.
  */
 public class ListEventCommand extends ListCommand<Event> {
-    public static final String COMMAND_WORD = "list_event";
+    public static final String COMMAND_WORD = "list_events";
     public static final String MESSAGE_SUCCESS = "Listed all events";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all events in the address book. "

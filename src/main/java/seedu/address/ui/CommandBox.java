@@ -13,6 +13,8 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.util.Pair;
 import seedu.address.logic.commands.Command;
@@ -53,9 +55,10 @@ public class CommandBox extends UiPart<Region> {
             setStyleToDefault();
             showSuggestions(newText);
         });
-        // Listen to caret position to show command history if at position 0.
-        commandTextField.caretPositionProperty().addListener((obs, oldPos, newPos) -> {
-            if (newPos.intValue() == 0) {
+        // Add key event filter to display command history only on UP/DOWN key press when caret is at position 0.
+        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (commandTextField.getCaretPosition() == 0
+                && (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN)) {
                 showHistory();
             } else {
                 historyPopup.hide();
@@ -256,4 +259,3 @@ public class CommandBox extends UiPart<Region> {
 
     }
 }
-

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.Messages.MESSAGE_EVENT_IN_PAST;
 import static seedu.address.testutil.TypicalClients.ALICE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
@@ -98,7 +99,7 @@ class AddEventCommandTest extends AddCommandTest<Event> {
                 LocalDateTime.of(1889, 4, 20, 17, 42), EventType.MEETING, INDEX_FIRST, INDEX_FIRST, NIL_NOTE);
 
         CommandException exception = assertThrows(CommandException.class, () -> addEventCommand.execute(modelStub));
-        assertEquals(AddEventCommand.MESSAGE_EVENT_IN_PAST, exception.getMessage());
+        assertEquals(MESSAGE_EVENT_IN_PAST, exception.getMessage());
         assertEquals(0, modelStub.events.size());
     }
 

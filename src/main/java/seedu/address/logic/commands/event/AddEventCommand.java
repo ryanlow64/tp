@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_EVENT_IN_PAST;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_START;
@@ -54,7 +55,6 @@ public class AddEventCommand extends Command {
     public static final String MESSAGE_EVENT_CONFLICT = "Event conflicts with existing event.";
     public static final String MESSAGE_INVALID_PROPERTY_ID = "Invalid property ID.";
     public static final String MESSAGE_INVALID_CLIENT_ID = "Invalid client ID.";
-    public static final String MESSAGE_EVENT_IN_PAST = "Event cannot be before 01-01-2025 0000.";
 
     private static final Logger logger = LogsCenter.getLogger(AddEventCommand.class);
 

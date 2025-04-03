@@ -37,7 +37,6 @@ import seedu.address.model.property.PropertyName;
 public class AddEventCommand extends Command {
     public static final String COMMAND_WORD = "add_event";
     public static final String MESSAGE_USAGE = new StringBuilder(COMMAND_WORD).append(" ")
-            // New ordering: date, type, client, property, note
             .append(PREFIX_EVENT_START).append("EVENT_DATE_TIME ")
             .append(PREFIX_EVENT_TYPE).append("EVENT_TYPE ")
             .append(PREFIX_CLIENT_ID).append("CLIENT_ID ")
@@ -49,7 +48,7 @@ public class AddEventCommand extends Command {
             .append(PREFIX_EVENT_TYPE).append("meeting ")
             .append(PREFIX_CLIENT_ID).append("2 ")
             .append(PREFIX_PROPERTY_ID).append("1 ")
-            .append(PREFIX_EVENT_NOTE).append("NA")
+            .append(PREFIX_EVENT_NOTE).append("N/A")
             .toString();
 
     public static final String MESSAGE_SUCCESS = "New event added: %s";

@@ -87,7 +87,7 @@ Edits an existing client in REconnect.
 
 Format: `edit_client INDEX [name/NAME] [phone/PHONE] [email/EMAIL] [addr/ADDRESS]`
 
-* Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed client list. The index **must be a positive integer** 1, 2, 3, ...
+* Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed client list, and should be a _positive integer_ e.g. 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * Editing a client's name will result in an update to his/her name if it exists in deals, listings, or events
@@ -160,8 +160,7 @@ Edits an existing property in REconnect.
 
 Format: `edit_property INDEX [prop/PROPERTY_NAME] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`
 
-* Edits the property at the specified `INDEX`. The index refers to the index number shown in the displayed property list.
-* The index **must be a positive integer** that does not exceed the property list size
+* Edits the property at the specified `INDEX`. The index refers to the index number shown in the displayed property list, and should be a _positive integer_ e.g. 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 
@@ -278,32 +277,33 @@ Examples:
 
 Creates a new event in REconnect.
 
-Format: `add_event pid/PROPERTY_ID cid/CLIENT_ID etype/EVENT_TYPE at/EVENT_START [note/EVENT_NOTE]`
+Format: `add_event at/EVENT_START etype/EVENT_TYPE cid/CLIENT_ID pid/PROPERTY_ID note/EVENT_NOTE`
 
-* Creates an event with the specified property, client, event type, start time and optional note
-* The property ID refers to the index number shown in the displayed property list
-* The property ID **must be a positive integer** 1, 2, 3, ...
-* The property must exist in REconnect
+* Creates an event with the specified start date and time, event type, property, client, and note
+* Event start time must be in the format "DD-MM-YYYY HHmm"
+* Event type describes the nature of the event (e.g., "conference", "meeting")
 * The client ID refers to the index number shown in the displayed client list
 * The client ID **must be a positive integer** 1, 2, 3, ...
 * The client must exist in REconnect
-* Event type describes the nature of the event (e.g., "viewing", "meeting")
-* Event start time must be in the format "YYYY-MM-DD HH:mm"
-* Event note is optional and can contain additional details
+* The property ID refers to the index number shown in the displayed property list
+* The property ID **must be a positive integer** 1, 2, 3, ...
+* The property must exist in REconnect
+* Event note can contain additional details about the event
 
 Examples:
-* `add_event pid/1 cid/1 etype/viewing at/2024-01-15 14:30 note/Property viewing at 123 Main St`
-* `add_event pid/3 cid/2 etype/meeting at/2024-01-20 10:00`
+* `add_event at/30-04-2025 1700 etype/meeting cid/1 pid/1 note/Property viewing at 123 Main St`
+* `add_event at/01-09-2026 1400 etype/others cid/3 pid/2 note/Thank client for successful deal`
 
 ### Editing an event : `edit_event`
 
 Edits an existing event in REConnect
 
-Format: `edit_event INDEX [etype/EVENT_TYPE] [pid/PROPERTY_ID] [cid/CLIENT_ID] [at/EVENT_DATE_TIME] [note/NOTE]`
+Format: `edit_event INDEX [at/EVENT_DATE_TIME] [etype/EVENT_TYPE] [cid/CLIENT_ID] [pid/PROPERTY_ID] [note/NOTE]`
 
-* Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed client list. The index **must be a positive integer** 1, 2, 3, ...
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the displayed event list, and should be a _positive integer_ e.g. 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* The same list of constraints in `add_event` apply.
 * If the start time is updated, the event list will be automatically re-sorted in the order they happen
 
 ### Listing all events : `list_event`
@@ -316,15 +316,15 @@ Format: `list_event`
 
 Displays all events that match the given criteria.
 
-Format: `find_event [cid/CLIENT_ID] [etype/EVENT_TYPE]`
+Format: `find_event [before/TIMESTAMP] [after/TIMESTAMP] [etype/EVENT_TYPE] [with/CLIENT_NAME] [about/PROPERTY_NAME]`
 
 * At least one search criteria must be provided
 * The search is case-insensitive
-* Partial matches are allowed for event type
+* Partial matches are allowed
 
 Examples:
 * `find_event etype/viewing` finds all viewing events
-* `find_event cid/1` finds all events for client #1
+* `find_event cid/1` finds all events associated to client #1
 
 ### Deleting an event : `delete_event`
 
@@ -332,12 +332,12 @@ Deletes an event from REconnect.
 
 Format: `delete_event EVENT_ID`
 
-* Deletes the event with the specified `EVENT_ID`
-* The event ID must be valid
+* Deletes the event with the corresponding `EVENT_ID`
+* The event ID must refer to an event in the current list
 
 Examples:
 * `list_event` followed by `delete_event 2` deletes the 2nd event in REconnect
-* `find_event etype/viewing` followed by `delete_event 1` deletes the 1st event in the filtered list
+* `find_event etype/others` followed by `delete_event 1` deletes the 1st event in the filtered list
 
 ### Listing all clients, listings, deals and events : `list_all`
 

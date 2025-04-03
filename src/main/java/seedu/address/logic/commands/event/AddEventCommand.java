@@ -44,7 +44,7 @@ public class AddEventCommand extends Command {
             + PREFIX_PROPERTY_ID + "PROPERTY_ID "
             + PREFIX_EVENT_NOTE + "NOTE\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_EVENT_START + "30-03-2025 1730 "
+            + PREFIX_EVENT_START + "30-04-2025 1700 "
             + PREFIX_EVENT_TYPE + "meeting "
             + PREFIX_CLIENT_ID + "2 "
             + PREFIX_PROPERTY_ID + "1 "

@@ -81,10 +81,10 @@ public class Messages {
         return new StringBuilder(event.getEventType().toFormattedString())
                 .append(" at ")
                 .append(event.getDateTime().format(ParserUtil.DATE_FORMAT_TEXT))
-                .append("; Property: ")
-                .append(event.getPropertyName())
                 .append("; Client: ")
                 .append(event.getClientName())
+                .append("; Property: ")
+                .append(event.getPropertyName())
                 .append("; Notes: ")
                 .append(event.getNote().toString())
                 .toString();

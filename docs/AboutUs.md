@@ -18,7 +18,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/kumar2215)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Project Advisor
+* Role: Team Lead
+* Responsibilities: UI
 
 ### Chen Xu
 
@@ -27,8 +28,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/chenxu20)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Project Advisor
+* Responsibilities: Backend
 
 ### Yan Mingjun
 
@@ -57,4 +58,4 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: Backend

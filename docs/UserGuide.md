@@ -18,15 +18,20 @@ REconnect is a **desktop application for Real Estate agents to manage their work
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T12-3/tp/releases/download/MVP/REconnect.jar).
+2. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T12-3/tp/releases/download/MVP/REconnect.jar).
 
-1. Copy the file to the folder you want to use as the _home folder_ for REconnect.
+3. Copy the file to the folder you want to use as the _home folder_ for REconnect.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar REconnect.jar` command to run the application.<br>
+4. Open a command terminal:
+   - **Windows**: Press `Win + R`, type `cmd`, and press Enter.
+   - **Mac**: Press `Cmd + Space`, type `Terminal`, and press Enter.
+   - **Linux**: Press `Ctrl + Alt + T` or search for "Terminal" in your applications menu.
+
+5. `cd` into the folder you put the jar file in, and use the `java -jar REconnect.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+6. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
     * `add_client name/John Doe phone/98765432 email/johnd@example.com addr/311, Clementi Ave 2, #02-25` : Adds a client named `John Doe` to the client list panel.
@@ -35,11 +40,39 @@ REconnect is a **desktop application for Real Estate agents to manage their work
 
     * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+7. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Features
+
+### UX Enhancement 1: Autocompletion for all commands
+
+REconnect provides autocompletion for all commands. This allows users to quickly find the command they want to use 
+without having to remember the exact syntax. It works by typing the first few letters of the command, choosing the 
+command from the dropdown list, and pressing Enter to choose it. This works for command parameters as well. This
+is especially useful for long commands with many parameters, as it saves time and reduces the chance of errors.
+
+![autocompletion](images/autoCompletion.png)
+
+### UX Enhancement 2: Command history
+
+REconnect keeps track of all the commands entered by the user during a session. To view this history, the cursor should
+be in the 0th position of the command box. The user can then use the up and down arrow keys to scroll through the 
+history of commands. At most 4 commands are shown at a time in the dropdown list to prevent cluttering the command box.
+This allows users to quickly re-enter previous commands without having to type them out again.
+
+<figure>
+  <a href="https://drive.google.com/file/d/11c8TxAIbabHAL8ikp2NAyP9N1ZTInd2Q/view?usp=sharing" target="_blank">
+    <img src="images/commandHistory.png" alt="Click to watch a demo" style="width:100%;max-width:600px;">
+  </a>
+  <figcaption>Click the image to watch a demo</figcaption>
+</figure>
+
+**Note**:
+The most recent command is shown at the top of the list, and the oldest command is shown at the bottom. 
+Commands that caused an error are also included in the history and appear in red. 
+The command history is cleared when the application is closed.
 
 <box type="info" seamless></box>
 
@@ -51,7 +84,7 @@ REconnect is a **desktop application for Real Estate agents to manage their work
 * Parameters can be in any order.<br>
   e.g. if the command specifies `name/NAME phone/PHONE_NUMBER`, `phone/PHONE_NUMBER name/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help` and `exit`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -65,6 +98,8 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+---
+
 ## Client Commands
 
 ### Adding a client: `add_client`
@@ -74,7 +109,7 @@ Creates a new client in REconnect.
 Format: `add_client name/NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]`
 
 * The client's name must be provided.
-* The client's phone number must be provided.
+* The client's phone number must be provided, and must be exactly 8 digits long.
 * The client's email and address are optional fields.
 
 Examples:
@@ -87,8 +122,9 @@ Edits an existing client in REconnect.
 
 Format: `edit_client INDEX [name/NAME] [phone/PHONE] [email/EMAIL] [addr/ADDRESS]`
 
-* Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed client list, and should be a _positive integer_ e.g. 1, 2, 3, ...
+* Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed client list, and should be a _positive integer_ not exceeding the client list size.
 * At least one of the optional fields must be provided.
+* The phone number if provided must be exactly 8 digits long.
 * Existing values will be updated to the input values.
 * Editing a client's name will result in an update to his/her name if it exists in deals, listings, or events
 
@@ -96,29 +132,40 @@ Examples:
 * `edit_client 1 phone/91234567 email/johndoe@example.com` Edits the phone number and email address of the 1st client to be `91234567` and `johndoe@example.com` respectively.
 * `edit_client 2 name/Betsy Crower` Edits the name of the 2nd client to be `Betsy Crower`
 
-### Listing all clients : `list_client`
-
-Displays all clients in REconnect.
-
-Format: `list_client`
-
-### Locating clients by name: `find_client`
+### Locating clients: `find_client`
 
 Displays all clients that match the given criteria.
 
-Format: `find_client KEYWORD [MORE_KEYWORDS]`
+Format: `find_client [name_keywords/KEYWORDS] [addr/ADDRESS] [email/EMAIL] [phone/PHONE]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* clients matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The order of the name keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* The following prefixes can be used:
+  * `name_keywords/KEYWORDS` to search names by keywords (case-insensitive)
+  * `addr/ADDRESS` to search by address (case-insensitive)
+  * `email/EMAIL` to search by email (case-sensitive)
+  * `phone/PHONE` to search by phone number
+* For the name keywords, only full words will be matched e.g. `Han` will not match `Hans`.
+* The rest of the keywords will be matched as substrings.
+* Not all prefixes need to be used. You can use any combination of the above prefixes.
+* The first prefix can be any of the above prefixes but must not be a connective one (the ones shown above).
+* The rest of the prefixes must be preceded by a connective keyword `AND_` or `OR_` (case-sensitive).
+* The connective keywords are used to combine multiple prefixes. All connective prefixes used must be of the same type:
+that is either all are preceded with `AND_` or all `OR_`.
 
 Examples:
-* `find_client John` returns `John` and `John Doe`
-* `find_client Alice David` returns `Alice Yeoh`, `David Li`<br>
-  ![result for 'find Alice David'](images/findAliceDavidResult.png)
+* `find_client name_keywords/John` returns `John` and `John Doe`
+* `find_client name_keywords/Alice David` returns `Alice Yeoh`, `David Li`
+* `find_client name_keywords/John AND_addr/123 Main St AND_email/example.com` returns clients with `John` being part of the name
+and address containing `123 Main St` (case-insensitive) and email containing `example.com`<br>
+
+### Listing all clients : `list_clients`
+
+Displays all clients in REconnect.
+
+Format: `list_clients`
+
+* Meant to be used after a `find_client` command to show the full list of clients again.
+* Any extra arguments given will throw an error.
 
 ### Deleting a client : `delete_client`
 
@@ -128,11 +175,15 @@ Format: `delete_client INDEX`
 
 * Deletes the client at the specified `INDEX`.
 * The index refers to the index number shown in the displayed client list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* The index **must be a positive integer** not exceeding the client list size.
+* **Note**: The client must not be involved in any existing deals, listings, or events. Else, the client cannot be deleted.
+* **Warning**: Deleting a client is not reversible.
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd client in REconnect.
-* `find_client Betsy` followed by `delete 1` deletes the 1st client in the results of the `find_client` command.
+* `find_client name_keywords/Betsy` followed by `delete 1` deletes the 1st client in the results of the `find_client` command.
+
+---
 
 ## Property Commands
 
@@ -146,9 +197,11 @@ Format: `add_property prop/PROPERTY_NAME addr/ADDRESS price/PRICE [size/SIZE] [d
 * The property name must be provided
 * The address must be provided
 * The price must be provided
-* PRICE must be a positive integer and is in thousands of S$
+* PRICE must be a positive integer and is in thousands of S$ and must be between 3 and 6 digits
 * Both size and description are optional fields
 * SIZE must be a positive integer and is in square feet
+* SIZE should only contain integers from [100, 99999]
+* Description if provided should be between 1 and 50 characters
 
 Examples:
 * `add_property prop/Sunset Villa addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
@@ -165,30 +218,45 @@ Format: `edit_property INDEX [prop/PROPERTY_NAME] [addr/ADDRESS] [price/PRICE] [
 * Existing values will be updated to the input values.
 
 Examples:
-* `edit_property 1 price/1600000 desc/Newly renovated` Edits the price and description of the 1st property in the list
+* `edit_property 1 price/1600 desc/Newly renovated` Edits the price and description of the 1st property in the list
 * `edit_property 2 prop/Sunrise Villa addr/789 Morning Street` Edits the name and address of the 2nd property in the list
-
-### Listing all properties : `list_property`
-
-Displays all properties in REconnect.
-
-Format: `list_property`
 
 ### Finding properties : `find_property`
 
-Displays all properties that match the given criteria.
+Displays all properties that match the specified criteria for name keywords, address, price, size, and/or owner.
 
-Format: `find_property KEYWORD [MORE_KEYWORDS]`
+Format: `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [owner/OWNER]`
 
-* The search is case-insensitive. e.g `villa` will match `Villa`
-* The order of the keywords does not matter
-* Only the property name is searched
-* Only full words will be matched e.g. `Sun` will not match `Sunset`
-* Properties matching at least one keyword will be returned (i.e. `OR` search)
+* The order of the name keywords does not matter. e.g. `Maple Villa` will match `Villa Maple`.
+* The following prefixes can be used:
+    * `name_keywords/KEYWORDS` to search property names by keywords (case-insensitive)
+    * `addr/ADDRESS` to search by address (case-insensitive)
+    * `price_</PRICE_BELOW` to search by price below a certain value
+    * `price_>/PRICE_ABOVE` to search by price above a certain value
+    * `size_</SIZE_BELOW` to search by size below a certain value
+    * `size_>/SIZE_ABOVE` to search by size above a certain value
+    * `owner/OWNER` to search owner name by keywords (case-insensitive)
+* For the name keywords, only full words will be matched e.g. `Han` will not match `Hans`.
+* The address keyword will be matched as a substring.
+* The PRICE and SIZE keywords used must follow the constraints defined in `add_property` command.
+* Not all prefixes need to be used. You can use any combination of the above prefixes.
+* The first prefix can be any of the above prefixes but must not be a connective one (the ones shown above).
+* The rest of the prefixes must be preceded by a connective keyword `AND_` or `OR_` (case-sensitive).
+* The connective keywords are used to combine multiple prefixes. All connective prefixes used must be of the same type:
+  that is either all are preceded with `AND_` or all `OR_`.
 
 Examples:
-* `find_property Villa` returns `Sunset Villa` and `Mountain Villa`
-* `find_property Heights Towers` returns `Ocean Heights`, `City Towers`
+* `find_property owner/John Doe AND_price_>/500`
+* `find_property addr/123 Main St OR_price_>/1000 OR_size_>/500`
+
+### Listing all properties : `list_properties`
+
+Displays all properties in REconnect.
+
+Format: `list_properties`
+
+* Meant to be used after a `find_property` command to show the full list of properties again.
+* Any extra arguments given will throw an error.
 
 ### Deleting a property : `delete_property`
 
@@ -196,13 +264,16 @@ Deletes the specified property from REconnect.
 
 Format: `delete_property INDEX`
 
-* Deletes the property at the specified `INDEX`
-* The index refers to the index number shown in the displayed property list
-* The index **must be a positive integer** that does not exceed the property list size
+* Deletes the property at the specified `INDEX`.
+* The index refers to the index number shown in the displayed property list.
+* The index **must be a positive integer** that does not exceed the property list size.
+* **Warning**: Deleting a property is not reversible.
 
 Examples:
 * `list_property` followed by `delete_property 2` deletes the 2nd property in REconnect
-* `find_property Villa` followed by `delete_property 1` deletes the 1st property in the results of the `find_property` command
+* `find_property name_keyowrds/Villa` followed by `delete_property 1` deletes the 1st property in the results of the `find_property` command
+
+---
 
 ## Deal Commands
 
@@ -214,12 +285,12 @@ Format: `add_deal pid/PROPERTY_ID buyer/BUYER_ID price/PRICE [status/STATUS]`
 
 * Creates a deal with the specified property, buyer and price details
 * The property ID and buyer ID refer to the index numbers shown in the displayed lists
-* The IDs **must be positive integers** 1, 2, 3, ...
+* The IDs **must be positive integers** that do not exceed the property and client list sizes respectively
 * The property and buyer must exist in REconnect
 * The property owner will automatically be set as the seller
 * The property must not be involved in another existing deal
-* The price must be a positive integer between 3 to 6 digits (in thousands)
-* Status is optional and indicates the deal progress (OPEN, PENDING, CLOSED)
+* The price must be a positive integer between 3 and 6 digits (in thousands)
+* Status is optional and indicates the deal progress (OPEN, PENDING, CLOSED) (case-insensitive)
 * If status is not specified, it defaults to PENDING
 
 Examples:
@@ -230,46 +301,60 @@ Examples:
 
 Updates an existing deal in REconnect.
 
-Format: `update_deal dealId/DEAL_ID [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`
+Format: `update_deal INDEX [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`
 
-* Updates the deal with the specified `DEAL_ID`
+* Updates the deal with the specified `INDEX`
 * At least one of the optional fields must be provided
-* The deal ID must be valid
+* The INDEX refers to the index number shown in the displayed deal list, and should be a _positive integer_ that does not exceed the deal list size
 * For property ID and buyer ID - the specified values must refer to existing entities in REconnect
 * Price must be within valid range (3 to 6 digits in thousands)
-* Status can be updated to indicate deal progress (OPEN, PENDING, CLOSED)
+* Status can be updated to indicate deal progress (OPEN, PENDING, CLOSED) (case-insensitive)
 * Seller cannot be manually updated as it is automatically set based on the property owner
 
 Examples:
-* `update_deal dealId/3 status/CLOSED` changes the status of deal #3 to CLOSED
-* `update_deal dealId/1 price/500 buyer/2` updates deal #1 with a new price of $500,000 and changes the buyer to client #2
-
-### Listing all deals : `list_deal`
-
-Displays all deals in REconnect.
-
-Format: `list_deal`
-
-* Displays all deals in the system with their details
-* No parameters required
+* `update_deal 3 status/CLOSED` changes the status of deal #3 to CLOSED
+* `update_deal 1 price/500 buyer/2` updates deal #1 with a new price of $500,000 and changes the buyer to client #2
 
 ### Finding deals : `find_deal`
 
 Displays all deals that match the given criteria.
 
-Format: `find_deal [prop/PROPERTY_NAME] [buyer/BUYER_NAME] [seller/SELLER_NAME] [status/STATUS]`
+Format: `find_deal [prop/PROPERTY_NAME_KEYWORDS] [buyer/BUYER_NAME_KEYWORDS] [seller/SELLER_NAME_KEYWORDS] [status/STATUS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE]`
 
-* At least one search criterion must be provided
-* The search for names is case-insensitive (e.g., "villa" will match "Villa")
-* Partial name matches are supported (e.g., "John" will match "Johnny")
-* For status, the match must be exact (OPEN, PENDING, or CLOSED)
-* If multiple criteria are provided, deals matching ANY of the criteria will be shown (OR logic)
+* The order of the name keywords does not matter. e.g. `Maple Villa` will match `Villa Maple`.
+* The following prefixes can be used:
+    * `prop/PROPERTY_NAME_KEYWORDS` to search property names by keywords (case-insensitive)
+    * `buyer/BUYER_NAME_KEYWORDS` to search buyer names by keywords (case-insensitive)
+    * `seller/SELLER_NAME_KEYWORDS` to search seller names by keywords (case-insensitive)
+    * `status/STATUS` to search by deal status (case-insensitive)
+    * `price_</PRICE_BELOW` to search by price below a certain value
+    * `price_>/PRICE_ABOVE` to search by price above a certain value
+* For the name keywords, only full words will be matched e.g. `Han` will not match `Hans`.
+* The PRICE keyword used must follow the constraints defined in `add_deal` command.
+* Not all prefixes need to be used. You can use any combination of the above prefixes.
+* The first prefix can be any of the above prefixes but must not be a connective one (the ones shown above).
+* The rest of the prefixes must be preceded by a connective keyword `AND_` or `OR_` (case-sensitive).
+* The connective keywords are used to combine multiple prefixes. All connective prefixes used must be of the same type:
+  that is either all are preceded with `AND_` or all `OR_`.
 
 Examples:
-* `find_deal prop/Villa` finds all deals involving properties with "Villa" in their names
-* `find_deal status/CLOSED` finds all closed deals
-* `find_deal buyer/John seller/Mary` finds all deals with buyers containing "John" in their name OR sellers containing "Mary" in their name
-* `find_deal prop/Ocean status/PENDING` finds all deals with properties containing "Ocean" in their name OR with PENDING status
+* `find_deal prop/Villa` finds all deals involving properties with "Villa" in their names.
+* `find_deal status/CLOSED` finds all closed deals.
+* `find_deal buyer/John AND_seller/Mary` finds all deals with buyers containing "John" in their name AND sellers containing "Mary" in their name.
+* `find_deal prop/Ocean OR_status/PENDING` finds all deals with properties containing "Ocean" in their name OR with PENDING status.
+
+### Listing all deals : `list_deals`
+
+Displays all deals in REconnect.
+
+Format: `list_deals`
+
+* Meant to be used after a `find_deal` command to show the full list of deals again.
+* Any extra arguments given will throw an error.
+
+**Note**: There is no `delete_deal` command as deals are not meant to be deleted. Instead, they can be updated to reflect the current status of the deal.
+
+---
 
 ## Event Commands
 
@@ -279,16 +364,22 @@ Creates a new event in REconnect.
 
 Format: `add_event at/EVENT_START etype/EVENT_TYPE cid/CLIENT_ID pid/PROPERTY_ID note/EVENT_NOTE`
 
-* Creates an event with the specified start date and time, event type, property, client, and note
-* Event start time must be in the format "DD-MM-YYYY HHmm"
-* Event type describes the nature of the event (e.g., "conference", "meeting")
-* The client ID refers to the index number shown in the displayed client list
-* The client ID **must be a positive integer** 1, 2, 3, ...
-* The client must exist in REconnect
-* The property ID refers to the index number shown in the displayed property list
-* The property ID **must be a positive integer** 1, 2, 3, ...
-* The property must exist in REconnect
-* Event note can contain additional details about the event
+* Creates an event with the specified start date and time, event type, property, client, and note.
+* Event start time must be in the format "DD-MM-YYYY HHmm".
+* The date and time can be any valid one starting from `01-01-2025 0000`.
+* This is to allow for past events that happened in the year before the app was created.
+* Event type describes the nature of the event and must be one of the following: `conference`, `meeting`, `workshop` 
+* or `others` (case-insensitive).
+* The client ID refers to the index number shown in the displayed client list.
+* The client ID **must be a positive integer** that does not exceed the client list size.
+* The client must exist in REconnect.
+* The property ID refers to the index number shown in the displayed property list.
+* The property ID **must be a positive integer** that does not exceed the property list size.
+* The property must exist in REconnect.
+* Event note can contain additional details about the event and is **not** optional. It should contain
+info on where the event will be held, and any other relevant information.
+* There is no limit on the number of characters in the note.
+* If there is nothing to add to the note, it should be set to "N/A".
 
 Examples:
 * `add_event at/30-04-2025 1700 etype/meeting cid/1 pid/1 note/Property viewing at 123 Main St`
@@ -300,44 +391,68 @@ Edits an existing event in REConnect
 
 Format: `edit_event INDEX [at/EVENT_DATE_TIME] [etype/EVENT_TYPE] [cid/CLIENT_ID] [pid/PROPERTY_ID] [note/NOTE]`
 
-* Edits the event at the specified `INDEX`. The index refers to the index number shown in the displayed event list, and should be a _positive integer_ e.g. 1, 2, 3, ...
+* Edits the event at the specified `INDEX`.
+* The index refers to the index number shown in the displayed event list, and should be a _positive integer_ that does not exceed the event list size.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * The same list of constraints in `add_event` apply.
-* If the start time is updated, the event list will be automatically re-sorted in the order they happen
+* If the start time is updated, the event list will be automatically re-sorted in the order they happen.
 
-### Listing all events : `list_event`
-
-Displays all events in REconnect.
-
-Format: `list_event`
+Examples:
+* `edit_event 1 at/01-05-2025 1200 note/Changed to 12pm` Edits the start time and note of the 1st event in the list
+* `edit_event 2 etype/meeting cid/3 pid/2` Edits the event type, client ID and property ID of the 2nd event in the list
 
 ### Finding events : `find_event`
 
 Displays all events that match the given criteria.
 
-Format: `find_event [before/TIMESTAMP] [after/TIMESTAMP] [etype/EVENT_TYPE] [with/CLIENT_NAME] [about/PROPERTY_NAME]`
+Format: `find_event [before/TIMESTAMP] [after/TIMESTAMP] [etype/EVENT_TYPE] [with/CLIENT_NAME_KEYWORDS] [about/PROPERTY_NAME_KEYWORDS]`
 
-* At least one search criteria must be provided
-* The search is case-insensitive
-* Partial matches are allowed
+* The order of the name keywords does not matter. e.g. `Maple Villa` will match `Villa Maple`.
+* The following prefixes can be used:
+    * `with/CLIENT_NAME_KEYWORDS` to search client names by keywords (case-insensitive)
+    * `about/PROPERTY_NAME_KEYWORDS` to search property names by keywords (case-insensitive)
+    * `etype/EVENT_TYPE` to search by event type (case-insensitive)
+    * `before/TIMESTAMP` to search for events before a certain date and time
+    * `after/TIMESTAMP` to search for events after a certain date and time
+* For the name keywords, only full words will be matched e.g. `Han` will not match `Hans`.
+* The TIMESTAMP keyword(s) used must follow the constraints defined in `add_event` command.
+* Not all prefixes need to be used. You can use any combination of the above prefixes.
+* The first prefix can be any of the above prefixes but must not be a connective one (the ones shown above).
+* The rest of the prefixes must be preceded by a connective keyword `AND_` or `OR_` (case-sensitive).
+* The connective keywords are used to combine multiple prefixes. All connective prefixes used must be of the same type:
+  that is either all are preceded with `AND_` or all `OR_`.
 
 Examples:
-* `find_event etype/viewing` finds all viewing events
-* `find_event cid/1` finds all events associated to client #1
+* `find_event with/Alice Yeo AND_etype/meeting` finds all meeting events with clients containing "Alice" or "Yeo" in their name.
+* `find_event before/05-04-2025 1200 AND_after/01-03-2025 1000` finds all events between 01-03-2025 1000 and 05-04-2025 1200.
+
+### Listing all events : `list_events`
+
+Displays all events in REconnect.
+
+Format: `list_events`
+
+* Meant to be used after a `find_event` command to show the full list of events again.
+* Any extra arguments given will throw an error.
 
 ### Deleting an event : `delete_event`
 
 Deletes an event from REconnect.
 
-Format: `delete_event EVENT_ID`
+Format: `delete_event INDEX`
 
-* Deletes the event with the corresponding `EVENT_ID`
-* The event ID must refer to an event in the current list
+* Deletes the event with the corresponding `INDEX`.
+* The INDEX **must be a positive integer** that does not exceed the event list size.
+* **WARNING**: Deleting an event is not reversible.
 
 Examples:
 * `list_event` followed by `delete_event 2` deletes the 2nd event in REconnect
-* `find_event etype/others` followed by `delete_event 1` deletes the 1st event in the filtered list
+* `find_event etype/meeting` followed by `delete_event 1` deletes the 1st event in the filtered list
+
+---
+
+## Miscellaneous Commands
 
 ### Listing all clients, listings, deals and events : `list_all`
 
@@ -345,11 +460,17 @@ Displays all data in REconnect.
 
 Format: `list_all`
 
+* Displays all clients, properties, deals and events in REconnect.
+* Meant to be used after any of the find commands to show the full list of data again.
+* Any extra arguments given will throw an error.
+
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
+
+---
 
 ### Saving the data
 
@@ -377,32 +498,55 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+3. **Emojis not being shown on Linux devices**: Emojis may not be displayed correctly on Linux devices. This is due to the default font used in JavaFX not supporting emojis.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
 
-Action     | Format, Examples
+### Client Commands
+
+| Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add Client**    | `add_client name/NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]` <br> e.g., `add_client name/James Ho phone/22224444 email/jamesho@example.com addr/123, Clementi Rd, 1234665`
-**Add Deal**      | `add_deal pid/PROPERTY_ID buyer/BUYER_ID price/PRICE [status/STATUS]` <br> e.g., `add_deal pid/1 buyer/1 price/100 status/CLOSED`
-**Add Event**     | `add_event etype/EVENT_TYPE pid/PROPERTY_ID cid/CLIENT_ID at/EVENT_DATE_TIME [note/NOTE]` <br> e.g., `add_event etype/meeting pid/1 cid/2 at/30-03-2025 1730 note/N/A`
-**Add Property**  | `add_property prop/PROPERTY_NAME price/PRICE [size/SIZE] [desc/DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa price/1000000 size/1200 desc/Beautiful sunset view`
+**Add Client**    | `add_client name/NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]` <br> e.g., `add_client name/John Doe phone/98765432 email/johnd@example.com addr/John street, block 123, #01-01`
+**Edit Client**   | `edit_client INDEX [name/NAME] [phone/PHONE] [email/EMAIL] [addr/ADDRESS]`<br> e.g.,`edit_client 1 phone/91234567 email/johndoe@example.com`
 **Delete Client** | `delete_client INDEX`<br> e.g., `delete_client 3`
-**Delete Event**  | `delete_event EVENT_ID`<br> e.g., `delete_event 2`
+**Find Client**   | `find_client [name_keywords/KEYWORDS] [addr/ADDRESS] [email/EMAIL] [phone/PHONE]`<br> e.g., `find_client name_keywords/John AND_addr/123 Main St AND_email/example.com`
+**List Clients**  | `list_clients`
+
+### Property Commands
+
+| Action     | Format, Examples
+-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add Property**  | `add_property prop/PROPERTY_NAME addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
+**Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1600 desc/Newly renovated`
 **Delete Property** | `delete_property INDEX`<br> e.g., `delete_property 1`
-**Edit Client**   | `edit_client INDEX [name/NAME] [phone/PHONE_NUMBER] [email/EMAIL] [addr/ADDRESS]`<br> e.g.,`edit_client 2 name/James Lee email/jameslee@example.com`
-**Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1200000 desc/Newly renovated`
-**Edit Event** | `edit_event INDEX [etype/EVENT_TYPE] [pid/PROPERTY_ID] [cid/CLIENT_ID] [at/EVENT_DATE_TIME] [note/NOTE]`
-**Find Client**   | `find_client KEYWORD [MORE_KEYWORDS]`<br> e.g., `find_client James Jake`
-**Find Deal**     | `find_deal [prop/PROPERTY_NAME] [buyer/BUYER_NAME] [seller/SELLER_NAME] [status/STATUS]`<br> e.g., `find_deal prop/Villa status/PENDING`
-**Find Event**    | `find_event etype/EVENT_TYPE`<br> e.g., `find_event etype/viewing`
-**Find Property** | `find_property KEYWORD [MORE_KEYWORDS]`<br> e.g., `find_property Villa Condo`
-**List Clients**  | `list_client`
-**List Deals**    | `list_deal`
-**List Events**   | `list_event`
-**List Properties** | `list_property`
+**Find Property** | `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [owner/OWNER]`<br> e.g., `find_property addr/123 Main St OR_price_>/1000 OR_size_>/500`
+**List Properties** | `list_properties`
+
+### Deal Commands
+
+| Action     | Format, Examples
+-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add Deal**      | `add_deal pid/PROPERTY_ID buyer/BUYER_ID price/PRICE [status/STATUS]` <br> e.g., `add_deal pid/1 buyer/1 price/100 status/CLOSED`
+**Update Deal**   | `update_deal INDEX [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`<br> e.g., `update_deal 3 status/CLOSED`
+**Find Deal**     | `find_deal [prop/PROPERTY_NAME_KEYWORDS] [buyer/BUYER_NAME_KEYWORDS] [seller/SELLER_NAME_KEYWORDS] [status/STATUS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE]`<br> e.g., `find_deal prop/Ocean OR_status/PENDING`
+**List Deals**    | `list_deals`
+
+### Event Commands
+
+| Action     | Format, Examples
+-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add Event**     | `add_event at/EVENT_START etype/EVENT_TYPE cid/CLIENT_ID pid/PROPERTY_ID note/EVENT_NOTE` <br> e.g., `add_event etype/meeting pid/1 cid/2 at/30-03-2025 1730 note/N/A`
+**Edit Event** | `edit_event INDEX [at/EVENT_DATE_TIME] [etype/EVENT_TYPE] [cid/CLIENT_ID] [pid/PROPERTY_ID] [note/NOTE]` <br> e.g., `edit_event 1 at/01-05-2025 1200 note/Changed to 12pm`
+**Delete Event**  | `delete_event INDEX`<br> e.g., `delete_event 2`
+**Find Event**    | `find_event [before/TIMESTAMP] [after/TIMESTAMP] [etype/EVENT_TYPE] [with/CLIENT_NAME_KEYWORDS] [about/PROPERTY_NAME_KEYWORDS]`<br> e.g., `find_event before/05-04-2025 1200 AND_after/01-03-2025 1000`
+**List Events**   | `list_events`
+
+### Miscellaneous Commands
+
+| Action     | Format, Examples
+-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **List All** | `list_all`
-**Update Deal**   | `update_deal dealId/DEAL_ID [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`<br> e.g., `update_deal dealId/3 status/CLOSED`
 **Help**          | `help`
 **Exit**          | `exit`

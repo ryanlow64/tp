@@ -11,6 +11,8 @@ REconnect is a **desktop application for Real Estate agents to manage their work
 <!-- * Table of Contents -->
 <page-nav-print />
 
+<div style="page-break-before: always;"></div>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Quick start
@@ -29,6 +31,7 @@ REconnect is a **desktop application for Real Estate agents to manage their work
 
 5. `cd` into the folder you put the jar file in, and use the `java -jar REconnect.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+
    ![Ui](images/Ui.png)
 
 6. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -271,7 +274,7 @@ Format: `delete_property INDEX`
 
 Examples:
 * `list_property` followed by `delete_property 2` deletes the 2nd property in REconnect
-* `find_property name_keyowrds/Villa` followed by `delete_property 1` deletes the 1st property in the results of the `find_property` command
+* `find_property name_keywords/Villa` followed by `delete_property 1` deletes the 1st property in the results of the `find_property` command
 
 ---
 

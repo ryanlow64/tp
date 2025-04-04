@@ -62,5 +62,6 @@ public class EventCard extends UiPart<Region> {
         property.setText("About: " + event.getPropertyName().fullName);
         String noteValue = event.getNote().toString();
         note.setText("Note: " + (noteValue.equals("N/A") ? "-" : noteValue));
+        note.setWrapText(true);
     }
 }

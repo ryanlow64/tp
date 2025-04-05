@@ -121,8 +121,8 @@ public class EditPropertyCommand extends EditCommand<Property> {
         ClientName updatedOwner = editPropertyDescriptor.getOwner()
                 .orElse(propertyToEdit.getOwner());
 
-        return new Property(updatedPropertyName, updatedAddress, updatedPrice, updatedSize, updatedDescription, updatedOwner
-        );
+        return new Property(updatedPropertyName, updatedAddress, updatedPrice, updatedSize, updatedDescription,
+                updatedOwner);
     }
 
     @Override

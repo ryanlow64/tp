@@ -113,16 +113,17 @@ public class EditPropertyCommand extends EditCommand<Property> {
 
         PropertyName updatedPropertyName = editPropertyDescriptor.getPropertyName()
                 .orElse(propertyToEdit.getFullName());
+        ClientName updatedOwner = editPropertyDescriptor.getOwner()
+                .orElse(propertyToEdit.getOwner());
         Address updatedAddress = editPropertyDescriptor.getAddress().orElse(propertyToEdit.getAddress());
         Price updatedPrice = editPropertyDescriptor.getPrice().orElse(propertyToEdit.getPrice());
         Optional<Size> updatedSize = editPropertyDescriptor.getSize().orElse(propertyToEdit.getSize());
         Optional<Description> updatedDescription = editPropertyDescriptor.getDescription()
                 .orElse(propertyToEdit.getDescription());
-        ClientName updatedOwner = editPropertyDescriptor.getOwner()
-                .orElse(propertyToEdit.getOwner());
 
-        return new Property(updatedPropertyName, updatedAddress, updatedPrice, updatedSize, updatedDescription,
-                updatedOwner);
+        return new Property(updatedPropertyName, updatedOwner, updatedAddress, updatedPrice, updatedSize,
+                updatedDescription
+        );
     }
 
     @Override
@@ -154,11 +155,11 @@ public class EditPropertyCommand extends EditCommand<Property> {
      */
     public static class EditPropertyDescriptor extends EditDescriptor<Property> {
         private PropertyName propertyName;
+        private ClientName owner;
         private Address address;
         private Price price;
         private Optional<Size> size;
         private Optional<Description> description;
-        private ClientName owner;
 
         public EditPropertyDescriptor() {}
 
@@ -168,11 +169,11 @@ public class EditPropertyCommand extends EditCommand<Property> {
          */
         public EditPropertyDescriptor(EditPropertyDescriptor toCopy) {
             setPropertyName(toCopy.propertyName);
+            setOwner(toCopy.owner);
             setAddress(toCopy.address);
             setPrice(toCopy.price);
             setSize(toCopy.size);
             setDescription(toCopy.description);
-            setOwner(toCopy.owner);
         }
 
         /**
@@ -180,7 +181,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
          */
         @Override
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(propertyName, address, price, size, description, owner);
+            return CollectionUtil.isAnyNonNull(propertyName, owner, address, price, size, description);
         }
 
         public void setPropertyName(PropertyName propertyName) {
@@ -189,6 +190,14 @@ public class EditPropertyCommand extends EditCommand<Property> {
 
         public Optional<PropertyName> getPropertyName() {
             return Optional.ofNullable(propertyName);
+        }
+
+        public void setOwner(ClientName owner) {
+            this.owner = owner;
+        }
+
+        public Optional<ClientName> getOwner() {
+            return Optional.ofNullable(owner);
         }
 
         public void setAddress(Address address) {
@@ -223,14 +232,6 @@ public class EditPropertyCommand extends EditCommand<Property> {
             return Optional.ofNullable(description);
         }
 
-        public void setOwner(ClientName owner) {
-            this.owner = owner;
-        }
-
-        public Optional<ClientName> getOwner() {
-            return Optional.ofNullable(owner);
-        }
-
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -243,22 +244,22 @@ public class EditPropertyCommand extends EditCommand<Property> {
             }
 
             return Objects.equals(propertyName, otherEditPropertyDescriptor.propertyName)
+                    && Objects.equals(owner, otherEditPropertyDescriptor.owner)
                     && Objects.equals(address, otherEditPropertyDescriptor.address)
                     && Objects.equals(price, otherEditPropertyDescriptor.price)
                     && Objects.equals(size, otherEditPropertyDescriptor.size)
-                    && Objects.equals(description, otherEditPropertyDescriptor.description)
-                    && Objects.equals(owner, otherEditPropertyDescriptor.owner);
+                    && Objects.equals(description, otherEditPropertyDescriptor.description);
         }
 
         @Override
         public String toString() {
             return new ToStringBuilder(this)
                     .add("propertyName", propertyName)
+                    .add("owner", owner)
                     .add("address", address)
                     .add("price", price)
                     .add("size", size)
                     .add("description", description)
-                    .add("owner", owner)
                     .toString();
         }
     }

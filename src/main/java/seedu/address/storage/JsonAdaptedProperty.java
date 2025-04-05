@@ -103,6 +103,6 @@ public class JsonAdaptedProperty {
         }
         final ClientName modelClientName = new ClientName(owner);
 
-        return new Property(modelPropertyName, modelAddress, modelPrice, modelSize, modelDescription, modelClientName);
+        return new Property(modelPropertyName, modelClientName, modelAddress, modelPrice, modelSize, modelDescription);
     }
 }

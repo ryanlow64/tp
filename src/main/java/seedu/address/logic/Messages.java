@@ -60,17 +60,17 @@ public class Messages {
      */
     public static String formatProperty(Property property) {
         return new StringBuilder(String.valueOf(property.getFullName()))
+                .append("; Owner: ")
+                .append(property.getOwner())
                 .append("; Address: ")
                 .append(property.getAddress())
                 .append("; Price: S$")
                 .append(property.getPrice()).append(" thousand")
                 .append("; Size: ")
-                .append(property.getSize().isPresent() ? property.getSize().get() : "N/A")
+                .append(property.getSize().isPresent() ? property.getSize().get() : "-")
                 .append(" square feet")
                 .append("; Description: ")
-                .append(property.getDescription().isPresent() ? property.getDescription().get() : "N/A")
-                .append("; Owner: ")
-                .append(property.getOwner())
+                .append(property.getDescription().isPresent() ? property.getDescription().get() : "-")
                 .toString();
     }
 

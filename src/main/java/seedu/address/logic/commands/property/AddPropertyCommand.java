@@ -15,7 +15,11 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
+import seedu.address.model.client.Client;
+import seedu.address.model.client.ClientName;
 import seedu.address.model.property.Property;
+
+import java.util.List;
 
 /**
  * Adds a property to the address book.

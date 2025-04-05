@@ -17,24 +17,24 @@ import seedu.address.model.commons.Price;
  */
 public class Property implements Nameable<Property> {
     private final PropertyName propertyName;
+    private final ClientName owner;
     private final Address address;
     private final Price price;
     private final Optional<Size> size;
     private final Optional<Description> description;
-    private final ClientName owner;
 
     /**
      * Every field must be present and not null.
      */
-    public Property(PropertyName propertyName, Address address, Price price,
-                    Optional<Size> size, Optional<Description> description, ClientName owner) {
+    public Property(PropertyName propertyName, ClientName owner, Address address, Price price,
+                    Optional<Size> size, Optional<Description> description) {
         requireAllNonNull(propertyName, address, price, size, description, owner);
         this.propertyName = propertyName;
+        this.owner = owner;
         this.address = address;
         this.price = price;
         this.size = size;
         this.description = description;
-        this.owner = owner;
     }
 
     @Override
@@ -92,27 +92,27 @@ public class Property implements Nameable<Property> {
 
         return propertyName.equals(otherProperty.propertyName)
                 && address.equals(otherProperty.address)
+                && owner.equals(otherProperty.owner)
                 && price.equals(otherProperty.price)
                 && size.equals(otherProperty.size)
-                && description.equals(otherProperty.description)
-                && owner.equals(otherProperty.owner);
+                && description.equals(otherProperty.description);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(propertyName, address, price, size, description, owner);
+        return Objects.hash(propertyName, owner, address, price, size, description);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("propertyName", propertyName)
+                .add("owner", owner)
                 .add("address", address)
                 .add("price", price)
                 .add("size", size)
                 .add("description", description)
-                .add("owner", owner)
                 .toString();
     }
 }

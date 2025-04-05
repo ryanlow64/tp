@@ -57,43 +57,51 @@ public class AddPropertyCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPropertyCommand.MESSAGE_USAGE);
 
         // missing property name prefix
-        assertParseFailure(parser, VALID_PROPERTY_NAME_MAPLE + PREFIX_ADDRESS + VALID_ADDRESS_MAPLE
-                + PREFIX_PRICE + VALID_PRICE_MAPLE + PREFIX_OWNER + VALID_OWNER_MAPLE, expectedMessage);
+        assertParseFailure(parser, VALID_PROPERTY_NAME_MAPLE + PREFIX_OWNER + VALID_OWNER_MAPLE
+                + PREFIX_ADDRESS + VALID_ADDRESS_MAPLE + PREFIX_PRICE + VALID_PRICE_MAPLE, expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // invalid property name
         String userInput = " " + PREFIX_PROPERTY_NAME + "Maple&"
+                + " " + PREFIX_OWNER + VALID_OWNER_MAPLE
                 + " " + PREFIX_ADDRESS + VALID_ADDRESS_MAPLE
-                + " " + PREFIX_PRICE + VALID_PRICE_MAPLE;
+                + " " + PREFIX_PRICE + VALID_PRICE_MAPLE
+                + " " + PREFIX_SIZE + " " + PREFIX_DESCRIPTION;
         assertParseFailure(parser, userInput, PropertyName.MESSAGE_CONSTRAINTS);
 
         // invalid price
         userInput = " " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME_MAPLE
+                + " " + PREFIX_OWNER + VALID_OWNER_MAPLE
                 + " " + PREFIX_ADDRESS + VALID_ADDRESS_MAPLE
-                + " " + PREFIX_PRICE + "-500";
+                + " " + PREFIX_PRICE + "-500"
+                + " " + PREFIX_SIZE + " " + PREFIX_DESCRIPTION;
         assertParseFailure(parser, userInput, "Price must be an integer and should not contain any "
                 + "special characters!");
 
         // invalid owner
         userInput = " " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME_MAPLE
+                + " " + PREFIX_OWNER + "James&"
                 + " " + PREFIX_ADDRESS + VALID_ADDRESS_MAPLE
                 + " " + PREFIX_PRICE + VALID_PRICE_MAPLE
-                + " " + PREFIX_OWNER + "James&";
+                + " " + PREFIX_SIZE + " " + PREFIX_DESCRIPTION;
         assertParseFailure(parser, userInput, ClientName.MESSAGE_CONSTRAINTS);
 
         // invalid size
         userInput = " " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME_MAPLE
+                + " " + PREFIX_OWNER + VALID_OWNER_MAPLE
                 + " " + PREFIX_ADDRESS + VALID_ADDRESS_MAPLE
                 + " " + PREFIX_PRICE + VALID_PRICE_MAPLE
-                + " " + PREFIX_SIZE + "99";
+                + " " + PREFIX_SIZE + "99"
+                + " " + PREFIX_DESCRIPTION;
         assertParseFailure(parser, userInput, Size.MESSAGE_CONSTRAINTS);
 
         // invalid description
         userInput = " " + PREFIX_PROPERTY_NAME + VALID_PROPERTY_NAME_MAPLE
+                + " " + PREFIX_OWNER + VALID_OWNER_MAPLE
                 + " " + PREFIX_ADDRESS + VALID_ADDRESS_MAPLE
-                + " " + PREFIX_PRICE + VALID_PRICE_MAPLE
+                + " " + PREFIX_PRICE + VALID_PRICE_MAPLE + " " + PREFIX_SIZE
                 + " " + PREFIX_DESCRIPTION + "x".repeat(60); // too long
         assertParseFailure(parser, userInput, Description.MESSAGE_CONSTRAINTS);
     }

@@ -496,6 +496,27 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty JSON file it creates with the JSON file that contains the data of your previous AddressBook home folder.
 
+**Q**: What happens to existing deals if I update a property's owner?<br>
+**A**: When you update a property's owner, any existing deals involving that property will automatically have their seller updated to reflect the new owner.
+
+**Q**: Can I bulk update multiple deals at once?<br>
+**A**: No, deals must be updated individually using the `update_deal` command with the specific index of each deal.
+
+**Q**: How are deals sorted in the deals list?<br>
+**A**: Deals are displayed in the order they were created, with the oldest deals appearing first.
+
+**Q**: Do closed deals still appear in the main list?<br>
+**A**: Yes, deals of all statuses (OPEN, PENDING, CLOSED) remain visible in the main list. Use the `find_deal` command to filter by status if needed.
+
+**Q**: If I update a client's name, will it automatically update in all related deals?<br>
+**A**: Yes, updating a client's name will automatically update their name in all deals where they appear as a buyer or seller.
+
+**Q**: Can I convert the price to a different currency?<br>
+**A**: No, REconnect currently only supports prices in Singapore dollars (S$). All prices are displayed and stored in thousands of S$.
+
+**Q**: What's the difference between using `AND_` and `OR_` in deal searches?<br>
+**A**: Using `AND_` means all conditions must be met (e.g., specific buyer AND specific status), while `OR_` means any condition can be met (e.g., specific buyer OR specific status).
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues

@@ -32,8 +32,8 @@ public class EditPropertyCommandParser extends EditCommandParser<Property> {
     public EditPropertyCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_OWNER, PREFIX_ADDRESS, PREFIX_PRICE,
-                        PREFIX_SIZE, PREFIX_DESCRIPTION);
+                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_SIZE,
+                        PREFIX_DESCRIPTION, PREFIX_OWNER);
 
         Index index;
 
@@ -44,18 +44,14 @@ public class EditPropertyCommandParser extends EditCommandParser<Property> {
                     pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_NAME, PREFIX_OWNER, PREFIX_ADDRESS, PREFIX_PRICE,
-                PREFIX_SIZE, PREFIX_DESCRIPTION);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_SIZE,
+                PREFIX_DESCRIPTION, PREFIX_OWNER);
 
         EditPropertyDescriptor editPropertyDescriptor = new EditPropertyDescriptor();
 
         if (argMultimap.getValue(PREFIX_PROPERTY_NAME).isPresent()) {
             editPropertyDescriptor.setPropertyName(ParserUtil.parsePropertyName(argMultimap
                     .getValue(PREFIX_PROPERTY_NAME).get()));
-        }
-        if (argMultimap.getValue(PREFIX_OWNER).isPresent()) {
-            editPropertyDescriptor.setOwner(ParserUtil.parseOwner(argMultimap
-                    .getValue(PREFIX_OWNER).get()));
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editPropertyDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
@@ -70,6 +66,10 @@ public class EditPropertyCommandParser extends EditCommandParser<Property> {
         if (argMultimap.getValue(PREFIX_DESCRIPTION).isPresent()) {
             editPropertyDescriptor.setDescription(ParserUtil.parseDescription(argMultimap
                     .getValue(PREFIX_DESCRIPTION).get()));
+        }
+        if (argMultimap.getValue(PREFIX_OWNER).isPresent()) {
+            editPropertyDescriptor.setOwner(ParserUtil.parseOwner(argMultimap
+                    .getValue(PREFIX_OWNER).get()));
         }
 
         if (!editPropertyDescriptor.isAnyFieldEdited()) {

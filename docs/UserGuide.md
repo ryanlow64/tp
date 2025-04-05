@@ -194,7 +194,7 @@ Examples:
 
 Creates a new property in REconnect.
 
-Format: `add_property prop/PROPERTY_NAME owner/OWNER_NAME addr/ADDRESS price/PRICE size/[SIZE] desc/[DESCRIPTION]`
+Format: `add_property prop/PROPERTY_NAME owner/OWNER_NAME addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]`
 
 * Adds a property with the specified details
 * The property name must be provided
@@ -206,7 +206,6 @@ Format: `add_property prop/PROPERTY_NAME owner/OWNER_NAME addr/ADDRESS price/PRI
 * SIZE must be a positive integer and is in square feet
 * SIZE should only contain integers from [100, 99999]
 * Description if provided should be between 1 and 50 characters
-* All prefixes must be present
 
 Examples:
 * `add_property prop/Maple Villa Condominium owner/Amy Bee addr/123 Maple Street price/2400 size/1000 desc/Spacious 4-bedroom home`
@@ -524,7 +523,7 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 | Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add Property**  | `add_property prop/PROPERTY_NAME owner/OWNER_NAME addr/ADDRESS price/PRICE size/[SIZE] desc/[DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa owner/Amy Bee addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
+**Add Property**  | `add_property prop/PROPERTY_NAME owner/OWNER_NAME addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa owner/Amy Bee addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
 **Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [owner/OWNER] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1600 desc/Newly renovated`
 **Delete Property** | `delete_property INDEX`<br> e.g., `delete_property 1`
 **Find Property** | `find_property [name_keywords/KEYWORDS] [owner/OWNER] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE]`<br> e.g., `find_property addr/123 Main St OR_price_>/1000 OR_size_>/500`

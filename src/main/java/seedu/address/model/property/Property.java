@@ -17,11 +17,11 @@ import seedu.address.model.commons.Price;
  */
 public class Property implements Nameable<Property> {
     private final PropertyName propertyName;
-    private final ClientName owner;
     private final Address address;
     private final Price price;
     private final Optional<Size> size;
     private final Optional<Description> description;
+    private final ClientName owner;
 
     /**
      * Every field must be present and not null.
@@ -30,11 +30,11 @@ public class Property implements Nameable<Property> {
                     Optional<Size> size, Optional<Description> description) {
         requireAllNonNull(propertyName, address, price, size, description, owner);
         this.propertyName = propertyName;
-        this.owner = owner;
         this.address = address;
         this.price = price;
         this.size = size;
         this.description = description;
+        this.owner = owner;
     }
 
     @Override
@@ -92,10 +92,10 @@ public class Property implements Nameable<Property> {
 
         return propertyName.equals(otherProperty.propertyName)
                 && address.equals(otherProperty.address)
-                && owner.equals(otherProperty.owner)
                 && price.equals(otherProperty.price)
                 && size.equals(otherProperty.size)
-                && description.equals(otherProperty.description);
+                && description.equals(otherProperty.description)
+                && owner.equals(otherProperty.owner);
     }
 
     @Override

@@ -44,7 +44,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_PROPERTY_NAME + "PROPERTY_NAME] "
-            + "[" + PREFIX_CLIENT_ID + "OWNER] "
+            + "[" + PREFIX_CLIENT_ID + "OWNER_ID] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_PRICE + "PRICE (in S$ thousands)] "
             + "[" + PREFIX_SIZE + "SIZE (in square feet)] "
@@ -175,7 +175,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
         private Price price;
         private Optional<Size> size;
         private Optional<Description> description;
-        private Index owner;
+        private Index ownerId;
 
         public EditPropertyDescriptor() {}
 
@@ -189,7 +189,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
             setPrice(toCopy.price);
             setSize(toCopy.size);
             setDescription(toCopy.description);
-            setOwner(toCopy.owner);
+            setOwner(toCopy.ownerId);
         }
 
         /**
@@ -197,7 +197,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
          */
         @Override
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(propertyName, address, price, size, description, owner);
+            return CollectionUtil.isAnyNonNull(propertyName, address, price, size, description, ownerId);
         }
 
         public void setPropertyName(PropertyName propertyName) {
@@ -240,12 +240,12 @@ public class EditPropertyCommand extends EditCommand<Property> {
             return Optional.ofNullable(description);
         }
 
-        public void setOwner(Index owner) {
-            this.owner = owner;
+        public void setOwner(Index ownerId) {
+            this.ownerId = ownerId;
         }
 
         public Optional<Index> getOwner() {
-            return Optional.ofNullable(owner);
+            return Optional.ofNullable(ownerId);
         }
 
         @Override
@@ -264,7 +264,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
                     && Objects.equals(price, otherEditPropertyDescriptor.price)
                     && Objects.equals(size, otherEditPropertyDescriptor.size)
                     && Objects.equals(description, otherEditPropertyDescriptor.description)
-                    && Objects.equals(owner, otherEditPropertyDescriptor.owner);
+                    && Objects.equals(ownerId, otherEditPropertyDescriptor.ownerId);
         }
 
         @Override
@@ -275,7 +275,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
                     .add("price", price)
                     .add("size", size)
                     .add("description", description)
-                    .add("owner", owner)
+                    .add("ownerId", ownerId)
                     .toString();
         }
     }

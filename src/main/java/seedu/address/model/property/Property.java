@@ -101,7 +101,7 @@ public class Property implements Nameable<Property> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(propertyName, owner, address, price, size, description);
+        return Objects.hash(propertyName, address, price, size, description, owner);
     }
 
     @Override

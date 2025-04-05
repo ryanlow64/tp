@@ -39,22 +39,21 @@ public class AddPropertyCommandParser extends AddCommandParser<Property> {
      */
     public AddPropertyCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_OWNER, PREFIX_ADDRESS, PREFIX_PRICE,
-                        PREFIX_SIZE, PREFIX_DESCRIPTION);
+                ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_SIZE,
+                        PREFIX_DESCRIPTION, PREFIX_OWNER);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_NAME, PREFIX_OWNER, PREFIX_ADDRESS, PREFIX_PRICE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_OWNER, PREFIX_PRICE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPropertyCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_NAME, PREFIX_OWNER, PREFIX_ADDRESS, PREFIX_PRICE,
-                PREFIX_SIZE, PREFIX_DESCRIPTION);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_SIZE,
+                PREFIX_DESCRIPTION, PREFIX_OWNER);
         PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_PROPERTY_NAME)
-                .orElse("-"));
-        ClientName owner = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_OWNER).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse("-"));
+                .orElse("N/A"));
+        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse("N/A"));
 
-        String priceArg = argMultimap.getValue(PREFIX_PRICE).orElse("-");
+        String priceArg = argMultimap.getValue(PREFIX_PRICE).orElse("N/A");
         if (!priceArg.matches("^[0-9]+$")) {
             throw new ParseException("Price must be an integer and should not contain any special characters!");
         }
@@ -64,9 +63,10 @@ public class AddPropertyCommandParser extends AddCommandParser<Property> {
         Long priceValue = Long.valueOf(priceArg);
         Price price = ParserUtil.parsePrice(priceValue);
 
-        Optional<Size> size = ParserUtil.parseSize(argMultimap.getValue(PREFIX_SIZE).orElse("-"));
+        Optional<Size> size = ParserUtil.parseSize(argMultimap.getValue(PREFIX_SIZE).orElse("N/A"));
         Optional<Description> description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)
-                .orElse("-"));
+                .orElse("N/A"));
+        ClientName owner = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_OWNER).get());
         Property property = new Property(propertyName, owner, address, price, size, description);
 
         return new AddPropertyCommand(property);

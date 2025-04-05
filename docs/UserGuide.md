@@ -309,7 +309,7 @@ Format: `update_deal INDEX [pid/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [sta
 
 * Updates the deal with the specified `INDEX`.
 * At least one of the optional fields must be provided.
-* The INDEX refers to the index number shown in the displayed deal list, and should be a _positive. integer_ that does not exceed the deal list size.
+* The INDEX refers to the index number shown in the displayed deal list, and should be a _positive integer_ that does not exceed the deal list size.
 * For property ID and buyer ID - the specified values must refer to existing entities in REconnect.
 * Price must be within valid range 3 to 6 digits (in thousands).
 * Status can be updated to indicate deal progress (OPEN, PENDING, CLOSED) (case-insensitive).

@@ -103,6 +103,6 @@ public class PropertyBuilder {
     }
 
     public Property build() {
-        return new Property(propertyName, owner, address, price, size, description);
+        return new Property(propertyName, address, price, size, description, owner);
     }
 }

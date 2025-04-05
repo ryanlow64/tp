@@ -48,10 +48,7 @@ public class AddDealCommandTest {
         // Create property and add to model
         Property testProperty = new Property(
             propertyName,
-                ownerName, new Address("123 Test St"),
-            new Price(500000L),
-            Optional.of(new Size("1000")),
-            Optional.of(new Description("Test description"))
+                new Address("123 Test St"), new Price(500000L), Optional.of(new Size("1000")), Optional.of(new Description("Test description")), ownerName
         );
         modelStub.addProperty(testProperty);
 
@@ -95,10 +92,7 @@ public class AddDealCommandTest {
         // Create property and add to model
         Property testProperty = new Property(
             propertyName,
-                ownerName, new Address("123 Test St"),
-            new Price(500000L),
-            Optional.of(new Size("1000")),
-            Optional.of(new Description("Test description"))
+                new Address("123 Test St"), new Price(500000L), Optional.of(new Size("1000")), Optional.of(new Description("Test description")), ownerName
         );
 
         ClientName buyerName = new ClientName("John Doe");
@@ -132,10 +126,7 @@ public class AddDealCommandTest {
         // Create property with owner same as buyer
         Property testProperty = new Property(
             propertyName,
-                ownerName, new Address("123 Test St"),
-            new Price(500000L),
-            Optional.of(new Size("1000")),
-            Optional.of(new Description("Test description"))
+                new Address("123 Test St"), new Price(500000L), Optional.of(new Size("1000")), Optional.of(new Description("Test description")), ownerName
         );
 
         Client person = new Client(ownerName, new Phone("91234567"),
@@ -166,10 +157,7 @@ public class AddDealCommandTest {
         // Create property and add to model
         Property testProperty = new Property(
             propertyName,
-                ownerName, new Address("123 Test St"),
-            new Price(500000L),
-            Optional.of(new Size("1000")),
-            Optional.of(new Description("Test description"))
+                new Address("123 Test St"), new Price(500000L), Optional.of(new Size("1000")), Optional.of(new Description("Test description")), ownerName
         );
 
         // First buyer

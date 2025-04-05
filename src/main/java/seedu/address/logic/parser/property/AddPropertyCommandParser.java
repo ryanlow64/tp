@@ -67,7 +67,7 @@ public class AddPropertyCommandParser extends AddCommandParser<Property> {
         Optional<Description> description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)
                 .orElse("N/A"));
         ClientName owner = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_OWNER).get());
-        Property property = new Property(propertyName, owner, address, price, size, description);
+        Property property = new Property(propertyName, address, price, size, description, owner);
 
         return new AddPropertyCommand(property);
     }

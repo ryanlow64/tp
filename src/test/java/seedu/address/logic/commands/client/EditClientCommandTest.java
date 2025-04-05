@@ -234,8 +234,8 @@ public class EditClientCommandTest extends EditCommandTest<Client> {
 
         // Add a property listing with this client as the owner
         Property mockProperty = new Property(new PropertyName("Maple Villa"),
-                originalClient.getFullName(), new Address("ABC Address"), new Price((long) 222),
-                Optional.of(new Size("100")), Optional.of(new Description("Good flat")));
+                new Address("ABC Address"), new Price((long) 222), Optional.of(new Size("100")), Optional.of(new Description("Good flat")), originalClient.getFullName()
+        );
         Model methodModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         methodModel.addProperty(mockProperty);
 
@@ -246,8 +246,8 @@ public class EditClientCommandTest extends EditCommandTest<Client> {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setClient(originalClient, editedClient);
         Property newMockProperty = new Property(new PropertyName("Maple Villa"),
-                editedClient.getFullName(), new Address("ABC Address"), new Price((long) 222),
-                Optional.of(new Size("100")), Optional.of(new Description("Good flat")));
+                new Address("ABC Address"), new Price((long) 222), Optional.of(new Size("100")), Optional.of(new Description("Good flat")), editedClient.getFullName()
+        );
         expectedModel.addProperty(newMockProperty);
 
         assertCommandSuccess(editCommand, methodModel,

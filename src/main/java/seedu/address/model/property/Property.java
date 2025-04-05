@@ -26,8 +26,8 @@ public class Property implements Nameable<Property> {
     /**
      * Every field must be present and not null.
      */
-    public Property(PropertyName propertyName, ClientName owner, Address address, Price price,
-                    Optional<Size> size, Optional<Description> description) {
+    public Property(PropertyName propertyName, Address address, Price price,
+                    Optional<Size> size, Optional<Description> description, ClientName owner) {
         requireAllNonNull(propertyName, address, price, size, description, owner);
         this.propertyName = propertyName;
         this.address = address;

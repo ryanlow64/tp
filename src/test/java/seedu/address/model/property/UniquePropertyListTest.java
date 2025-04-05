@@ -16,13 +16,9 @@ import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 public class UniquePropertyListTest {
     private final UniquePropertyList uniquePropertyList = new UniquePropertyList();
-    private final Property property1 = new Property(new PropertyName("Maple Villa"), new ClientName("Amy Bee"),
-            new Address("123 Maple St"), new Price(2400L), Optional.of(new Size("1000")),
-            Optional.of(new Description("Spacious 3-bedroom"))
+    private final Property property1 = new Property(new PropertyName("Maple Villa"), new Address("123 Maple St"), new Price(2400L), Optional.of(new Size("1000")), Optional.of(new Description("Spacious 3-bedroom")), new ClientName("Amy Bee")
     );
-    private final Property property2 = new Property(new PropertyName("Orchid Gardens"), new ClientName("Bob Choo"),
-            new Address("234 Orchid St"), new Price(1500L), Optional.of(new Size("800")),
-            Optional.of(new Description("2-bedroom apartment"))
+    private final Property property2 = new Property(new PropertyName("Orchid Gardens"), new Address("234 Orchid St"), new Price(1500L), Optional.of(new Size("800")), Optional.of(new Description("2-bedroom apartment")), new ClientName("Bob Choo")
     );
 
     @Test

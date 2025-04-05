@@ -287,37 +287,37 @@ Creates a new property deal in REconnect.
 
 Format: `add_deal pid/PROPERTY_ID buyer/BUYER_ID price/PRICE [status/STATUS]`
 
-* Creates a deal with the specified property, buyer and price details
-* The property ID and buyer ID refer to the index numbers shown in the displayed lists
-* The IDs **must be positive integers** that do not exceed the property and client list sizes respectively
-* The property and buyer must exist in REconnect
-* The property owner will automatically be set as the seller
-* The property must not be involved in another existing deal
-* The price must be a positive integer between 3 and 6 digits (in thousands)
-* Status is optional and indicates the deal progress (OPEN, PENDING, CLOSED) (case-insensitive)
-* If status is not specified, it defaults to PENDING
+* Creates a deal with the specified property, buyer and price details.
+* The property ID and buyer ID refer to the index numbers shown in the displayed lists.
+* The IDs **must be positive integers** that do not exceed the property and client list sizes respectively.
+* The property and buyer must exist in REconnect.
+* The property owner will automatically be set as the seller.
+* The property must not be involved in another existing deal.
+* The price must be a positive integer between 3 and 6 digits (in thousands).
+* Status is optional and indicates the deal progress (OPEN, PENDING, CLOSED) (case-insensitive).
+* If status is not specified, it defaults to PENDING.
 
 Examples:
-* `add_deal pid/1 buyer/1 price/100 status/CLOSED` creates a `CLOSED` deal for property #1 with buyer #1 at $100,000
-* `add_deal pid/3 buyer/2 price/500` creates a deal for property #3 with buyer #2 at $500,000 with default status of `PENDING`
+* `add_deal pid/1 buyer/1 price/100 status/CLOSED` creates a `CLOSED` deal for property #1 with buyer #1 at $100k
+* `add_deal pid/3 buyer/2 price/500` creates a deal for property #3 with buyer #2 at $500k with default status of `PENDING`
 
 ### Updating a deal : `update_deal`
 
 Updates an existing deal in REconnect.
 
-Format: `update_deal INDEX [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`
+Format: `update_deal INDEX [pid/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`
 
-* Updates the deal with the specified `INDEX`
-* At least one of the optional fields must be provided
-* The INDEX refers to the index number shown in the displayed deal list, and should be a _positive integer_ that does not exceed the deal list size
-* For property ID and buyer ID - the specified values must refer to existing entities in REconnect
-* Price must be within valid range (3 to 6 digits in thousands)
-* Status can be updated to indicate deal progress (OPEN, PENDING, CLOSED) (case-insensitive)
-* Seller cannot be manually updated as it is automatically set based on the property owner
+* Updates the deal with the specified `INDEX`.
+* At least one of the optional fields must be provided.
+* The INDEX refers to the index number shown in the displayed deal list, and should be a _positive. integer_ that does not exceed the deal list size.
+* For property ID and buyer ID - the specified values must refer to existing entities in REconnect.
+* Price must be within valid range 3 to 6 digits (in thousands).
+* Status can be updated to indicate deal progress (OPEN, PENDING, CLOSED) (case-insensitive).
+* Seller cannot be manually updated as it is automatically set based on the property owner.
 
 Examples:
 * `update_deal 3 status/CLOSED` changes the status of deal #3 to CLOSED
-* `update_deal 1 price/500 buyer/2` updates deal #1 with a new price of $500,000 and changes the buyer to client #2
+* `update_deal 1 price/500 buyer/2` updates deal #1 with a new price of $500k and changes the buyer to client #2
 
 ### Finding deals : `find_deal`
 
@@ -327,12 +327,12 @@ Format: `find_deal [prop/PROPERTY_NAME_KEYWORDS] [buyer/BUYER_NAME_KEYWORDS] [se
 
 * The order of the name keywords does not matter. e.g. `Maple Villa` will match `Villa Maple`.
 * The following prefixes can be used:
-    * `prop/PROPERTY_NAME_KEYWORDS` to search property names by keywords (case-insensitive)
-    * `buyer/BUYER_NAME_KEYWORDS` to search buyer names by keywords (case-insensitive)
-    * `seller/SELLER_NAME_KEYWORDS` to search seller names by keywords (case-insensitive)
-    * `status/STATUS` to search by deal status (case-insensitive)
-    * `price_</PRICE_BELOW` to search by price below a certain value
-    * `price_>/PRICE_ABOVE` to search by price above a certain value
+    * `prop/PROPERTY_NAME_KEYWORDS` to search property names by keywords (case-insensitive).
+    * `buyer/BUYER_NAME_KEYWORDS` to search buyer names by keywords (case-insensitive).
+    * `seller/SELLER_NAME_KEYWORDS` to search seller names by keywords (case-insensitive).
+    * `status/STATUS` to search by deal status (case-insensitive).
+    * `price_</PRICE_BELOW` to search by price below a certain value.
+    * `price_>/PRICE_ABOVE` to search by price above a certain value.
 * For the name keywords, only full words will be matched e.g. `Han` will not match `Hans`.
 * The PRICE keyword used must follow the constraints defined in `add_deal` command.
 * Not all prefixes need to be used. You can use any combination of the above prefixes.
@@ -534,7 +534,7 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 | Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add Deal**      | `add_deal pid/PROPERTY_ID buyer/BUYER_ID price/PRICE [status/STATUS]` <br> e.g., `add_deal pid/1 buyer/1 price/100 status/CLOSED`
-**Update Deal**   | `update_deal INDEX [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`<br> e.g., `update_deal 3 status/CLOSED`
+**Update Deal**   | `update_deal INDEX [pid/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`<br> e.g., `update_deal 3 status/CLOSED`
 **Find Deal**     | `find_deal [prop/PROPERTY_NAME_KEYWORDS] [buyer/BUYER_NAME_KEYWORDS] [seller/SELLER_NAME_KEYWORDS] [status/STATUS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE]`<br> e.g., `find_deal prop/Ocean OR_status/PENDING`
 **List Deals**    | `list_deals`
 

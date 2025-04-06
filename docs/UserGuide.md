@@ -115,6 +115,7 @@ Format: `add_client name/NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]`
 * The client's phone number must be provided, must start with either 6, 8 or 9, and must be exactly 8 digits long.
 * The client's email and address are optional fields.
 * No two clients can have the same name or phone number, but they can have the same email address, for example, multiple people can share the same corporate email address
+* Client names with different casings are accepted (i.e. "Bernice Yu" and "bernice yu" are distinct names)
 * Multiple spaces in between names are accepted, similar to how you can do that in the contact list of your phone e.g. "John      Doe"
 
 Examples:

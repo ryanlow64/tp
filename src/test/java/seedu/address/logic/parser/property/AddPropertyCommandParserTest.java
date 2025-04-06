@@ -85,9 +85,9 @@ public class AddPropertyCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        // invalid property name (& character)
+        // invalid property name (- character)
         String userInput = " "
-                + PREFIX_PROPERTY_NAME + "Maple&"
+                + PREFIX_PROPERTY_NAME + "Maple-"
                 + " " + PREFIX_ADDRESS + VALID_ADDRESS_MAPLE
                 + " " + PREFIX_PRICE + VALID_PRICE_MAPLE
                 + " " + PREFIX_OWNER + "1";

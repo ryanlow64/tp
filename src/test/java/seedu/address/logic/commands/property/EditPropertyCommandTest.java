@@ -51,28 +51,15 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
     }
 
     @Test
-    public void execute_someFieldsSpecifiedUnfilteredList_success() {
+    public void execute_someFieldsSpecifiedUnfilteredList_failure() {
         Index indexLastProperty = Index.fromOneBased(model.getFilteredPropertyList().size());
-        Property lastProperty = model.getFilteredPropertyList().get(indexLastProperty.getZeroBased());
-
-        Property editedProperty = new PropertyBuilder(lastProperty)
-                .withPropertyName(VALID_PROPERTY_NAME_ORCHID)
-                .withPrice(2000L)
-                .build();
-
         EditPropertyDescriptor descriptor = new EditPropertyDescriptorBuilder()
                 .withPropertyName(VALID_PROPERTY_NAME_ORCHID)
                 .withPrice(2000L)
                 .build();
         EditPropertyCommand editCommand = new EditPropertyCommand(indexLastProperty, descriptor);
 
-        String expectedMessage = String.format(EditPropertyCommand.MESSAGE_EDIT_PROPERTY_SUCCESS,
-                Messages.formatProperty(editedProperty));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setProperty(lastProperty, editedProperty);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(editCommand, model, EditPropertyCommand.MESSAGE_DUPLICATE_PROPERTY);
     }
 
     @Test

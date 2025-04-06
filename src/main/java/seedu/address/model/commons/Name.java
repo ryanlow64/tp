@@ -5,5 +5,5 @@ package seedu.address.model.commons;
  * @param <T> The type of the name.
  */
 public interface Name<T> {
-    public final int MAX_LENGTH = 50;
+    int MAX_LENGTH = 50;
 }

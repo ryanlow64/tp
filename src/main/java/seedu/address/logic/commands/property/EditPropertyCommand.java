@@ -12,7 +12,9 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PROPERTIES;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -20,6 +22,10 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditDescriptor;
+import seedu.address.logic.commands.deal.UpdateDealCommand;
+import seedu.address.logic.commands.deal.UpdateDealCommand.UpdateDealDescriptor;
+import seedu.address.logic.commands.event.EditEventCommand;
+import seedu.address.logic.commands.event.EditEventCommand.EditEventDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
@@ -27,6 +33,8 @@ import seedu.address.model.client.Client;
 import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
+import seedu.address.model.deal.Deal;
+import seedu.address.model.event.Event;
 import seedu.address.model.property.Description;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
@@ -58,6 +66,8 @@ public class EditPropertyCommand extends EditCommand<Property> {
     public static final String MESSAGE_DUPLICATE_PROPERTY = "This property already exists in the address book.";
     public static final String MESSAGE_INVALID_CLIENT_ID = "Invalid client ID.";
 
+    private static final Logger logger = LogsCenter.getLogger(EditPropertyCommand.class);
+
     private final EditPropertyDescriptor editPropertyDescriptor;
 
     /**
@@ -88,6 +98,9 @@ public class EditPropertyCommand extends EditCommand<Property> {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Property> lastShownList = model.getFilteredPropertyList();
+        List<Deal> lastShownDealList = model.getFilteredDealList();
+        List<Event> lastShownEventList = model.getFilteredEventList();
+        Optional<PropertyName> optionalPropertyName = editPropertyDescriptor.getPropertyName();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PROPERTY_DISPLAYED_INDEX);
@@ -102,7 +115,51 @@ public class EditPropertyCommand extends EditCommand<Property> {
 
         model.setProperty(propertyToEdit, editedProperty);
         model.updateFilteredPropertyList(PREDICATE_SHOW_ALL_PROPERTIES);
+
+        if (optionalPropertyName.isPresent()) {
+            PropertyName oldPropertyName = propertyToEdit.getFullName();
+
+            updatePropertyNameInDeals(oldPropertyName, index, lastShownDealList, model);
+            updatePropertyNameInEvents(oldPropertyName, index, lastShownEventList, model);
+        }
+
         return new CommandResult(String.format(MESSAGE_EDIT_PROPERTY_SUCCESS, Messages.formatProperty(editedProperty)));
+    }
+
+    private void updatePropertyNameInEvents(PropertyName oldPropertyName, Index index,
+            List<Event> eventList, Model model) {
+        for (int eventPosition = 0; eventPosition < eventList.size(); eventPosition++) {
+            Event event = eventList.get(eventPosition);
+            EditEventDescriptor descriptor = new EditEventDescriptor();
+            if (oldPropertyName.equals(event.getPropertyName())) {
+                descriptor.setPropertyId(index);
+            }
+            if (descriptor.isAnyFieldEdited()) {
+                try {
+                    new EditEventCommand(Index.fromZeroBased(eventPosition), descriptor).execute(model);
+                } catch (CommandException e) {
+                    logger.info("An error occurred while executing command to update property");
+                }
+            }
+        }
+    }
+
+    private void updatePropertyNameInDeals(PropertyName oldPropertyName, Index index,
+            List<Deal> dealList, Model model) {
+        for (int dealPosition = 0; dealPosition < dealList.size(); dealPosition++) {
+            Deal deal = dealList.get(dealPosition);
+            UpdateDealDescriptor descriptor = new UpdateDealDescriptor();
+            if (oldPropertyName.equals(deal.getPropertyName())) {
+                descriptor.setPropertyId(index);
+            }
+            if (descriptor.isAnyFieldEdited()) {
+                try {
+                    new UpdateDealCommand(Index.fromZeroBased(dealPosition), descriptor).execute(model);
+                } catch (CommandException e) {
+                    logger.info("An error occurred while executing command to update property");
+                }
+            }
+        }
     }
 
     /**

@@ -30,7 +30,7 @@ public class PropertyTest {
         Property editedMaple = new PropertyBuilder(MAPLE).withAddress(VALID_ADDRESS_ORCHID)
                 .withPrice(VALID_PRICE_ORCHID).withSize(VALID_SIZE_ORCHID)
                 .withDescription(VALID_DESCRIPTION_ORCHID).withOwner(VALID_OWNER_ORCHID).build();
-        assertFalse(MAPLE.isSameProperty(editedMaple));
+        assertTrue(MAPLE.isSameProperty(editedMaple));
 
         // different name, all other attributes same -> returns false
         editedMaple = new PropertyBuilder(MAPLE).withPropertyName(VALID_PROPERTY_NAME_ORCHID).build();

@@ -112,8 +112,12 @@ Creates a new client in REconnect.
 Format: `add_client name/NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]`
 
 * The client's name must be provided.
-* The client's phone number must be provided, and must be exactly 8 digits long.
+* The client's phone number must be provided, must start with either 6, 8 or 9, and must be exactly 8 digits long.
 * The client's email and address are optional fields.
+* No two clients can have the same name or phone number, but they can have the same email address, for example, multiple people can share the same corporate email address
+* Client names with different casings are allowed (i.e. "Bernice Yu" and "bernice yu" are distinct names)
+* Duplicate names are not allowed
+* Multiple spaces in between names are accepted, similar to how you can do that in the contact list of your phone e.g. "John      Doe"
 
 Examples:
 * `add_client name/John Doe phone/98765432 email/johnd@example.com addr/John street, block 123, #01-01`
@@ -127,7 +131,7 @@ Format: `edit_client INDEX [name/NAME] [phone/PHONE] [email/EMAIL] [addr/ADDRESS
 
 * Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed client list, and should be a _positive integer_ not exceeding the client list size.
 * At least one of the optional fields must be provided.
-* The phone number if provided must be exactly 8 digits long.
+* Same restrictions as the add_client command
 * Existing values will be updated to the input values.
 * Editing a client's name will result in an update to his/her name if it exists in deals, listings, or events
 
@@ -179,6 +183,7 @@ Format: `delete_client INDEX`
 * Deletes the client at the specified `INDEX`.
 * The index refers to the index number shown in the displayed client list.
 * The index **must be a positive integer** not exceeding the client list size.
+* Extra parameters results in an error.
 * **Note**: The client must not be involved in any existing deals, listings, or events. Else, the client cannot be deleted.
 * **Warning**: Deleting a client is not reversible.
 
@@ -198,7 +203,10 @@ Format: `add_property prop/PROPERTY_NAME cid/OWNER_ID addr/ADDRESS price/PRICE [
 
 * Adds a property with the specified details
 * The property name must be provided
-* The owner name must be provided
+* Duplicate property names are not accepted (Case Sensitive i.e. "Maple Villa" and "maple villa" are distinct names)
+* Multiple spaces in between names are accepted (i.e. "Maple Villa" and "Maple     Villa" are distinct property names that are valid)
+* The owner ID refer to the index numbers shown in the displayed lists
+* The ID **must be positive integers** that do not exceed the client list size
 * The address must be provided
 * The price must be provided
 * PRICE must be a positive integer and is in thousands of S$ and must be between 3 and 6 digits
@@ -208,8 +216,8 @@ Format: `add_property prop/PROPERTY_NAME cid/OWNER_ID addr/ADDRESS price/PRICE [
 * Description if provided should be between 1 and 50 characters
 
 Examples:
-* `add_property prop/Maple Villa Condominium cid/2 addr/123 Maple Street price/2400 size/1000 desc/Spacious 4-bedroom home`
-* `add_property prop/Ocean Heights cid/1 addr/456 Marina Boulevard price/2800 size/1500`
+* `add_property prop/Sunset Villa cid/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
+* `add_property prop/Ocean Heights cid/2 addr/456 Marina Boulevard price/2800 size/1500`
 
 ### Editing a property : `edit_property`
 
@@ -219,6 +227,7 @@ Format: `edit_property INDEX [prop/PROPERTY_NAME] [cid/OWNER_ID] [addr/ADDRESS] 
 
 * Edits the property at the specified `INDEX`. The index refers to the index number shown in the displayed property list, and should be a _positive integer_ e.g. 1, 2, 3, ...
 * At least one of the optional fields must be provided.
+* Same restrictions as the add_property command.
 * Existing values will be updated to the input values.
 
 Examples:
@@ -229,17 +238,17 @@ Examples:
 
 Displays all properties that match the specified criteria for name keywords, address, price, size, and/or owner.
 
-Format: `find_property [name_keywords/KEYWORDS] [owner/OWNER] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE]`
+Format: `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [cid/OWNER_ID]`
 
 * The order of the name keywords does not matter. e.g. `Maple Villa` will match `Villa Maple`.
 * The following prefixes can be used:
     * `name_keywords/KEYWORDS` to search property names by keywords (case-insensitive)
-    * `owner/OWNER` to search owner name by keywords (case-insensitive)
     * `addr/ADDRESS` to search by address (case-insensitive)
     * `price_</PRICE_BELOW` to search by price below a certain value
     * `price_>/PRICE_ABOVE` to search by price above a certain value
     * `size_</SIZE_BELOW` to search by size below a certain value
     * `size_>/SIZE_ABOVE` to search by size above a certain value
+    * `owner/OWNER` to search owner name by keywords (case-insensitive)
 * For the name keywords, only full words will be matched e.g. `Han` will not match `Hans`.
 * The address keyword will be matched as a substring.
 * The PRICE and SIZE keywords used must follow the constraints defined in `add_property` command.
@@ -271,6 +280,7 @@ Format: `delete_property INDEX`
 * Deletes the property at the specified `INDEX`.
 * The index refers to the index number shown in the displayed property list.
 * The index **must be a positive integer** that does not exceed the property list size.
+* Extra parameters results in an error.
 * **Warning**: Deleting a property is not reversible.
 
 Examples:
@@ -448,6 +458,7 @@ Format: `delete_event INDEX`
 
 * Deletes the event with the corresponding `INDEX`.
 * The INDEX **must be a positive integer** that does not exceed the event list size.
+* Extra parameters results in an error.
 * **WARNING**: Deleting an event is not reversible.
 
 Examples:
@@ -487,14 +498,35 @@ REconnect data are saved automatically as a JSON file `[JAR file location]/data/
 <box type="warning" seamless></box>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, REConnect will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the REConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty JSON file it creates with the JSON file that contains the data of your previous AddressBook home folder.
+
+**Q**: What happens to existing deals if I update a property's owner?<br>
+**A**: When you update a property's owner, any existing deals involving that property will automatically have their seller updated to reflect the new owner.
+
+**Q**: Can I bulk update multiple deals at once?<br>
+**A**: No, deals must be updated individually using the `update_deal` command with the specific index of each deal.
+
+**Q**: How are deals sorted in the deals list?<br>
+**A**: Deals are displayed in the order they were created, with the oldest deals appearing first.
+
+**Q**: Do closed deals still appear in the main list?<br>
+**A**: Yes, deals of all statuses (OPEN, PENDING, CLOSED) remain visible in the main list. Use the `find_deal` command to filter by status if needed.
+
+**Q**: If I update a client's name, will it automatically update in all related deals?<br>
+**A**: Yes, updating a client's name will automatically update their name in all deals where they appear as a buyer or seller.
+
+**Q**: Can I convert the price to a different currency?<br>
+**A**: No, REconnect currently only supports prices in Singapore dollars (S$). All prices are displayed and stored in thousands of S$.
+
+**Q**: What's the difference between using `AND_` and `OR_` in deal searches?<br>
+**A**: Using `AND_` means all conditions must be met (e.g., specific buyer AND specific status), while `OR_` means any condition can be met (e.g., specific buyer OR specific status).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -526,7 +558,7 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 **Add Property**  | `add_property prop/PROPERTY_NAME cid/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa cid/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
 **Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [cid/OWNER_ID] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1600 desc/Newly renovated`
 **Delete Property** | `delete_property INDEX`<br> e.g., `delete_property 1`
-**Find Property** | `find_property [name_keywords/KEYWORDS] [owner/OWNER] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE]`<br> e.g., `find_property addr/123 Main St OR_price_>/1000 OR_size_>/500`
+**Find Property** | `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [owner/OWNER]`<br> e.g., `find_property addr/123 Main St OR_price_>/1000 OR_size_>/500`
 **List Properties** | `list_properties`
 
 ### Deal Commands

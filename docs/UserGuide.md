@@ -112,6 +112,9 @@ Creates a new client in REconnect.
 Format: `add_client name/NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]`
 
 * The client's name must be provided.
+* The client's name must not be empty and must not exceed 50 characters.
+* The client's must be a alphanumeric string and can contain spaces, and the special characters `/` and `\`.
+* **Note**: While the client's name can contain the special characters `/` and `\`, they should not be at the start of the client's name.
 * The client's phone number must be provided, must start with either 6, 8 or 9, and must be exactly 8 digits long.
 * The client's email and address are optional fields.
 * No two clients can have the same name or phone number, but they can have the same email address, for example, multiple people can share the same corporate email address
@@ -201,19 +204,22 @@ Creates a new property in REconnect.
 
 Format: `add_property prop/PROPERTY_NAME owner/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]`
 
-* Adds a property with the specified details
-* The property name must be provided
-* Duplicate property names are not accepted (Case Sensitive i.e. "Maple Villa" and "maple villa" are distinct names)
-* Multiple spaces in between names are accepted (i.e. "Maple Villa" and "Maple     Villa" are distinct property names that are valid)
-* The owner ID refer to the index numbers shown in the displayed lists
-* The ID **must be positive integers** that do not exceed the client list size
-* The address must be provided
-* The price must be provided
-* PRICE must be a positive integer and is in thousands of S$ and must be between 3 and 6 digits
-* Both size and description are optional fields
-* SIZE must be a positive integer and is in square feet
-* SIZE should only contain integers from [100, 99999]
-* Description if provided should be between 1 and 50 characters
+* Adds a property with the specified details.
+* The property name must be provided.
+* The property name must not be empty and must not exceed 50 characters.
+* The property name must be a alphanumeric string and can contain spaces, and the special characters `&` and `@`.
+* **Note**: While the property name can contain the special characters `&` and `@`, they should not be at the start of the property name.
+* Duplicate property names are not accepted (Case Sensitive i.e. "Maple Villa" and "maple villa" are distinct names).
+* Multiple spaces in between names are accepted (i.e. "Maple Villa" and "Maple     Villa" are distinct property names that are valid).
+* The owner ID refer to the index numbers shown in the displayed lists.
+* The ID **must be positive integers** that do not exceed the client list size.
+* The address must be provided.
+* The price must be provided.
+* PRICE must be a positive integer and is in thousands of S$ and must be between 3 and 6 digits.
+* Both size and description are optional fields.
+* SIZE must be a positive integer and is in square feet.
+* SIZE should only contain integers from [100, 99999].
+* Description if provided should be between 1 and 50 characters.
 
 Examples:
 * `add_property prop/Sunset Villa owner/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`

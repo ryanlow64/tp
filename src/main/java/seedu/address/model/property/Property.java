@@ -37,6 +37,7 @@ public class Property implements Nameable<Property> {
         this.owner = owner;
     }
 
+    @Override
     public PropertyName getFullName() {
         return propertyName;
     }

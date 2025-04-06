@@ -227,7 +227,7 @@ Examples:
 
 ### Finding properties : `find_property`
 
-Displays all properties that match the specified criteria for name keywords, address, price, size, and/or owner.
+Displays all properties in the property list that match the specified criteria for name keywords, address, price, size, and/or owner.
 
 Format: `find_property [name_keywords/KEYWORDS] [owner/OWNER] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE]`
 
@@ -255,7 +255,7 @@ Examples:
 
 ### Listing all properties : `list_properties`
 
-Displays all properties in REconnect.
+Displays all existing properties in REconnect.
 
 Format: `list_properties`
 

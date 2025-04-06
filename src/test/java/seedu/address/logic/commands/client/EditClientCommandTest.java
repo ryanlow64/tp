@@ -15,7 +15,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalProperties.MAPLE;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -34,9 +33,6 @@ import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
 import seedu.address.model.deal.Deal;
 import seedu.address.model.deal.DealStatus;
-import seedu.address.model.event.Event;
-import seedu.address.model.event.EventType;
-import seedu.address.model.event.Note;
 import seedu.address.model.property.Description;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;

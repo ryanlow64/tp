@@ -157,8 +157,8 @@ The `Model` component,
 
 * stores the data stored in REconnect i.e., all `Client` objects (which are contained in a `UniqueClientList` object).
 * stores the currently 'selected' `Client` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Client>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
+* stores a `UserPref` object that represents the user's preferences. This is exposed to the outside as a `ReadOnlyUserPref` object.
+* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components).
 
 
 ### Storage component
@@ -786,13 +786,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Agent**: A licensed professional responsible for managing client contacts and facilitate real estate transactions.
 
+**AND Connective**: A logical operator used in search commands (prefixed as `AND_`) that requires all specified conditions to be true for a match to be returned.
+
+**Buyer**: A client who purchases a property in a deal transaction.
+
+**Case-insensitive**: A property of string comparison where uppercase and lowercase letters are treated as equivalent (e.g., "Villa" matches "villa", "VILLA", etc.).
+
 **Client**: Anyone who intends to buy, sell or invest in real estate that interacts with an agent regarding their prospective real estate transactions.
 
-**Contact Details**: Information including name, phone number, email, and/or other personal details of a client.
+**Command**: A text instruction entered by the user to perform a specific action in the application (e.g., `add_deal`, `find_client`).
 
 **Command-Line Interface (CLI)**: A text-based user interface that allows users to interact with the system by typing commands.
 
 **Connective Prefix**: A prefix that can be combined with logical connectives (AND, OR) to form compound arguments in commands.
+
+**Contact Details**: Information including name, phone number, email, and/or other personal details of a client.
 
 **Deal**: A property transaction record that tracks the relationship between a property, its seller (property owner), a buyer, the agreed price, and the current status of the transaction.
 
@@ -802,9 +810,33 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Event Type**: The category of an event, such as client meetings, workshops, conferences, or any other relevant activities.
 
+**Graphical User Interface (GUI)**: A visual way of interacting with a computer using items such as windows, icons, and menus, operated by a mouse or touchscreen.
+
+**Index**: A number used to refer to a specific item in a displayed list. In REconnect, indexes are 1-based (start from 1) and shown to the left of each item in the list.
+
+**JAR file**: A Java Archive file (with .jar extension) that packages multiple Java class files and resources into a single file for distribution.
+
+**OR Connective**: A logical operator used in search commands (prefixed as `OR_`) that requires at least one of the specified conditions to be true for a match to be returned.
+
+**Parameter**: A piece of information provided to a command, typically in the format `prefix/VALUE`, such as `price/2000`.
+
+**Positive Integer**: A whole number greater than zero (1, 2, 3, etc.).
+
+**Prefix**: A keyword followed by a forward slash (/) that indicates the type of information being provided in a command, such as `pid/` for property ID.
+
+**Property ID (pid)**: A reference number used to identify a specific property in the property list.
+
 **Property Listing**: A collection of information about a property available for sale.
 
 **Property Viewing**: A scheduled meeting between the real estate agent and a client to inspect a property.
+
+**Result Display**: The area in the GUI that shows the outcome of executing a command, including success messages and error messages.
+
+**Seller**: The owner of a property who is selling it in a deal transaction.
+
+**Test Case**: A specific set of conditions, inputs, and expected outcomes used to verify that a particular feature works correctly.
+
+**Terminal**: A text-based interface program that allows users to interact with the operating system by entering commands.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -833,4 +865,110 @@ testers are expected to do more *exploratory* testing.
 
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+
+### Deal management
+
+1. Adding a deal
+
+   1. Prerequisites: There must be at least one property and one client in the property and client lists.
+      Use the `list_properties` and `list_clients` commands to verify this and note their indexes.
+      **Important**: Since deals cannot be deleted, you will need a different property for each add_deal test. 
+      Consider adding multiple properties before testing using the `add_property` command.
+
+   2. Test case: `add_deal pid/1 buyer/1 price/2000 status/OPEN`<br>
+      Expected: A new deal is added with the specified property, buyer, and status. The property owner is automatically set as the seller.
+      A success message is shown in the result display.
+
+   3. Test case: `add_deal pid/1 buyer/1 price/2000`<br>
+      Expected: A new deal is added with default status (PENDING). Success message is shown.
+
+   4. Test case: `add_deal pid/999 buyer/1 price/2000`<br>
+      Expected: No deal is added. Error message showing the property ID is invalid.
+
+   5. Test case: `add_deal pid/1 buyer/999 price/2000`<br>
+      Expected: No deal is added. Error message showing the buyer ID is invalid.
+
+   6. Test case: `add_deal pid/1 buyer/1 price/1`<br>
+      Expected: No deal is added. Error message showing that price must be between 3 and 6 digits.
+
+   7. Other incorrect add_deal commands to test:
+      * `add_deal pid/a buyer/1 price/2000`: Non-integer property ID
+      * `add_deal pid/1 buyer/b price/2000`: Non-integer buyer ID
+      * `add_deal pid/1 buyer/1 price/2000 status/invalid`: Invalid status (not OPEN, PENDING, or CLOSED)
+      * `add_deal pid/1 buyer/1 price/2000000`: Price exceeds 6 digits
+      * `add_deal`: Missing all required fields<br>
+      Expected: Similar to previous test cases. Error messages specific to the invalid input are shown.
+
+2. Updating a deal
+
+   1. Prerequisites: There must be at least one deal in the deal list. Use the `list_deals` command to verify this and note its index.
+
+   2. Test case: `update_deal 1 status/CLOSED`<br>
+      Expected: The status of the first deal is updated to CLOSED. Success message is shown.
+
+   3. Test case: `update_deal 1 price/3000`<br>
+      Expected: The price of the first deal is updated to $3000k. Success message is shown.
+
+   4. Test case: `update_deal 1 buyer/2`<br>
+      Expected: The buyer of the first deal is updated to the client at index 2 (if it exists). Success message is shown.
+
+   5. Test case: `update_deal 0 status/CLOSED`<br>
+      Expected: No deal is updated. Error message showing that index must be a positive integer.
+
+   6. Test case: `update_deal 999 status/CLOSED`<br>
+      Expected: No deal is updated. Error message showing that the specified deal doesn't exist.
+
+   7. Other incorrect update_deal commands to test:
+      * `update_deal 1 pid/999`: Invalid property ID
+      * `update_deal 1 buyer/999`: Invalid buyer ID
+      * `update_deal 1 status/invalid`: Invalid status
+      * `update_deal 1`: Missing all optional fields<br>
+      Expected: Similar to previous test cases. Error messages specific to the invalid input are shown.
+
+3. Finding deals
+
+   1. Prerequisites: There must be multiple deals with different properties, buyers, sellers, prices, and statuses.
+      To properly test all cases, ensure you have:
+      * At least one property with "Villa" in its name (e.g., "Maple Villa")
+      * At least one property with "Ocean" in its name (e.g., "Ocean View")
+      * At least one deal with status "CLOSED" and one with "PENDING"
+      * At least one deal with a buyer named "John" and a seller named "Mary"
+      * Deals with various prices (e.g., above $2000k, below $5000k)
+
+   2. Test case: `find_deal prop/Villa`<br>
+      Expected: Displays deals with properties containing "Villa" in their names if present.
+
+   3. Test case: `find_deal status/CLOSED`<br>
+      Expected: Displays all deals with status CLOSED.
+
+   4. Test case: `find_deal buyer/John AND_seller/Mary`<br>
+      Expected: Displays deals with buyers containing "John" and sellers containing "Mary".
+
+   5. Test case: `find_deal prop/Ocean OR_status/PENDING`<br>
+      Expected: Displays deals with properties containing "Ocean" or with PENDING status.
+
+   6. Test case: `find_deal price_>/2000`<br>
+      Expected: Displays deals with prices above $2000k.
+
+   7. Test case: `find_deal price_</5000`<br>
+      Expected: Displays deals with prices below $5000k.
+
+   8. Test case: `find_deal nonexistent/keyword`<br>
+      Expected: Invalid command format. Error message shown.
+
+   9. Test case: `find_deal prop/NonexistentProperty`<br>
+      Expected: No deals found. Result display shows "0 deals listed!".
+
+   10. Test case: `find_deal prop/Villa AND_price_>/10000000`<br>
+       Expected: Error message indicating that price must be between 3 and 6 digits.
+
+4. Listing deals
+
+   1. Prerequisites: The deal list has been filtered using `find_deal`.
+
+   2. Test case: `list_deals`<br>
+      Expected: All deals are displayed, showing the complete, unfiltered list.
+
+   3. Test case: `list_deals extra_argument`<br>
+      Expected: Invalid command format. Error message shown.
 

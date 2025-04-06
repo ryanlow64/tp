@@ -26,7 +26,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.property.Property;
 import seedu.address.testutil.EditPropertyDescriptorBuilder;
-import seedu.address.testutil.PropertyBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditPropertyCommand.

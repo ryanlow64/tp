@@ -2,8 +2,8 @@ package seedu.address.logic.commands.property;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
@@ -37,14 +37,14 @@ public class AddPropertyCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a property to the address book. "
             + "Parameters: "
             + PREFIX_PROPERTY_NAME + "PROPERTY_NAME "
-            + PREFIX_CLIENT_ID + "OWNER_ID "
+            + PREFIX_OWNER + "OWNER_ID "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_PRICE + "PRICE (in S$ thousands) "
             + "[" + PREFIX_SIZE + "SIZE (in square feet)] "
             + "[" + PREFIX_DESCRIPTION + "DESCRIPTION]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PROPERTY_NAME + "Maple Villa Condominium "
-            + PREFIX_CLIENT_ID + "1 "
+            + PREFIX_OWNER + "1 "
             + PREFIX_ADDRESS + "123 Maple Street "
             + PREFIX_PRICE + "2400 "
             + PREFIX_SIZE + "1000 "
@@ -52,7 +52,7 @@ public class AddPropertyCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New property added: %1$s";
     public static final String MESSAGE_DUPLICATE_PROPERTY = "This property already exists in the address book";
-    public static final String MESSAGE_INVALID_CLIENT_ID = "Invalid client ID.";
+    public static final String MESSAGE_INVALID_OWNER_ID = "Invalid owner ID.";
 
     private final PropertyName propertyName;
     private final Address address;
@@ -86,7 +86,7 @@ public class AddPropertyCommand extends Command {
     public static void addCommandWord() {
         Prefix[] parameterPrefixes = {
             PREFIX_PROPERTY_NAME,
-            PREFIX_CLIENT_ID,
+            PREFIX_OWNER,
             PREFIX_ADDRESS,
             PREFIX_PRICE,
             PREFIX_SIZE,
@@ -103,7 +103,7 @@ public class AddPropertyCommand extends Command {
         List<Client> clientList = model.getFilteredClientList();
         int clientIdZeroBased = clientId.getZeroBased();
         if (clientIdZeroBased >= clientList.size()) {
-            throw new CommandException(MESSAGE_INVALID_CLIENT_ID);
+            throw new CommandException(MESSAGE_INVALID_OWNER_ID);
         }
         Client client = clientList.get(clientIdZeroBased);
         ClientName owner = client.getFullName();

@@ -2,8 +2,8 @@ package seedu.address.logic.parser.property;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
@@ -39,15 +39,15 @@ public class AddPropertyCommandParser implements Parser<AddPropertyCommand> {
     public AddPropertyCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_SIZE,
-                        PREFIX_DESCRIPTION, PREFIX_CLIENT_ID);
+                        PREFIX_DESCRIPTION, PREFIX_OWNER);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_CLIENT_ID)
+        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_OWNER)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPropertyCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_SIZE,
-                PREFIX_DESCRIPTION, PREFIX_CLIENT_ID);
+                PREFIX_DESCRIPTION, PREFIX_OWNER);
         PropertyName propertyName = ParserUtil.parsePropertyName(argMultimap.getValue(PREFIX_PROPERTY_NAME)
                 .orElse("N/A"));
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse("N/A"));
@@ -65,14 +65,14 @@ public class AddPropertyCommandParser implements Parser<AddPropertyCommand> {
         Optional<Size> size = ParserUtil.parseSize(argMultimap.getValue(PREFIX_SIZE).orElse("N/A"));
         Optional<Description> description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)
                 .orElse("N/A"));
-        Index clientId;
+        Index ownerId;
         try {
-            clientId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CLIENT_ID).get());
+            ownerId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_OWNER).get());
         } catch (ParseException pe) {
             throw new ParseException(String.format("Invalid client ID: %s", pe.getMessage()));
         }
 
-        return new AddPropertyCommand(propertyName, address, price, size, description, clientId);
+        return new AddPropertyCommand(propertyName, address, price, size, description, ownerId);
     }
 
     /**

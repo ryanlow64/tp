@@ -2,8 +2,8 @@ package seedu.address.logic.commands.property;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
@@ -52,7 +52,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_PROPERTY_NAME + "PROPERTY_NAME] "
-            + "[" + PREFIX_CLIENT_ID + "OWNER_ID] "
+            + "[" + PREFIX_OWNER + "OWNER_ID] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_PRICE + "PRICE (in S$ thousands)] "
             + "[" + PREFIX_SIZE + "SIZE (in square feet)] "
@@ -64,7 +64,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
     public static final String MESSAGE_EDIT_PROPERTY_SUCCESS = "Edited Property: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PROPERTY = "This property already exists in the address book.";
-    public static final String MESSAGE_INVALID_CLIENT_ID = "Invalid client ID.";
+    public static final String MESSAGE_INVALID_OWNER_ID = "Invalid owner ID.";
 
     private static final Logger logger = LogsCenter.getLogger(EditPropertyCommand.class);
 
@@ -85,7 +85,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
     public static void addCommandWord() {
         Prefix[] prefixes = {
             PREFIX_PROPERTY_NAME,
-            PREFIX_CLIENT_ID,
+            PREFIX_OWNER,
             PREFIX_ADDRESS,
             PREFIX_PRICE,
             PREFIX_SIZE,
@@ -187,7 +187,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
             Index clientId = optionalClientId.get();
             int clientIdZeroBased = clientId.getZeroBased();
             if (clientIdZeroBased >= clientList.size()) {
-                throw new CommandException(MESSAGE_INVALID_CLIENT_ID);
+                throw new CommandException(MESSAGE_INVALID_OWNER_ID);
             }
             Client client = clientList.get(clientIdZeroBased);
             updatedClientName = client.getFullName();

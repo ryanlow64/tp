@@ -199,7 +199,7 @@ Examples:
 
 Creates a new property in REconnect.
 
-Format: `add_property prop/PROPERTY_NAME cid/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]`
+Format: `add_property prop/PROPERTY_NAME owner/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]`
 
 * Adds a property with the specified details
 * The property name must be provided
@@ -216,14 +216,14 @@ Format: `add_property prop/PROPERTY_NAME cid/OWNER_ID addr/ADDRESS price/PRICE [
 * Description if provided should be between 1 and 50 characters
 
 Examples:
-* `add_property prop/Sunset Villa cid/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
-* `add_property prop/Ocean Heights cid/2 addr/456 Marina Boulevard price/2800 size/1500`
+* `add_property prop/Sunset Villa owner/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
+* `add_property prop/Ocean Heights owner/2 addr/456 Marina Boulevard price/2800 size/1500`
 
 ### Editing a property : `edit_property`
 
 Edits an existing property in REconnect.
 
-Format: `edit_property INDEX [prop/PROPERTY_NAME] [cid/OWNER_ID] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`
+Format: `edit_property INDEX [prop/PROPERTY_NAME] [owner/OWNER_ID] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`
 
 * Edits the property at the specified `INDEX`. The index refers to the index number shown in the displayed property list, and should be a _positive integer_ e.g. 1, 2, 3, ...
 * At least one of the optional fields must be provided.
@@ -238,7 +238,7 @@ Examples:
 
 Displays all properties that match the specified criteria for name keywords, address, price, size, and/or owner.
 
-Format: `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [cid/OWNER_ID]`
+Format: `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [owner/OWNER]`
 
 * The order of the name keywords does not matter. e.g. `Maple Villa` will match `Villa Maple`.
 * The following prefixes can be used:
@@ -555,8 +555,8 @@ Furthermore, certain edits can cause the REConnect to behave in unexpected ways 
 
 | Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add Property**  | `add_property prop/PROPERTY_NAME cid/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa cid/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
-**Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [cid/OWNER_ID] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1600 desc/Newly renovated`
+**Add Property**  | `add_property prop/PROPERTY_NAME owner/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa owner/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
+**Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [owner/OWNER_ID] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1600 desc/Newly renovated`
 **Delete Property** | `delete_property INDEX`<br> e.g., `delete_property 1`
 **Find Property** | `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [owner/OWNER]`<br> e.g., `find_property addr/123 Main St OR_price_>/1000 OR_size_>/500`
 **List Properties** | `list_properties`

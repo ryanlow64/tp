@@ -52,7 +52,7 @@ public class UpdateDealCommandTest {
 
         Client buyer = new Client(
                 new ClientName("John"),
-                new Phone("12345678"),
+                new Phone("62345678"),
                 new Email("john@example.com"),
                 new Address("Blk 123"));
         Client seller = new Client(
@@ -129,7 +129,7 @@ public class UpdateDealCommandTest {
 
         Client buyer = new Client(
                 new ClientName("John"),
-                new Phone("12345678"),
+                new Phone("62345678"),
                 new Email("john@example.com"),
                 new Address("Blk 123"));
         Client seller = new Client(
@@ -240,7 +240,7 @@ public class UpdateDealCommandTest {
 
         Client buyer = new Client(
                 new ClientName("John"),
-                new Phone("12345678"),
+                new Phone("62345678"),
                 new Email("john@example.com"),
                 new Address("Blk 123"));
         Client seller = new Client(
@@ -289,7 +289,7 @@ public class UpdateDealCommandTest {
 
         Client client = new Client(
                 new ClientName("John"),
-                new Phone("12345678"),
+                new Phone("62345678"),
                 new Email("john@example.com"),
                 new Address("Blk 123"));
         model.addClient(client);
@@ -322,7 +322,7 @@ public class UpdateDealCommandTest {
 
         Client buyer = new Client(
                 new ClientName("John"),
-                new Phone("12345678"),
+                new Phone("62345678"),
                 new Email("john@example.com"),
                 new Address("Blk 123"));
         Client seller = new Client(
@@ -394,7 +394,7 @@ public class UpdateDealCommandTest {
 
         Client buyer = new Client(
                 new ClientName("John"),
-                new Phone("12345678"),
+                new Phone("62345678"),
                 new Email("john@example.com"),
                 new Address("Blk 123"));
         Client seller = new Client(

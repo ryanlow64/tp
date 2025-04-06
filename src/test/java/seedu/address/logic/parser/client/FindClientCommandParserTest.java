@@ -55,13 +55,13 @@ public class FindClientCommandParserTest {
     public void parse_validAllFields_returnsFindCommand() {
         // Test case with all valid prefixes provided.
         Predicate<Client> expectedPredicate = new ClientNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
-        expectedPredicate = expectedPredicate.and(new ClientPhoneContainsPredicate("1234567"));
+        expectedPredicate = expectedPredicate.and(new ClientPhoneContainsPredicate("6234567"));
         expectedPredicate = expectedPredicate.and(new ClientEmailContainsPredicate("alice@example.com"));
         expectedPredicate = expectedPredicate.and(new ClientAddressContainsPredicate("Blk 123"));
 
         Client testClient = new Client(
             new ClientName("Alice"),
-            new Phone("12345679"),
+            new Phone("62345679"),
             new Email("alice@example.com"),
             new Address("Blk 123")
         );

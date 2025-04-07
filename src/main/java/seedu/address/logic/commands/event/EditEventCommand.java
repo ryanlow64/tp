@@ -58,6 +58,7 @@ public class EditEventCommand extends EditCommand<Event> {
     public static final String MESSAGE_EVENT_CONFLICT = "Event conflicts with existing event.";
     public static final String MESSAGE_INVALID_PROPERTY_ID = "Invalid property ID.";
     public static final String MESSAGE_INVALID_CLIENT_ID = "Invalid client ID.";
+    public static final String MESSAGE_NO_CHANGES_MADE = "No changes made to the event.";
 
     private static final Logger logger = LogsCenter.getLogger(EditEventCommand.class);
 
@@ -97,6 +98,11 @@ public class EditEventCommand extends EditCommand<Event> {
 
         Event eventToEdit = lastShownList.get(index.getZeroBased());
         Event editedEvent = createEditedEvent(eventToEdit, editEventDescriptor, model);
+
+        if (eventToEdit.equals(editedEvent)) {
+            logger.info("Event is the same as before, no changes made.");
+            throw new CommandException(MESSAGE_NO_CHANGES_MADE);
+        }
 
         // check if event conflicts with existing events
         for (Event event : model.getFilteredEventList()) {

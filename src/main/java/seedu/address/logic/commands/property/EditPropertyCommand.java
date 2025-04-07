@@ -65,6 +65,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PROPERTY = "This property already exists in the address book.";
     public static final String MESSAGE_INVALID_OWNER_ID = "Invalid owner ID.";
+    public static final String MESSAGE_NO_CHANGES_MADE = "No changes made to the property.";
 
     private static final Logger logger = LogsCenter.getLogger(EditPropertyCommand.class);
 
@@ -108,6 +109,11 @@ public class EditPropertyCommand extends EditCommand<Property> {
 
         Property propertyToEdit = lastShownList.get(index.getZeroBased());
         Property editedProperty = createEditedProperty(propertyToEdit, editPropertyDescriptor, model);
+
+        if (propertyToEdit.equals(editedProperty)) {
+            logger.info("Property is the same as before, no changes made.");
+            throw new CommandException(MESSAGE_NO_CHANGES_MADE);
+        }
 
         if (!propertyToEdit.isSameProperty(editedProperty) && model.hasProperty(editedProperty)) {
             throw new CommandException(MESSAGE_DUPLICATE_PROPERTY);

@@ -8,9 +8,7 @@
 
 REconnect is a **desktop application for Real Estate agents to manage their work via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
 
-<box type="info" seamless>
 If you can type fast, REconnect can get your real estate management tasks done faster than traditional GUI apps.
-</box>
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -22,11 +20,8 @@ If you can type fast, REconnect can get your real estate management tasks done f
 ## Quick start
 
 1. Ensure you have Java `17` or above installed.<br>
-<box type="info" seamless>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
-
+    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).\
     If you need help installing Java, you may find [this guide](https://docs.oracle.com/en/java/javase/17/install/overview-jdk-installation.html) by Oracle useful. You can navigate the sidebar of the linked page to find platform-specific instructions.
-</box>
 
 2. Download the latest `REconnect.jar` file from [here](https://github.com/AY2425S2-CS2103T-T12-3/tp/releases/download/MVP/REconnect.jar).
 
@@ -38,15 +33,14 @@ If you can type fast, REconnect can get your real estate management tasks done f
    - **Linux**: Press `Ctrl + Alt + T` or search for "Terminal" in your Activities or Applications menu.
 
 5. `cd` (change directory) into the folder you put the jar file in.
-<box type="tip" seamless>
-    Type `cd␣` (with a space), and drag the folder into the terminal.
-</box>
+   Type `cd␣` (with a space), and drag the folder into the terminal.
+
 6. Enter the command `java -jar REconnect.jar` to start the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
 
    ![Ui](images/Ui.png)
 
-6. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+7. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
     * `add_client name/John Doe phone/98765432 email/johnd@example.com addr/311, Clementi Ave 2, #02-25` : Adds a client named `John Doe` to the client list panel.
@@ -55,7 +49,7 @@ If you can type fast, REconnect can get your real estate management tasks done f
 
     * `exit` : Exits the application.
 
-7. Refer to the [Features](#features) below for details of each command.
+8. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -84,12 +78,10 @@ This allows users to quickly re-enter previous commands without having to type t
   <figcaption>Click the image to watch a demo</figcaption>
 </figure>
 
-<box type="info" seamless>
-    **Note**:
-    The most recent command is shown at the top of the list, and the oldest command is shown at the bottom. 
-    Commands that caused an error are also included in the history and appear in red. 
-    The command history is cleared when the application is closed.
-</box>
+**Note**:
+The most recent command is shown at the top of the list, and the oldest command is shown at the bottom.\
+Commands that caused an error are also included in the history and appear in red.\
+The command history is cleared when the application is closed.
 
 **Notes about the command format:**<br>
 
@@ -103,7 +95,7 @@ This allows users to quickly re-enter previous commands without having to type t
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-  </box>
+
 
 ### Viewing help : `help`
 
@@ -181,10 +173,8 @@ Displays all clients in REconnect.
 
 Format: `list_clients`
 
-* Any extra arguments given will throw an error.
-<box type="tip" seamless>
-    Meant to be used after a `find_client` command to show the full list of clients again.
-</box>
+* Any extra arguments given will throw an error. 
+* Meant to be used after a `find_client` command to show the full list of clients again.
 
 ### Deleting a client : `delete_client`
 
@@ -197,9 +187,7 @@ Format: `delete_client INDEX`
 * The index **must be a positive integer** not exceeding the client list size.
 * Extra parameters results in an error.
 * **Note**: The client must not be involved in any existing deals, listings, or events. Else, the client cannot be deleted.
-<box type="warning" seamless>
-    Deleting a client is not reversible.
-</box>
+* Deleting a client is **not reversible**.
 
 Examples:
 * `list_clients` followed by `delete_client 2` deletes the 2nd client in REconnect.
@@ -512,12 +500,9 @@ REconnect data are saved in the hard disk automatically after any command that c
 
 REconnect data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Users who know how JSON files work are welcome to update data directly by editing that data file.
 
-<box type="warning" seamless></box>
-
 **Caution:**
 If your changes to the data file makes its format invalid, REConnect will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the REConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-</box>
 
 ## FAQ
 

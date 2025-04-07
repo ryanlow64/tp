@@ -915,6 +915,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    - Currently, only keyword matching is supported.
    - Eg. `find_client name_keywords/Joh` will not match `John Doe`, but it's better if it does.
 
+6. Properties with different property names but same address can be added.
+   - Currently, only properties with same names will be counter as duplicate.
+   - Eg. Address of property A with name "Maple Villa" is "321 Clementi Avenue 1, #11-11" and of property B with name "Sunset Villa" is "321 Clementi Avenue 1, #11-11", yet both property listings can coexist in REConnect, which should not be the case.
+   - Validation for exact same address will be done in the future.
+
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.

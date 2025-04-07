@@ -37,9 +37,9 @@ public class PropertyNameTest {
         assertTrue(PropertyName.isValidPropertyName("12345")); // numbers only
         assertTrue(PropertyName.isValidPropertyName("peter the 2nd")); // alphanumeric characters
         assertTrue(PropertyName.isValidPropertyName("Capital Tan")); // with capital letters
-        assertTrue(PropertyName.isValidPropertyName("Capital @ Tower")); // with capital letters and special character '@'
+        assertTrue(PropertyName.isValidPropertyName("Capital @ Tower")); // with special character '@'
         assertTrue(PropertyName.isValidPropertyName("Capital Tower &")); // with special character '&'
-        assertTrue(PropertyName.isValidPropertyName("Capital @ Tower &&123")); // with both special characters and numbers
+        assertTrue(PropertyName.isValidPropertyName("Capital @ Tower &&123")); // with both special characters
         assertTrue(PropertyName.isValidPropertyName("David Roger Jackson Ray Jr 2nd")); // long clientNames
     }
 

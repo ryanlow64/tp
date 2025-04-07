@@ -1,9 +1,14 @@
 ﻿Some code adapted from http://code.makery.ch/library/javafx-8-tutorial/ by Marco Jakob
 
-Copyright by Susumu Yoshida - http://www.mcdodesign.com/
-- address_book_32.png
-- AddressApp.ico
+Copyright by uxwing
+- client.png  - https://uxwing.com/man-user-color-icon/
+- property.png - https://uxwing.com/property-agreement-icon/
 
-Copyright by Jan Jan Kovařík - http://glyphicons.com/
-- calendar.png
-- edit.png
+Copyright by freepik
+- calendar.png - https://www.freepik.com/icon/calendar_10754906
+
+Copyright by flaticon
+- REconnect.png - https://www.flaticon.com/free-icon/real-estate_1909981
+
+Copyright by pngtree
+- deal.png - https://pngtree.com/freepng/vector-handshake-icon_4231941.html

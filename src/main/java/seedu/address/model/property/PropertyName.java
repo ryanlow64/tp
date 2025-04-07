@@ -38,10 +38,7 @@ public class PropertyName implements Name<Property> {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidPropertyName(String test) {
-        if (test.length() > MAX_LENGTH) {
-            return true;
-        }
-        return test.matches(VALIDATION_REGEX);
+        return test.length() <= MAX_LENGTH && test.matches(VALIDATION_REGEX);
     }
 
     @Override

@@ -38,10 +38,7 @@ public class ClientName implements Name<Client> {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidClientName(String test) {
-        if (test.length() > MAX_LENGTH) {
-            return false;
-        }
-        return test.matches(VALIDATION_REGEX);
+        return test.length() <= MAX_LENGTH && test.matches(VALIDATION_REGEX);
     }
 
     @Override

@@ -8,7 +8,9 @@
 
 REconnect is a **desktop application for Real Estate agents to manage their work via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
 
-If you can type fast, REconnect can get your real estate management tasks done faster than traditional GUI apps.
+<box type="info" seamless>
+    If you can type fast, REconnect can get your real estate management tasks done faster than traditional GUI apps.
+</box>
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -20,8 +22,10 @@ If you can type fast, REconnect can get your real estate management tasks done f
 ## Quick start
 
 1. Ensure you have Java `17` or above installed.<br>
-    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).\
-    If you need help installing Java, you may find [this guide](https://docs.oracle.com/en/java/javase/17/install/overview-jdk-installation.html) by Oracle useful. You can navigate the sidebar of the linked page to find platform-specific instructions.
+    <box type="info" seamless>
+        **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).\
+        If you need help installing Java, you may find [this guide](https://docs.oracle.com/en/java/javase/17/install/overview-jdk-installation.html) by Oracle useful. You can navigate the sidebar of the linked page to find platform-specific instructions.
+    </box>
 
 2. Download the latest `REconnect.jar` file from [here](https://github.com/AY2425S2-CS2103T-T12-3/tp/releases).
 
@@ -33,7 +37,9 @@ If you can type fast, REconnect can get your real estate management tasks done f
    - **Linux**: Press `Ctrl + Alt + T` or search for "Terminal" in your Activities or Applications menu.
 
 5. `cd` (change directory) into the folder you put the jar file in.
-   Type `cd␣` (with a space), and drag the folder into the terminal.
+    <box type="tip" seamless>
+        Type `cd␣` (with a space), and drag the folder into the terminal.
+    </box>
 
 6. Enter the command `java -jar REconnect.jar` to start the application.<br>
    A GUI similar to the below should appear in a few seconds. **Note:** The app contains some sample data, and it may not correspond to the data shown in the image below.<br>
@@ -175,8 +181,11 @@ Displays all clients in REconnect.
 
 Format: `list_clients`
 
-* Any extra arguments given will throw an error. 
-* Meant to be used after a `find_client` command to show the full list of clients again.
+* Any extra arguments given will throw an error.
+
+<box type="tip" seamless>
+    Meant to be used after a `find_client` command to show the full list of clients again.
+</box>
 
 ### Deleting a client : `delete_client`
 

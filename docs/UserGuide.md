@@ -23,7 +23,7 @@ If you can type fast, REconnect can get your real estate management tasks done f
     **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).\
     If you need help installing Java, you may find [this guide](https://docs.oracle.com/en/java/javase/17/install/overview-jdk-installation.html) by Oracle useful. You can navigate the sidebar of the linked page to find platform-specific instructions.
 
-2. Download the latest `REconnect.jar` file from [here](https://github.com/AY2425S2-CS2103T-T12-3/tp/releases/download/MVP/REconnect.jar).
+2. Download the latest `REconnect.jar` file from [here](https://github.com/AY2425S2-CS2103T-T12-3/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for REconnect.
 
@@ -36,7 +36,7 @@ If you can type fast, REconnect can get your real estate management tasks done f
    Type `cd␣` (with a space), and drag the folder into the terminal.
 
 6. Enter the command `java -jar REconnect.jar` to start the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   A GUI similar to the below should appear in a few seconds. **Note:** The app contains some sample data, and it may not correspond to the data shown in the image below.<br>
 
    ![Ui](images/Ui.png)
 
@@ -83,6 +83,8 @@ The most recent command is shown at the top of the list, and the oldest command 
 Commands that caused an error are also included in the history and appear in red.\
 The command history is cleared when the application is closed.
 
+<box type="info" seamless>
+
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
@@ -95,7 +97,7 @@ The command history is cleared when the application is closed.
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-
+</box>
 
 ### Viewing help : `help`
 
@@ -500,9 +502,10 @@ REconnect data are saved in the hard disk automatically after any command that c
 
 REconnect data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Users who know how JSON files work are welcome to update data directly by editing that data file.
 
-**Caution:**
-If your changes to the data file makes its format invalid, REConnect will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the REConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+<box type="warning" seamless>
+    If your changes to the data file makes its format invalid, REConnect will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+    Furthermore, certain edits can cause the REConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+</box>
 
 ## FAQ
 

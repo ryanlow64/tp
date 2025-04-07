@@ -7,7 +7,7 @@ import seedu.address.model.commons.Price;
 import seedu.address.model.property.PropertyName;
 
 /**
- * Represents a Deal in the address book.
+ * Represents a Deal in REconnect.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Deal {

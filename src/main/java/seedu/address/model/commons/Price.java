@@ -1,7 +1,7 @@
 package seedu.address.model.commons;
 
 /**
- * Represents a Property's price in the address book.
+ * Represents a Property's price in REconnect.
  * Guarantees: immutable; is valid as declared in {@link #isValidPrice(Long)}
  */
 public class Price {

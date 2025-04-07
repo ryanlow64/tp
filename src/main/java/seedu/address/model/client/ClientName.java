@@ -6,7 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import seedu.address.model.commons.Name;
 
 /**
- * Represents a Person's name in the address book.
+ * Represents a Person's name in REconnect.
  * Guarantees: immutable; is valid as declared in {@link #isValidClientName Name(String)}
  */
 public class ClientName implements Name<Client> {

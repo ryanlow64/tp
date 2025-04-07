@@ -29,7 +29,7 @@ import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 
 /**
- * Adds an event to the address book.
+ * Adds an event to REconnect.
  * Guarantees:
  * - the event is not too far in the past.
  * - there are no conflicts with existing events.
@@ -37,7 +37,7 @@ import seedu.address.model.property.PropertyName;
  */
 public class AddEventCommand extends Command {
     public static final String COMMAND_WORD = "add_event";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to REconnect. "
             + "Parameters: "
             + PREFIX_EVENT_START + "EVENT_DATE_TIME "
             + PREFIX_EVENT_TYPE + "EVENT_TYPE "

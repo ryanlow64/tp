@@ -3,7 +3,7 @@ package seedu.address.model.property;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Property's description in the address book.
+ * Represents a Property's description in REconnect.
  * Guarantees: immutable; is valid as declared in {@link #isValidDescription(String)}
  */
 public class Description {

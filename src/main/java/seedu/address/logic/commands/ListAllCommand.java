@@ -9,14 +9,14 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PROPERTIES;
 import seedu.address.model.Model;
 
 /**
- * Lists everything in the address book to the user.
+ * Lists everything in REconnect to the user.
  */
 public class ListAllCommand extends ListCommand<Object> {
     public static final String COMMAND_WORD = "list_all";
 
     public static final String MESSAGE_SUCCESS = "Listed everything";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all data in the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all data in REconnect. "
             + "This command does not take additional parameters.\n"
             + "Example: " + COMMAND_WORD;
 

@@ -20,7 +20,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
 
 /**
- * Deletes a client identified using it's displayed index from the address book.
+ * Deletes a client identified using it's displayed index from REconnect.
  */
 public class DeleteClientCommand extends DeleteCommand<Client> {
 
@@ -32,10 +32,7 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
         + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_CLIENT_SUCCESS = "Deleted Client: %1$s";
-
-    public static final String MESSAGE_DELETE_CLIENT_ERROR = "Client cannot be deleted.\n"
-        + "Client exists in either property, deals, or events.\n"
-        + "Please delete the client from the categories before deleting the client itself.";
+    public static final String MESSAGE_DELETE_CLIENT_ERROR = "Client %s cannot be deleted.\n";
 
     public DeleteClientCommand(Index targetIndex) {
         super(targetIndex);
@@ -62,47 +59,72 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
 
         Client clientToDelete = lastShownClientList.get(targetIndex.getZeroBased());
 
-        if (existInDeals(clientToDelete, lastShownDealList)
-            || existInEvents(clientToDelete, lastShownEventList)
-            || existInProperties(clientToDelete, lastShownPropertyList)) {
-            throw new CommandException(MESSAGE_DELETE_CLIENT_ERROR);
+        String existingDeals = existInDeals(clientToDelete, lastShownDealList);
+        String existingEvents = existInEvents(clientToDelete, lastShownEventList);
+        String existingProperties = existInProperties(clientToDelete, lastShownPropertyList);
+
+        if (!existingDeals.isEmpty() || !existingEvents.isEmpty() || !existingProperties.isEmpty()) {
+            String msg = String.format(MESSAGE_DELETE_CLIENT_ERROR, clientToDelete.getFullName());
+            msg += existingProperties + existingDeals + existingEvents;
+            throw new CommandException(msg);
         }
 
         model.deleteClient(clientToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_CLIENT_SUCCESS, Messages.formatClient(clientToDelete)));
     }
 
-    private boolean existInDeals(Client clientToDelete, List<Deal> dealList) {
+    private String existInDeals(Client clientToDelete, List<Deal> dealList) {
         ClientName clientNameToDelete = clientToDelete.getFullName();
-        for (Deal deal : dealList) {
+        StringBuilder msg = new StringBuilder("He/She is involved in the following unclosed deal(s): ");
+        boolean found = false;
+        for (int i = 0; i < dealList.size(); i++) {
+            Deal deal = dealList.get(i);
             if ((clientNameToDelete.equals(deal.getBuyer())
                 || clientNameToDelete.equals(deal.getSeller()))
                 && deal.getStatus() != DealStatus.CLOSED) {
-                return true;
+                msg.append(i + 1).append(" ");
+                found = true;
             }
         }
-        return false;
+        if (found) {
+            return msg + ".\n";
+        }
+        return "";
     }
 
-    private boolean existInEvents(Client clientToDelete, List<Event> eventList) {
+    private String existInEvents(Client clientToDelete, List<Event> eventList) {
         ClientName clientNameToDelete = clientToDelete.getFullName();
-        for (Event event : eventList) {
+        StringBuilder msg = new StringBuilder("He/She is involved in the following future event(s): ");
+        boolean found = false;
+        for (int i = 0; i < eventList.size(); i++) {
+            Event event = eventList.get(i);
             if (clientNameToDelete.equals(event.getClientName())
                 && LocalDateTime.now().isBefore(event.getDateTime())) {
-                return true;
+                msg.append(i + 1).append(" ");
+                found = true;
             }
         }
-        return false;
+        if (found) {
+            return msg + ".\n";
+        }
+        return "";
     }
 
-    private boolean existInProperties(Client clientToDelete, List<Property> propertyList) {
+    private String existInProperties(Client clientToDelete, List<Property> propertyList) {
         ClientName clientNameToDelete = clientToDelete.getFullName();
-        for (Property property : propertyList) {
+        StringBuilder msg = new StringBuilder("He/She is the owner of the following property(s): ");
+        boolean found = false;
+        for (int i = 0; i < propertyList.size(); i++) {
+            Property property = propertyList.get(i);
             if (clientNameToDelete.equals(property.getOwner())) {
-                return true;
+                msg.append(i + 1).append(" ");
+                found = true;
             }
         }
-        return false;
+        if (found) {
+            return msg + ".\n";
+        }
+        return "";
     }
 
     @Override

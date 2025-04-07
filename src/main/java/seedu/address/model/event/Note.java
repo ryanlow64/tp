@@ -1,7 +1,7 @@
 package seedu.address.model.event;
 
 /**
- * Represents a Event in the address book.
+ * Represents a Event in REconnect.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Note {

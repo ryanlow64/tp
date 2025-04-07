@@ -96,7 +96,7 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2425S2-CS2103T-T12-3/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
@@ -115,7 +115,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2425S2-CS2103T-T12-3/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -138,17 +138,16 @@ How the `Logic` component works:
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
-Here are the partial class diagrams in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
+Here is the class diagram in `Logic` (omitted from the class diagram above) that is used for parsing a user command:
 
 <puml src="diagrams/ParserStructure.puml" width="600" height="500"/>
-<puml src="diagrams/CommandStructure.puml" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddClientCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddClientCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddClientCommand`) which the `AddressBookParser` returns back as a `Command` object.
   * All `XYZCommandParser` classes (e.g., `AddClientCommandParser`, `DeleteClientCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2425S2-CS2103T-T12-3/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="800" height="600"/>
 
@@ -163,7 +162,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2425S2-CS2103T-T12-3/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -233,7 +232,7 @@ private void initialiseCommandWords() {
 }
 ```
 
-As you can see, its implemented in such a way that if any of the command classes do not implement the `addCommandWord()` method correctly, 
+As you can see, it's implemented in such a way that if any of the command classes do not implement the `addCommandWord()` method correctly, 
 the app will throw a runtime exception and crash. This is to ensure that the command words are always in sync with the command classes.
 
 ### **Feature 2: Enabling the conjunction (AND) and disjunction (OR) of filtering parameters for find commands**
@@ -767,7 +766,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an empty list.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
 
-*(More to be added)*
+---
+
+**Use case: List Events**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to list all events.
+2. System displays all deals in the address book.
+
+**Use case ends.**
 
 ### Non-Functional Requirements
 
@@ -786,7 +797,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Agent**: A licensed professional responsible for managing client contacts and facilitate real estate transactions.
 
-**AND Connective**: A logical operator used in search commands (prefixed as `AND_`) that requires all specified conditions to be true for a match to be returned.
+**AND Connective**: A logical operator used in find commands (prefixed as `AND_`) that requires all specified conditions to be true for a match to be returned.
 
 **Buyer**: A client who purchases a property in a deal transaction.
 
@@ -816,7 +827,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **JAR file**: A Java Archive file (with .jar extension) that packages multiple Java class files and resources into a single file for distribution.
 
-**OR Connective**: A logical operator used in search commands (prefixed as `OR_`) that requires at least one of the specified conditions to be true for a match to be returned.
+**OR Connective**: A logical operator used in find commands (prefixed as `OR_`) that requires at least one of the specified conditions to be true for a match to be returned.
 
 **Parameter**: A piece of information provided to a command, typically in the format `prefix/VALUE`, such as `price/2000`.
 
@@ -840,6 +851,28 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Appendix: Planned Enhancements**
+
+1. Allow for other valid phone number formats (e.g., `+65 8287 2001`, `65-8287-2001`, etc.) to be accepted.
+
+2. Improve validation for emails for clients.
+   - Currently, the regex used for email validation is not comprehensive and can be improved to cover more edge cases.
+   - Eg. alex@55.533 is considered valid, but it should not be.
+   - Eg. alex@emailcom is considered valid, but it should not be.
+   
+3. Improve validation for addresses for clients and properties.
+   - Currently, any non-empty string is considered valid.
+   - Eg. 1234 is considered valid, but it should not be.
+   - Eg. @%%@% is considered valid, but it should not be.
+   
+4. Add support for more complex date and time formats in the event scheduling feature.
+   - Currently, only `dd-MM-yyyy HHmm` format are supported.
+   - Eg. `dd/MM/yyyy HH:mm` is not supported.
+
+5. Allow substring matching for client and property names in the find commands.
+   - Currently, only keyword matching is supported.
+   - Eg. `find_client name_keywords/Joh` will not match `John Doe`, but it's better if it does.
+
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
@@ -857,14 +890,143 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   2. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+
+### Client management
+
+1. Adding a client
+    
+   1. Test case: `add_client name/John Doe phone/82872001`<br>   
+      Expected: A new client is added with the name "John Doe", phone number "82872001", email and address as "(blank)".
+      A success message is shown in the result display.
+
+   2. Test case: `add_client name/John S/O Doe phone/82872001`<br>
+      Expected: A new client is added with the name "John S/O Doe", phone number "82872001", email and address as "(blank)".
+      A success message is shown in the result display.
+
+   3. Test case: `add_client name/John S\O Doe phone/82872001`<br>
+      Expected: A new client is added with the name "John S\O Doe", phone number "82872001", email and address as "(blank)".
+      A success message is shown in the result display.
+
+   4. Test case: `add_client name/John Mo phone/72872001`<br>
+      Expected: An error message is shown in the result display indicating that the phone number is invalid.
+
+   5. Test case: `add_client name/John Mo phone/828720019`<br>
+      Expected: An error message is shown in the result display indicating that the phone number is invalid.
+
+   6. Test case: `add_client name/John Doe phone/98765432 email/johnd@example.com`<br>
+      Expected: A new client is added with the name "John Doe", phone number "98765432", email "johnd@example.com" and address as "(blank)".
+      A success message is shown in the result display.
+
+   7. Test case: `add_client name/John Moe phone/98765432 email/johnd_9+0-0.0@example.com`<br>
+      Expected: A new client is added with the name "John Moe", phone number "98765432", email "johnd_9+0-0.0@example.com" and address as "(blank)".
+      A success message is shown in the result display. 
+
+   8. Test case: `add_client name/John Moe phone/98765432 email/johnd_+-.0@example.com`<br>
+      Expected: An error message is shown in the result display indicating that the email is invalid.
+
+   9. Test case: `add_client name/Jo Doe phone/98765432 addr/311, Clementi Ave 2, #02-25`<br>
+      Expected: A new client is added with the name "Jo Doe", phone number "98765432", email "(blank)" and address as "311, Clementi Ave 2, #02-25".
+      A success message is shown in the result display.
+   
+   10. Test case: `add_client name/Joe Doe phone/98765432 email/johnd@example.com addr/311, Clementi Ave 2, #02-25`<br>
+       Expected: A new client is added with the name "Joe Doe", phone number "98765432", email "johnd@example.com" and address as "311, Clementi Ave 2, #02-25".
+       A success message is shown in the result display.
+   
+2. Editing a client
+
+   1. Prerequisites: There must be at least one client in the client list. Use the `list_clients` command to verify this and note its index.
+
+   2. Test case: `edit_client 1 name/John Doe`<br>
+      Expected: The client at index 1 is updated with the name "John Doe". A success message is shown in the result display.
+
+   3. Test case: `edit_client 1 phone/82872001`<br>
+      Expected: The client at index 1 is updated with the phone number "82872001". A success message is shown in the result display.
+
+   4. Test case: `edit_client 1 email/johnd@example.com`<br>
+      Expected: The client at index 1 is updated with the email "johnd@example.com". A success message is shown in the result display.
+
+   5. Test case: `edit_client 1 addr/311, Clementi Ave 2, #02-25`<br>
+      Expected: The client at index 1 is updated with the address "311, Clementi Ave 2, #02-25". A success message is shown in the result display.
+
+   6. Test case: `edit_client 1 name/John Doe phone/82872001 email/johnd@example.com addr/311, Clementi Ave 2, #02-25`<br>
+      Expected: The client at index 1 is updated with the name "John Doe", phone number "82872001", email "johnd@example.com", and address "311, Clementi Ave 2, #02-25". A success message is shown in the result display.
+
+   7. Test case: `edit_client 1 phone/72872001`<br>
+      Expected: An error message is shown in the result display indicating that the phone number is invalid.
+
+   8. Test case: `edit_client 1 email/johnd_+-.0@example.com`<br>
+      Expected: An error message is shown in the result display indicating that the email is invalid.
+
+   9. Test case: `edit_client 999 name/John Doe`<br>
+      Expected: An error message is shown in the result display indicating that the client index is invalid.
+
+   10. Test case: `edit_client 1`<br>
+       Expected: An error message is shown in the result display indicating that no fields to edit were provided.
+
+3. Finding a client
+
+    1. Prerequisites: There must be multiple clients with different names, phone numbers, emails, and addresses.
+       To properly test all cases, ensure you have:
+        * At least one client with "Alice" in their name (e.g., "Alice Tan")
+        * At least one client with "Bob" in their name (e.g., "Bob Lee")
+        * At least one client with the phone number "12345678"
+        * At least one client with the email "alice@example.com"
+        * At least one client with the address "123, Clementi Ave 3"
+
+    2. Test case: `find_client name_keywords/Alice`<br>
+       Expected: Displays clients with names containing "Alice" if present.
+
+    3. Test case: `find_client phone/1234`<br>
+       Expected: Displays clients with the phone number "12345678".
+
+    4. Test case: `find_client email/alice`<br>
+       Expected: Displays clients with the email "alice@example.com".
+
+    5. Test case: `find_client address/Clementi`<br>
+       Expected: Displays clients with the address "123, Clementi Ave 3".
+
+    6. Test case: `find_client keywords/Alice AND_phone/5678`<br>
+       Expected: Displays clients with names containing "Alice" and phone number "12345678".
+
+    7. Test case: `find_client keywords/Bob OR_email/xample.com`<br>
+       Expected: Displays clients with names containing "Bob" or email "alice@example.com".
+
+    8. Test case: `find_client nonexistent/keyword`<br>
+       Expected: Invalid command format. Error message shown.
+
+    9. Test case: `find_client name_keywords/NonexistentName`<br>
+       Expected: No clients found. Result display shows "0 clients listed!".
+
+    10. Test case: `find_client name_keywords/Alice AND_phone/99999999`<br>
+        Expected: No clients found. Result display shows "0 clients listed!".
+
+4. Deleting a client
+
+    1. Prerequisites: There must be at least one client in the client list. Use the `list_clients` command to verify this and note its index.
+
+    2. Test case: `delete_client 1`<br>
+       Expected: The client at index 1 is deleted. A success message is shown in the result display.
+    
+    3. Test case: `delete_client 999`<br>
+       Expected: An error message is shown in the result display indicating that the client index is invalid.
+
+5. Listing clients
+
+    1. Prerequisites: The client list has been filtered using `find_client`.
+
+    2. Test case: `list_clients`<br>
+       Expected: All clients are displayed, showing the complete, unfiltered list.
+
+    3. Test case: `list_clients extra_argument`<br>
+       Expected: Invalid command format. Error message shown.
 
 ### Deal management
 
@@ -916,7 +1078,7 @@ testers are expected to do more *exploratory* testing.
       Expected: No deal is updated. Error message showing that index must be a positive integer.
 
    6. Test case: `update_deal 999 status/CLOSED`<br>
-      Expected: No deal is updated. Error message showing that the specified deal doesn't exist.
+      Expected: No deal is updated. Error message showing that the index is invalid.
 
    7. Other incorrect update_deal commands to test:
       * `update_deal 1 pid/999`: Invalid property ID

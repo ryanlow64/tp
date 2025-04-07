@@ -64,32 +64,32 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a client with the same identity as {@code client} exists in the address book.
+     * Returns true if a client with the same identity as {@code client} exists in REconnect.
      */
     boolean hasClient(Client client);
 
     /**
-     * Returns true if a client with the same identity as {@code client} exists in the address book,
+     * Returns true if a client with the same identity as {@code client} exists in REconnect,
      * excluding at that index.
      */
     boolean hasClient(Client client, Index index);
 
     /**
      * Deletes the given client.
-     * The client must exist in the address book.
+     * The client must exist in REconnect.
      */
     void deleteClient(Client target);
 
     /**
      * Adds the given client.
-     * {@code client} must not already exist in the address book.
+     * {@code client} must not already exist in REconnect.
      */
     void addClient(Client client);
 
     /**
      * Replaces the given client {@code target} with {@code editedClient}.
-     * {@code target} must exist in the address book.
-     * The client identity of {@code editedClient} must not be the same as another existing client in the address book.
+     * {@code target} must exist in REconnect.
+     * The client identity of {@code editedClient} must not be the same as another existing client in REconnect.
      */
     void setClient(Client target, Client editedClient);
 
@@ -122,25 +122,25 @@ public interface Model {
     void updateFilteredEventList(Predicate<Event> predicate);
 
     /**
-     * Returns true if a property with the same identity as {@code property} exists in the address book.
+     * Returns true if a property with the same identity as {@code property} exists in REconnect.
      */
     boolean hasProperty(Property property);
 
     /**
      * Deletes the given property.
-     * The property must exist in the address book.
+     * The property must exist in REconnect.
      */
     void deleteProperty(Property target);
 
     /**
      * Adds the given property.
-     * {@code property} must not already exist in the address book.
+     * {@code property} must not already exist in REconnect.
      */
     void addProperty(Property property);
 
     /**
      * Replaces the given property {@code target} with {@code editedProperty}.
-     * {@code target} must exist in the address book.
+     * {@code target} must exist in REconnect.
      * The property identity of {@code editedProperty} must not be the same as another existing property in the AB.
      */
     void setProperty(Property target, Property editedProperty);
@@ -159,8 +159,8 @@ public interface Model {
 
     /**
      * Replaces the given deal {@code target} with {@code editedDeal}.
-     * {@code target} must exist in the address book.
-     * The deal identity of {@code editedDeal} must not be the same as another existing deal in the address book.
+     * {@code target} must exist in REconnect.
+     * The deal identity of {@code editedDeal} must not be the same as another existing deal in REconnect.
      */
     void setDeal(Deal target, Deal editedDeal);
 

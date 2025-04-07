@@ -28,13 +28,13 @@ import seedu.address.model.property.PropertyName;
 import seedu.address.model.property.Size;
 
 /**
- * Adds a property to the address book.
+ * Adds a property to REconnect.
  */
 public class AddPropertyCommand extends Command {
 
     public static final String COMMAND_WORD = "add_property";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a property to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a property to REconnect. "
             + "Parameters: "
             + PREFIX_PROPERTY_NAME + "PROPERTY_NAME "
             + PREFIX_OWNER + "OWNER_ID "
@@ -51,7 +51,7 @@ public class AddPropertyCommand extends Command {
             + PREFIX_DESCRIPTION + "Spacious 4-bedroom home ";
 
     public static final String MESSAGE_SUCCESS = "New property added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PROPERTY = "This property already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PROPERTY = "This property already exists in REconnect";
     public static final String MESSAGE_INVALID_OWNER_ID = "Invalid owner ID.";
 
     private final PropertyName propertyName;

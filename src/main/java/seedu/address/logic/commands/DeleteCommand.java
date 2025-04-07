@@ -5,7 +5,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
 /**
- * Generic class for deleting an item in the address book.
+ * Generic class for deleting an item in REconnect.
  */
 public abstract class DeleteCommand<T> extends Command {
 

@@ -204,7 +204,7 @@ public class UpdateDealCommandTest {
         UpdateDealCommand updateCommand = new UpdateDealCommand(INDEX_FIRST, descriptor);
 
         assertThrows(CommandException.class, () -> updateCommand.execute(model),
-                UpdateDealCommand.MESSAGE_NO_CHANGES);
+                UpdateDealCommand.MESSAGE_NO_CHANGES_MADE);
     }
 
     @Test

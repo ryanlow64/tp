@@ -12,7 +12,7 @@ import seedu.address.model.commons.Nameable;
 import seedu.address.model.commons.Price;
 
 /**
- * Represents a Property in the address book.
+ * Represents a Property in REconnect.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Property implements Nameable<Property> {

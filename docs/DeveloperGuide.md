@@ -895,6 +895,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ## **Appendix: Planned Enhancements**
 
+<box type="info" seamless>
+Team size: 5
+</box>
+
 1. Allow for other valid phone number formats (e.g., `+65 8287 2001`, `65-8287-2001`, etc.) to be accepted.
 
 2. Improve validation for emails for clients.
@@ -950,8 +954,8 @@ testers are expected to do more *exploratory* testing.
 
 1. Adding a client
     
-   1. Test case: `add_client name/John Doe phone/82872001`<br>   
-      Expected: A new client is added with the name "John Doe", phone number "82872001", email and address as "(blank)".
+   1. Test case: `add_client name/John's Doe phone/82872001`<br>   
+      Expected: A new client is added with the name "John's Doe", phone number "82872001", email and address as "(blank)".
       A success message is shown in the result display.
 
    2. Test case: `add_client name/John S/O Doe phone/82872001`<br>

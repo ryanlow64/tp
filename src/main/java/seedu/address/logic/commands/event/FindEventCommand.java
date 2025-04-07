@@ -29,13 +29,12 @@ public class FindEventCommand extends FindCommand<Event> {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all events that match "
             + "the specified criteria for event type, date and time, client name, and/or property name\n"
             + "Parameters: "
-            + "[" + PREFIX_EVENT_BEFORE + "BEFORE] "
-            + "[" + PREFIX_EVENT_AFTER + "AFTER] "
+            + "[" + PREFIX_EVENT_BEFORE + "TIMESTAMP] "
+            + "[" + PREFIX_EVENT_AFTER + "TIMESTAMP] "
             + "[" + PREFIX_EVENT_TYPE + "EVENT_TYPE] "
-            + "[" + PREFIX_EVENT_WITH + "WITH] "
-            + "[" + PREFIX_EVENT_ABOUT + "ABOUT]\n"
-            + "Note: At least one parameter must be provided. The first parameter is applied unconnectively, "
-            + "and if more parameters are provided, all must be "
+            + "[" + PREFIX_EVENT_WITH + "CLIENT_NAME_KEYWORDS] "
+            + "[" + PREFIX_EVENT_ABOUT + "PROPERTY_NAME_KEYWORDS]\n"
+            + "Note: At least one parameter must be provided. If more than 1 parameter is provided, all must be "
             + "combined with the same connective operator either 'AND' or 'OR'.\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_EVENT_WITH + "Alice Yeo " + PREFIX_EVENT_TYPE.getAndPrefix()
             + "meeting";

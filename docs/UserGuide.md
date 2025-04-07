@@ -167,7 +167,10 @@ Format: `find_client [name_keywords/KEYWORDS] [addr/ADDRESS] [email/EMAIL] [phon
 * For the name keywords, only full words will be matched e.g. `Han` will not match `Hans`.
 * The rest of the keywords will be matched as substrings.
 * Not all prefixes need to be used. You can use any combination of the above prefixes.
-* All prefixes except for the first one must have a connective keyword prefix `AND_` or `OR_` (case-sensitive). The prefixes used must be of the same type: either all `AND_`, or all `OR_`.
+* The first prefix can be any of the above prefixes but must not be a connective one (the ones shown above).
+* The rest of the prefixes must be preceded by a connective keyword `AND_` or `OR_` (case-sensitive).
+* The connective keywords are used to combine multiple prefixes. All connective prefixes used must be of the same type:
+  that is either all are preceded with `AND_` or all `OR_`.
 
 Examples:
 * `find_client name_keywords/John` returns `John` and `John Doe`

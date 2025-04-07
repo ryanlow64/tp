@@ -138,7 +138,7 @@ How the `Logic` component works:
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
-Here is the class diagram in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
+Here is the class diagram in `Logic` (omitted from the class diagram above) that is used for parsing a user command:
 
 <puml src="diagrams/ParserStructure.puml" width="600" height="500"/>
 

@@ -8,10 +8,12 @@ package Logic as LogicPackage {
 
 package "Parser Classes" as ParserClasses{
 }
-Class XYZCommand
+Class FindDealCommand
+Class DeletePropertyCommand
+Class AddClientCommand
+Class EditEventCommand
 Class CommandResult
 Class "{abstract}\nCommand" as Command
-
 
 Class "<<interface>>\nLogic" as Logic
 Class LogicManager
@@ -29,17 +31,23 @@ HiddenOutside ..> Logic
 
 LogicManager .right.|> Logic
 LogicManager -right->"1" ParserClasses
-ParserClasses ..> XYZCommand : <<create>>
+ParserClasses ..> FindDealCommand : <<create>>
+ParserClasses ..> DeletePropertyCommand : <<create>>
+ParserClasses ..> AddClientCommand : <<create>>
+ParserClasses ..> EditEventCommand : <<create>>
 
-XYZCommand -up-|> Command
+FindDealCommand -up-|> Command
+DeletePropertyCommand -up-|> Command
+AddClientCommand -up-|> Command
+EditEventCommand -up-|> Command
+
 LogicManager .left.> Command : <<call>>
-
-LogicManager --> Model
 LogicManager --> Storage
+LogicManager --> Model
+
 Storage --[hidden] Model
 Command .[hidden]up.> Storage
 Command .right.> Model
-note right of XYZCommand: XYZCommand = AddCommand, \nFindCommand, etc
 
 Logic ..> CommandResult
 LogicManager .down.> CommandResult

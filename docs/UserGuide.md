@@ -6,7 +6,11 @@
 
 # REconnect User Guide
 
-REconnect is a **desktop application for Real Estate agents to manage their work via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, REconnect can get your real estate management tasks done faster than traditional GUI apps.
+REconnect is a **desktop application for Real Estate agents to manage their work via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
+
+<box type="info" seamless>
+    If you can type fast, REconnect can get your real estate management tasks done faster than traditional GUI apps.
+</box>
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -17,33 +21,41 @@ REconnect is a **desktop application for Real Estate agents to manage their work
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+1. Ensure you have Java `17` or above installed.<br>
+    <box type="info" seamless>
+        **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).\
+        If you need help installing Java, you may find [this guide](https://docs.oracle.com/en/java/javase/17/install/overview-jdk-installation.html) by Oracle useful. You can navigate the sidebar of the linked page to find platform-specific instructions.
+    </box>
 
-2. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T12-3/tp/releases).
+2. Download the latest `REconnect.jar` file from [here](https://github.com/AY2425S2-CS2103T-T12-3/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for REconnect.
 
 4. Open a command terminal:
    - **Windows**: Press `Win + R`, type `cmd`, and press Enter.
    - **Mac**: Press `Cmd + Space`, type `Terminal`, and press Enter.
-   - **Linux**: Press `Ctrl + Alt + T` or search for "Terminal" in your applications menu.
+   - **Linux**: Press `Ctrl + Alt + T` or search for "Terminal" in your Activities or Applications menu.
 
-5. `cd` into the folder you put the jar file in, and use the `java -jar REconnect.jar` command to run the application.<br>
+5. `cd` (change directory) into the folder you put the jar file in.
+    <box type="tip" seamless>
+        Type `cd␣` (with a space), and drag the folder into the terminal.
+    </box>
+
+6. Enter the command `java -jar REconnect.jar` to start the application.<br>
    A GUI similar to the below should appear in a few seconds. **Note:** The app contains some sample data, and it may not correspond to the data shown in the image below.<br>
 
    ![Ui](images/Ui.png)
 
-6. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+7. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
     * `add_client name/John Doe phone/98765432 email/johnd@example.com addr/311, Clementi Ave 2, #02-25` : Adds a client named `John Doe` to the client list panel.
 
     * `delete_property 3` : Deletes the 3rd property shown in the current property list.
 
-    * `exit` : Exits the app.
+    * `exit` : Exits the application.
 
-7. Refer to the [Features](#features) below for details of each command.
+8. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -73,9 +85,10 @@ This allows users to quickly re-enter previous commands without having to type t
 </figure>
 
 **Note**:
-The most recent command is shown at the top of the list, and the oldest command is shown at the bottom. 
-Commands that caused an error are also included in the history and appear in red. 
+The most recent command is shown at the top of the list, and the oldest command is shown at the bottom.\
+Commands that caused an error are also included in the history and appear in red.\
 The command history is cleared when the application is closed.
+
 <box type="info" seamless>
 
 **Notes about the command format:**<br>
@@ -110,16 +123,14 @@ Creates a new client in REconnect.
 
 Format: `add_client name/NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]`
 
-* The client's name must be provided.
+* 💡 The client's email and address are optional fields.
 * The client's name must not be empty and must not exceed 50 characters.
-* The client's must be a alphanumeric string and can contain spaces, and the special characters `/` and `\`.
-* **Note**: While the client's name can contain the special characters `/` and `\`, they should not be at the start of the client's name.
-* The client's phone number must be provided, must start with either 6, 8 or 9, and must be exactly 8 digits long.
-* The client's email and address are optional fields.
-* No two clients can have the same name or phone number, but they can have the same email address, for example, multiple people can share the same corporate email address
-* Client names with different casings are allowed (i.e. "Bernice Yu" and "bernice yu" are distinct names)
-* Duplicate names are not allowed
-* Multiple spaces in between names are accepted, similar to how you can do that in the contact list of your phone e.g. "John      Doe"
+* The client's name must be a alphanumeric string and can contain spaces, and the special characters `/`, `\` and `'`. The name should not start with a special character.
+* The client's phone number must start with either 6, 8 or 9, and must be exactly 8 digits long.
+* Clients cannot have the same name or phone number, but they can share the same email address.
+* Client names with different casings are allowed (i.e. "Bernice Yu" and "bernice yu" are distinct names).
+* Duplicate names are not allowed.
+* Multiple spaces in between names are accepted, similar to how you can do that in the contact list of your phone e.g. "John      Doe".
 
 Examples:
 * `add_client name/John Doe phone/98765432 email/johnd@example.com addr/John street, block 123, #01-01`
@@ -133,9 +144,9 @@ Format: `edit_client INDEX [name/NAME] [phone/PHONE] [email/EMAIL] [addr/ADDRESS
 
 * Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed client list, and should be a _positive integer_ not exceeding the client list size.
 * At least one of the optional fields must be provided.
-* Same restrictions as the add_client command
+* The restrictions in the `add_client` command also apply here.
 * Existing values will be updated to the input values.
-* Editing a client's name will result in an update to his/her name if it exists in deals, listings, or events
+* Editing a client's name will result in an update to his/her name if it exists in deals, listings, or events.
 
 Examples:
 * `edit_client 1 phone/91234567 email/johndoe@example.com` Edits the phone number and email address of the 1st client to be `91234567` and `johndoe@example.com` respectively.
@@ -156,10 +167,7 @@ Format: `find_client [name_keywords/KEYWORDS] [addr/ADDRESS] [email/EMAIL] [phon
 * For the name keywords, only full words will be matched e.g. `Han` will not match `Hans`.
 * The rest of the keywords will be matched as substrings.
 * Not all prefixes need to be used. You can use any combination of the above prefixes.
-* The first prefix can be any of the above prefixes but must not be a connective one (the ones shown above).
-* The rest of the prefixes must be preceded by a connective keyword `AND_` or `OR_` (case-sensitive).
-* The connective keywords are used to combine multiple prefixes. All connective prefixes used must be of the same type:
-that is either all are preceded with `AND_` or all `OR_`.
+* All prefixes except for the first one must have a connective keyword prefix `AND_` or `OR_` (case-sensitive). The prefixes used must be of the same type: either all `AND_`, or all `OR_`.
 
 Examples:
 * `find_client name_keywords/John` returns `John` and `John Doe`
@@ -173,8 +181,11 @@ Displays all clients in REconnect.
 
 Format: `list_clients`
 
-* Meant to be used after a `find_client` command to show the full list of clients again.
 * Any extra arguments given will throw an error.
+
+<box type="tip" seamless>
+    Meant to be used after a `find_client` command to show the full list of clients again.
+</box>
 
 ### Deleting a client : `delete_client`
 
@@ -187,11 +198,11 @@ Format: `delete_client INDEX`
 * The index **must be a positive integer** not exceeding the client list size.
 * Extra parameters results in an error.
 * **Note**: The client must not be involved in any existing deals, listings, or events. Else, the client cannot be deleted.
-* **Warning**: Deleting a client is not reversible.
+* Deleting a client is **not reversible**.
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd client in REconnect.
-* `find_client name_keywords/Betsy` followed by `delete 1` deletes the 1st client in the results of the `find_client` command.
+* `list_clients` followed by `delete_client 2` deletes the 2nd client in REconnect.
+* `find_client name_keywords/John` followed by `delete_client 1` deletes the 1st client in the results of the `find_client` command.
 
 ---
 
@@ -499,11 +510,10 @@ REconnect data are saved in the hard disk automatically after any command that c
 ### Editing the data file
 
 REconnect data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Users who know how JSON files work are welcome to update data directly by editing that data file.
-<box type="warning" seamless>
 
-**Caution:**
-If your changes to the data file makes its format invalid, REConnect will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the REConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+<box type="warning" seamless>
+    If your changes to the data file makes its format invalid, REConnect will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+    Furthermore, certain edits can cause the REConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
 ## FAQ

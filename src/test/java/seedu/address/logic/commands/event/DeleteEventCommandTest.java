@@ -1,9 +1,12 @@
 package seedu.address.logic.commands.event;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showEventAtIndex;
 import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 
 import org.junit.jupiter.api.Test;
@@ -42,11 +45,27 @@ class DeleteEventCommandTest extends DeleteCommandTest<Event> {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        // TODO
+        showEventAtIndex(model, INDEX_SECOND);
+        Event eventToDelete = model.getFilteredEventList().get(0);
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(INDEX_FIRST);
+
+        String expectedMessage = String.format(DeleteEventCommand.MESSAGE_SUCCESS, Messages.formatEvent(eventToDelete));
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteEvent(eventToDelete);
+        expectedModel.updateFilteredEventList(x -> false);
+
+        assertCommandSuccess(deleteEventCommand, model, expectedMessage, expectedModel);
+        assertFalse(model.hasEvent(eventToDelete));
     }
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        // TODO
+        showEventAtIndex(model, INDEX_SECOND);
+        Index outOfBoundIndex = INDEX_SECOND;
+        assertFalse(outOfBoundIndex.getZeroBased() < model.getFilteredEventList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getEventList().size());
+
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(outOfBoundIndex);
+        assertCommandFailure(deleteEventCommand, model, DeleteEventCommand.MESSAGE_INVALID_EVENT);
     }
 }

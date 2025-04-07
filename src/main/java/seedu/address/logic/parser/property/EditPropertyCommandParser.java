@@ -68,7 +68,7 @@ public class EditPropertyCommandParser extends EditCommandParser<Property> {
                     .getValue(PREFIX_DESCRIPTION).get()));
         }
         if (argMultimap.getValue(PREFIX_OWNER).isPresent()) {
-            editPropertyDescriptor.setOwner(ParserUtil.parseOwner(argMultimap
+            editPropertyDescriptor.setOwner(ParserUtil.parseIndex(argMultimap
                     .getValue(PREFIX_OWNER).get()));
         }
 

@@ -11,25 +11,24 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.property.AddPropertyCommand;
-import seedu.address.logic.parser.AddCommandParser;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
+import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.client.ClientName;
 import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Price;
 import seedu.address.model.property.Description;
-import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 import seedu.address.model.property.Size;
 
 /**
  * Parses input arguments and creates a new AddCommand object
  */
-public class AddPropertyCommandParser extends AddCommandParser<Property> {
+public class AddPropertyCommandParser implements Parser<AddPropertyCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -42,7 +41,7 @@ public class AddPropertyCommandParser extends AddCommandParser<Property> {
                 ArgumentTokenizer.tokenize(args, PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_SIZE,
                         PREFIX_DESCRIPTION, PREFIX_OWNER);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_OWNER, PREFIX_PRICE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_PROPERTY_NAME, PREFIX_ADDRESS, PREFIX_PRICE, PREFIX_OWNER)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPropertyCommand.MESSAGE_USAGE));
         }
@@ -66,10 +65,14 @@ public class AddPropertyCommandParser extends AddCommandParser<Property> {
         Optional<Size> size = ParserUtil.parseSize(argMultimap.getValue(PREFIX_SIZE).orElse("N/A"));
         Optional<Description> description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)
                 .orElse("N/A"));
-        ClientName owner = ParserUtil.parseClientName(argMultimap.getValue(PREFIX_OWNER).get());
-        Property property = new Property(propertyName, address, price, size, description, owner);
+        Index ownerId;
+        try {
+            ownerId = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_OWNER).get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format("Invalid client ID: %s", pe.getMessage()));
+        }
 
-        return new AddPropertyCommand(property);
+        return new AddPropertyCommand(propertyName, address, price, size, description, ownerId);
     }
 
     /**

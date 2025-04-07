@@ -40,8 +40,8 @@ public class CommandTestUtil {
 
     public static final String VALID_CLIENT_NAME_AMY = "Amy Bee";
     public static final String VALID_CLIENT_NAME_BOB = "Bob Choo";
-    public static final String VALID_PHONE_AMY = "11111111";
-    public static final String VALID_PHONE_BOB = "22222222";
+    public static final String VALID_PHONE_AMY = "81111111";
+    public static final String VALID_PHONE_BOB = "92222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
@@ -95,10 +95,10 @@ public class CommandTestUtil {
                 .build();
         DESC_MAPLE = new EditPropertyDescriptorBuilder().withPropertyName(VALID_PROPERTY_NAME_MAPLE)
                 .withAddress(VALID_ADDRESS_MAPLE).withPrice(VALID_PRICE_MAPLE).withSize(VALID_SIZE_MAPLE)
-                .withDescription(VALID_DESCRIPTION_MAPLE).withOwner(VALID_OWNER_MAPLE).build();
+                .withDescription(VALID_DESCRIPTION_MAPLE).build();
         DESC_ORCHID = new EditPropertyDescriptorBuilder().withPropertyName(VALID_PROPERTY_NAME_ORCHID)
                 .withAddress(VALID_ADDRESS_ORCHID).withPrice(VALID_PRICE_ORCHID).withSize(VALID_SIZE_ORCHID)
-                .withDescription(VALID_DESCRIPTION_ORCHID).withOwner(VALID_OWNER_ORCHID).build();
+                .withDescription(VALID_DESCRIPTION_ORCHID).build();
     }
 
     /**
@@ -198,6 +198,6 @@ public class CommandTestUtil {
         model.updateFilteredEventList(new EventAboutPropertyPredicate(
             new PropertyName(splitEventName[0])));
 
-        assertEquals(1, model.getFilteredPropertyList().size());
+        assertEquals(1, model.getFilteredEventList().size());
     }
 }

@@ -112,8 +112,15 @@ Creates a new client in REconnect.
 Format: `add_client name/NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]`
 
 * The client's name must be provided.
-* The client's phone number must be provided, and must be exactly 8 digits long.
+* The client's name must not be empty and must not exceed 50 characters.
+* The client's must be a alphanumeric string and can contain spaces, and the special characters `/` and `\`.
+* **Note**: While the client's name can contain the special characters `/` and `\`, they should not be at the start of the client's name.
+* The client's phone number must be provided, must start with either 6, 8 or 9, and must be exactly 8 digits long.
 * The client's email and address are optional fields.
+* No two clients can have the same name or phone number, but they can have the same email address, for example, multiple people can share the same corporate email address
+* Client names with different casings are allowed (i.e. "Bernice Yu" and "bernice yu" are distinct names)
+* Duplicate names are not allowed
+* Multiple spaces in between names are accepted, similar to how you can do that in the contact list of your phone e.g. "John      Doe"
 
 Examples:
 * `add_client name/John Doe phone/98765432 email/johnd@example.com addr/John street, block 123, #01-01`
@@ -127,7 +134,7 @@ Format: `edit_client INDEX [name/NAME] [phone/PHONE] [email/EMAIL] [addr/ADDRESS
 
 * Edits the client at the specified `INDEX`. The index refers to the index number shown in the displayed client list, and should be a _positive integer_ not exceeding the client list size.
 * At least one of the optional fields must be provided.
-* The phone number if provided must be exactly 8 digits long.
+* Same restrictions as the add_client command
 * Existing values will be updated to the input values.
 * Editing a client's name will result in an update to his/her name if it exists in deals, listings, or events
 
@@ -179,6 +186,7 @@ Format: `delete_client INDEX`
 * Deletes the client at the specified `INDEX`.
 * The index refers to the index number shown in the displayed client list.
 * The index **must be a positive integer** not exceeding the client list size.
+* Extra parameters results in an error.
 * **Note**: The client must not be involved in any existing deals, listings, or events. Else, the client cannot be deleted.
 * **Warning**: Deleting a client is not reversible.
 
@@ -194,31 +202,38 @@ Examples:
 
 Creates a new property in REconnect.
 
-Format: `add_property prop/PROPERTY_NAME owner/OWNER_NAME addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]`
+Format: `add_property prop/PROPERTY_NAME owner/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]`
 
-* Adds a property with the specified details
-* The property name must be provided
-* The owner name must be provided
-* The address must be provided
-* The price must be provided
-* PRICE must be a positive integer and is in thousands of S$ and must be between 3 and 6 digits
-* Both size and description are optional fields
-* SIZE must be a positive integer and is in square feet
-* SIZE should only contain integers from [100, 99999]
-* Description if provided should be between 1 and 50 characters
+* Adds a property with the specified details.
+* The property name must be provided.
+* The property name must not be empty and must not exceed 50 characters.
+* The property name must be a alphanumeric string and can contain spaces, and the special characters `&` and `@`.
+* **Note**: While the property name can contain the special characters `&` and `@`, they should not be at the start of the property name.
+* Duplicate property names are not accepted (Case Sensitive i.e. "Maple Villa" and "maple villa" are distinct names).
+* Multiple spaces in between names are accepted (i.e. "Maple Villa" and "Maple     Villa" are distinct property names that are valid).
+* The owner ID refer to the index numbers shown in the displayed lists.
+* The ID **must be positive integers** that do not exceed the client list size.
+* The address must be provided.
+* The price must be provided.
+* PRICE must be a positive integer and is in thousands of S$ and must be between 3 and 6 digits.
+* Both size and description are optional fields.
+* SIZE must be a positive integer and is in square feet.
+* SIZE should only contain integers from [100, 99999].
+* Description if provided should be between 1 and 50 characters.
 
 Examples:
-* `add_property prop/Maple Villa Condominium owner/Amy Bee addr/123 Maple Street price/2400 size/1000 desc/Spacious 4-bedroom home`
-* `add_property prop/Ocean Heights owner/Bob Choo addr/456 Marina Boulevard price/2800 size/1500`
+* `add_property prop/Sunset Villa owner/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
+* `add_property prop/Ocean Heights owner/2 addr/456 Marina Boulevard price/2800 size/1500`
 
 ### Editing a property : `edit_property`
 
 Edits an existing property in REconnect.
 
-Format: `edit_property INDEX [prop/PROPERTY_NAME] [owner/OWNER_NAME] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`
+Format: `edit_property INDEX [prop/PROPERTY_NAME] [owner/OWNER_ID] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`
 
 * Edits the property at the specified `INDEX`. The index refers to the index number shown in the displayed property list, and should be a _positive integer_ e.g. 1, 2, 3, ...
 * At least one of the optional fields must be provided.
+* Same restrictions as the add_property command.
 * Existing values will be updated to the input values.
 
 Examples:
@@ -229,17 +244,17 @@ Examples:
 
 Displays all properties that match the specified criteria for name keywords, address, price, size, and/or owner.
 
-Format: `find_property [name_keywords/KEYWORDS] [owner/OWNER] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE]`
+Format: `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [owner/OWNER]`
 
 * The order of the name keywords does not matter. e.g. `Maple Villa` will match `Villa Maple`.
 * The following prefixes can be used:
     * `name_keywords/KEYWORDS` to search property names by keywords (case-insensitive)
-    * `owner/OWNER` to search owner name by keywords (case-insensitive)
     * `addr/ADDRESS` to search by address (case-insensitive)
     * `price_</PRICE_BELOW` to search by price below a certain value
     * `price_>/PRICE_ABOVE` to search by price above a certain value
     * `size_</SIZE_BELOW` to search by size below a certain value
     * `size_>/SIZE_ABOVE` to search by size above a certain value
+    * `owner/OWNER` to search owner name by keywords (case-insensitive)
 * For the name keywords, only full words will be matched e.g. `Han` will not match `Hans`.
 * The address keyword will be matched as a substring.
 * The PRICE and SIZE keywords used must follow the constraints defined in `add_property` command.
@@ -271,6 +286,7 @@ Format: `delete_property INDEX`
 * Deletes the property at the specified `INDEX`.
 * The index refers to the index number shown in the displayed property list.
 * The index **must be a positive integer** that does not exceed the property list size.
+* Extra parameters results in an error.
 * **Warning**: Deleting a property is not reversible.
 
 Examples:
@@ -287,37 +303,37 @@ Creates a new property deal in REconnect.
 
 Format: `add_deal pid/PROPERTY_ID buyer/BUYER_ID price/PRICE [status/STATUS]`
 
-* Creates a deal with the specified property, buyer and price details.
-* The property ID and buyer ID refer to the index numbers shown in the displayed lists.
-* The IDs **must be positive integers** that do not exceed the property and client list sizes respectively.
-* The property and buyer must exist in REconnect.
-* The property owner will automatically be set as the seller.
-* The property must not be involved in another existing deal.
-* The price must be a positive integer between 3 and 6 digits (in thousands).
-* Status is optional and indicates the deal progress (OPEN, PENDING, CLOSED) (case-insensitive).
-* If status is not specified, it defaults to PENDING.
+* Creates a deal with the specified property, buyer and price details
+* The property ID and buyer ID refer to the index numbers shown in the displayed lists
+* The IDs **must be positive integers** that do not exceed the property and client list sizes respectively
+* The property and buyer must exist in REconnect
+* The property owner will automatically be set as the seller
+* The property must not be involved in another existing deal
+* The price must be a positive integer between 3 and 6 digits (in thousands)
+* Status is optional and indicates the deal progress (OPEN, PENDING, CLOSED) (case-insensitive)
+* If status is not specified, it defaults to PENDING
 
 Examples:
-* `add_deal pid/1 buyer/1 price/100 status/CLOSED` creates a `CLOSED` deal for property #1 with buyer #1 at $100k
-* `add_deal pid/3 buyer/2 price/500` creates a deal for property #3 with buyer #2 at $500k with default status of `PENDING`
+* `add_deal pid/1 buyer/1 price/100 status/CLOSED` creates a `CLOSED` deal for property #1 with buyer #1 at $100,000
+* `add_deal pid/3 buyer/2 price/500` creates a deal for property #3 with buyer #2 at $500,000 with default status of `PENDING`
 
 ### Updating a deal : `update_deal`
 
 Updates an existing deal in REconnect.
 
-Format: `update_deal INDEX [pid/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`
+Format: `update_deal INDEX [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`
 
-* Updates the deal with the specified `INDEX`.
-* At least one of the optional fields must be provided.
-* The INDEX refers to the index number shown in the displayed deal list, and should be a _positive integer_ that does not exceed the deal list size.
-* For property ID and buyer ID - the specified values must refer to existing entities in REconnect.
-* Price must be within valid range 3 to 6 digits (in thousands).
-* Status can be updated to indicate deal progress (OPEN, PENDING, CLOSED) (case-insensitive).
-* Seller cannot be manually updated as it is automatically set based on the property owner.
+* Updates the deal with the specified `INDEX`
+* At least one of the optional fields must be provided
+* The INDEX refers to the index number shown in the displayed deal list, and should be a _positive integer_ that does not exceed the deal list size
+* For property ID and buyer ID - the specified values must refer to existing entities in REconnect
+* Price must be within valid range (3 to 6 digits in thousands)
+* Status can be updated to indicate deal progress (OPEN, PENDING, CLOSED) (case-insensitive)
+* Seller cannot be manually updated as it is automatically set based on the property owner
 
 Examples:
 * `update_deal 3 status/CLOSED` changes the status of deal #3 to CLOSED
-* `update_deal 1 price/500 buyer/2` updates deal #1 with a new price of $500k and changes the buyer to client #2
+* `update_deal 1 price/500 buyer/2` updates deal #1 with a new price of $500,000 and changes the buyer to client #2
 
 ### Finding deals : `find_deal`
 
@@ -327,12 +343,12 @@ Format: `find_deal [prop/PROPERTY_NAME_KEYWORDS] [buyer/BUYER_NAME_KEYWORDS] [se
 
 * The order of the name keywords does not matter. e.g. `Maple Villa` will match `Villa Maple`.
 * The following prefixes can be used:
-    * `prop/PROPERTY_NAME_KEYWORDS` to search property names by keywords (case-insensitive).
-    * `buyer/BUYER_NAME_KEYWORDS` to search buyer names by keywords (case-insensitive).
-    * `seller/SELLER_NAME_KEYWORDS` to search seller names by keywords (case-insensitive).
-    * `status/STATUS` to search by deal status (case-insensitive).
-    * `price_</PRICE_BELOW` to search by price below a certain value.
-    * `price_>/PRICE_ABOVE` to search by price above a certain value.
+    * `prop/PROPERTY_NAME_KEYWORDS` to search property names by keywords (case-insensitive)
+    * `buyer/BUYER_NAME_KEYWORDS` to search buyer names by keywords (case-insensitive)
+    * `seller/SELLER_NAME_KEYWORDS` to search seller names by keywords (case-insensitive)
+    * `status/STATUS` to search by deal status (case-insensitive)
+    * `price_</PRICE_BELOW` to search by price below a certain value
+    * `price_>/PRICE_ABOVE` to search by price above a certain value
 * For the name keywords, only full words will be matched e.g. `Han` will not match `Hans`.
 * The PRICE keyword used must follow the constraints defined in `add_deal` command.
 * Not all prefixes need to be used. You can use any combination of the above prefixes.
@@ -448,6 +464,7 @@ Format: `delete_event INDEX`
 
 * Deletes the event with the corresponding `INDEX`.
 * The INDEX **must be a positive integer** that does not exceed the event list size.
+* Extra parameters results in an error.
 * **WARNING**: Deleting an event is not reversible.
 
 Examples:
@@ -487,8 +504,8 @@ REconnect data are saved automatically as a JSON file `[JAR file location]/data/
 <box type="warning" seamless></box>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, REConnect will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the REConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
 ## FAQ
@@ -544,10 +561,10 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 | Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add Property**  | `add_property prop/PROPERTY_NAME owner/OWNER_NAME addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa owner/Amy Bee addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
-**Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [owner/OWNER] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1600 desc/Newly renovated`
+**Add Property**  | `add_property prop/PROPERTY_NAME owner/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa owner/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
+**Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [owner/OWNER_ID] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1600 desc/Newly renovated`
 **Delete Property** | `delete_property INDEX`<br> e.g., `delete_property 1`
-**Find Property** | `find_property [name_keywords/KEYWORDS] [owner/OWNER] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE]`<br> e.g., `find_property addr/123 Main St OR_price_>/1000 OR_size_>/500`
+**Find Property** | `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [owner/OWNER]`<br> e.g., `find_property addr/123 Main St OR_price_>/1000 OR_size_>/500`
 **List Properties** | `list_properties`
 
 ### Deal Commands
@@ -555,7 +572,7 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 | Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add Deal**      | `add_deal pid/PROPERTY_ID buyer/BUYER_ID price/PRICE [status/STATUS]` <br> e.g., `add_deal pid/1 buyer/1 price/100 status/CLOSED`
-**Update Deal**   | `update_deal INDEX [pid/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`<br> e.g., `update_deal 3 status/CLOSED`
+**Update Deal**   | `update_deal INDEX [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`<br> e.g., `update_deal 3 status/CLOSED`
 **Find Deal**     | `find_deal [prop/PROPERTY_NAME_KEYWORDS] [buyer/BUYER_NAME_KEYWORDS] [seller/SELLER_NAME_KEYWORDS] [status/STATUS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE]`<br> e.g., `find_deal prop/Ocean OR_status/PENDING`
 **List Deals**    | `list_deals`
 

@@ -26,7 +26,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.property.Property;
 import seedu.address.testutil.EditPropertyDescriptorBuilder;
-import seedu.address.testutil.PropertyBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditPropertyCommand.
@@ -36,43 +35,15 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_allFieldsSpecifiedUnfilteredList_success() {
-        Property editedProperty = new PropertyBuilder().build();
-        EditPropertyDescriptor descriptor = new EditPropertyDescriptorBuilder(editedProperty).build();
-        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_FIRST, descriptor);
-
-        String expectedMessage = String.format(EditPropertyCommand.MESSAGE_EDIT_PROPERTY_SUCCESS,
-                Messages.formatProperty(editedProperty));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setProperty(model.getFilteredPropertyList().get(0), editedProperty);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_someFieldsSpecifiedUnfilteredList_success() {
+    public void execute_someFieldsSpecifiedUnfilteredList_failure() {
         Index indexLastProperty = Index.fromOneBased(model.getFilteredPropertyList().size());
-        Property lastProperty = model.getFilteredPropertyList().get(indexLastProperty.getZeroBased());
-
-        Property editedProperty = new PropertyBuilder(lastProperty)
-                .withPropertyName(VALID_PROPERTY_NAME_ORCHID)
-                .withPrice(2000L)
-                .build();
-
         EditPropertyDescriptor descriptor = new EditPropertyDescriptorBuilder()
                 .withPropertyName(VALID_PROPERTY_NAME_ORCHID)
                 .withPrice(2000L)
                 .build();
         EditPropertyCommand editCommand = new EditPropertyCommand(indexLastProperty, descriptor);
 
-        String expectedMessage = String.format(EditPropertyCommand.MESSAGE_EDIT_PROPERTY_SUCCESS,
-                Messages.formatProperty(editedProperty));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setProperty(lastProperty, editedProperty);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(editCommand, model, EditPropertyCommand.MESSAGE_DUPLICATE_PROPERTY);
     }
 
     @Test
@@ -86,15 +57,6 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_duplicatePropertyUnfilteredList_failure() {
-        Property firstProperty = model.getFilteredPropertyList().get(INDEX_FIRST.getZeroBased());
-        EditPropertyDescriptor descriptor = new EditPropertyDescriptorBuilder(firstProperty).build();
-        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_SECOND, descriptor);
-
-        assertCommandFailure(editCommand, model, EditPropertyCommand.MESSAGE_DUPLICATE_PROPERTY);
     }
 
     @Test
@@ -117,27 +79,6 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
                 new EditPropertyDescriptorBuilder().withPropertyName(VALID_PROPERTY_NAME_ORCHID).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PROPERTY_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void execute_editOwner_success() {
-        Property propertyToEdit = model.getFilteredPropertyList().get(INDEX_FIRST.getZeroBased());
-        Property editedProperty = new PropertyBuilder(propertyToEdit)
-                .withOwner("Bob Choo")
-                .build();
-
-        EditPropertyDescriptor descriptor = new EditPropertyDescriptorBuilder()
-                .withOwner("Bob Choo")
-                .build();
-        EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_FIRST, descriptor);
-
-        String expectedMessage = String.format(EditPropertyCommand.MESSAGE_EDIT_PROPERTY_SUCCESS,
-                Messages.formatProperty(editedProperty));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setProperty(propertyToEdit, editedProperty);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test

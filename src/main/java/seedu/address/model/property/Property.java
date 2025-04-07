@@ -71,8 +71,7 @@ public class Property implements Nameable<Property> {
         }
 
         return otherProperty != null
-                && otherProperty.getFullName().equals(getFullName())
-                && otherProperty.getAddress().equals(getAddress());
+                && otherProperty.getFullName().equals(getFullName());
     }
 
     /**

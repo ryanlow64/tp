@@ -31,9 +31,8 @@ public class FindClientCommand extends FindCommand<Client> {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS]\n"
-            + "Note: At least one parameter must be provided. The first parameter is applied unconnectively, "
-            + "and if more parameters are provided, all must be combined with the same connective operator either"
-            + "'AND' or 'OR'.\n"
+            + "Note: At least one parameter must be provided. If more than 1 parameter is provided, all must be "
+            + "combined with the same connective operator either 'AND' or 'OR'.\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_KEYWORDS + "Alice " + PREFIX_PHONE.getOrPrefix()
             + "12345678";
 

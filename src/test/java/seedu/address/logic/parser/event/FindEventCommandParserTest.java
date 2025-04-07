@@ -55,7 +55,7 @@ public class FindEventCommandParserTest {
     @Test
     public void parse_invalidEventType_throwsParseException() {
         // Invalid event type provided
-        String input = "with/Alice type/invalidType";
+        String input = "with/Alice etype/invalidType";
         assertThrows(ParseException.class, () -> parser.parse(FindEventCommand.COMMAND_WORD + " " + input));
     }
 }

@@ -12,13 +12,14 @@ import seedu.address.model.commons.Name;
 public class PropertyName implements Name<Property> {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+        "Names should only contain alphanumeric characters, the special characters '@', '&' and spaces, it should "
+            + "not be blank and should not exceed " + MAX_LENGTH + " characters";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} @&]*";
 
     public final String fullName;
 
@@ -37,7 +38,7 @@ public class PropertyName implements Name<Property> {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidPropertyName(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.length() <= MAX_LENGTH && test.matches(VALIDATION_REGEX);
     }
 
     @Override

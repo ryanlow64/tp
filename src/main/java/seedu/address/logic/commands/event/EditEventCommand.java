@@ -98,6 +98,14 @@ public class EditEventCommand extends EditCommand<Event> {
         Event eventToEdit = lastShownList.get(index.getZeroBased());
         Event editedEvent = createEditedEvent(eventToEdit, editEventDescriptor, model);
 
+        // check if event conflicts with existing events
+        for (Event event : model.getFilteredEventList()) {
+            if (event.getDateTime().equals(editedEvent.getDateTime())) {
+                logger.warning("Conflict with existing event");
+                throw new CommandException(MESSAGE_EVENT_CONFLICT);
+            }
+        }
+
         if (!eventToEdit.isSameEvent(editedEvent) && model.hasEvent(editedEvent)) {
             throw new CommandException(MESSAGE_EVENT_CONFLICT);
         }

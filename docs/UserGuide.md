@@ -112,10 +112,14 @@ Creates a new client in REconnect.
 Format: `add_client name/NAME phone/PHONE_NUMBER [email/EMAIL] [addr/ADDRESS]`
 
 * The client's name must be provided.
+* The client's name must not be empty and must not exceed 50 characters.
+* The client's must be a alphanumeric string and can contain spaces, and the special characters `/` and `\`.
+* **Note**: While the client's name can contain the special characters `/` and `\`, they should not be at the start of the client's name.
 * The client's phone number must be provided, must start with either 6, 8 or 9, and must be exactly 8 digits long.
 * The client's email and address are optional fields.
 * No two clients can have the same name or phone number, but they can have the same email address, for example, multiple people can share the same corporate email address
-* Client names with different casings are accepted (i.e. "Bernice Yu" and "bernice yu" are distinct names)
+* Client names with different casings are allowed (i.e. "Bernice Yu" and "bernice yu" are distinct names)
+* Duplicate names are not allowed
 * Multiple spaces in between names are accepted, similar to how you can do that in the contact list of your phone e.g. "John      Doe"
 
 Examples:
@@ -198,31 +202,34 @@ Examples:
 
 Creates a new property in REconnect.
 
-Format: `add_property prop/PROPERTY_NAME cid/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]`
+Format: `add_property prop/PROPERTY_NAME owner/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]`
 
-* Adds a property with the specified details
-* The property name must be provided
-* Duplicate property names are not accepted (Case Sensitive i.e. "Maple Villa" and "maple villa" are distinct names)
-* Multiple spaces in between names are accepted (i.e. "Maple Villa" and "Maple     Villa" are distinct property names that are valid)
-* The owner ID refer to the index numbers shown in the displayed lists
-* The ID **must be positive integers** that do not exceed the client list size
-* The address must be provided
-* The price must be provided
-* PRICE must be a positive integer and is in thousands of S$ and must be between 3 and 6 digits
-* Both size and description are optional fields
-* SIZE must be a positive integer and is in square feet
-* SIZE should only contain integers from [100, 99999]
-* Description if provided should be between 1 and 50 characters
+* Adds a property with the specified details.
+* The property name must be provided.
+* The property name must not be empty and must not exceed 50 characters.
+* The property name must be a alphanumeric string and can contain spaces, and the special characters `&` and `@`.
+* **Note**: While the property name can contain the special characters `&` and `@`, they should not be at the start of the property name.
+* Duplicate property names are not accepted (Case Sensitive i.e. "Maple Villa" and "maple villa" are distinct names).
+* Multiple spaces in between names are accepted (i.e. "Maple Villa" and "Maple     Villa" are distinct property names that are valid).
+* The owner ID refer to the index numbers shown in the displayed lists.
+* The ID **must be positive integers** that do not exceed the client list size.
+* The address must be provided.
+* The price must be provided.
+* PRICE must be a positive integer and is in thousands of S$ and must be between 3 and 6 digits.
+* Both size and description are optional fields.
+* SIZE must be a positive integer and is in square feet.
+* SIZE should only contain integers from [100, 99999].
+* Description if provided should be between 1 and 50 characters.
 
 Examples:
-* `add_property prop/Sunset Villa cid/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
-* `add_property prop/Ocean Heights cid/2 addr/456 Marina Boulevard price/2800 size/1500`
+* `add_property prop/Sunset Villa owner/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
+* `add_property prop/Ocean Heights owner/2 addr/456 Marina Boulevard price/2800 size/1500`
 
 ### Editing a property : `edit_property`
 
 Edits an existing property in REconnect.
 
-Format: `edit_property INDEX [prop/PROPERTY_NAME] [cid/OWNER_ID] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`
+Format: `edit_property INDEX [prop/PROPERTY_NAME] [owner/OWNER_ID] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`
 
 * Edits the property at the specified `INDEX`. The index refers to the index number shown in the displayed property list, and should be a _positive integer_ e.g. 1, 2, 3, ...
 * At least one of the optional fields must be provided.
@@ -237,7 +244,7 @@ Examples:
 
 Displays all properties that match the specified criteria for name keywords, address, price, size, and/or owner.
 
-Format: `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [cid/OWNER_ID]`
+Format: `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [owner/OWNER]`
 
 * The order of the name keywords does not matter. e.g. `Maple Villa` will match `Villa Maple`.
 * The following prefixes can be used:
@@ -554,8 +561,8 @@ Furthermore, certain edits can cause the REConnect to behave in unexpected ways 
 
 | Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add Property**  | `add_property prop/PROPERTY_NAME cid/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa cid/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
-**Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [cid/OWNER_ID] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1600 desc/Newly renovated`
+**Add Property**  | `add_property prop/PROPERTY_NAME owner/OWNER_ID addr/ADDRESS price/PRICE [size/SIZE] [desc/DESCRIPTION]` <br> e.g., `add_property prop/Sunset Villa owner/1 addr/123 Sunset Way price/150 size/1200 desc/Beautiful sunset view`
+**Edit Property** | `edit_property INDEX [prop/PROPERTY_NAME] [owner/OWNER_ID] [addr/ADDRESS] [price/PRICE] [size/SIZE] [desc/DESCRIPTION]`<br> e.g.,`edit_property 1 price/1600 desc/Newly renovated`
 **Delete Property** | `delete_property INDEX`<br> e.g., `delete_property 1`
 **Find Property** | `find_property [name_keywords/KEYWORDS] [addr/ADDRESS] [price_</PRICE_BELOW] [price_>/PRICE_ABOVE] [size_</SIZE_BELOW] [size_>/SIZE_ABOVE] [owner/OWNER]`<br> e.g., `find_property addr/123 Main St OR_price_>/1000 OR_size_>/500`
 **List Properties** | `list_properties`

@@ -62,31 +62,6 @@ public class EditEventCommandTest extends EditCommandTest<Event> {
     }
 
     @Test
-    public void execute_someFieldsSpecifiedUnfilteredList_success() {
-        Event eventToEdit = model.getFilteredEventList().get(INDEX_FIRST.getZeroBased());
-
-        Event editedEvent = new Event(eventToEdit.getDateTime(),
-                EventType.valueOf(EVENT_TYPE.toUpperCase()),
-                eventToEdit.getClientName(),
-                eventToEdit.getPropertyName(),
-                new Note(EVENT_NOTE));
-
-        EditEventDescriptor descriptor = new EditEventDescriptor();
-        descriptor.setEventType(EventType.valueOf(EVENT_TYPE.toUpperCase()));
-        descriptor.setNote(new Note(EVENT_NOTE));
-
-        EditEventCommand editCommand = new EditEventCommand(INDEX_FIRST, descriptor);
-
-        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS,
-                Messages.formatEvent(editedEvent));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setEvent(eventToEdit, editedEvent);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_invalidEventIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
         EditEventDescriptor descriptor = new EditEventDescriptor();

@@ -31,7 +31,7 @@ public class EventBeforeDateTimePredicateTest {
     @Test
     public void test_eventAfterCutoff_returnsFalse() {
         Event event = createEvent(LocalDateTime.of(2025, 9, 11, 19, 0));
-        assertTrue(predicate.test(event));
+        assertFalse(predicate.test(event));
     }
 
     @Test
@@ -43,6 +43,6 @@ public class EventBeforeDateTimePredicateTest {
     @Test
     public void test_eventBeforeCutoff_returnsTrue() {
         Event event = createEvent(LocalDateTime.of(2025, 4, 30, 17, 0));
-        assertFalse(predicate.test(event));
+        assertTrue(predicate.test(event));
     }
 }

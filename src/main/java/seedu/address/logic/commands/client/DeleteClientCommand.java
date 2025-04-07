@@ -75,7 +75,7 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
 
     private String existInDeals(Client clientToDelete, List<Deal> dealList) {
         ClientName clientNameToDelete = clientToDelete.getFullName();
-        StringBuilder msg = new StringBuilder("He/She is involved in the following deal(s): ");
+        StringBuilder msg = new StringBuilder("He/She is involved in the following unclosed deal(s): ");
         boolean found = false;
         for (int i = 0; i < dealList.size(); i++) {
             Deal deal = dealList.get(i);
@@ -94,7 +94,7 @@ public class DeleteClientCommand extends DeleteCommand<Client> {
 
     private String existInEvents(Client clientToDelete, List<Event> eventList) {
         ClientName clientNameToDelete = clientToDelete.getFullName();
-        StringBuilder msg = new StringBuilder("He/She is involved in the following event(s): ");
+        StringBuilder msg = new StringBuilder("He/She is involved in the following future event(s): ");
         boolean found = false;
         for (int i = 0; i < eventList.size(); i++) {
             Event event = eventList.get(i);

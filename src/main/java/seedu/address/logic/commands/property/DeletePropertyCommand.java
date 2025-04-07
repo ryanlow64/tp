@@ -73,7 +73,7 @@ public class DeletePropertyCommand extends DeleteCommand<Property> {
 
     private String existInDeals(Property propertyToDelete, List<Deal> dealList) {
         PropertyName propertyNameToDelete = propertyToDelete.getFullName();
-        StringBuilder msg = new StringBuilder("It is part of deal(s) ");
+        StringBuilder msg = new StringBuilder("It is part of unclosed deal(s) ");
         boolean found = false;
         for (int i = 0; i < dealList.size(); i++) {
             Deal deal = dealList.get(i);
@@ -91,7 +91,7 @@ public class DeletePropertyCommand extends DeleteCommand<Property> {
 
     private String existInEvents(Property propertyToDelete, List<Event> eventList) {
         PropertyName propertyNameToDelete = propertyToDelete.getFullName();
-        StringBuilder msg = new StringBuilder("It is part of event(s) ");
+        StringBuilder msg = new StringBuilder("It is part of future event(s) ");
         boolean found = false;
         for (int i = 0; i < eventList.size(); i++) {
             Event event = eventList.get(i);

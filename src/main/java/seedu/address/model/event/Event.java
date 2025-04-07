@@ -10,7 +10,7 @@ import seedu.address.model.client.ClientName;
 import seedu.address.model.property.PropertyName;
 
 /**
- * Represents an Event in the address book.
+ * Represents an Event in REconnect.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Event implements Comparable<Event> {

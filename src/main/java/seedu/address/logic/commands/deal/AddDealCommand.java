@@ -25,13 +25,13 @@ import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 
 /**
- * Adds a deal to the address book.
+ * Adds a deal to REconnect.
  */
 public class AddDealCommand extends Command {
 
     public static final String COMMAND_WORD = "add_deal";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a property deal to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a property deal to REconnect. "
             + "Parameters: "
             + PREFIX_PROPERTY_ID + "PROPERTY_ID "
             + PREFIX_BUYER + "BUYER_ID "
@@ -45,7 +45,7 @@ public class AddDealCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New deal added successfully:"
             + " Property: %1$s, Buyer: %2$s, Seller: %3$s, Price $%4$d, Status %5$s";
-    public static final String MESSAGE_DUPLICATE_DEAL = "This deal already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_DEAL = "This deal already exists in REconnect";
     public static final String MESSAGE_INVALID_PROPERTY_ID = "Invalid property ID.";
     public static final String MESSAGE_INVALID_BUYER_ID = "Invalid buyer ID.";
     public static final String MESSAGE_SAME_BUYER_SELLER = "Buyer and seller cannot be the same person.";

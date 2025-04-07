@@ -9,7 +9,7 @@ import seedu.address.model.commons.Address;
 import seedu.address.model.commons.Nameable;
 
 /**
- * Represents a Client in the address book.
+ * Represents a Client in REconnect.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Client implements Nameable<Client> {

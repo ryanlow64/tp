@@ -34,7 +34,7 @@ import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 
 /**
- * Edits the details of an existing event in the address book.
+ * Edits the details of an existing event in REconnect.
  */
 public class EditEventCommand extends EditCommand<Event> {
 

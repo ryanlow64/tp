@@ -41,7 +41,7 @@ import seedu.address.model.property.PropertyName;
 import seedu.address.model.property.Size;
 
 /**
- * Edits the details of an existing property in the address book.
+ * Edits the details of an existing property in REconnect.
  */
 public class EditPropertyCommand extends EditCommand<Property> {
 
@@ -63,7 +63,7 @@ public class EditPropertyCommand extends EditCommand<Property> {
 
     public static final String MESSAGE_EDIT_PROPERTY_SUCCESS = "Edited Property: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PROPERTY = "This property already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PROPERTY = "This property already exists in REconnect.";
     public static final String MESSAGE_INVALID_OWNER_ID = "Invalid owner ID.";
     public static final String MESSAGE_NO_CHANGES_MADE = "No changes made to the property.";
 

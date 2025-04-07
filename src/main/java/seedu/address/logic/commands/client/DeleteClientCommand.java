@@ -20,7 +20,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
 
 /**
- * Deletes a client identified using it's displayed index from the address book.
+ * Deletes a client identified using it's displayed index from REconnect.
  */
 public class DeleteClientCommand extends DeleteCommand<Client> {
 

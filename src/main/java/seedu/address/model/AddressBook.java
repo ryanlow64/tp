@@ -93,7 +93,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// client-level operations
 
     /**
-     * Returns true if a client with the same identity as {@code client} exists in the address book.
+     * Returns true if a client with the same identity as {@code client} exists in REconnect.
      */
     public boolean hasClient(Client client) {
         requireNonNull(client);
@@ -101,7 +101,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns true if a client with the same identity as {@code client} exists in the address book.
+     * Returns true if a client with the same identity as {@code client} exists in REconnect.
      */
     public boolean hasClient(Client client, Index index) {
         requireNonNull(client);
@@ -109,8 +109,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Adds a client to the address book.
-     * The client must not already exist in the address book.
+     * Adds a client to REconnect.
+     * The client must not already exist in REconnect.
      */
     public void addClient(Client p) {
         clients.add(p);
@@ -118,8 +118,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Replaces the given client {@code target} in the list with {@code editedClient}.
-     * {@code target} must exist in the address book.
-     * The client identity of {@code editedClient} must not be the same as another existing client in the address book.
+     * {@code target} must exist in REconnect.
+     * The client identity of {@code editedClient} must not be the same as another existing client in REconnect.
      */
     public void setClient(Client target, Client editedClient) {
         requireNonNull(editedClient);
@@ -129,7 +129,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
+     * {@code key} must exist in REconnect.
      */
     public void removeClient(Client key) {
         clients.remove(key);
@@ -137,14 +137,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// event operations
     /**
-     * Returns true if an event with the same identity as {@code event} exists in the address book.
+     * Returns true if an event with the same identity as {@code event} exists in REconnect.
      */
     public boolean hasEvent(Event event) {
         requireNonNull(event);
         return events.contains(event);
     }
     /**
-     * Adds an event to the address book.
+     * Adds an event to REconnect.
      */
     public void addEvent(Event event) {
         requireNonNull(event);
@@ -152,7 +152,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes an event from the address book.
+     * Removes an event from REconnect.
      */
     public void removeEvent(Event event) {
         requireNonNull(event);
@@ -166,7 +166,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// property-level operations
 
     /**
-     * Returns true if a property with the same identity as {@code property} exists in the address book.
+     * Returns true if a property with the same identity as {@code property} exists in REconnect.
      */
     public boolean hasProperty(Property property) {
         requireNonNull(property);
@@ -174,8 +174,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Adds a property to the address book.
-     * The property must not already exist in the address book.
+     * Adds a property to REconnect.
+     * The property must not already exist in REconnect.
      */
     public void addProperty(Property property) {
         properties.add(property);
@@ -183,9 +183,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Replaces the given property {@code target} in the list with {@code editedProperty}.
-     * {@code target} must exist in the address book.
+     * {@code target} must exist in REconnect.
      * The property identity of {@code editedProperty} must not be the same as
-     * another existing property in the address book.
+     * another existing property in REconnect.
      */
     public void setProperty(Property target, Property editedProperty) {
         requireNonNull(editedProperty);
@@ -195,7 +195,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
+     * {@code key} must exist in REconnect.
      */
     public void removeProperty(Property key) {
         properties.remove(key);
@@ -204,7 +204,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// deal-level operations
 
     /**
-     * Returns true if a deal with the same identity as {@code deal} exists in the address book.
+     * Returns true if a deal with the same identity as {@code deal} exists in REconnect.
      */
     public boolean hasDeal(Deal deal) {
         requireNonNull(deal);
@@ -212,8 +212,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Adds a deal to the address book.
-     * The deal must not already exist in the address book.
+     * Adds a deal to REconnect.
+     * The deal must not already exist in REconnect.
      */
     public void addDeal(Deal deal) {
         deals.add(deal);
@@ -221,8 +221,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Replaces the given deal {@code target} in the list with {@code editedDeal}.
-     * {@code target} must exist in the address book.
-     * The deal identity of {@code editedDeal} must not be the same as another existing deal in the address book.
+     * {@code target} must exist in REconnect.
+     * The deal identity of {@code editedDeal} must not be the same as another existing deal in REconnect.
      */
     public void setDeal(Deal target, Deal editedDeal) {
         requireNonNull(editedDeal);
@@ -232,7 +232,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
+     * {@code key} must exist in REconnect.
      */
     public void removeDeal(Deal key) {
         deals.remove(key);

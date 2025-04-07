@@ -12,13 +12,13 @@ import seedu.address.model.Model;
 import seedu.address.model.deal.Deal;
 
 /**
- * Lists all deals in the address book to the user.
+ * Lists all deals in REconnect to the user.
  */
 public class ListDealCommand extends ListCommand<Deal> {
     public static final String COMMAND_WORD = "list_deals";
     public static final String MESSAGE_SUCCESS = "Listed all deals";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all deals in the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all deals in REconnect. "
             + "This command does not take additional parameters.\n"
             + "Example: " + COMMAND_WORD;
 

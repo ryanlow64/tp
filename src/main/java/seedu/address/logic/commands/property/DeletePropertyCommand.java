@@ -19,7 +19,7 @@ import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 
 /**
- * Deletes a property identified using it's displayed index from the address book.
+ * Deletes a property identified using it's displayed index from REconnect.
  */
 public class DeletePropertyCommand extends DeleteCommand<Property> {
 

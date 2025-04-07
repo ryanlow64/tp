@@ -26,7 +26,7 @@ import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 
 /**
- * Updates the details of an existing deal in the address book.
+ * Updates the details of an existing deal in REconnect.
  */
 public class UpdateDealCommand extends EditCommand<Deal> {
 
@@ -46,7 +46,7 @@ public class UpdateDealCommand extends EditCommand<Deal> {
     public static final String MESSAGE_NO_FIELDS_PROVIDED = "At least one field to update must be provided";
     public static final String MESSAGE_INVALID_DEAL_ID = "Invalid deal ID";
     public static final String MESSAGE_SAME_BUYER_SELLER = "Buyer and seller cannot be the same person";
-    public static final String MESSAGE_DUPLICATE_DEAL = "This deal already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_DEAL = "This deal already exists in REconnect";
     public static final String MESSAGE_NO_CHANGES_MADE = "No changes were made to the deal";
 
     private final UpdateDealDescriptor updateDealDescriptor;

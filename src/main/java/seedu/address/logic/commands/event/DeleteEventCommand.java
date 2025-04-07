@@ -15,7 +15,7 @@ import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 
 /**
- * Deletes an event identified using its index from the address book.
+ * Deletes an event identified using its index from REconnect.
  */
 public class DeleteEventCommand extends DeleteCommand<Event> {
 

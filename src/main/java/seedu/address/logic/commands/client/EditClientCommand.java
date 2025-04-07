@@ -39,7 +39,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.property.Property;
 
 /**
- * Edits the details of an existing client in the address book.
+ * Edits the details of an existing client in REconnect.
  */
 public class EditClientCommand extends EditCommand<Client> {
 
@@ -59,7 +59,7 @@ public class EditClientCommand extends EditCommand<Client> {
 
     public static final String MESSAGE_EDIT_CLIENT_SUCCESS = "Edited Client: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_CLIENT = "This client already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_CLIENT = "This client already exists in REconnect.";
     public static final String MESSAGE_NO_CHANGES_MADE = "No changes made to the client.";
 
     private static final Logger logger = LogsCenter.getLogger(EditClientCommand.class);

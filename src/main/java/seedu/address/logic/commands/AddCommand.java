@@ -6,7 +6,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
 /**
- * Generic class for adding items to the address book.
+ * Generic class for adding items to REconnect.
  */
 public abstract class AddCommand<T> extends Command {
 

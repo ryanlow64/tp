@@ -31,9 +31,7 @@ public class DeletePropertyCommand extends DeleteCommand<Property> {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_PROPERTY_SUCCESS = "Deleted Property: %1$s";
-    public static final String MESSAGE_DELETE_PROPERTY_ERROR = "Property cannot be deleted.\n"
-            + "Property exists in either deals or events.\n"
-            + "Please delete the property from the categories before deleting the property itself.";
+    public static final String MESSAGE_DELETE_PROPERTY_ERROR = "Property %s cannot be deleted.\n";
 
     public DeletePropertyCommand(Index targetIndex) {
         super(targetIndex);
@@ -59,35 +57,54 @@ public class DeletePropertyCommand extends DeleteCommand<Property> {
 
         Property propertyToDelete = lastShownList.get(targetIndex.getZeroBased());
 
-        if (existInDeals(propertyToDelete, lastShownDealList)
-                || existInEvents(propertyToDelete, lastShownEventList)) {
-            throw new CommandException(MESSAGE_DELETE_PROPERTY_ERROR);
+        String existingDeals = existInDeals(propertyToDelete, lastShownDealList);
+        String existingEvents = existInEvents(propertyToDelete, lastShownEventList);
+
+        if (!existingDeals.isEmpty() || !existingEvents.isEmpty()) {
+            String msg = String.format(MESSAGE_DELETE_PROPERTY_ERROR, propertyToDelete.getFullName());
+            msg += existingDeals + existingEvents;
+            throw new CommandException(msg);
         }
+
         model.deleteProperty(propertyToDelete);
         return new CommandResult(String.format(
                 MESSAGE_DELETE_PROPERTY_SUCCESS, Messages.formatProperty(propertyToDelete)));
     }
 
-    private boolean existInDeals(Property propertyToDelete, List<Deal> dealList) {
+    private String existInDeals(Property propertyToDelete, List<Deal> dealList) {
         PropertyName propertyNameToDelete = propertyToDelete.getFullName();
-        for (Deal deal : dealList) {
+        StringBuilder msg = new StringBuilder("It is part of deal(s) ");
+        boolean found = false;
+        for (int i = 0; i < dealList.size(); i++) {
+            Deal deal = dealList.get(i);
             if ((propertyNameToDelete.equals(deal.getPropertyName()))
                     && deal.getStatus() != DealStatus.CLOSED) {
-                return true;
+                msg.append(i + 1).append(" ");
+                found = true;
             }
         }
-        return false;
+        if (found) {
+            return msg + ".\n";
+        }
+        return "";
     }
 
-    private boolean existInEvents(Property propertyToDelete, List<Event> eventList) {
+    private String existInEvents(Property propertyToDelete, List<Event> eventList) {
         PropertyName propertyNameToDelete = propertyToDelete.getFullName();
-        for (Event event : eventList) {
+        StringBuilder msg = new StringBuilder("It is part of event(s) ");
+        boolean found = false;
+        for (int i = 0; i < eventList.size(); i++) {
+            Event event = eventList.get(i);
             if (propertyNameToDelete.equals(event.getPropertyName())
                     && LocalDateTime.now().isBefore(event.getDateTime())) {
-                return true;
+                msg.append(i + 1).append(" ");
+                found = true;
             }
         }
-        return false;
+        if (found) {
+            return msg + ".\n";
+        }
+        return "";
     }
 
     @Override

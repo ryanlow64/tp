@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_MAPLE;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_ORCHID;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROPERTY_NAME_ORCHID;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPropertyAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
@@ -20,7 +19,6 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditCommandTest;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.property.EditPropertyCommand.EditPropertyDescriptor;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -50,13 +48,9 @@ public class EditPropertyCommandTest extends EditCommandTest<Property> {
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         EditPropertyCommand editCommand = new EditPropertyCommand(INDEX_FIRST, new EditPropertyDescriptor());
         Property editedProperty = model.getFilteredPropertyList().get(INDEX_FIRST.getZeroBased());
+        String expectedMessage = EditPropertyCommand.MESSAGE_NO_CHANGES_MADE;
 
-        String expectedMessage = String.format(EditPropertyCommand.MESSAGE_EDIT_PROPERTY_SUCCESS,
-                Messages.formatProperty(editedProperty));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(editCommand, model, expectedMessage);
     }
 
     @Test

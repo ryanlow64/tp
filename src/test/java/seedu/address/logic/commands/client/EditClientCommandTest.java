@@ -92,9 +92,7 @@ public class EditClientCommandTest extends EditCommandTest<Client> {
         String expectedMessage = String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS,
             Messages.formatClient(editedClient));
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(editCommand, model, EditClientCommand.MESSAGE_NO_CHANGES_MADE);
     }
 
     @Test

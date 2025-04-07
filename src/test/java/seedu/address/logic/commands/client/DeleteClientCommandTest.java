@@ -105,7 +105,10 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
         Index johnIndex = Index.fromOneBased(model.getFilteredClientList().size());
         DeleteClientCommand command = new DeleteClientCommand(johnIndex);
 
-        assertCommandFailure(command, model, DeleteClientCommand.MESSAGE_DELETE_CLIENT_ERROR);
+        String expectedMessage = "Client John Doe cannot be deleted.\n"
+            + "He/She is involved in the following deal(s): 1 .\n";
+
+        assertCommandFailure(command, model, expectedMessage);
     }
 
     @Test
@@ -128,7 +131,11 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
         model.addEvent(EVENT1);
         DeleteClientCommand command = new DeleteClientCommand(INDEX_FIRST);
 
-        assertCommandFailure(command, model, DeleteClientCommand.MESSAGE_DELETE_CLIENT_ERROR);
+        String expectedMessage = "Client " + model.getFilteredClientList().get(INDEX_FIRST.getZeroBased()).getFullName()
+            + " cannot be deleted.\n"
+            + "He/She is involved in the following event(s): 1 .\n";
+
+        assertCommandFailure(command, model, expectedMessage);
     }
 
     @Test
@@ -139,7 +146,10 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
         Index amyIndex = Index.fromOneBased(model.getFilteredClientList().size());
         DeleteClientCommand command = new DeleteClientCommand(amyIndex);
 
-        assertCommandFailure(command, model, DeleteClientCommand.MESSAGE_DELETE_CLIENT_ERROR);
+        String expectedMessage = "Client Amy Bee cannot be deleted.\n"
+            + "He/She is the owner of the following property(s): 1 .\n";
+
+        assertCommandFailure(command, model, expectedMessage);
     }
 
     @Test

@@ -34,7 +34,7 @@ import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyName;
 
 /**
- * Edits the details of an existing event in REconnect.
+ * Edits the details of an existing event in the address book.
  */
 public class EditEventCommand extends EditCommand<Event> {
 
@@ -105,8 +105,9 @@ public class EditEventCommand extends EditCommand<Event> {
         }
 
         // check if event conflicts with existing events
-        for (Event event : model.getFilteredEventList()) {
-            if (event.getDateTime().equals(editedEvent.getDateTime())) {
+        for (int i = 0; i < lastShownList.size(); i++) {
+            Event currentEvent = lastShownList.get(i);
+            if (i != index.getZeroBased() && currentEvent.getDateTime().equals(editedEvent.getDateTime())) {
                 logger.warning("Conflict with existing event");
                 throw new CommandException(MESSAGE_EVENT_CONFLICT);
             }

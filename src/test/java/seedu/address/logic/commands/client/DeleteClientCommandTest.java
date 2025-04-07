@@ -106,7 +106,7 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
         DeleteClientCommand command = new DeleteClientCommand(johnIndex);
 
         String expectedMessage = "Client John Doe cannot be deleted.\n"
-            + "He/She is involved in the following deal(s): 1 .\n";
+            + "He/She is involved in the following unclosed deal(s): 1 .\n";
 
         assertCommandFailure(command, model, expectedMessage);
     }
@@ -133,7 +133,7 @@ public class DeleteClientCommandTest extends DeleteCommandTest<Client> {
 
         String expectedMessage = "Client " + model.getFilteredClientList().get(INDEX_FIRST.getZeroBased()).getFullName()
             + " cannot be deleted.\n"
-            + "He/She is involved in the following event(s): 1 .\n";
+            + "He/She is involved in the following future event(s): 1 .\n";
 
         assertCommandFailure(command, model, expectedMessage);
     }

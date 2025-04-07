@@ -16,7 +16,7 @@ import seedu.address.model.property.PropertyName;
 public class EventBeforeDateTimePredicateTest {
 
     private final LocalDateTime cutoff = LocalDateTime.of(2025, 4, 30, 19, 0);
-    private final EventAfterDateTimePredicate predicate = new EventAfterDateTimePredicate(cutoff);
+    private final EventBeforeDateTimePredicate predicate = new EventBeforeDateTimePredicate(cutoff);
 
     private Event createEvent(LocalDateTime dateTime) {
         return new Event(

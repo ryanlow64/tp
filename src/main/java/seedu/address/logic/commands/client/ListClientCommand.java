@@ -9,7 +9,7 @@ import seedu.address.model.Model;
 import seedu.address.model.client.Client;
 
 /**
- * Lists all clients in the address book to the user.
+ * Lists all clients in REconnect to the user.
  */
 public class ListClientCommand extends ListCommand<Client> {
 
@@ -17,7 +17,7 @@ public class ListClientCommand extends ListCommand<Client> {
 
     public static final String MESSAGE_SUCCESS = "Listed all clients";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all clients in the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all clients in REconnect. "
             + "This command does not take additional parameters.\n"
             + "Example: " + COMMAND_WORD;
 

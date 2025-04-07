@@ -92,7 +92,7 @@ public class UpdateDealCommandParser extends EditCommandParser<Deal> {
         }
 
         if (!updateDealDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(UpdateDealCommand.MESSAGE_NO_CHANGES);
+            throw new ParseException(UpdateDealCommand.MESSAGE_NO_FIELDS_PROVIDED);
         }
 
         return new UpdateDealCommand(index, updateDealDescriptor);

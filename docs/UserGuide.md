@@ -20,7 +20,7 @@ REconnect is a **desktop application for Real Estate agents to manage their work
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-2. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T12-3/tp/releases/download/MVP/REconnect.jar).
+2. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T12-3/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for REconnect.
 
@@ -30,7 +30,7 @@ REconnect is a **desktop application for Real Estate agents to manage their work
    - **Linux**: Press `Ctrl + Alt + T` or search for "Terminal" in your applications menu.
 
 5. `cd` into the folder you put the jar file in, and use the `java -jar REconnect.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   A GUI similar to the below should appear in a few seconds. **Note:** The app contains some sample data, and it may not correspond to the data shown in the image below.<br>
 
    ![Ui](images/Ui.png)
 
@@ -76,8 +76,7 @@ This allows users to quickly re-enter previous commands without having to type t
 The most recent command is shown at the top of the list, and the oldest command is shown at the bottom. 
 Commands that caused an error are also included in the history and appear in red. 
 The command history is cleared when the application is closed.
-
-<box type="info" seamless></box>
+<box type="info" seamless>
 
 **Notes about the command format:**<br>
 
@@ -91,7 +90,7 @@ The command history is cleared when the application is closed.
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-  </box>
+</box>
 
 ### Viewing help : `help`
 
@@ -500,8 +499,7 @@ REconnect data are saved in the hard disk automatically after any command that c
 ### Editing the data file
 
 REconnect data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Users who know how JSON files work are welcome to update data directly by editing that data file.
-
-<box type="warning" seamless></box>
+<box type="warning" seamless>
 
 **Caution:**
 If your changes to the data file makes its format invalid, REConnect will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>

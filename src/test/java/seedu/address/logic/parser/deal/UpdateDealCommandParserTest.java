@@ -54,7 +54,7 @@ public class UpdateDealCommandParserTest {
         // Just a deal ID but no fields to update
         assertParseFailure(parser,
                 " " + "1",
-                UpdateDealCommand.MESSAGE_NO_CHANGES);
+                UpdateDealCommand.MESSAGE_NO_FIELDS_PROVIDED);
     }
 
     @Test

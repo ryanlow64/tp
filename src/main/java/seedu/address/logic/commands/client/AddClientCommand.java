@@ -16,13 +16,13 @@ import seedu.address.model.Model;
 import seedu.address.model.client.Client;
 
 /**
- * Adds a client to the address book.
+ * Adds a client to REconnect.
  */
 public class AddClientCommand extends AddCommand<Client> {
 
     public static final String COMMAND_WORD = "add_client";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a client to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a client to REconnect. "
         + "Parameters: "
         + PREFIX_CLIENT_NAME + "CLIENT_NAME "
         + PREFIX_PHONE + "PHONE "
@@ -35,7 +35,7 @@ public class AddClientCommand extends AddCommand<Client> {
         + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25";
 
     public static final String MESSAGE_SUCCESS = "New client added: %1$s";
-    public static final String MESSAGE_DUPLICATE_CLIENT = "This client already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_CLIENT = "This client already exists in REconnect";
 
     /**
      * Creates an AddCommand to add the specified {@code Client}

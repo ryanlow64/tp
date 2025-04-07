@@ -1,7 +1,7 @@
 package seedu.address.model.event;
 
 /**
- * Represents the available types of events in the address book.
+ * Represents the available types of events in REconnect.
  */
 public enum EventType {
     CONFERENCE, MEETING, OTHERS, WORKSHOP;

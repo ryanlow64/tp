@@ -198,6 +198,6 @@ public class CommandTestUtil {
         model.updateFilteredEventList(new EventAboutPropertyPredicate(
             new PropertyName(splitEventName[0])));
 
-        assertEquals(1, model.getFilteredPropertyList().size());
+        assertEquals(1, model.getFilteredEventList().size());
     }
 }

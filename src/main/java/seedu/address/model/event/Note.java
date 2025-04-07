@@ -3,8 +3,6 @@ package seedu.address.model.event;
 /**
  * Represents a Event in REconnect.
  * Guarantees: details are present and not null, field values are validated, immutable.
- * TODO: Implement this class
- * TODO: make all fields final
  */
 public class Note {
 

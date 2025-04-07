@@ -447,6 +447,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
+**Use case: List Clients**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to list all clients.
+2. System displays all clients in the address book.
+
+**Use case ends.**
+
+---
+
 **Use case: Add Property Listing Details**
 
 **Actor:** User (Real Estate Agent)\
@@ -549,6 +563,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3a. System fails to find the property listings with the input criteria.\
 &nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an empty list.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
+
+**Use case: List Properties**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to list all properties.
+2. System displays all properties in the address book.
+
+**Use case ends.**
 
 ---
 
@@ -777,6 +805,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User requests to list all events.
 2. System displays all deals in the address book.
+
+**Use case ends.**
+
+---
+
+**Use case: List All**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to list everything from all four categories.
+2. System displays all everything in the address book.
 
 **Use case ends.**
 
@@ -1016,6 +1058,9 @@ testers are expected to do more *exploratory* testing.
        Expected: The client at index 1 is deleted. A success message is shown in the result display.
     
     3. Test case: `delete_client 999`<br>
+       Expected: An error message is shown in the result display indicating that the client index is invalid.
+
+    4. Test case: `delete_client 1 1 1`<br>
        Expected: An error message is shown in the result display indicating that the client index is invalid.
 
 5. Listing clients

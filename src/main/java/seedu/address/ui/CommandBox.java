@@ -224,6 +224,7 @@ public class CommandBox extends UiPart<Region> {
         historyPopup.setMaxHeight(Math.min(4, commandHistory.size()) * commandTextField.getHeight() * 1.2);
         if (!historyPopup.isShowing()) {
             historyPopup.getItems().clear();
+            // This part is also adapted from the StackOverflow link given below
             historyPopup.getItems().add(commandList.get(0));
             historyPopup.show(commandTextField, Side.BOTTOM, 0, 0);
             historyPopup.getItems().addAll(commandList.stream().skip(1).toList());
@@ -232,6 +233,9 @@ public class CommandBox extends UiPart<Region> {
 
     /**
      * Custom context menu that allows for a maximum height.
+     * Code is adapted from
+     * <a href="https://stackoverflow.com/questions/31969372/how-do-i-create-a-scrollable-context-menu-in-javafx">
+     * StackOverflow</a>.
      */
     private static class MaxSizedContextMenu extends ContextMenu {
         public MaxSizedContextMenu() {

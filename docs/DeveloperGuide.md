@@ -19,6 +19,7 @@ We would like to humbly acknowledge the following for the success of our project
 * Our peers and collaborators for their support, constructive code reviews, and insightful discussions.
 * The open-source Java and JavaFX communities for providing comprehensive documentation and development tools.
 * The developers and maintainers of essential libraries and frameworks used in this project, including Jackson for JSON processing and JUnit for testing.
+* Special thanks to [samuelneo](https://github.com/samuelneo) for the idea of using emojis to represent phone and email.
 
 ### **Java Dependencies**
 
@@ -119,7 +120,7 @@ The `UI` component,
 
 Here's a (partial) class diagram of the `Logic` component:
 
-<puml src="diagrams/LogicClassDiagram.puml" width="550"/>
+<puml src="diagrams/LogicClassDiagram.puml" width="800" height="600"/>
 
 The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete_client 1")` API call as an example.
 
@@ -164,7 +165,7 @@ The `Model` component,
 
 **API** : [`Storage.java`](https://github.com/AY2425S2-CS2103T-T12-3/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
-<puml src="diagrams/StorageClassDiagram.puml" width="550" />
+<puml src="diagrams/StorageClassDiagram.puml" width="800" height="600"/>
 
 The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
@@ -1388,7 +1389,7 @@ testers are expected to do more *exploratory* testing.
       Expected: Displays events after 01-03-2025 0000.
 
    4. Test case: `find_event after/01-03-2025 0000 AND_before/30-04-2025 1700`<br>
-      Expected: Displays events after 01-03-2025 0000 and before 30-04-2025 1700.
+      Expected: Displays events between 01-03-2025 0000 and 30-04-2025 1700.
 
    5. Test case: `find_event etype/meeting`<br>
       Expected: Displays events with the type "Meeting".
@@ -1399,10 +1400,7 @@ testers are expected to do more *exploratory* testing.
    7. Test case: `find_event about/Villa`<br>
       Expected: Displays events associated with properties with names containing "Villa".
 
-   8. Test case: `find_event after/01-03-2025 0000 AND_before/30-04-2025 1700`<br>
-      Expected: Displays events before 30-04-2025 1700.
-
-   9. Test case: `find_client nonexistent/keyword`<br>
+   8. Test case: `find_client nonexistent/keyword`<br>
       Expected: An error message is shown indicating that the prefix is invalid.
 
 4. Deleting an event

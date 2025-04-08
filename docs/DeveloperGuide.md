@@ -1082,6 +1082,134 @@ testers are expected to do more *exploratory* testing.
     3. Test case: `list_clients extra_argument`<br>
        Expected: Invalid command format. Error message shown.
 
+### Property management
+
+1. Adding a property
+
+    1. Test case: `add_property prop/Sunset Villa owner/1 addr/123 Sunset Way price/150`\
+       Expected: A new property is added with the name "Sunset Villa", owner as client at index 1, address "123 Sunset Way", price "\$150k", size and description as "-". A success message is shown in the results display.
+
+    2. Test case: `add_property prop/Ocean@Front owner/2 addr/456 Beach Blvd price/1200 size/1000 desc/Beautiful sea view`\
+       Expected: A new property is added with the name "Ocean\@Front", owner as client at index 2, address "456 Beach Blvd", price "\$1200k", size "1000 square feet" and description "Beautiful sea view". A success message is shown in the results display.
+
+    3. Test case: `add_property prop/@@Villa owner/2 addr/789 Sea St price/900`\
+       Expected: An error message is shown in the result display as property name cannot begin with special characters.
+
+    4. Test case: `add_property prop/Maple Villa owner/99 addr/123 Maple Street price/500`\
+       Expected: An error message is shown in the result display indicating invalid owner ID.
+
+    5. Test case: `add_property prop/Maple Villa owner/1 addr/123 Maple Street price/-50`\
+       Expected: An error message is shown in the result display indicating price must be a positive integer in thousands.
+
+    6. Test case: `add_property prop/Maple Villa owner/1 addr/123 Maple Street price/150 size/10`\
+       Expected: An error message is shown in the result display indicating size must be between 100 and 99999.
+
+    7. Test case: `add_property prop/Maple Villa owner/1 addr/123 Maple Street price/150 desc/A very very very long description exceeding fifty characters`\
+       Expected: An error message is shown in the result display indicating description must be 1-50 characters.
+
+    8. Test case: `add_property prop/Maple Villa owner/1 addr/123 Maple Street`\
+       Expected: An error message is shown in the result display indicating invalid command format as price is a required field.
+
+2. Editing a property
+
+    1. Prerequisites: There must be at least one client in the client list. Use the `list_properties` to verify this and note its index.
+
+    2. Test case: `edit_property 1 prop/New Name`\
+       Expected: The property at index 1 is updated with the name "New Name". A success message is shown in the result display.
+
+    3. Test case: `edit_property 1 price/2000 size/1200 desc/Renovated`\
+       Expected: The property at index 1 is updated with the price "\$2000k", size "1200 square feet" and description "Renovated". A success message is shown in the result display.
+
+    4. Test case: `edit_property 1 owner/3`\
+       Expected: The owner of the property at index 1 is updated with the client at index 3. A success message is shown in the result display.
+
+    5. Test case: `edit_property 1 price/abcd`\
+       Expected: An error message is shown in the result display indicating price must be an integer.
+
+    6. Test case: `edit_property 1 prop/@@Invalid`\
+       Expected: An error message is shown in the result display as property name cannot begin with special characters.
+
+    7. Test case: `edit_property 99 price/1000`\
+       Expected: An error message is shown in the result display indicating invalid property index.
+
+    8. Test case: `edit_property 1`\
+       Expected: An error message is shown in the result display indicating that at least one field to edit must be provided.
+
+3. Finding a property
+
+    1. Prerequisites: There must be multiple property listings with different names, owners, addresses, sizes and descriptions.; 
+        To properly test all cases, ensure you have:
+
+        - At least one property with "Villa" in their name (e.g., "Maple Villa");
+
+        - At least one property with "Alice" in its owner name
+
+        - At least one property with "Sunset" in their address
+
+        - At least one property with price above \$500k
+
+        - At least one property with price below \$200k
+
+        - At least one property with size above 1000 square feet
+
+        - At least one property with description "Beautiful"
+
+    2. Test case: `find_property name_keywords/Villa`\
+       Expected: Displays properties whose names contain the word "Villa".
+
+    3. Test case: `find_property owner/Alice`\
+       Expected: Displays properties owned by a client whose name includes "Alice".
+
+    4. Test case: `find_property addr/Sunset`\
+       Expected: Displays properties whose addresses contain the word "Sunset".
+
+    5. Test case: `find_property price_>/500`\
+       Expected: Displays properties priced above \$500k.
+
+    6. Test case: `find_property price_</200`\
+       Expected: Displays properties priced below \$200k.
+
+    7. Test case: `find_property size_>/1000`\
+       Expected: Displays properties with size above 1000 square feet.
+
+    8. Test case: `find_property addr/Sunset AND_price_>/500`\
+       Expected: Displays properties with addresses containing "Sunset" and priced above \$500k.
+
+    9. Test case: `find_property name_keywords/Villa OR_price_</200`\
+       Expected: Displays properties whose names contain the word "Villa" or priced below \$200k.
+
+    10. Test case: `find_property price_>/abc`\
+        Expected: An error message is shown in the result display indicating price must be an integer.
+
+    11. Test case: `find_property name_keywords/NonexistentName`
+
+        Expected: No properties found. Result display shows "0 properties are found and listed here!".
+
+4. Deleting a property
+
+    1. Prerequisites: There must be at least one property in the property list. Use the `list_properties` command to verify this and note its index.
+
+    2. Test case: `delete_property 1`\
+       Expected: The property at index 1 is deleted. A success message is shown in the result display.
+
+    3. Test case: `delete_property 999`\
+       Expected: An error message is shown in the result display indicating that the property index is invalid.
+
+    4. Test case: `delete_property 1 1 1`\
+       Expected: An error message is shown in the result display indicating that the property index is invalid.
+
+5. Listing properties
+
+    1. Prerequisites: The property list has been filtered using `find_property`.
+
+    2. Test case: `list_properties`\
+       Expected: All properties are displayed, showing the complete, unfiltered list.
+
+    3. Test case: `list_properties extra_argument`
+
+    4. Expected: An error message is shown in the result display indicating invalid command format.
+
+
 ### Deal management
 
 1. Adding a deal

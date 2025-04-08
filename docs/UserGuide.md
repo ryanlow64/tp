@@ -173,7 +173,7 @@ Examples:
 * `edit_client 1 phone/91234567 email/johndoe@example.com` edits the phone number and email address of the 1st client to be `91234567` and `johndoe@example.com` respectively.
 * `edit_client 2 name/Betsy Crower` edits the name of the 2nd client to be `Betsy Crower`.
 
-### Locating clients: `find_client`
+### Finding clients: `find_client`
 
 Displays all clients that match the given criteria.
 

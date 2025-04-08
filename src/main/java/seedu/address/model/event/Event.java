@@ -71,13 +71,16 @@ public class Event implements Comparable<Event> {
                 && this.propertyName.equals(otherEvent.propertyName);
     }
 
+    /**
+     * Same rules as {@code isSameEvent}, with an additional equality rule for {@code note}.
+     */
     @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;
         }
         if (other instanceof Event otherEvent) {
-            return isSameEvent(otherEvent);
+            return isSameEvent(otherEvent) && this.note.equals(otherEvent.note);
         }
         return false;
     }

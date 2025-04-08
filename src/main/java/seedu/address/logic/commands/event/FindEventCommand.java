@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_BEFORE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_WITH;
 
+import java.text.MessageFormat;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -73,7 +74,7 @@ public class FindEventCommand extends FindCommand<Event> {
         model.updateFilteredEventList(predicate);
         int eventsFound = model.getFilteredEventList().size();
         logger.info("Found " + eventsFound + " events satisfying the predicate");
-        return new CommandResult(String.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, eventsFound));
+        return new CommandResult(MessageFormat.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, eventsFound));
     }
 
     @Override

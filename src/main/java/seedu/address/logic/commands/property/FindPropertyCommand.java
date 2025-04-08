@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE_BELOW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE_ABOVE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIZE_BELOW;
 
+import java.text.MessageFormat;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -72,7 +73,7 @@ public class FindPropertyCommand extends FindCommand<Property> {
         requireNonNull(model);
         model.updateFilteredPropertyList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_PROPERTIES_LISTED_OVERVIEW, model.getFilteredPropertyList().size()));
+                MessageFormat.format(Messages.MESSAGE_PROPERTIES_LISTED_OVERVIEW, model.getFilteredPropertyList().size()));
     }
 
     @Override

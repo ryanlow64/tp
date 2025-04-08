@@ -46,7 +46,8 @@ public class EventTest {
         Event eventDifferentNote = new Event(dateTime1, EventType.MEETING, clientName1, propertyName1, note2);
 
         assertTrue(event1.equals(event2));
-        assertTrue(event1.equals(eventDifferentNote));
+        assertFalse(event1.equals(eventDifferentNote));
+        assertTrue(event1.isSameEvent(eventDifferentNote));
 
         Event eventDifferentDate = new Event(dateTime2, EventType.MEETING, clientName1, propertyName1, note1);
         assertFalse(event1.equals(eventDifferentDate));

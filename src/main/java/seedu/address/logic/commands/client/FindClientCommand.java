@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_KEYWORDS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
+import java.text.MessageFormat;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -58,7 +59,7 @@ public class FindClientCommand extends FindCommand<Client> {
         requireNonNull(model);
         model.updateFilteredClientList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_CLIENTS_LISTED_OVERVIEW, model.getFilteredClientList().size()));
+                MessageFormat.format(Messages.MESSAGE_CLIENTS_LISTED_OVERVIEW, model.getFilteredClientList().size()));
     }
 
     @Override

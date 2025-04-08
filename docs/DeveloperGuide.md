@@ -447,6 +447,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
+**Use case: List Clients**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to list all clients.
+2. System displays all clients in the address book.
+
+**Use case ends.**
+
+---
+
 **Use case: Add Property Listing Details**
 
 **Actor:** User (Real Estate Agent)\
@@ -549,6 +563,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3a. System fails to find the property listings with the input criteria.\
 &nbsp;&nbsp;&nbsp;&nbsp;3a1. System displays an empty list.\
 &nbsp;&nbsp;&nbsp;&nbsp;**Use case ends.**
+
+---
+
+**Use case: List Properties**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to list all properties.
+2. System displays all properties in the address book.
+
+**Use case ends.**
 
 ---
 
@@ -780,6 +808,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case ends.**
 
+---
+
+**Use case: List All**
+
+**Actor:** User (Real Estate Agent)\
+**Preconditions:** The system is running.
+
+**MSS**
+
+1. User requests to list everything from all four categories.
+2. System displays all everything in the address book.
+
+**Use case ends.**
+
 ### Non-Functional Requirements
 
 1. The system must process all user commands within 2 seconds.
@@ -853,6 +895,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ## **Appendix: Planned Enhancements**
 
+<box type="info" seamless>
+Team size: 5
+</box>
+
 1. Allow for other valid phone number formats (e.g., `+65 8287 2001`, `65-8287-2001`, etc.) to be accepted.
 
 2. Improve validation for emails for clients.
@@ -876,6 +922,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 6. Allow optional parameters when adding events.
    - Currently, parameters such as `cid` and `pid` are compulsory. This may not make sense for some event types like `workshop` or `others`.
    - Some parameters can be made optional for certain event types.
+
+7. Properties with different property names but same address can be added.
+   - Currently, only properties with same names will be counter as duplicate.
+   - Eg. Address of property A with name "Maple Villa" is "321 Clementi Avenue 1, #11-11" and of property B with name "Sunset Villa" is "321 Clementi Avenue 1, #11-11", yet both property listings can coexist in REConnect, which should not be the case.
+   - Validation for exact same address will be done in the future.
 
 ## **Appendix: Instructions for manual testing**
 
@@ -907,8 +958,8 @@ testers are expected to do more *exploratory* testing.
 
 1. Adding a client
     
-   1. Test case: `add_client name/John Doe phone/82872001`<br>
-      Expected: A new client is added with the name "John Doe", phone number "82872001", email and address as "(blank)".
+   1. Test case: `add_client name/John O'Doe phone/82872001`<br>
+      Expected: A new client is added with the name "John O'Doe", phone number "82872001", email and address as "(blank)".
       A success message is shown in the result display.
 
    2. Test case: `add_client name/John S/O Doe phone/82872001`<br>
@@ -1020,6 +1071,9 @@ testers are expected to do more *exploratory* testing.
        Expected: The client at index 1 is deleted. A success message is shown in the result display.
     
     3. Test case: `delete_client 999`<br>
+       Expected: An error message is shown in the result display indicating that the client index is invalid.
+
+    4. Test case: `delete_client 1 1 1`<br>
        Expected: An error message is shown in the result display indicating that the client index is invalid.
 
 5. Listing clients

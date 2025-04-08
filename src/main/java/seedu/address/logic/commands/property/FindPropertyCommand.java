@@ -29,18 +29,17 @@ public class FindPropertyCommand extends FindCommand<Property> {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all properties that match the "
             + "specified criteria for name keywords, address, price, size, and/or owner.\nParameters: "
-                    + "[" + PREFIX_KEYWORDS + "KEYWORDS] "
-                    + "[" + PREFIX_ADDRESS + "ADDRESS] "
-                    + "[" + PREFIX_PRICE_BELOW + "PRICE_BELOW] "
-                    + "[" + PREFIX_PRICE_ABOVE + "PRICE_ABOVE] "
-                    + "[" + PREFIX_SIZE_BELOW + "SIZE_BELOW] "
-                    + "[" + PREFIX_SIZE_ABOVE + "SIZE_ABOVE] "
-                    + "[" + PREFIX_OWNER + "OWNER]\n"
-                    + "Note: At least one parameter must be provided. The first parameter is applied unconnectively, "
-                    + "and if more parameters are provided, all must be combined with the same connective operator "
-                    + "either 'AND' or 'OR'.\n"
-                    + "Example: " + COMMAND_WORD + " " + PREFIX_OWNER + "John Doe " + PREFIX_PRICE_ABOVE.getAndPrefix()
-                    + "500";
+            + "[" + PREFIX_KEYWORDS + "KEYWORDS] "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_PRICE_BELOW + "PRICE_BELOW] "
+            + "[" + PREFIX_PRICE_ABOVE + "PRICE_ABOVE] "
+            + "[" + PREFIX_SIZE_BELOW + "SIZE_BELOW] "
+            + "[" + PREFIX_SIZE_ABOVE + "SIZE_ABOVE] "
+            + "[" + PREFIX_OWNER + "OWNER]\n"
+            + "Note: At least one parameter must be provided. If more than 1 parameter is provided, all must be "
+            + "combined with the same connective operator either 'AND' or 'OR'.\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_OWNER + "John Doe " + PREFIX_PRICE_ABOVE.getAndPrefix()
+            + "500";
 
     private final Predicate<Property> predicate;
 

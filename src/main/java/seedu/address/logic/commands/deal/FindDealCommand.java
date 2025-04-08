@@ -33,14 +33,13 @@ public class FindDealCommand extends FindCommand<Deal> {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays all deals that match the specified criteria "
             + "for buyer, seller, property name, deal status, and/or price\n"
             + "Parameters: "
-            + "[" + PREFIX_PROPERTY_NAME + "PROPERTY_NAME] "
-            + "[" + PREFIX_BUYER + "BUYER_NAME] "
-            + "[" + PREFIX_SELLER + "SELLER_NAME] "
+            + "[" + PREFIX_PROPERTY_NAME + "PROPERTY_NAME_KEYWORDS] "
+            + "[" + PREFIX_BUYER + "BUYER_NAME_KEYWORDS] "
+            + "[" + PREFIX_SELLER + "SELLER_NAME_KEYWORDS] "
             + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_PRICE_ABOVE + "PRICE_ABOVE] "
             + "[" + PREFIX_PRICE_BELOW + "PRICE_BELOW]\n"
-            + "Note: At least one parameter must be provided. The first parameter is applied unconnectively, "
-            + "and if more parameters are provided, all must be "
+            + "Note: At least one parameter must be provided. If more than 1 parameter is provided, all must be "
             + "combined with the same connective operator either 'AND' or 'OR'.\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PROPERTY_NAME + "Villa " + PREFIX_STATUS.getAndPrefix()
             + "PENDING";

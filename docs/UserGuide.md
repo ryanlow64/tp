@@ -418,7 +418,7 @@ Examples:
 
 ### Editing an event : `edit_event`
 
-Edits an existing event in REConnect at the specified index.
+Edits an existing event in REconnect at the specified index.
 
 Format: `edit_event INDEX [at/EVENT_DATE_TIME] [etype/EVENT_TYPE] [cid/CLIENT_ID] [pid/PROPERTY_ID] [note/NOTE]`
 
@@ -520,8 +520,8 @@ REconnect data are saved in the hard disk automatically after any command that c
 REconnect data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Users who know how JSON files work are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
-    If your changes to the data file makes its format invalid, REConnect will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-    Furthermore, certain edits can cause the REConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Edit the data file only if you are confident that you can update it correctly.
+    If your changes to the data file makes its format invalid, REconnect will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+    Furthermore, certain edits can cause the REconnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Edit the data file only if you are confident that you can update it correctly.
 </box>
 
 <div style="page-break-after: always;"></div>

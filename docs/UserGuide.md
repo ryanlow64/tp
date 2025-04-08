@@ -194,7 +194,7 @@ Examples:
 * `find_client name_keywords/John` returns `John` and `John Doe`.
 * `find_client name_keywords/Alice David` returns `Alice Yeoh`, `David Li`.
 * `find_client name_keywords/John AND_addr/123 Main St AND_email/example.com` returns clients with `John` being part of the name
-and address containing `123 Main St` (case-insensitive) and email containing `example.com`<br>.
+and address containing `123 Main St` (case-insensitive) and email containing `example.com`.
 
 ### Listing all clients : `list_clients`
 
@@ -351,7 +351,7 @@ Updates an existing deal in REconnect at the specified index.
 
 Format: `update_deal INDEX [prop/PROPERTY_ID] [buyer/BUYER_ID] [price/PRICE] [status/STATUS]`
 
-* 💡 At least one of the optional fields must be provided
+* 💡 At least one of the optional fields must be provided.
 * The index refers to the index number shown in the displayed deal list, and should be a _positive integer_ that does not exceed the deal list size.
 * The specified property ID and buyer ID must refer to existing entities in REconnect.
 * Price is in thousands and must have 3 to 6 digits.
@@ -449,11 +449,12 @@ Format: `find_event [before/TIMESTAMP] [after/TIMESTAMP] [etype/EVENT_TYPE] [wit
 * All prefixes except for the first one must have a connective keyword prefix `AND_` or `OR_` (case-sensitive). The prefixes used must be of the same type: either all `AND_`, or all `OR_`.
 * The order of the name keywords does not matter. e.g. `Maple Villa` will match `Villa Maple`.
 * The following prefixes can be used:
-    * `with/CLIENT_NAME_KEYWORDS` to search client names by keywords (case-insensitive)
-    * `about/PROPERTY_NAME_KEYWORDS` to search property names by keywords (case-insensitive)
-    * `etype/EVENT_TYPE` to search by event type (case-insensitive)
     * `before/TIMESTAMP` to search for events before a certain date and time
     * `after/TIMESTAMP` to search for events after a certain date and time
+    * `etype/EVENT_TYPE` to search by event type (case-insensitive)
+    * `with/CLIENT_NAME_KEYWORDS` to search client names by keywords (case-insensitive)
+    * `about/PROPERTY_NAME_KEYWORDS` to search property names by keywords (case-insensitive)
+
 * For the name keywords, only full words will be matched e.g. `Han` will not match `Hans`.
 * The TIMESTAMP keyword(s) used must follow the constraints defined in `add_event` command.
 
@@ -555,7 +556,7 @@ REconnect data are saved automatically as a JSON file `[JAR file location]/data/
 **A**: Yes, updating a client's name will automatically update their name in all deals where they appear as a buyer or seller.
 
 **Q**: Can I convert the price to a different currency?<br>
-**A**: No, REconnect currently only supports prices in Singapore dollars (S$). All prices are displayed and stored in thousands of S$.
+**A**: No, REconnect currently only supports prices in Singapore dollars (S\$). All prices are displayed and stored in thousands of S\$.
 
 **Q**: What's the difference between using `AND_` and `OR_` in deal searches?<br>
 **A**: Using `AND_` means all conditions must be met (e.g., specific buyer AND specific status), while `OR_` means any condition can be met (e.g., specific buyer OR specific status).

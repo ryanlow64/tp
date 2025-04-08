@@ -1403,7 +1403,7 @@ testers are expected to do more *exploratory* testing.
       Expected: Displays events before 30-04-2025 1700.
 
    9. Test case: `find_client nonexistent/keyword`<br>
-      Expected: An error message is shown indicating that the format is invalid.
+      Expected: An error message is shown indicating that the prefix is invalid.
 
 4. Deleting an event
 

@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalDeals.DEAL1;
 import static seedu.address.testutil.TypicalDeals.DEAL3;
 import static seedu.address.testutil.TypicalDeals.getTypicalAddressBook;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
@@ -64,14 +65,14 @@ public class FindDealCommandTest {
 
     @Test
     public void execute_zeroKeywords_noDealsFound() {
-        String expectedMessage = String.format(MESSAGE_DEALS_LISTED_OVERVIEW, 0);
+        String expectedMessage = MessageFormat.format(MESSAGE_DEALS_LISTED_OVERVIEW, 0);
         assertThrows(IllegalArgumentException.class, () -> new FindDealCommand(preparePropertyNamePredicate(" ")));
     }
 
     @Test
     public void execute_findByPropertyName_success() {
         // Villa is in DEAL1 property name
-        String expectedMessage = String.format(MESSAGE_DEALS_LISTED_OVERVIEW, 1);
+        String expectedMessage = MessageFormat.format(MESSAGE_DEALS_LISTED_OVERVIEW, 1);
 
         // Create a predicate that allows all deals through except for property name filter
         Predicate<Deal> alwaysTrue = deal -> true;
@@ -87,7 +88,7 @@ public class FindDealCommandTest {
     @Test
     public void execute_findByBuyerName_success() {
         // "John" is in DEAL1 buyer name
-        String expectedMessage = String.format(MESSAGE_DEALS_LISTED_OVERVIEW, 1);
+        String expectedMessage = MessageFormat.format(MESSAGE_DEALS_LISTED_OVERVIEW, 1);
 
         // Create a predicate that allows all deals through except for buyer name filter
         Predicate<Deal> alwaysTrue = deal -> true;
@@ -103,7 +104,7 @@ public class FindDealCommandTest {
     @Test
     public void execute_findBySellerName_success() {
         // "Jane" is in DEAL1 seller name
-        String expectedMessage = String.format(MESSAGE_DEALS_LISTED_OVERVIEW, 1);
+        String expectedMessage = MessageFormat.format(MESSAGE_DEALS_LISTED_OVERVIEW, 1);
 
         // Create a predicate that allows all deals through except for seller name filter
         Predicate<Deal> alwaysTrue = deal -> true;
@@ -119,7 +120,7 @@ public class FindDealCommandTest {
     @Test
     public void execute_findByStatus_success() {
         // PENDING status will match DEAL1 and DEAL3
-        String expectedMessage = String.format(MESSAGE_DEALS_LISTED_OVERVIEW, 2);
+        String expectedMessage = MessageFormat.format(MESSAGE_DEALS_LISTED_OVERVIEW, 2);
 
         // Create a predicate that allows all deals through except for status filter
         Predicate<Deal> alwaysTrue = deal -> true;
@@ -136,7 +137,7 @@ public class FindDealCommandTest {
     public void execute_multiplePredicate_success() {
         // Create predicates for property name "Villa", buyer name "John", and seller name "Jane"
         // This should match DEAL1 only, as it has all those attributes
-        String expectedMessage = String.format(MESSAGE_DEALS_LISTED_OVERVIEW, 1);
+        String expectedMessage = MessageFormat.format(MESSAGE_DEALS_LISTED_OVERVIEW, 1);
 
         DealPropertyNameContainsPredicate propertyPredicate = preparePropertyNamePredicate("Villa");
         DealBuyerNameContainsPredicate buyerPredicate = prepareBuyerNamePredicate("John");

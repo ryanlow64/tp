@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PROPERTY_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELLER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
+import java.text.MessageFormat;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -78,7 +79,7 @@ public class FindDealCommand extends FindCommand<Deal> {
         int dealsFound = model.getFilteredDealList().size();
         logger.info("Found " + dealsFound + " deals satisfying the predicate");
 
-        return new CommandResult(String.format(Messages.MESSAGE_DEALS_LISTED_OVERVIEW, dealsFound));
+        return new CommandResult(MessageFormat.format(Messages.MESSAGE_DEALS_LISTED_OVERVIEW, dealsFound));
     }
 
     @Override

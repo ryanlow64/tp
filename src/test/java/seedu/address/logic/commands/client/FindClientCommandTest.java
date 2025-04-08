@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalClients.ELLE;
 import static seedu.address.testutil.TypicalClients.FIONA;
 import static seedu.address.testutil.TypicalClients.getTypicalAddressBook;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -56,7 +57,7 @@ public class FindClientCommandTest {
 
     @Test
     public void execute_zeroKeywords_noClientFound() {
-        String expectedMessage = String.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 0);
+        String expectedMessage = MessageFormat.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 0);
         ClientNameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindClientCommand command = new FindClientCommand(predicate);
         expectedModel.updateFilteredClientList(predicate);
@@ -66,7 +67,7 @@ public class FindClientCommandTest {
 
     @Test
     public void execute_multipleKeywords_multipleClientsFound() {
-        String expectedMessage = String.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 3);
+        String expectedMessage = MessageFormat.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 3);
         ClientNameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         FindClientCommand command = new FindClientCommand(predicate);
         expectedModel.updateFilteredClientList(predicate);
@@ -76,7 +77,7 @@ public class FindClientCommandTest {
 
     @Test
     public void execute_caseInsensitiveMatching_success() {
-        String expectedMessage = String.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 1);
+        String expectedMessage = MessageFormat.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 1);
         ClientNameContainsKeywordsPredicate predicate = preparePredicate("kuRz");
         FindClientCommand command = new FindClientCommand(predicate);
         expectedModel.updateFilteredClientList(predicate);
@@ -86,7 +87,7 @@ public class FindClientCommandTest {
 
     @Test
     public void execute_partialKeyword_noClientFound() {
-        String expectedMessage = String.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 0);
+        String expectedMessage = MessageFormat.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 0);
         ClientNameContainsKeywordsPredicate predicate = preparePredicate("arl");
         FindClientCommand command = new FindClientCommand(predicate);
         expectedModel.updateFilteredClientList(predicate);

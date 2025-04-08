@@ -15,7 +15,7 @@ REconnect is a **desktop application for Real Estate agents to manage their work
 <box type="tip" seamless>
     If you need to quickly jump back to the table of contents, try out the following shortcuts:
     <ul>
-        <li><b>Windows:</b> Press <kbd>Home</kbd> or <kbd>Ctrl + Home</kbd> (depending on the PDF reader).</li>
+        <li><b>Windows or Linux:</b> Press <kbd>Home</kbd> or <kbd>Ctrl + Home</kbd> (depending on the PDF reader).</li>
         <li><b>macOS:</b> Press <kbd>⌘ + Up Arrow</kbd>.</li>
     </ul>
 </box>

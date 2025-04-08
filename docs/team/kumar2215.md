@@ -49,4 +49,3 @@ Given below are my contributions to the project.
 * **Community**:
   * PRs reviewed (with non-trivial review comments): [\#58](https://github.com/AY2425S2-CS2103T-T12-3/tp/pull/58), [\#109](https://github.com/AY2425S2-CS2103T-T12-3/tp/pull/109)
   * Contributed to forum discussions (examples: [191](https://github.com/nus-cs2103-AY2425S2/forum/issues/191), [160](https://github.com/nus-cs2103-AY2425S2/forum/issues/160), [403](https://github.com/nus-cs2103-AY2425S2/forum/issues/403), [520](https://github.com/nus-cs2103-AY2425S2/forum/issues/520))
-  

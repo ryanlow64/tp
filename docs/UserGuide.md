@@ -556,7 +556,7 @@ REconnect data are saved automatically as a JSON file `[JAR file location]/data/
 **A**: Yes, updating a client's name will automatically update their name in all deals where they appear as a buyer or seller.
 
 **Q**: Can I convert the price to a different currency?<br>
-**A**: No, REconnect currently only supports prices in Singapore dollars (S\$). All prices are displayed and stored in thousands of S\$.
+**A**: No, REconnect currently only supports prices in Singapore dollars (S\$). _All prices are displayed and stored in thousands of S\$_.
 
 **Q**: What's the difference between using `AND_` and `OR_` in deal searches?<br>
 **A**: Using `AND_` means all conditions must be met (e.g., specific buyer AND specific status), while `OR_` means any condition can be met (e.g., specific buyer OR specific status).

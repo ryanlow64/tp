@@ -288,11 +288,11 @@ protected static void checkPrefixesUsedAreValid(List<Prefix> prefixesUsed) throw
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
-* [Documentation guide](Documentation.md)
-* [Testing guide](Testing.md)
-* [Logging guide](Logging.md)
-* [Configuration guide](Configuration.md)
-* [DevOps guide](DevOps.md)
+* [Documentation guide](https://ay2425s2-cs2103t-t12-3.github.io/tp/Documentation.html)
+* [Testing guide](https://ay2425s2-cs2103t-t12-3.github.io/tp/Testing.html)
+* [Logging guide](https://ay2425s2-cs2103t-t12-3.github.io/tp/Logging.html)
+* [Configuration guide](https://ay2425s2-cs2103t-t12-3.github.io/tp/Configuration.html)
+* [DevOps guide](https://ay2425s2-cs2103t-t12-3.github.io/tp/DevOps.html)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -903,23 +903,27 @@ Team size: 5
 
 2. Improve validation for emails for clients.
    - Currently, the regex used for email validation is not comprehensive and can be improved to cover more edge cases.
-   - Eg. alex@55.533 is considered valid, but it should not be.
-   - Eg. alex@emailcom is considered valid, but it should not be.
-   
+   - E.g. alex@55.533 is considered valid, but it should not be.
+   - E.g. alex@emailcom is considered valid, but it should not be.
+
 3. Improve validation for addresses for clients and properties.
    - Currently, any non-empty string is considered valid.
-   - Eg. 1234 is considered valid, but it should not be.
-   - Eg. @%%@% is considered valid, but it should not be.
-   
+   - E.g. 1234 is considered valid, but it should not be.
+   - E.g. @%%@% is considered valid, but it should not be.
+
 4. Add support for more complex date and time formats in the event scheduling feature.
    - Currently, only `dd-MM-yyyy HHmm` format are supported.
-   - Eg. `dd/MM/yyyy HH:mm` is not supported.
+   - E.g. `dd/MM/yyyy HH:mm` is not supported.
 
 5. Allow substring matching for client and property names in the find commands.
    - Currently, only keyword matching is supported.
-   - Eg. `find_client name_keywords/Joh` will not match `John Doe`, but it's better if it does.
+   - E.g. `find_client name_keywords/Joh` will not match `John Doe`, but it's better if it does.
 
-6. Properties with different property names but same address can be added.
+6. Allow optional parameters when adding events.
+   - Currently, parameters such as `cid` and `pid` are compulsory. This may not make sense for some event types like `workshop` or `others`.
+   - Some parameters can be made optional for certain event types.
+
+7. Properties with different property names but same address can be added.
    - Currently, only properties with same names will be counter as duplicate.
    - Eg. Address of property A with name "Maple Villa" is "321 Clementi Avenue 1, #11-11" and of property B with name "Sunset Villa" is "321 Clementi Avenue 1, #11-11", yet both property listings can coexist in REConnect, which should not be the case.
    - Validation for exact same address will be done in the future.
@@ -954,8 +958,8 @@ testers are expected to do more *exploratory* testing.
 
 1. Adding a client
     
-   1. Test case: `add_client name/John's Doe phone/82872001`<br>   
-      Expected: A new client is added with the name "John's Doe", phone number "82872001", email and address as "(blank)".
+   1. Test case: `add_client name/John O'Doe phone/82872001`<br>
+      Expected: A new client is added with the name "John O'Doe", phone number "82872001", email and address as "(blank)".
       A success message is shown in the result display.
 
    2. Test case: `add_client name/John S/O Doe phone/82872001`<br>
@@ -1017,7 +1021,7 @@ testers are expected to do more *exploratory* testing.
       Expected: An error message is shown in the result display indicating that the email is invalid.
 
    9. Test case: `edit_client 999 name/John Doe`<br>
-      Expected: An error message is shown in the result display indicating that the client index is invalid.
+      Expected: An error message is shown in the result display indicating that the client index is invalid (out of the range of the current client list).
 
    10. Test case: `edit_client 1`<br>
        Expected: An error message is shown in the result display indicating that no fields to edit were provided.
@@ -1086,7 +1090,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Adding a deal
 
-   1. Prerequisites: There must be at least one property and one client in the property and client lists.
+   1. Prerequisites: There must be at least one property and one client in the respective lists.
       Use the `list_properties` and `list_clients` commands to verify this and note their indexes.
       **Important**: Since deals cannot be deleted, you will need a different property for each add_deal test. 
       Consider adding multiple properties before testing using the `add_property` command.
@@ -1099,13 +1103,13 @@ testers are expected to do more *exploratory* testing.
       Expected: A new deal is added with default status (PENDING). Success message is shown.
 
    4. Test case: `add_deal pid/999 buyer/1 price/2000`<br>
-      Expected: No deal is added. Error message showing the property ID is invalid.
+      Expected: An error message is shown indicating that the property ID is invalid (out of the range of the current property list).
 
    5. Test case: `add_deal pid/1 buyer/999 price/2000`<br>
-      Expected: No deal is added. Error message showing the buyer ID is invalid.
+      Expected: An error message is shown indicating that the buyer ID provided is invalid (out of the range of the current client list).
 
    6. Test case: `add_deal pid/1 buyer/1 price/1`<br>
-      Expected: No deal is added. Error message showing that price must be between 3 and 6 digits.
+      Expected: An error message is shown indicating that price must be between 3 and 6 digits.
 
    7. Other incorrect add_deal commands to test:
       * `add_deal pid/a buyer/1 price/2000`: Non-integer property ID
@@ -1129,10 +1133,10 @@ testers are expected to do more *exploratory* testing.
       Expected: The buyer of the first deal is updated to the client at index 2 (if it exists). Success message is shown.
 
    5. Test case: `update_deal 0 status/CLOSED`<br>
-      Expected: No deal is updated. Error message showing that index must be a positive integer.
+      Expected: An error message is shown indicating that index must be a positive integer.
 
    6. Test case: `update_deal 999 status/CLOSED`<br>
-      Expected: No deal is updated. Error message showing that the index is invalid.
+      Expected: An error message is shown indicating that the index is invalid.
 
    7. Other incorrect update_deal commands to test:
       * `update_deal 1 pid/999`: Invalid property ID
@@ -1141,7 +1145,7 @@ testers are expected to do more *exploratory* testing.
       * `update_deal 1`: Missing all optional fields<br>
       Expected: Similar to previous test cases. Error messages specific to the invalid input are shown.
 
-3. Finding deals
+3. Finding a deal
 
    1. Prerequisites: There must be multiple deals with different properties, buyers, sellers, prices, and statuses.
       To properly test all cases, ensure you have:
@@ -1176,7 +1180,7 @@ testers are expected to do more *exploratory* testing.
       Expected: No deals found. Result display shows "0 deals listed!".
 
    10. Test case: `find_deal prop/Villa AND_price_>/10000000`<br>
-       Expected: Error message indicating that price must be between 3 and 6 digits.
+       Expected: An error message is shown indicating that price must be between 3 and 6 digits.
 
 4. Listing deals
 
@@ -1188,3 +1192,110 @@ testers are expected to do more *exploratory* testing.
    3. Test case: `list_deals extra_argument`<br>
       Expected: Invalid command format. Error message shown.
 
+### Event management
+
+1. Adding an event
+
+  1. Prerequisites: There must be at least one client and one property in the respective lists.
+    Use the `list_clients` and `list_properties` commands to verify this and note their indexes.
+   
+  2. Test case: `add_event at/30-04-2025 1700 etype/meeting cid/2 pid/1 note/Property viewing at 123 Clementi Ave 2`<br>
+     Expected: A new event is added with the specified state date and time, event type, client, property, and note.
+     A success message is shown in the result display.
+   
+  3. Test case: `add_event at/30-04-2024 1700 etype/meeting cid/2 pid/1 note/N/A`<br>
+     Expected: An error message is shown indicating that the event is scheduled too far back in the past.
+
+  4. Test case: `add_event at/30-04-2025 1700 etype/meeting cid/3 pid/3 note/Some other meeting`<br>
+     Expected: An error message is shown indicating that the event conflicts with an existing event.
+
+  4. Test case: `add_event at/30-04-2025 1900 etype/some type cid/2 pid/1 note/N/A`<br>
+     Expected: An error message is shown indicating that the event type is invalid, and the accepted event types are listed.
+
+  5. Test case: `add_event at/30-04-2025 1900 etype/meeting cid/999 pid/1 note/N/A`<br>
+     Expected: An error message is shown indicating that the client ID provided is invalid (out of the range of the current client list).
+
+  6. Test case: `add_event at/30-04-2025 1900 etype/meeting cid/2 pid/999 note/N/A`<br>
+     Expected: An error message is shown indicating that the property ID provided is invalid (out of the range of the current property list).
+
+2. Editing an event
+
+  1. Prerequisites: There must be at least one event in the event list. Use the `list_events` command to verify this and note its index.
+
+  2. Test case: `edit_event 1 at/30-04-2025 1200 note/Changed to 12pm`<br>
+     Expected: The date and time of the first event is updated to 30-04-2025 at 1200. A success message is shown.
+   
+  3. Test case: `edit_event 1 etype/others`<br>
+     Expected: The type of the first event is updated to "Others". A success message is shown.
+   
+  4. Test case: `edit_event 1 cid/1`<br>
+     Expected: The client of the first event is updated to the client at index 1. A success message is shown.
+   
+  5. Test case: `edit_event 1 note/Coffee with client`<br>
+     Expected: The note of the first event is updated as specified. A success message is shown.
+   
+  6. Test case: `edit_event 999 at/30-04-2025 1200`<br>
+      Expected: An error message is shown indicating that the index provided is invalid (out of the range of the current event list).
+
+  7. Other incorrect `edit_event` commands to test:
+      * `edit_event 1 at/30-04-2024 1700`: Past date and time
+      * `edit_event 1 cid/999`: Invalid client ID
+      * `edit_event 1 etype/invalid`: Invalid event type
+      * `edit_event 1`: Missing all optional fields<br>
+        Expected: Similar to previous test cases. Error messages specific to the invalid input are shown.
+
+3. Finding an event
+
+  1. Prerequisites: There must be multiple events with different dates and times, types, clients, and properties.
+     To properly test all cases, ensure you have:
+     * At least one event before 01-03-2025 0000 and after 30-04-2025 1700
+     * At least one event with event type "Meeting"
+     * At least one event with a client whose name contains "Alice" (e.g., "Alice Tan")
+     * At least one event with a property whose name contains "Villa" (e.g., "Maple Villa")
+
+  2. Test case: `find_event before/30-04-2025 1700`<br>
+     Expected: Displays events before 30-04-2025 1700.
+
+  3. Test case: `find_event after/01-03-2025 0000`<br>
+     Expected: Displays events after 01-03-2025 0000.
+
+  4. Test case: `find_event after/01-03-2025 0000 AND_before/30-04-2025 1700`<br>
+     Expected: Displays events after 01-03-2025 0000 and before 30-04-2025 1700.
+
+  5. Test case: `find_event etype/meeting`<br>
+     Expected: Displays events with the type "Meeting".
+
+  6. Test case: `find_event with/Alice`<br>
+     Expected: Displays events associated with clients with names containing "Alice".
+
+  7. Test case: `find_event about/Villa`<br>
+     Expected: Displays events associated with properties with names containing "Villa".
+
+  8. Test case: `find_event after/01-03-2025 0000 AND_before/30-04-2025 1700`<br>
+     Expected: Displays events before 30-04-2025 1700.
+
+  9. Test case: `find_client nonexistent/keyword`<br>
+     Expected: An error message is shown indicating that the format is invalid.
+
+
+4. Deleting an event
+
+  1. Prerequisites: There must be at least one event in the event list. Use the `list_event` command to verify this and note its index.
+
+  2. Test case: `delete_event 1`<br>
+     Expected: The event at index 1 is deleted. A success message is shown.
+
+  3. Test case: `delete_event 999`<br>
+     Expected: An error message is shown in the result display indicating that the event index is invalid.
+
+  4. Test case: `delete_event 1 1 1`<br>
+     Expected: An error message is shown indicating that the event index is invalid.
+
+5. Listing events
+    1. Prerequisites: The event list has been filtered using `find_event`.
+
+    2. Test case: `list_events`<br>
+       Expected: All events are displayed, showing the complete, unfiltered list.
+
+    3. Test case: `list_events extra_argument`<br>
+       Expected: Invalid command format. Error message shown.

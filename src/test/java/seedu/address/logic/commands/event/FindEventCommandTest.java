@@ -7,6 +7,7 @@ import static seedu.address.logic.Messages.MESSAGE_EVENTS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalProperties.getTypicalAddressBook;
 
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.function.Predicate;
 
@@ -51,7 +52,7 @@ public class FindEventCommandTest {
 
     @Test
     public void execute_zeroEventsFound() throws Exception {
-        String expectedMessage = String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 0);
+        String expectedMessage = MessageFormat.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 0);
         Predicate<Event> predicate = preparePredicate("gamma");
         FindEventCommand command = new FindEventCommand(predicate);
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());

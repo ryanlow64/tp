@@ -21,10 +21,14 @@ public class Messages {
     public static final String MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX = "The client index provided is invalid";
     public static final String MESSAGE_INVALID_EVENT_DISPLAYED_INDEX = "The event index provided is invalid";
     public static final String MESSAGE_INVALID_PROPERTY_DISPLAYED_INDEX = "The property index provided is invalid";
-    public static final String MESSAGE_CLIENTS_LISTED_OVERVIEW = "%1$d clients listed!";
-    public static final String MESSAGE_PROPERTIES_LISTED_OVERVIEW = "%1$d properties are found and listed here!";
-    public static final String MESSAGE_EVENTS_LISTED_OVERVIEW = "%1$d events listed!";
-    public static final String MESSAGE_DEALS_LISTED_OVERVIEW = "%1$d deals listed!";
+    public static final String MESSAGE_CLIENTS_LISTED_OVERVIEW =
+            "{0,choice,0#{0} clients listed|1#1 client listed|1<{0} clients listed}";
+    public static final String MESSAGE_PROPERTIES_LISTED_OVERVIEW =
+            "{0,choice,0#{0} properties listed|1#1 property listed|1<{0} properties listed}";
+    public static final String MESSAGE_EVENTS_LISTED_OVERVIEW =
+            "{0,choice,0#{0} events listed|1#1 event listed|1<{0} events listed}";
+    public static final String MESSAGE_DEALS_LISTED_OVERVIEW =
+            "{0,choice,0#{0} deals listed|1#1 deal listed|1<{0} deals listed}";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_EVENT_IN_PAST = "Event cannot be before 01-01-2025 0000.";

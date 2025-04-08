@@ -57,6 +57,11 @@ public class EditPropertyCommandParser extends EditCommandParser<Property> {
             editPropertyDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
         if (argMultimap.getValue(PREFIX_PRICE).isPresent()) {
+            String priceArg = argMultimap.getValue(PREFIX_PRICE).get().trim();
+            if (!priceArg.matches("^[0-9]+$")) {
+                throw new ParseException("Price must be an integer and should not contain any special characters!");
+            }
+
             editPropertyDescriptor.setPrice(ParserUtil
                     .parsePrice(Long.valueOf(argMultimap.getValue(PREFIX_PRICE).get())));
         }
